@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES2019",
     "module": "none",
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outFile": "./workers.js",
-    "lib": ["ES5", "ES2015.Promise"]
+    "lib": ["ES2019"]
   },
   "include": ["./ts/**/*.ts", "./Roll20.d.ts"]
 }

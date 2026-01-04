@@ -1,21 +1,25 @@
 //- Dark City, Shining Babel - Header and Navigation
+//- Underground Zine Aesthetic: Photocopied dossier header
 
 .header
-    .title
-        h1 DARK CITY, SHINING BABEL
-        span.subtitle Runner Dossier
+    //- Main title block - looks like a stamped/stenciled header
+    .title-block
+        .title-main
+            span.title-dark DARK CITY
+            span.title-comma ,
+            span.title-shining SHINING BABEL
+        .title-sub
+            span.dossier-type(data-i18n="RUNNER_DOSSIER") RUNNER DOSSIER
 
-    .tabs
-        button(type="action", name="act_tab_character").tab-button
-            span(data-i18n="CHARACTER") CHARACTER
-        button(type="action", name="act_tab_crew").tab-button
-            span(data-i18n="CREW") CREW
+    //- Tab navigation - labels point to root-level radio buttons
+    .tab-nav
+        label.tab-button(for="tab_character")
+            span.tab-text(data-i18n="CHARACTER") CHARACTER
+        label.tab-button(for="tab_crew")
+            span.tab-text(data-i18n="CREW") CREW
 
-.settings
-    //- Sheet type toggle (for switching between character/crew sheets)
-    .setting
-        label
-            span(data-i18n="SHEET_TYPE") Sheet Type
-            select(name="attr_sheet_type")
-                option(value="character", data-i18n="CHARACTER") Character
-                option(value="crew", data-i18n="CREW") Crew
+    //- Settings toggle (edit mode)
+    .header-controls
+        label.edit-toggle
+            input(type="checkbox", name="attr_edit_mode", value="1", checked)
+            span.toggle-label(data-i18n="EDIT_MODE") Edit

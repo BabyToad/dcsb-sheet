@@ -43,6 +43,17 @@ const VICES = [
 // Cybernetic tiers
 const CYBERNETIC_TIERS = [2, 3, 4, 5] as const;
 
-// TODO: Add cybernetics data per playbook
-// TODO: Add items data
-// TODO: Add crew upgrade data
+// Standard item loads (fixed values)
+const STANDARD_ITEMS: {[key: string]: number} = {
+    item_blade: 1,
+    item_pistol: 1,
+    item_ammo: 1,
+    item_armor: 2,
+    item_heavy: 3,
+    item_tools: 1,
+    item_climbing: 2,
+    item_documents: 1
+};
+
+// All attribute names
+const ATTRIBUTE_NAMES = ['acuity', 'grit', 'resolve'] as const;

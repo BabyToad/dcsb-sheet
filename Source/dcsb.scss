@@ -1,8 +1,8 @@
 // Dark City, Shining Babel - Character Sheet Styles
 // Visual Design: Underground Zine aesthetic
 // - Photocopied, hand-annotated, punk
-// - High contrast B&W base + spot color
-// - Typewriter/hand-drawn typography feel
+// - High contrast B&W base + neon pink accent
+// - Typewriter typography, rubber stamp headers
 
 // =============================================================================
 // VARIABLES
@@ -14,20 +14,17 @@ $zine-ink: #1a1a1a;             // High contrast black
 $zine-grey: #666666;            // Photocopier grey
 $zine-light-grey: #cccccc;      // Faded areas
 
-// Spot colors (pick one accent - TBD in Phase 2)
-$zine-accent: #ff1493;          // Neon pink (placeholder)
-// $zine-accent: #00bfff;       // Electric blue alternative
-// $zine-accent: #ffcc00;       // Warning yellow alternative
+// Accent - Neon Pink (confirmed)
+$zine-accent: #ff1493;
 
-// Status colors
-$status-good: #2d5a27;          // Dark green (hand-drawn)
-$status-warning: #cc7700;       // Orange (highlighted)
-$status-danger: #8b0000;        // Dark red (circled)
+// Status colors (muted, hand-drawn feel)
+$status-good: #2d5a27;          // Dark green
+$status-warning: #cc7700;       // Orange
+$status-danger: #8b0000;        // Dark red
 
 // Typography
 $font-typewriter: 'Courier New', Courier, monospace;
 $font-header: 'Impact', 'Arial Black', sans-serif;
-$font-body: 'Arial', sans-serif;
 
 // Spacing
 $spacing-xs: 2px;
@@ -46,12 +43,35 @@ $spacing-xl: 24px;
     color: $zine-ink;
     background: $zine-paper;
     padding: $spacing-lg;
+    max-width: 800px;
 
-    // Subtle paper texture (via noise)
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    // Subtle scan lines (Roll20-safe, no data URLs)
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.01) 2px,
+            rgba(0,0,0,0.01) 4px
+        );
+
+    // Subtle vignette effect
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.05);
+
+    // Reset Roll20 defaults for common elements
+    div, span, label, textarea, button, h1, h2, h3 {
+        box-sizing: border-box;
+    }
+
+    label {
+        margin: 0;
+        padding: 0;
+        color: inherit;
+        display: inline-block;
+    }
 
     // ==========================================================================
-    // INPUTS
+    // INPUTS - Form field styling
     // ==========================================================================
 
     input[type="text"],
@@ -62,14 +82,45 @@ $spacing-xl: 24px;
         font-size: 12px;
         background: transparent;
         border: none;
-        border-bottom: 1px solid $zine-grey;
+        border-bottom: 1px dashed $zine-grey;
         padding: $spacing-xs $spacing-sm;
+        transition: border-color 0.2s;
 
         &:focus {
             outline: none;
-            border-bottom-color: $zine-ink;
+            border-bottom: 2px solid $zine-accent;
+        }
+
+        &::placeholder {
+            color: $zine-light-grey;
+            font-style: italic;
         }
     }
+
+    textarea {
+        border: 1px dashed $zine-grey;
+        min-height: 60px;
+        resize: vertical;
+
+        &:focus {
+            border-color: $zine-accent;
+        }
+    }
+
+    select {
+        border: 1px solid $zine-grey;
+        border-radius: 0;
+        padding: $spacing-xs;
+        cursor: pointer;
+
+        &:focus {
+            border-color: $zine-accent;
+        }
+    }
+
+    // ==========================================================================
+    // CHECKBOXES & RADIO - Hand-drawn feel
+    // ==========================================================================
 
     input[type="checkbox"],
     input[type="radio"] {
@@ -77,11 +128,24 @@ $spacing-xl: 24px;
         -webkit-appearance: none;
         width: 14px;
         height: 14px;
+        min-width: 14px;
+        min-height: 14px;
+        max-width: 14px;
+        max-height: 14px;
+        flex-shrink: 0;
         border: 2px solid $zine-ink;
         cursor: pointer;
+        position: relative;
+        transition: all 0.1s;
+        margin: 0;
+        padding: 0;
 
         &:checked {
             background: $zine-ink;
+        }
+
+        &:hover {
+            border-color: $zine-accent;
         }
     }
 
@@ -97,179 +161,581 @@ $spacing-xl: 24px;
         font-family: $font-header;
         font-size: 24px;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         margin: 0;
     }
 
     h2 {
-        font-family: $font-header;
-        font-size: 16px;
+        font-family: $font-typewriter;
+        font-size: 14px;
+        font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 1px;
-        border-bottom: 2px solid $zine-ink;
-        margin: $spacing-md 0;
-        padding-bottom: $spacing-xs;
+        margin: $spacing-md 0 $spacing-sm;
     }
 
     h3 {
         font-family: $font-typewriter;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         text-transform: uppercase;
         margin: $spacing-sm 0;
     }
 
+    h4 {
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $zine-grey;
+        margin: $spacing-sm 0;
+    }
+
     // ==========================================================================
-    // HEADER
+    // HEADER - Title block
     // ==========================================================================
 
     .header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        border-bottom: 3px solid $zine-ink;
+        align-items: flex-start;
+        border-bottom: 4px double $zine-ink;
         padding-bottom: $spacing-md;
         margin-bottom: $spacing-lg;
+        position: relative;
 
-        .title {
-            .subtitle {
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: $zine-grey;
+        // Staple marks in corners
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 10px;
+            background: $zine-grey;
+            top: -2px;
+        }
+        &::before { left: 10px; transform: rotate(-5deg); }
+        &::after { right: 10px; transform: rotate(5deg); }
+    }
+
+    .title-block {
+        .title-main {
+            font-family: $font-header;
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            // Stencil effect
+            .title-dark {
+                color: $zine-ink;
+            }
+            .title-comma {
+                color: $zine-accent;
+                font-weight: bold;
+            }
+            .title-shining {
+                color: $zine-ink;
             }
         }
 
-        .tabs {
-            display: flex;
-            gap: $spacing-sm;
-        }
-    }
+        .title-sub {
+            margin-top: $spacing-xs;
 
-    .tab-button {
-        font-family: $font-typewriter;
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: $zine-paper;
-        border: 2px solid $zine-ink;
-        padding: $spacing-sm $spacing-md;
-        cursor: pointer;
+            .dossier-type {
+                font-family: $font-typewriter;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                padding: 2px 6px;
+                border: 1px solid $zine-ink;
+                display: inline-block;
 
-        &:hover {
-            background: $zine-ink;
-            color: $zine-paper;
+                // Rubber stamp effect
+                transform: rotate(-1deg);
+                background: rgba($zine-paper, 0.9);
+            }
         }
     }
 
     // ==========================================================================
-    // SECTIONS
+    // TAB NAVIGATION - Folder tabs
+    // ==========================================================================
+
+    .tab-nav {
+        display: flex;
+        gap: $spacing-xs;
+    }
+
+    .tab-button {
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: $zine-paper;
+        border: 2px solid $zine-ink;
+        padding: $spacing-sm $spacing-lg;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.15s;
+
+        // Folder tab shape
+        clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+
+        &:hover {
+            background: $zine-light-grey;
+            transform: translateY(-2px);
+        }
+
+        .tab-text {
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    .header-controls {
+        .edit-toggle {
+            font-size: 10px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            color: $zine-grey;
+
+            input { margin: 0; }
+        }
+    }
+
+    // ==========================================================================
+    // SECTIONS - Paper layers with stamps
     // ==========================================================================
 
     .section {
         margin-bottom: $spacing-lg;
         padding: $spacing-md;
-        border: 1px solid $zine-grey;
+        position: relative;
+        background: $zine-paper;
+
+        // Layered paper shadow
+        box-shadow:
+            2px 2px 0 rgba(0,0,0,0.05),
+            4px 4px 0 rgba(0,0,0,0.03);
+
+        // Dashed border like a form
+        border: 1px dashed $zine-grey;
+
+        // Tape mark in corner
+        &::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 20px;
+            width: 40px;
+            height: 12px;
+            background: rgba(255, 235, 180, 0.6);
+            transform: rotate(-2deg);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
     }
 
     .section-header {
         display: flex;
         align-items: center;
-        gap: $spacing-sm;
-        cursor: pointer;
+        gap: $spacing-md;
+        margin-bottom: $spacing-md;
+        padding-bottom: $spacing-sm;
+        border-bottom: 1px solid $zine-light-grey;
+    }
 
-        input[type="checkbox"] {
-            display: none;
+    // Rubber stamp effect for section titles
+    .section-stamp {
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: $spacing-xs $spacing-sm;
+        border: 2px solid $zine-ink;
+        display: inline-block;
+        transform: rotate(-0.5deg);
+        position: relative;
+
+        // Ink bleed / stamp imperfection
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border: 1px solid rgba($zine-ink, 0.3);
+            pointer-events: none;
         }
     }
 
-    // ==========================================================================
-    // ACTION RATINGS
-    // ==========================================================================
-
-    .action-rating {
+    // Hand-circled section number
+    .section-number {
+        font-family: $font-typewriter;
+        font-size: 14px;
+        font-weight: bold;
+        width: 28px;
+        height: 28px;
         display: flex;
         align-items: center;
-        gap: $spacing-sm;
-        margin: $spacing-xs 0;
+        justify-content: center;
+        position: relative;
 
-        .action-name {
-            width: 100px;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border: 2px solid $zine-ink;
+        // Hand-drawn circle effect
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid $zine-accent;
             border-radius: 50%;
-            display: inline-block;
+            transform: rotate(5deg);
         }
 
-        input[type="radio"] {
-            display: none;
-
-            &:checked ~ .dot {
-                background: $zine-ink;
-            }
+        // Second slightly offset circle for hand-drawn feel
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border: 1px solid rgba($zine-accent, 0.5);
+            border-radius: 50%;
+            transform: rotate(-3deg);
         }
     }
 
-    .attribute-group {
-        margin-bottom: $spacing-md;
+    // ==========================================================================
+    // TWO-COLUMN LAYOUT
+    // ==========================================================================
+
+    .sheet-columns {
+        display: grid;
+        grid-template-columns: 55% 45%;
+        gap: $spacing-lg;
+        align-items: start;
+
+        @media (max-width: 700px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .left-column,
+    .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    // ==========================================================================
+    // ACTION RATINGS - Fakeradio Checkbox Pattern (Inverse Fill)
+    // ==========================================================================
+
+    // Attribute blocks (vertical stack in right column)
+    .attribute-block {
+        margin-bottom: $spacing-sm;
         padding: $spacing-sm;
         border-left: 3px solid $zine-ink;
+        background: rgba(0,0,0,0.02);
+
+        .attribute-header-row {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-sm;
+
+            .attr-name {
+                margin: 0;
+                font-size: 11px;
+                font-weight: bold;
+                font-family: $font-typewriter;
+                text-transform: uppercase;
+                min-width: 55px;
+                background: transparent;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                color: $zine-ink;
+                text-align: left;
+                transition: color 0.15s;
+
+                &:hover {
+                    color: $zine-accent;
+                }
+            }
+        }
+
+        .attribute-xp {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            margin-bottom: $spacing-sm;
+
+            .xp-label {
+                font-size: 9px;
+                text-transform: uppercase;
+                color: $zine-grey;
+                min-width: 20px;
+            }
+        }
+    }
+
+    // Attribute rating track (fakeradio inverse-fill)
+    .attribute-track {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+
+        .fakeradio.zero {
+            display: none;
+        }
+
+        .fakeradio {
+            display: none;
+        }
+
+        .attr-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            max-width: 12px;
+            max-height: 12px;
+            border: 1px solid $zine-grey;
+            border-radius: 1px;
+            cursor: pointer;
+            display: block;
+            flex-shrink: 0;
+            flex-grow: 0;
+            background: $zine-grey;
+            transition: background 0.1s;
+            line-height: 0;
+            font-size: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        // Inverse fill: dots AFTER checked become empty
+        .fakeradio:checked ~ .fakeradio + .attr-dot {
+            background: transparent;
+        }
+    }
+
+    .action-list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+    }
+
+    // Action row (clickable name + dots)
+    .action-row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .action-name {
+            width: 75px;
+            font-family: $font-typewriter;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            // Remove button styling
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            color: $zine-ink;
+            transition: color 0.15s;
+
+            &:hover {
+                color: $zine-accent;
+            }
+        }
+
+        .action-dots {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+
+            .fakeradio.zero {
+                display: none;
+            }
+
+            .fakeradio {
+                display: none;
+            }
+
+            .dot {
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                min-height: 16px;
+                max-width: 16px;
+                max-height: 16px;
+                border: 2px solid $zine-ink;
+                border-radius: 1px;
+                display: block;
+                cursor: pointer;
+                transition: all 0.1s;
+                flex-shrink: 0;
+                flex-grow: 0;
+                background: $zine-ink;
+                line-height: 0;
+                font-size: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+            // Inverse fill: dots AFTER checked become empty
+            .fakeradio:checked ~ .fakeradio + .dot {
+                background: transparent;
+            }
+        }
+    }
+
+    // Playbook XP block
+    .playbook-xp-block {
+        margin-top: $spacing-sm;
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        background: rgba(0,0,0,0.02);
+
+        .xp-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-xs;
+
+            .xp-label {
+                font-size: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .xp-trigger {
+                font-size: 9px;
+                font-style: italic;
+                color: $zine-grey;
+            }
+        }
     }
 
     // ==========================================================================
-    // TRACKERS (Stress, Trauma, etc.)
+    // TRACKERS - Stress, Trauma, Heat, etc.
     // ==========================================================================
 
-    .stress-track,
-    .trauma-track,
-    .rep-track,
-    .heat-track,
-    .wanted-track {
-        display: flex;
-        align-items: center;
-        gap: $spacing-xs;
-        margin: $spacing-sm 0;
+    .condition-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-md;
+    }
 
-        span:first-child {
-            width: 80px;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
+    .track-label {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: $spacing-xs;
+    }
+
+    .stress-block,
+    .trauma-block {
+        margin-bottom: $spacing-sm;
+    }
+
+    .stress-track,
+    .trauma-track {
+        display: flex;
+        gap: 2px;
 
         .stress-box,
-        .trauma-box,
-        .rep-box,
-        .heat-box,
-        .wanted-box {
+        .trauma-box {
             width: 16px;
             height: 16px;
+            min-width: 16px;
+            min-height: 16px;
             border: 2px solid $zine-ink;
-            display: inline-block;
+            cursor: pointer;
+            transition: all 0.1s;
+            flex-shrink: 0;
+
+            // Hand-drawn imperfection
+            &:nth-child(odd) {
+                transform: rotate(0.5deg);
+            }
+            &:nth-child(even) {
+                transform: rotate(-0.5deg);
+            }
         }
 
         input[type="checkbox"] {
             display: none;
 
-            &:checked + span {
+            &:checked + .stress-box,
+            &:checked + .trauma-box {
                 background: $zine-ink;
+                box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
             }
         }
     }
 
-    .trauma-track .trauma-box {
-        // Trauma boxes are X'd out, not filled
-        position: relative;
+    // Trauma gets X marks
+    .trauma-track {
+        .trauma-box {
+            position: relative;
+        }
+
+        input[type="checkbox"]:checked + .trauma-box {
+            background: transparent;
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                width: 2px;
+                height: 14px;
+                background: $zine-ink;
+                top: 50%;
+                left: 50%;
+            }
+            &::before {
+                transform: translate(-50%, -50%) rotate(45deg);
+            }
+            &::after {
+                transform: translate(-50%, -50%) rotate(-45deg);
+            }
+        }
     }
 
     // ==========================================================================
-    // HARM TRACK
+    // HARM TRACKS
     // ==========================================================================
+
+    .harm-block {
+        margin-bottom: $spacing-md;
+
+        &.mental {
+            .harm-header {
+                border-left: 3px solid $zine-accent;
+                padding-left: $spacing-sm;
+            }
+        }
+    }
+
+    .harm-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+
+        .harm-note {
+            font-size: 9px;
+            color: $zine-accent;
+            font-style: italic;
+        }
+    }
 
     .harm-track {
         .harm-level {
@@ -277,10 +743,18 @@ $spacing-xl: 24px;
             align-items: center;
             gap: $spacing-sm;
             margin: $spacing-xs 0;
+            padding: $spacing-xs 0;
+            border-bottom: 1px dotted $zine-light-grey;
 
-            > span:first-child {
-                width: 20px;
+            .level-num {
+                font-size: 14px;
                 font-weight: bold;
+                width: 20px;
+                text-align: center;
+            }
+
+            &.severe .level-num {
+                color: $status-danger;
             }
 
             .text-input {
@@ -289,24 +763,44 @@ $spacing-xl: 24px;
         }
     }
 
+    .healing-clock {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .clock-label {
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+    }
+
     // ==========================================================================
-    // CLOCKS
+    // CLOCKS - Circular segments
     // ==========================================================================
 
     .clock {
         display: inline-flex;
         align-items: center;
-        gap: $spacing-xs;
 
-        .clock-label {
-            margin-right: $spacing-sm;
+        .clock-segments {
+            display: flex;
+            gap: 1px;
         }
 
         .segment {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border: 2px solid $zine-ink;
-            display: inline-block;
+            cursor: pointer;
+            transition: background 0.1s;
+
+            // Make them look like pie segments
+            &:first-child {
+                border-radius: 8px 0 0 8px;
+            }
+            &:last-child {
+                border-radius: 0 8px 8px 0;
+            }
         }
 
         input[type="checkbox"] {
@@ -319,38 +813,645 @@ $spacing-xl: 24px;
     }
 
     // ==========================================================================
-    // TAB VISIBILITY
+    // HEAT GAUGE - Special styling
     // ==========================================================================
 
-    .tab-input:not([value="character"]) ~ .character {
-        display: none;
+    .heat-gauge {
+        padding: $spacing-sm;
+        border: 2px solid $zine-ink;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 5px,
+            rgba(0,0,0,0.02) 5px,
+            rgba(0,0,0,0.02) 10px
+        );
+
+        .gauge-label {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: $spacing-xs;
+        }
+
+        .gauge-segments {
+            display: flex;
+            gap: 2px;
+            margin-bottom: $spacing-xs;
+
+            .heat-segment {
+                width: 24px;
+                height: 24px;
+                min-width: 24px;
+                min-height: 24px;
+                border: 2px solid $zine-ink;
+                cursor: pointer;
+                transition: all 0.15s;
+                flex-shrink: 0;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+
+                &:checked + .heat-segment {
+                    background: $status-danger;
+                    border-color: $status-danger;
+                }
+            }
+        }
+
+        .gauge-dice {
+            font-size: 10px;
+            color: $zine-grey;
+
+            .dice-count {
+                width: 30px;
+                text-align: center;
+                font-weight: bold;
+                border: none;
+                background: transparent;
+            }
+        }
     }
 
-    .tab-input:not([value="crew"]) ~ .crew {
-        display: none;
+    // ==========================================================================
+    // ARMOR BLOCK
+    // ==========================================================================
+
+    .armor-block {
+        .armor-track {
+            display: flex;
+            gap: $spacing-md;
+        }
+
+        .armor-checkbox {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-size: 10px;
+            text-transform: uppercase;
+
+            .armor-box {
+                width: 14px;
+                height: 14px;
+                min-width: 14px;
+                min-height: 14px;
+                border: 2px solid $zine-ink;
+                display: inline-block;
+                flex-shrink: 0;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+
+                &:checked + .armor-box {
+                    background: $zine-ink;
+                }
+            }
+        }
     }
 
     // ==========================================================================
-    // GRIDS
+    // EQUIPMENT
     // ==========================================================================
 
-    .identity-grid {
+    .load-selector {
+        margin-bottom: $spacing-sm;
+
+        .load-options {
+            display: flex;
+            gap: $spacing-md;
+        }
+
+        .load-option {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-size: 10px;
+
+            .load-box {
+                width: 12px;
+                height: 12px;
+                min-width: 12px;
+                min-height: 12px;
+                border: 2px solid $zine-ink;
+                border-radius: 1px;  // Box style
+                flex-shrink: 0;
+            }
+
+            input[type="radio"] {
+                display: none;
+
+                &:checked + .load-box {
+                    background: $zine-accent;
+                    border-color: $zine-accent;
+                }
+            }
+        }
+    }
+
+    .load-tracker {
+        font-size: 10px;
+        margin-bottom: $spacing-sm;
+        color: $zine-grey;
+
+        .load-num {
+            width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    .equipment-columns {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: $spacing-md;
     }
 
-    .select-row {
-        label {
-            display: flex;
-            flex-direction: column;
-            gap: $spacing-xs;
+    .item-checkbox {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        cursor: pointer;
+        font-size: 10px;
+        padding: $spacing-xs 0;
 
-            span {
-                font-size: 10px;
-                text-transform: uppercase;
+        .item-box {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            border: 1px solid $zine-ink;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            &:checked + .item-box {
+                background: $zine-ink;
+            }
+
+            &:checked ~ .item-name {
+                text-decoration: line-through;
                 color: $zine-grey;
             }
+        }
+
+        .item-load {
+            color: $zine-grey;
+            margin-left: auto;
+        }
+    }
+
+    // ==========================================================================
+    // CYBERNETICS
+    // ==========================================================================
+
+    .cyber-capacity {
+        font-size: 11px;
+        margin-bottom: $spacing-sm;
+        padding: $spacing-xs $spacing-sm;
+        background: rgba(0,0,0,0.03);
+        border-left: 3px solid $zine-accent;
+
+        .cyber-used,
+        .cyber-max {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    .cyber-entry {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: $spacing-sm;
+        padding: $spacing-sm;
+        margin-bottom: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        align-items: start;
+
+        .cyber-tier select {
+            font-size: 10px;
+            padding: 2px;
+        }
+
+        .cyber-name {
+            font-weight: bold;
+        }
+
+        .cyber-slots {
+            display: flex;
+            gap: 2px;
+
+            .slot-box {
+                width: 12px;
+                height: 12px;
+                border: 1px solid $zine-ink;
+                cursor: pointer;
+            }
+
+            input:checked + .slot-box {
+                background: $zine-ink;
+            }
+        }
+
+        .cyber-desc {
+            grid-column: 1 / -1;
+            font-size: 10px;
+            min-height: 40px;
+        }
+    }
+
+    // ==========================================================================
+    // XP TRACKS
+    // ==========================================================================
+
+    .xp-boxes {
+        display: flex;
+        gap: 2px;
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .xp-box {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        input:checked + .xp-box {
+            background: $zine-accent;
+            border-color: $zine-accent;
+        }
+    }
+
+    // ==========================================================================
+    // VICE
+    // ==========================================================================
+
+    .vice-block {
+        .vice-fields {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: $spacing-sm;
+            align-items: end;
+        }
+    }
+
+    // ==========================================================================
+    // CIRCLES (Contacts)
+    // ==========================================================================
+
+    .circles-intro {
+        font-style: italic;
+        color: $zine-grey;
+        margin-bottom: $spacing-sm;
+        font-size: 11px;
+    }
+
+    .contact-entry {
+        display: grid;
+        grid-template-columns: auto 1fr 2fr;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .contact-status {
+            display: flex;
+            gap: 2px;
+
+            input[type="radio"] {
+                display: none;
+            }
+
+            .status-friend,
+            .status-neutral,
+            .status-rival {
+                width: 18px;
+                height: 18px;
+                min-width: 18px;
+                min-height: 18px;
+                border: 1px solid $zine-grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 10px;
+                flex-shrink: 0;
+            }
+
+            input:checked + .status-friend {
+                background: $status-good;
+                color: white;
+                border-color: $status-good;
+            }
+            input:checked + .status-neutral {
+                background: $zine-grey;
+                color: white;
+            }
+            input:checked + .status-rival {
+                background: $status-danger;
+                color: white;
+                border-color: $status-danger;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // NOTES
+    // ==========================================================================
+
+    .notes-area {
+        width: 100%;
+        min-height: 100px;
+        font-family: $font-typewriter;
+        font-size: 11px;
+        line-height: 1.5;
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        background: repeating-linear-gradient(
+            transparent,
+            transparent 18px,
+            $zine-light-grey 18px,
+            $zine-light-grey 19px
+        );
+    }
+
+    // ==========================================================================
+    // CREW SHEET SPECIFICS
+    // ==========================================================================
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-md;
+    }
+
+    .stat-label {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: $spacing-xs;
+    }
+
+    .tier-selector {
+        display: flex;
+        gap: 2px;
+
+        .tier-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid $zine-ink;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input:checked + .tier-box {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+
+    .hold-selector {
+        display: flex;
+        gap: $spacing-sm;
+
+        .hold-option {
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        input:checked + .hold-option {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+
+    .rep-track,
+    .heat-track,
+    .wanted-track {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+
+        .rep-box,
+        .heat-box,
+        .wanted-box {
+            width: 14px;
+            height: 14px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+        }
+
+        input:checked + .rep-box { background: $zine-ink; }
+        input:checked + .heat-box { background: $status-warning; border-color: $status-warning; }
+        input:checked + .wanted-box { background: $status-danger; border-color: $status-danger; }
+    }
+
+    .vault-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+
+        .vault-box {
+            width: 14px;
+            height: 14px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+
+            &:nth-child(4n) {
+                margin-right: $spacing-xs;
+            }
+        }
+
+        input:checked + .vault-box {
+            background: $status-good;
+            border-color: $status-good;
+        }
+    }
+
+    .coin-warning {
+        font-size: 9px;
+        color: $status-warning;
+        font-style: italic;
+    }
+
+    // ==========================================================================
+    // UPGRADES
+    // ==========================================================================
+
+    .upgrades-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-md;
+    }
+
+    .upgrade-category {
+        h4 {
+            border-bottom: 1px solid $zine-grey;
+            padding-bottom: $spacing-xs;
+            margin-bottom: $spacing-xs;
+        }
+    }
+
+    .upgrade-checkbox {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        cursor: pointer;
+        font-size: 10px;
+        padding: 2px 0;
+
+        .upgrade-box {
+            width: 10px;
+            height: 10px;
+            border: 1px solid $zine-ink;
+        }
+
+        input:checked + .upgrade-box {
+            background: $zine-ink;
+        }
+
+        .upgrade-cost {
+            color: $zine-grey;
+            margin-left: auto;
+        }
+    }
+
+    // ==========================================================================
+    // COHORTS
+    // ==========================================================================
+
+    .cohort-entry {
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        margin-bottom: $spacing-sm;
+
+        .cohort-header {
+            display: flex;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-xs;
+        }
+
+        .cohort-harm {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            margin: $spacing-xs 0;
+
+            .harm-label {
+                font-size: 10px;
+                text-transform: uppercase;
+            }
+
+            .harm-box {
+                width: 14px;
+                height: 14px;
+                border: 1px solid $zine-ink;
+                cursor: pointer;
+            }
+
+            input:checked + .harm-box {
+                background: $status-danger;
+                border-color: $status-danger;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // FACTION STATUS
+    // ==========================================================================
+
+    .faction-legend {
+        font-size: 9px;
+        color: $zine-grey;
+        margin-bottom: $spacing-sm;
+        display: flex;
+        gap: $spacing-md;
+    }
+
+    .faction-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .status-track {
+            display: flex;
+            gap: 1px;
+
+            .status-pip {
+                width: 16px;
+                height: 16px;
+                border: 1px solid $zine-grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 8px;
+
+                &[data-value="-3"],
+                &[data-value="-2"],
+                &[data-value="-1"] {
+                    border-color: $status-danger;
+                }
+                &[data-value="1"],
+                &[data-value="2"],
+                &[data-value="3"] {
+                    border-color: $status-good;
+                }
+            }
+
+            input:checked + .status-pip {
+                background: $zine-ink;
+                color: $zine-paper;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // TAB CONTENT VISIBILITY
+    // ==========================================================================
+
+    .tab-content {
+        display: none;
+    }
+
+    // ==========================================================================
+    // CLAIMS
+    // ==========================================================================
+
+    .claim-entry {
+        display: grid;
+        grid-template-columns: auto 1fr 1fr;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .claim-check {
+            width: 14px;
+            height: 14px;
         }
     }
 
@@ -364,13 +1465,113 @@ $spacing-xl: 24px;
         flex-direction: column;
 
         .label {
-            font-size: 10px;
+            font-size: 9px;
             text-transform: uppercase;
             color: $zine-grey;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea {
+            width: 100%;
+        }
+    }
+
+    .select-field {
+        .field-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: $zine-grey;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        select {
+            width: 100%;
+        }
+    }
+
+    // ==========================================================================
+    // IDENTITY GRID
+    // ==========================================================================
+
+    .identity-grid {
+        .identity-row {
+            margin-bottom: $spacing-sm;
+
+            &.primary {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: $spacing-md;
+            }
+
+            &.classification {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: $spacing-md;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // DISENGAGEMENT BUTTON
+    // ==========================================================================
+
+    .disengage-btn {
+        width: 100%;
+        padding: $spacing-sm;
+        margin-top: $spacing-sm;
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: $zine-paper;
+        border: 2px solid $zine-ink;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        &:hover {
+            background: $zine-ink;
+            color: $zine-paper;
         }
     }
 
 } // End .charsheet
+
+// =============================================================================
+// TAB SWITCHING (must be outside .charsheet - radio buttons are siblings)
+// =============================================================================
+
+.tab-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tab-radio[value="character"]:checked ~ .charsheet .character-content {
+    display: block;
+}
+
+.tab-radio[value="crew"]:checked ~ .charsheet .crew-content {
+    display: block;
+}
+
+// Active tab styling with accent underline
+.tab-radio[value="character"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_character"],
+.tab-radio[value="crew"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_crew"] {
+    background: #1a1a1a;
+    color: #f5f5f0;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #ff1493;
+    }
+}
 
 // =============================================================================
 // ROLL TEMPLATES
@@ -398,12 +1599,13 @@ $spacing-xl: 24px;
             .title {
                 text-transform: uppercase;
                 font-size: 11px;
+                color: #ff1493;
             }
         }
 
         .rolltemplate-body {
             .roll-result {
-                font-size: 16px;
+                font-size: 18px;
                 font-weight: bold;
             }
         }

@@ -51,13 +51,31 @@ The sheet uses a diegetic "underground zine" aesthetic - a photocopied document 
 - Paper texture, photocopier artifacts
 - Hand-annotated feel (circled items, margin notes)
 
-### Color Palette
+### Color Palette (Confirmed Phase 2)
 
 ```scss
 $zine-paper: #f5f5f0;      // Aged photocopy paper
 $zine-ink: #1a1a1a;        // High contrast black
-$zine-accent: #ff1493;     // Neon pink (placeholder - TBD in Phase 2)
+$zine-grey: #666666;       // Photocopier grey
+$zine-accent: #ff1493;     // Neon pink (confirmed)
+$status-good: #2d5a27;     // Dark green
+$status-warning: #cc7700;  // Orange
+$status-danger: #8b0000;   // Dark red
 ```
+
+### Visual Elements (Phase 2)
+
+| Element | Treatment |
+|---------|-----------|
+| Section headers | Rubber stamp style, slight rotation, ink bleed effect |
+| Section numbers | Hand-circled in accent pink, double circle for hand-drawn feel |
+| Tabs | Folder tab shape (clip-path), hover lift, accent underline when active |
+| Checkboxes | Hand-drawn imperfection, ink bleed on check, X marks for trauma |
+| Paper texture | Layered noise + subtle scan lines + vignette |
+| Sections | Dashed borders, tape marks in corners, paper shadow stack |
+| Inputs | Dashed underline, accent color on focus |
+| XP boxes | Accent pink when filled |
+| Heat gauge | Danger red when filled, hazard stripe background |
 
 ## Key Differences from Standard Blades in the Dark
 
@@ -130,12 +148,50 @@ getSectionIDs("repeating_section", (ids) => {
 
 ## Development Phases
 
-- [x] Phase 0: Foundation (current)
-- [ ] Phase 1: Information Architecture
-- [ ] Phase 2: Visual Design
+- [x] Phase 0: Foundation
+- [x] Phase 1: Information Architecture
+- [x] Phase 2: Visual Design
 - [ ] Phase 3: Core Implementation
 - [ ] Phase 4: Custom Features (Cybernetics, Heat Gauge, etc.)
 - [ ] Phase 5: Crew Sheet & Polish
+
+## Information Architecture (Phase 1)
+
+### Character Sheet Sections
+
+| # | Section | Framing | Content |
+|---|---------|---------|---------|
+| 01 | Subject Identification | Corporate intake form | Name, Alias, Look, Playbook, Heritage, Background |
+| 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), roll buttons |
+| 03 | Condition Report | Medical chart | Stress (9), Trauma (4), Physical Harm, Mental Harm, Armor |
+| 04 | Augmentation Record | Tech spec sheet | Cybernetics repeating section with tier/slots |
+| 05 | Equipment Manifest | Quartermaster checklist | Load selector, standard items, playbook items |
+| 06 | Special Abilities | Classified capabilities | Repeating section for abilities |
+| 07 | Vice & Advancement | Off-the-record notes | Vice type/purveyor, Playbook XP (8), Attribute XP (6 each) |
+| 08 | Circles | Contact cards | Friends/Rivals repeating section |
+| 09 | Notes | Margin scrawl | Free-form text area |
+
+### Crew Sheet Sections
+
+| # | Section | Framing | Content |
+|---|---------|---------|---------|
+| 01 | Crew Identification | Syndicate charter | Name, Type, Reputation, Hunting Grounds, Lair |
+| 02 | Crew Stats | Performance metrics | Tier (0-4), Hold, Rep (12), Turf, Heat (9), Wanted (4) |
+| 03 | Score Tracker | Mission control | Heat Gauge (6), Current Score, Disengagement Roll |
+| 04 | Crew Upgrades | Asset manifest | Lair, Training, Quality upgrade checkboxes |
+| 05 | Crew Abilities | Special operations | Repeating section for crew abilities |
+| 06 | Cohorts | Personnel files | Gang/Expert repeating section with harm/edges/flaws |
+| 07 | Faction Status | Intelligence briefing | Faction relationship matrix (-3 to +3) |
+| 08 | Claims | Territory map | Repeating section for held claims |
+| 09 | Vault | Treasury | Coin counter, Vault track (16) |
+| 10 | Crew Notes | Mission logs | Free-form text area |
+
+### Key DC,SB-Specific Elements
+
+1. **Mental Harm Track** - Separate from physical, cleared via Vice (not healing)
+2. **Heat Gauge** - 6-segment clock for active scores, determines Disengagement dice
+3. **Cybernetics Section** - Tier-based (T2-T5), capacity system, expandable via XP
+4. **Disengagement Roll** - Uses unticked Heat Gauge segments as dice pool
 
 ## References
 

@@ -1,18 +1,25 @@
 //- Dark City, Shining Babel - Reusable Pug Mixins
+//- Component library for the Runner Dossier sheet
 
-//- Text input with label
+//- ═══════════════════════════════════════════════════════════════
+//- INPUT COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
+
+//- Text input with floating label
 mixin text-input(name, label, extraclass)
     label(class=["text-input", extraclass])&attributes(attributes)
         input(type="text", name=`attr_${name}`)
-        .label(data-i18n=label)
-            block
+        if label
+            .label(data-i18n=label)
+                block
 
 //- Number input with label
 mixin number-input(name, label, extraclass)
     label(class=["number-input", extraclass])&attributes(attributes)
         input(type="number", name=`attr_${name}`)
-        .label(data-i18n=label)
-            block
+        if label
+            .label(data-i18n=label)
+                block
 
 //- Checkbox input
 mixin checkbox(name, value, label)
@@ -20,24 +27,86 @@ mixin checkbox(name, value, label)
         input(type="checkbox", name=`attr_${name}`, value=value)
         span(data-i18n=label)
 
-//- Action rating dots (0-4)
-mixin action-dots(name, label)
-    .action-rating
-        span.action-name(data-i18n=label)
-        - for (var i = 0; i <= 4; i++)
-            input(type="radio", name=`attr_${name}`, value=i, checked=(i === 0))
-            span.dot
+//- ═══════════════════════════════════════════════════════════════
+//- ACTION & ATTRIBUTE COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
+
+//- Action row with clickable name (fakeradio checkbox pattern)
+//- Uses "inverse fill": all dots start filled, dots AFTER checked become empty
+//- DOM order: 0,1,2,3,4 (normal) - CSS :checked ~ sibling unfills following dots
+mixin action-row(name, label)
+    .action-row
+        button.action-name(type="action", name=`act_roll_${name}`, data-i18n=label)
+        .action-dots
+            //- Hidden zero-value checkbox (default state)
+            input.fakeradio.zero(type="checkbox", name=`attr_${name}`, value="0", checked)
+            //- Visible dots with incrementing values
+            - for (var i = 1; i <= 4; i++)
+                input.fakeradio(type="checkbox", name=`attr_${name}`, value=i, id=`${name}_${i}`)
+                label.dot(for=`${name}_${i}`)
+
+//- Attribute rating track (derived from highest action)
+//- Uses same fakeradio inverse-fill pattern
+mixin attribute-track(name)
+    .attribute-track
+        //- Hidden zero-value checkbox (default state)
+        input.fakeradio.zero(type="checkbox", name=`attr_${name}_rating`, value="0", checked)
+        //- Visible dots
+        - for (var i = 1; i <= 4; i++)
+            input.fakeradio(type="checkbox", name=`attr_${name}_rating`, value=i, id=`${name}_rating_${i}`)
+            label.attr-dot(for=`${name}_rating_${i}`)
+
+//- XP track (6 or 8 boxes)
+mixin xp-track(name, count)
+    .xp-boxes
+        - for (var i = 1; i <= count; i++)
+            input(type="checkbox", name=`attr_${name}_xp_${i}`, value="1", id=`${name}_xp_${i}`)
+            label.xp-box(for=`${name}_xp_${i}`)
+
+//- ═══════════════════════════════════════════════════════════════
+//- TRACKER COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
 
 //- Clock segments (configurable size)
 mixin clock(name, segments, label)
     .clock(data-segments=segments)
         if label
             span.clock-label(data-i18n=label)
-        - for (var i = 1; i <= segments; i++)
-            input(type="checkbox", name=`attr_${name}_${i}`, value="1")
-            span.segment
+        .clock-segments
+            - for (var i = 1; i <= segments; i++)
+                input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_seg_${i}`)
+                label.segment(for=`${name}_seg_${i}`)
 
-//- Section header (collapsible)
+//- Heat Gauge (6-segment clock with special styling)
+mixin heat-gauge(name)
+    .heat-gauge
+        .gauge-label(data-i18n="HEAT_GAUGE") HEAT GAUGE
+        .gauge-segments
+            - for (var i = 1; i <= 6; i++)
+                input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_${i}`)
+                label.heat-segment(for=`${name}_${i}`)
+        .gauge-dice
+            span.dice-label(data-i18n="DISENGAGE_DICE") Disengage:
+            input(type="number", name=`attr_${name}_dice`, value="6", readonly).dice-count
+            span d6
+
+//- ═══════════════════════════════════════════════════════════════
+//- EQUIPMENT COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
+
+//- Item checkbox with load value
+mixin item-checkbox(name, label, load)
+    label.item-checkbox
+        input(type="checkbox", name=`attr_${name}`, value="1")
+        span.item-box
+        span.item-name= label
+        span.item-load= load
+
+//- ═══════════════════════════════════════════════════════════════
+//- STRUCTURAL COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
+
+//- Section header (collapsible, with stamp styling)
 mixin sectionheader(name, label)
     .section-header
         input(type="checkbox", name=`attr_show_${name}`, value="1", checked)
@@ -48,3 +117,48 @@ mixin sectionheader(name, label)
 mixin repeating(name)
     fieldset(class=`repeating_${name}`)
         block
+
+//- ═══════════════════════════════════════════════════════════════
+//- CREW COMPONENTS
+//- ═══════════════════════════════════════════════════════════════
+
+//- Faction status row
+mixin faction-status(name)
+    .faction-row
+        input(type="text", name=`attr_${name}_faction`, placeholder="Faction name").faction-name
+        .status-track
+            - for (var i = -3; i <= 3; i++)
+                input(type="radio", name=`attr_${name}_status`, value=i, checked=(i === 0), id=`${name}_status_${i}`)
+                label.status-pip(for=`${name}_status_${i}`, data-value=i)
+                    if i === -3
+                        span W
+                    else if i === 3
+                        span A
+
+//- Cohort block
+mixin cohort-block()
+    .cohort-entry
+        .cohort-header
+            input(type="text", name="attr_cohort_name", placeholder="Cohort name").cohort-name
+            select(name="attr_cohort_type")
+                option(value="gang") Gang
+                option(value="expert") Expert
+        .cohort-tags
+            +text-input("cohort_tags", "TAGS")
+        .cohort-harm
+            span.harm-label(data-i18n="HARM") Harm:
+            - for (var i = 1; i <= 4; i++)
+                input(type="checkbox", name=`attr_cohort_harm_${i}`, value="1", id=`cohort_harm_${i}`)
+                label.harm-box(for=`cohort_harm_${i}`)
+        .cohort-edges-flaws
+            +text-input("cohort_edges", "EDGES")
+            +text-input("cohort_flaws", "FLAWS")
+
+//- Upgrade checkbox
+mixin upgrade-checkbox(name, label, cost)
+    label.upgrade-checkbox
+        input(type="checkbox", name=`attr_${name}`, value="1")
+        span.upgrade-box
+        span.upgrade-name(data-i18n=label)= label
+        if cost && cost > 1
+            span.upgrade-cost= `(${cost})`

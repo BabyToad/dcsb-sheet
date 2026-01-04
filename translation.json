@@ -1,12 +1,12 @@
 {
+    "RUNNER_DOSSIER": "Runner Dossier",
     "CHARACTER": "Character",
     "CREW": "Crew",
-    "SHEET_TYPE": "Sheet Type",
+    "EDIT_MODE": "Edit",
 
-    "IDENTITY": "Identity",
-    "NAME": "Name",
+    "LEGAL_NAME": "Legal Name",
     "ALIAS": "Alias",
-    "LOOK": "Look",
+    "PHYSICAL_DESCRIPTION": "Physical Description",
     "PLAYBOOK": "Playbook",
     "HERITAGE": "Heritage",
     "BACKGROUND": "Background",
@@ -31,7 +31,6 @@
     "UNDERWORLD": "Underworld",
     "FRINGE": "Fringe",
 
-    "ACTIONS": "Actions",
     "ACUITY": "Acuity",
     "GRIT": "Grit",
     "RESOLVE": "Resolve",
@@ -49,31 +48,86 @@
     "TAMPER": "Tamper",
     "VANDALIZE": "Vandalize",
 
-    "STRESS_TRAUMA": "Stress & Trauma",
     "STRESS": "Stress",
     "TRAUMA": "Trauma",
+    "TRAUMA_CONDITIONS": "Conditions",
 
-    "HARM": "Harm",
+    "PHYSICAL_HARM": "Physical Harm",
+    "MENTAL_HARM": "Mental Harm",
+    "CLEARED_VIA_VICE": "(cleared via Vice)",
     "HARM_SEVERE": "Severe (Need Help)",
-    "HARM_MODERATE": "Moderate (-1d)",
-    "HARM_LESSER": "Lesser",
     "HEALING": "Healing",
+    "ARMOR": "Armor",
+    "HEAVY": "+Heavy",
+    "SPECIAL": "Special",
 
-    "CREW_IDENTITY": "Crew Identity",
+    "CAPACITY": "Capacity",
+
+    "LOAD": "Load",
+    "LIGHT": "Light (3)",
+    "NORMAL": "Normal (5)",
+    "CURRENT": "Current",
+    "STANDARD_ITEMS": "Standard Items",
+    "PLAYBOOK_ITEMS": "Playbook Items",
+
+    "VICE": "Vice",
+    "FAITH": "Faith",
+    "GAMBLING": "Gambling",
+    "LUXURY": "Luxury",
+    "OBLIGATION": "Obligation",
+    "PLEASURE": "Pleasure",
+    "STUPOR": "Stupor",
+    "WEIRD": "Weird",
+    "PURVEYOR": "Purveyor",
+    "DETAILS": "Details",
+
+    "PLAYBOOK_XP": "Playbook XP",
+    "ACUITY_XP": "Acuity XP",
+    "GRIT_XP": "Grit XP",
+    "RESOLVE_XP": "Resolve XP",
+
+    "CIRCLES_DESC": "\"I know a guy...\"",
+
     "CREW_NAME": "Crew Name",
     "CREW_TYPE": "Crew Type",
     "HUNTING_GROUNDS": "Hunting Grounds",
     "LAIR": "Lair",
-    "REPUTATION": "Reputation",
 
     "FIREBRANDS": "Firebrands",
     "LEECHES": "Leeches",
     "RUNNERS": "Runners",
     "ZOKUS": "Zokus",
 
-    "CREW_STATS": "Crew Stats",
     "TIER": "Tier",
+    "HOLD": "Hold",
+    "WEAK": "Weak",
+    "STRONG": "Strong",
     "REP": "Rep",
+    "TURF": "Turf",
     "HEAT": "Heat",
-    "WANTED": "Wanted"
+    "WANTED": "Wanted",
+
+    "HEAT_GAUGE": "Heat Gauge",
+    "DISENGAGE_DICE": "Disengage",
+    "CURRENT_SCORE": "Current Score",
+    "TARGET": "Target",
+    "ROLL_DISENGAGEMENT": "Roll Disengagement",
+
+    "TRAINING": "Training",
+    "QUALITY": "Quality",
+
+    "TAGS": "Tags",
+    "HARM": "Harm",
+    "EDGES": "Edges",
+    "FLAWS": "Flaws",
+
+    "WAR": "War",
+    "NEUTRAL": "Neutral",
+    "ALLY": "Allied",
+
+    "COIN": "Coin",
+    "COIN_WARNING": "(4+ draws Heat)",
+    "VAULT": "Vault",
+
+    "REPUTATION": "Reputation"
 }

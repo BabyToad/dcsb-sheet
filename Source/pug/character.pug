@@ -1,113 +1,364 @@
 //- Dark City, Shining Babel - Character Sheet Content
+//- Layout: Two-column with Actions+XP on right
+//- Information Architecture: Runner Dossier framing
 
-//- Identity Section
-.section.identity
-    +sectionheader("identity", "IDENTITY")
-    .identity-grid
-        +text-input("character_name", "NAME")
-        +text-input("alias", "ALIAS")
-        +text-input("look", "LOOK")
+.sheet-columns
+    //- ═══════════════════════════════════════════════════════════════
+    //- LEFT COLUMN
+    //- ═══════════════════════════════════════════════════════════════
+    .left-column
 
-        .select-row
-            label
-                span(data-i18n="PLAYBOOK") Playbook
-                select(name="attr_playbook")
-                    option(value="") --
-                    option(value="face", data-i18n="FACE") Face
-                    option(value="fixer", data-i18n="FIXER") Fixer
-                    option(value="l337", data-i18n="L337") L337
-                    option(value="midnighter", data-i18n="MIDNIGHTER") MidNighter
-                    option(value="murk", data-i18n="MURK") Murk
-                    option(value="street_warrior", data-i18n="STREET_WARRIOR") Street Warrior
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 1: SUBJECT IDENTIFICATION
+        //- Framing: Corporate intake form / employee file
+        //- ───────────────────────────────────────────────────────────
+        .section.identity
+            .section-header
+                .section-stamp SUBJECT IDENTIFICATION
+                .section-number 01
 
-        .select-row
-            label
-                span(data-i18n="HERITAGE") Heritage
-                select(name="attr_heritage")
-                    option(value="") --
-                    option(value="sub_cities", data-i18n="SUB_CITIES") Sub Cities
-                    option(value="the_well", data-i18n="THE_WELL") The Well
-                    option(value="the_jungle", data-i18n="THE_JUNGLE") The Jungle
-                    option(value="the_syndicate", data-i18n="THE_SYNDICATE") The Syndicate
-                    option(value="labor_colonies", data-i18n="LABOR_COLONIES") Labor Colonies
+            .identity-grid
+                .identity-row.primary
+                    +text-input("character_name", "LEGAL_NAME")
+                    +text-input("alias", "ALIAS")
 
-        .select-row
-            label
-                span(data-i18n="BACKGROUND") Background
-                select(name="attr_background")
-                    option(value="") --
-                    option(value="entertainment", data-i18n="ENTERTAINMENT") Entertainment
-                    option(value="law", data-i18n="LAW") Law
-                    option(value="labor", data-i18n="LABOR") Labor
-                    option(value="corporate", data-i18n="CORPORATE") Corporate
-                    option(value="underworld", data-i18n="UNDERWORLD") Underworld
-                    option(value="fringe", data-i18n="FRINGE") Fringe
+                .identity-row.secondary
+                    +text-input("look", "PHYSICAL_DESCRIPTION")
 
-//- Actions Section
-.section.actions
-    +sectionheader("actions", "ACTIONS")
+                .identity-row.classification
+                    .select-field
+                        label
+                            span.field-label(data-i18n="PLAYBOOK") Playbook
+                            select(name="attr_playbook")
+                                option(value="") --
+                                option(value="face", data-i18n="FACE") Face
+                                option(value="fixer", data-i18n="FIXER") Fixer
+                                option(value="l337", data-i18n="L337") L337
+                                option(value="midnighter", data-i18n="MIDNIGHTER") MidNighter
+                                option(value="murk", data-i18n="MURK") Murk
+                                option(value="street_warrior", data-i18n="STREET_WARRIOR") Street Warrior
 
-    .attribute-group
-        h3(data-i18n="ACUITY") ACUITY
-        +action-dots("hack", "HACK")
-        +action-dots("recon", "RECON")
-        +action-dots("scrutinize", "SCRUTINIZE")
-        +action-dots("tamper", "TAMPER")
+                    .select-field
+                        label
+                            span.field-label(data-i18n="HERITAGE") Heritage
+                            select(name="attr_heritage")
+                                option(value="") --
+                                option(value="sub_cities", data-i18n="SUB_CITIES") Sub Cities
+                                option(value="the_well", data-i18n="THE_WELL") The Well
+                                option(value="the_jungle", data-i18n="THE_JUNGLE") The Jungle
+                                option(value="the_syndicate", data-i18n="THE_SYNDICATE") The Syndicate
+                                option(value="labor_colonies", data-i18n="LABOR_COLONIES") Labor Colonies
 
-    .attribute-group
-        h3(data-i18n="GRIT") GRIT
-        +action-dots("brawl", "BRAWL")
-        +action-dots("hunt", "HUNT")
-        +action-dots("skulk", "SKULK")
-        +action-dots("vandalize", "VANDALIZE")
+                    .select-field
+                        label
+                            span.field-label(data-i18n="BACKGROUND") Background
+                            select(name="attr_background")
+                                option(value="") --
+                                option(value="entertainment", data-i18n="ENTERTAINMENT") Entertainment
+                                option(value="law", data-i18n="LAW") Law
+                                option(value="labor", data-i18n="LABOR") Labor
+                                option(value="corporate", data-i18n="CORPORATE") Corporate
+                                option(value="underworld", data-i18n="UNDERWORLD") Underworld
+                                option(value="fringe", data-i18n="FRINGE") Fringe
 
-    .attribute-group
-        h3(data-i18n="RESOLVE") RESOLVE
-        +action-dots("consort", "CONSORT")
-        +action-dots("dominate", "DOMINATE")
-        +action-dots("finesse", "FINESSE")
-        +action-dots("sway", "SWAY")
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 3: CONDITION REPORT
+        //- Framing: Medical chart / trauma assessment
+        //- ───────────────────────────────────────────────────────────
+        .section.condition
+            .section-header
+                .section-stamp CONDITION REPORT
+                .section-number 03
 
-//- Stress & Trauma Section
-.section.stress-trauma
-    +sectionheader("stress", "STRESS_TRAUMA")
+            .condition-grid
+                //- Stress Track
+                .stress-block
+                    .track-label(data-i18n="STRESS") STRESS
+                    .stress-track
+                        - for (var i = 1; i <= 9; i++)
+                            input(type="checkbox", name=`attr_stress_${i}`, value="1", id=`stress_${i}`)
+                            label.stress-box(for=`stress_${i}`)
 
-    .stress-track
-        span(data-i18n="STRESS") Stress
-        - for (var i = 1; i <= 9; i++)
-            input(type="checkbox", name=`attr_stress_${i}`, value="1")
-            span.stress-box
+                //- Trauma Track
+                .trauma-block
+                    .track-label(data-i18n="TRAUMA") TRAUMA
+                    .trauma-track
+                        - for (var i = 1; i <= 4; i++)
+                            input(type="checkbox", name=`attr_trauma_${i}`, value="1", id=`trauma_${i}`)
+                            label.trauma-box(for=`trauma_${i}`)
+                    +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
 
-    .trauma-track
-        span(data-i18n="TRAUMA") Trauma
-        - for (var i = 1; i <= 4; i++)
-            input(type="checkbox", name=`attr_trauma_${i}`, value="1")
-            span.trauma-box
+                //- Physical Harm
+                .harm-block.physical
+                    .harm-header
+                        .track-label(data-i18n="PHYSICAL_HARM") PHYSICAL HARM
+                        .healing-clock
+                            span.clock-label(data-i18n="HEALING") Healing
+                            +clock("healing", 4)
 
-//- Harm Section
-.section.harm
-    +sectionheader("harm", "HARM")
+                    .harm-track
+                        .harm-level.severe
+                            span.level-num 3
+                            +text-input("harm_phys_3", "HARM_SEVERE")
+                        .harm-level.moderate
+                            span.level-num 2
+                            +text-input("harm_phys_2a", "")
+                            +text-input("harm_phys_2b", "")
+                        .harm-level.lesser
+                            span.level-num 1
+                            +text-input("harm_phys_1a", "")
+                            +text-input("harm_phys_1b", "")
 
-    .harm-track
-        .harm-level
-            span 3
-            +text-input("harm_3", "HARM_SEVERE")
-        .harm-level
-            span 2
-            +text-input("harm_2a", "HARM_MODERATE")
-            +text-input("harm_2b", "HARM_MODERATE")
-        .harm-level
-            span 1
-            +text-input("harm_1a", "HARM_LESSER")
-            +text-input("harm_1b", "HARM_LESSER")
+                //- Mental Harm (DC,SB specific - cleared via Vice)
+                .harm-block.mental
+                    .harm-header
+                        .track-label(data-i18n="MENTAL_HARM") MENTAL HARM
+                        .harm-note(data-i18n="CLEARED_VIA_VICE") (cleared via Vice)
 
-    .healing-clock
-        span(data-i18n="HEALING") Healing
-        +clock("healing", 4)
+                    .harm-track
+                        .harm-level.severe
+                            span.level-num 3
+                            +text-input("harm_ment_3", "HARM_SEVERE")
+                        .harm-level.moderate
+                            span.level-num 2
+                            +text-input("harm_ment_2a", "")
+                            +text-input("harm_ment_2b", "")
+                        .harm-level.lesser
+                            span.level-num 1
+                            +text-input("harm_ment_1a", "")
+                            +text-input("harm_ment_1b", "")
 
-//- TODO: Add more sections
-//- - Cybernetics
-//- - Equipment/Load
-//- - Vice
-//- - XP
-//- - Notes
+                //- Armor
+                .armor-block
+                    .track-label(data-i18n="ARMOR") ARMOR
+                    .armor-track
+                        label.armor-checkbox
+                            input(type="checkbox", name="attr_armor", value="1")
+                            span.armor-box
+                            span(data-i18n="ARMOR") Armor
+                        label.armor-checkbox
+                            input(type="checkbox", name="attr_heavy_armor", value="1")
+                            span.armor-box
+                            span(data-i18n="HEAVY") +Heavy
+                        label.armor-checkbox
+                            input(type="checkbox", name="attr_special_armor", value="1")
+                            span.armor-box
+                            span(data-i18n="SPECIAL") Special
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 4: AUGMENTATION RECORD
+        //- Framing: Tech spec sheet / warranty documentation
+        //- ───────────────────────────────────────────────────────────
+        .section.cybernetics
+            .section-header
+                .section-stamp AUGMENTATION RECORD
+                .section-number 04
+
+            .cyber-capacity
+                span.capacity-label(data-i18n="CAPACITY") Capacity:
+                input(type="number", name="attr_cyber_used", value="0", readonly).cyber-used
+                span /
+                input(type="number", name="attr_cyber_max", value="4").cyber-max
+
+            +repeating("cybernetics")
+                .cyber-entry
+                    .cyber-tier
+                        select(name="attr_cyber_tier")
+                            option(value="2") T2
+                            option(value="3") T3
+                            option(value="4") T4
+                            option(value="5") T5
+                    input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
+                    .cyber-slots
+                        - for (var i = 1; i <= 3; i++)
+                            input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
+                            label.slot-box(for=`cyber_slot_${i}`)
+                    textarea(name="attr_cyber_desc", placeholder="Description & effects").cyber-desc
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 6: SPECIAL ABILITIES
+        //- Framing: Classified capabilities / redacted dossier
+        //- ───────────────────────────────────────────────────────────
+        .section.abilities
+            .section-header
+                .section-stamp SPECIAL ABILITIES
+                .section-number 06
+
+            +repeating("abilities")
+                .ability-entry
+                    input(type="checkbox", name="attr_ability_taken", value="1").ability-check
+                    input(type="text", name="attr_ability_name", placeholder="Ability name").ability-name
+                    textarea(name="attr_ability_desc", placeholder="Description").ability-desc
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 7: VICE
+        //- Framing: Handwritten notes / off-the-record intel
+        //- ───────────────────────────────────────────────────────────
+        .section.vice
+            .section-header
+                .section-stamp VICE
+                .section-number 07
+
+            .vice-block
+                .vice-fields
+                    .select-field
+                        select(name="attr_vice_type")
+                            option(value="") --
+                            option(value="faith", data-i18n="FAITH") Faith
+                            option(value="gambling", data-i18n="GAMBLING") Gambling
+                            option(value="luxury", data-i18n="LUXURY") Luxury
+                            option(value="obligation", data-i18n="OBLIGATION") Obligation
+                            option(value="pleasure", data-i18n="PLEASURE") Pleasure
+                            option(value="stupor", data-i18n="STUPOR") Stupor
+                            option(value="weird", data-i18n="WEIRD") Weird
+                    +text-input("vice_purveyor", "PURVEYOR")
+                    +text-input("vice_details", "DETAILS")
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 8: CIRCLES
+        //- Framing: Contact cards / post-it notes / rolodex
+        //- ───────────────────────────────────────────────────────────
+        .section.circles
+            .section-header
+                .section-stamp CIRCLES
+                .section-number 08
+
+            .circles-intro(data-i18n="CIRCLES_DESC") "I know a guy..."
+
+            +repeating("contacts")
+                .contact-entry
+                    .contact-status
+                        input(type="radio", name="attr_contact_relation", value="friend", id="contact_friend")
+                        label(for="contact_friend").status-friend ✓
+                        input(type="radio", name="attr_contact_relation", value="neutral", checked, id="contact_neutral")
+                        label(for="contact_neutral").status-neutral ○
+                        input(type="radio", name="attr_contact_relation", value="rival", id="contact_rival")
+                        label(for="contact_rival").status-rival ✗
+                    input(type="text", name="attr_contact_name", placeholder="Name").contact-name
+                    input(type="text", name="attr_contact_desc", placeholder="Description / usefulness").contact-desc
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 9: NOTES
+        //- Framing: Margin scrawl / personal annotations
+        //- ───────────────────────────────────────────────────────────
+        .section.notes
+            .section-header
+                .section-stamp NOTES
+                .section-number 09
+
+            textarea(name="attr_notes", placeholder="Personal notes, background details, mission logs...").notes-area
+
+    //- ═══════════════════════════════════════════════════════════════
+    //- RIGHT COLUMN
+    //- ═══════════════════════════════════════════════════════════════
+    .right-column
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 2: CAPABILITY ASSESSMENT
+        //- Framing: Psychometric evaluation / skills matrix
+        //- Actions grouped by attribute with integrated XP
+        //- ───────────────────────────────────────────────────────────
+        .section.actions
+            .section-header
+                .section-stamp CAPABILITY ASSESSMENT
+                .section-number 02
+
+            //- Playbook XP (at top of section)
+            .playbook-xp-block
+                .xp-label-row
+                    span.xp-label(data-i18n="PLAYBOOK_XP") Playbook XP
+                    span.xp-trigger(name="attr_xp_trigger")
+                +xp-track("playbook", 8)
+
+            //- ACUITY Attribute Block
+            .attribute-block.acuity
+                .attribute-header-row
+                    button.attr-name(type="action", name="act_roll_acuity_resist", data-i18n="ACUITY") ACUITY
+                    +attribute-track("acuity")
+                .attribute-xp
+                    span.xp-label XP
+                    +xp-track("acuity", 6)
+                .action-list
+                    +action-row("hack", "HACK")
+                    +action-row("recon", "RECON")
+                    +action-row("scrutinize", "SCRUTINIZE")
+                    +action-row("tamper", "TAMPER")
+
+            //- GRIT Attribute Block
+            .attribute-block.grit
+                .attribute-header-row
+                    button.attr-name(type="action", name="act_roll_grit_resist", data-i18n="GRIT") GRIT
+                    +attribute-track("grit")
+                .attribute-xp
+                    span.xp-label XP
+                    +xp-track("grit", 6)
+                .action-list
+                    +action-row("brawl", "BRAWL")
+                    +action-row("hunt", "HUNT")
+                    +action-row("skulk", "SKULK")
+                    +action-row("vandalize", "VANDALIZE")
+
+            //- RESOLVE Attribute Block
+            .attribute-block.resolve
+                .attribute-header-row
+                    button.attr-name(type="action", name="act_roll_resolve_resist", data-i18n="RESOLVE") RESOLVE
+                    +attribute-track("resolve")
+                .attribute-xp
+                    span.xp-label XP
+                    +xp-track("resolve", 6)
+                .action-list
+                    +action-row("consort", "CONSORT")
+                    +action-row("dominate", "DOMINATE")
+                    +action-row("finesse", "FINESSE")
+                    +action-row("sway", "SWAY")
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 5: EQUIPMENT MANIFEST
+        //- Framing: Quartermaster checklist / gear loadout
+        //- ───────────────────────────────────────────────────────────
+        .section.equipment
+            .section-header
+                .section-stamp EQUIPMENT MANIFEST
+                .section-number 05
+
+            .load-selector
+                .load-label(data-i18n="LOAD") LOAD
+                .load-options
+                    label.load-option
+                        input(type="radio", name="attr_load", value="3")
+                        span.load-box
+                        span(data-i18n="LIGHT") Light (3)
+                    label.load-option
+                        input(type="radio", name="attr_load", value="5", checked)
+                        span.load-box
+                        span(data-i18n="NORMAL") Normal (5)
+                    label.load-option
+                        input(type="radio", name="attr_load", value="6")
+                        span.load-box
+                        span(data-i18n="HEAVY") Heavy (6)
+
+            .load-tracker
+                span.load-current(data-i18n="CURRENT") Current:
+                input(type="number", name="attr_load_current", value="0", readonly).load-num
+                span /
+                input(type="number", name="attr_load_max", value="5", readonly).load-num
+
+            .equipment-columns
+                .equipment-column.standard
+                    h4(data-i18n="STANDARD_ITEMS") Standard Items
+                    +item-checkbox("item_blade", "Blade or club", 1)
+                    +item-checkbox("item_pistol", "Pistol", 1)
+                    +item-checkbox("item_ammo", "Extra ammo", 1)
+                    +item-checkbox("item_armor", "Armor", 2)
+                    +item-checkbox("item_heavy", "+Heavy", 3)
+                    +item-checkbox("item_tools", "Burglary tools", 1)
+                    +item-checkbox("item_climbing", "Climbing gear", 2)
+                    +item-checkbox("item_documents", "Documents", 1)
+
+                .equipment-column.playbook
+                    h4(data-i18n="PLAYBOOK_ITEMS") Playbook Items
+                    +repeating("items")
+                        .item-entry
+                            input(type="checkbox", name="attr_item_carried", value="1")
+                            input(type="text", name="attr_item_name", placeholder="Item name")
+                            input(type="number", name="attr_item_load", value="1", min="0", max="6")

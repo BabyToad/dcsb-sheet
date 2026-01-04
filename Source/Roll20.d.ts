@@ -29,3 +29,19 @@ declare function getTranslationLanguage(): string
 declare function setDefaultToken(values: {[key: string]: string}): void
 
 declare function on(event: string, callback: (eventInfo: EventInfo) => void): void
+
+// Roll20 Custom Roll Parsing API
+declare interface RollResults {
+    rollId: string;
+    results: {
+        [key: string]: {
+            result: number;
+            dice: number[];
+            expression: string;
+        }
+    }
+}
+
+declare function startRoll(rollString: string, callback: (results: RollResults) => void): void
+
+declare function finishRoll(rollId: string, computedValues?: {[key: string]: string | number}): void
