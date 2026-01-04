@@ -105,3 +105,17 @@ on("change:repeating_cybernetics remove:repeating_cybernetics", calculateCyberCa
 // =============================================================================
 
 on("change:score_heat_1 change:score_heat_2 change:score_heat_3 change:score_heat_4 change:score_heat_5 change:score_heat_6", calculateHeatDice);
+
+// =============================================================================
+// PLAYBOOK SELECTION
+// =============================================================================
+
+on("change:playbook", eventInfo => {
+    const newPlaybook = eventInfo.newValue as string;
+    handlePlaybookChange(newPlaybook);
+});
+
+// Reset to Playbook Defaults button
+on("clicked:reset_to_playbook", () => {
+    resetToPlaybookDefaults();
+});

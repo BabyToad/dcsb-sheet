@@ -17,7 +17,24 @@
                 .section-stamp SUBJECT IDENTIFICATION
                 .section-number 01
 
-            .identity-grid
+            //- Display mode - compact read-only view
+            .display.identity-display
+                .identity-name-line
+                    span.char-name(name="attr_character_name")
+                    span.alias-wrapper
+                        span.quote "
+                        span.alias-value(name="attr_alias")
+                        span.quote "
+                .identity-look(name="attr_look")
+                .identity-classification
+                    span.playbook-value(name="attr_playbook")
+                    span.sep |
+                    span.heritage-value(name="attr_heritage")
+                    span.sep |
+                    span.background-value(name="attr_background")
+
+            //- Edit mode - full form
+            .edit.identity-grid
                 .identity-row.primary
                     +text-input("character_name", "LEGAL_NAME")
                     +text-input("alias", "ALIAS")
@@ -61,6 +78,10 @@
                                 option(value="underworld", data-i18n="UNDERWORLD") Underworld
                                 option(value="fringe", data-i18n="FRINGE") Fringe
 
+                .identity-row.reset-row
+                    button.reset-btn(type="action", name="act_reset_to_playbook") Reset to Playbook Defaults
+                    span.reset-hint Clears items, abilities, and actions
+
         //- ───────────────────────────────────────────────────────────
         //- SECTION 3: CONDITION REPORT
         //- Framing: Medical chart / trauma assessment
@@ -86,47 +107,51 @@
                         - for (var i = 1; i <= 4; i++)
                             input(type="checkbox", name=`attr_trauma_${i}`, value="1", id=`trauma_${i}`)
                             label.trauma-box(for=`trauma_${i}`)
-                    +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
+                    //- Trauma conditions: display/edit modes
+                    span.display.trauma-conditions-display(name="attr_trauma_conditions")
+                    .edit
+                        +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
 
-                //- Physical Harm
-                .harm-block.physical
+                //- Harm Track
+                .harm-block
                     .harm-header
-                        .track-label(data-i18n="PHYSICAL_HARM") PHYSICAL HARM
-                        .healing-clock
+                        .track-label(data-i18n="HARM") HARM
+                        .healing-clock-wrapper
                             span.clock-label(data-i18n="HEALING") Healing
-                            +clock("healing", 4)
+                            .clock-circle(data-segments="4")
+                                - for (var i = 1; i <= 4; i++)
+                                    input(type="checkbox", name=`attr_healing_${i}`, value="1", id=`healing_seg_${i}`)
+                                    label.clock-wedge(for=`healing_seg_${i}`, data-segment=i)
 
-                    .harm-track
+                    //- Display mode - harm as text
+                    .display.harm-display
                         .harm-level.severe
                             span.level-num 3
-                            +text-input("harm_phys_3", "HARM_SEVERE")
+                            span.harm-value(name="attr_harm_3")
                         .harm-level.moderate
                             span.level-num 2
-                            +text-input("harm_phys_2a", "")
-                            +text-input("harm_phys_2b", "")
+                            span.harm-value(name="attr_harm_2a")
+                            span.harm-sep /
+                            span.harm-value(name="attr_harm_2b")
                         .harm-level.lesser
                             span.level-num 1
-                            +text-input("harm_phys_1a", "")
-                            +text-input("harm_phys_1b", "")
+                            span.harm-value(name="attr_harm_1a")
+                            span.harm-sep /
+                            span.harm-value(name="attr_harm_1b")
 
-                //- Mental Harm (DC,SB specific - cleared via Vice)
-                .harm-block.mental
-                    .harm-header
-                        .track-label(data-i18n="MENTAL_HARM") MENTAL HARM
-                        .harm-note(data-i18n="CLEARED_VIA_VICE") (cleared via Vice)
-
-                    .harm-track
+                    //- Edit mode - harm as inputs
+                    .edit.harm-edit
                         .harm-level.severe
                             span.level-num 3
-                            +text-input("harm_ment_3", "HARM_SEVERE")
+                            +text-input("harm_3", "HARM_SEVERE")
                         .harm-level.moderate
                             span.level-num 2
-                            +text-input("harm_ment_2a", "")
-                            +text-input("harm_ment_2b", "")
+                            +text-input("harm_2a", "")
+                            +text-input("harm_2b", "")
                         .harm-level.lesser
                             span.level-num 1
-                            +text-input("harm_ment_1a", "")
-                            +text-input("harm_ment_1b", "")
+                            +text-input("harm_1a", "")
+                            +text-input("harm_1b", "")
 
                 //- Armor
                 .armor-block
@@ -162,18 +187,30 @@
 
             +repeating("cybernetics")
                 .cyber-entry
-                    .cyber-tier
-                        select(name="attr_cyber_tier")
-                            option(value="2") T2
-                            option(value="3") T3
-                            option(value="4") T4
-                            option(value="5") T5
-                    input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
-                    .cyber-slots
-                        - for (var i = 1; i <= 3; i++)
-                            input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
-                            label.slot-box(for=`cyber_slot_${i}`)
-                    textarea(name="attr_cyber_desc", placeholder="Description & effects").cyber-desc
+                    //- Display mode - compact row with slots visible
+                    .display.cyber-display
+                        .cyber-slots
+                            - for (var i = 1; i <= 3; i++)
+                                input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
+                                label.slot-box(for=`cyber_slot_${i}`)
+                        span.cyber-tier-display T
+                        span.cyber-tier-value(name="attr_cyber_tier")
+                        span.cyber-name-display(name="attr_cyber_name")
+
+                    //- Edit mode - full form
+                    .edit.cyber-edit
+                        .cyber-tier
+                            select(name="attr_cyber_tier")
+                                option(value="2") T2
+                                option(value="3") T3
+                                option(value="4") T4
+                                option(value="5") T5
+                        input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
+                        .cyber-slots
+                            - for (var i = 1; i <= 3; i++)
+                                input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
+                                label.slot-box(for=`cyber_slot_${i}`)
+                        textarea(name="attr_cyber_desc", placeholder="Description & effects").cyber-desc
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 6: SPECIAL ABILITIES
@@ -186,9 +223,16 @@
 
             +repeating("abilities")
                 .ability-entry
+                    //- Checkbox always visible (interactive during play)
                     input(type="checkbox", name="attr_ability_taken", value="1").ability-check
-                    input(type="text", name="attr_ability_name", placeholder="Ability name").ability-name
-                    textarea(name="attr_ability_desc", placeholder="Description").ability-desc
+
+                    //- Display mode - just the name
+                    span.display.ability-name-display(name="attr_ability_name")
+
+                    //- Edit mode - name input and description
+                    .edit.ability-edit
+                        input(type="text", name="attr_ability_name", placeholder="Ability name").ability-name
+                        textarea(name="attr_ability_desc", placeholder="Description").ability-desc
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 7: VICE
@@ -200,7 +244,15 @@
                 .section-number 07
 
             .vice-block
-                .vice-fields
+                //- Display mode - compact vice summary
+                .display.vice-display
+                    span.vice-type-display(name="attr_vice_type")
+                    span.vice-sep :
+                    span.vice-purveyor-display(name="attr_vice_purveyor")
+                    span.vice-details-display(name="attr_vice_details")
+
+                //- Edit mode - full form
+                .edit.vice-fields
                     .select-field
                         select(name="attr_vice_type")
                             option(value="") --
@@ -227,6 +279,7 @@
 
             +repeating("contacts")
                 .contact-entry
+                    //- Status radios always visible (small, useful in play)
                     .contact-status
                         input(type="radio", name="attr_contact_relation", value="friend", id="contact_friend")
                         label(for="contact_friend").status-friend ✓
@@ -234,8 +287,14 @@
                         label(for="contact_neutral").status-neutral ○
                         input(type="radio", name="attr_contact_relation", value="rival", id="contact_rival")
                         label(for="contact_rival").status-rival ✗
-                    input(type="text", name="attr_contact_name", placeholder="Name").contact-name
-                    input(type="text", name="attr_contact_desc", placeholder="Description / usefulness").contact-desc
+
+                    //- Display mode - just the name
+                    span.display.contact-name-display(name="attr_contact_name")
+
+                    //- Edit mode - name and description inputs
+                    .edit.contact-edit
+                        input(type="text", name="attr_contact_name", placeholder="Name").contact-name
+                        input(type="text", name="attr_contact_desc", placeholder="Description / usefulness").contact-desc
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 9: NOTES
@@ -246,7 +305,11 @@
                 .section-stamp NOTES
                 .section-number 09
 
-            textarea(name="attr_notes", placeholder="Personal notes, background details, mission logs...").notes-area
+            //- Display mode - read-only text
+            span.display.notes-display(name="attr_notes")
+
+            //- Edit mode - textarea
+            textarea.edit.notes-area(name="attr_notes", placeholder="Personal notes, background details, mission logs...")
 
     //- ═══════════════════════════════════════════════════════════════
     //- RIGHT COLUMN
@@ -267,7 +330,8 @@
             .playbook-xp-block
                 .xp-label-row
                     span.xp-label(data-i18n="PLAYBOOK_XP") Playbook XP
-                    span.xp-trigger(name="attr_xp_trigger")
+                .xp-trigger-row
+                    input.xp-trigger(type="text", name="attr_xp_trigger", readonly, placeholder="Select a playbook...")
                 +xp-track("playbook", 8)
 
             //- ACUITY Attribute Block
@@ -359,6 +423,17 @@
                     h4(data-i18n="PLAYBOOK_ITEMS") Playbook Items
                     +repeating("items")
                         .item-entry
-                            input(type="checkbox", name="attr_item_carried", value="1")
-                            input(type="text", name="attr_item_name", placeholder="Item name")
-                            input(type="number", name="attr_item_load", value="1", min="0", max="6")
+                            //- Checkbox always visible (toggled during play)
+                            input(type="checkbox", name="attr_item_carried", value="1").item-carried
+
+                            //- Display mode - name and load as text
+                            .display.item-display
+                                span.item-name-display(name="attr_item_name")
+                                span.item-load-display (
+                                span.item-load-value(name="attr_item_load")
+                                span.item-load-display )
+
+                            //- Edit mode - editable inputs
+                            .edit.item-edit
+                                input(type="text", name="attr_item_name", placeholder="Item name")
+                                input(type="number", name="attr_item_load", value="1", min="0", max="6")

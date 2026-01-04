@@ -18,8 +18,7 @@
         label.tab-button(for="tab_crew")
             span.tab-text(data-i18n="CREW") CREW
 
-    //- Settings toggle (edit mode)
+    //- Settings toggle (edit mode) - checkbox is at root level, label points to it
     .header-controls
-        label.edit-toggle
-            input(type="checkbox", name="attr_edit_mode", value="1", checked)
+        label.edit-toggle(for="edit_mode_toggle")
             span.toggle-label(data-i18n="EDIT_MODE") Edit

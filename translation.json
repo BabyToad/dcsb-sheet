@@ -52,9 +52,6 @@
     "TRAUMA": "Trauma",
     "TRAUMA_CONDITIONS": "Conditions",
 
-    "PHYSICAL_HARM": "Physical Harm",
-    "MENTAL_HARM": "Mental Harm",
-    "CLEARED_VIA_VICE": "(cleared via Vice)",
     "HARM_SEVERE": "Severe (Need Help)",
     "HEALING": "Healing",
     "ARMOR": "Armor",

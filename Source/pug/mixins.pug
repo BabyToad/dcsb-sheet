@@ -162,3 +162,33 @@ mixin upgrade-checkbox(name, label, cost)
         span.upgrade-name(data-i18n=label)= label
         if cost && cost > 1
             span.upgrade-cost= `(${cost})`
+
+//- ═══════════════════════════════════════════════════════════════
+//- EDIT/DISPLAY MODE COMPONENTS
+//- These output both edit and display versions of fields
+//- CSS toggles visibility based on .edit-mode-checkbox state
+//- ═══════════════════════════════════════════════════════════════
+
+//- Text field with edit/display modes
+//- Display: span showing value
+//- Edit: text input with label
+mixin text-field(name, label)
+    .field-group&attributes(attributes)
+        //- Display mode - read-only span
+        span.display.field-value(name=`attr_${name}`)
+        //- Edit mode - editable input
+        .edit
+            label.text-input
+                input(type="text", name=`attr_${name}`)
+                if label
+                    .label(data-i18n=label)
+
+//- Textarea with edit/display modes
+//- Display: span showing value
+//- Edit: textarea
+mixin textarea-field(name, placeholder)
+    .field-group&attributes(attributes)
+        //- Display mode - read-only span (shows text content)
+        span.display.field-value(name=`attr_${name}`)
+        //- Edit mode - editable textarea
+        textarea.edit(name=`attr_${name}`, placeholder=placeholder)

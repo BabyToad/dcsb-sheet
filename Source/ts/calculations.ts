@@ -1,3 +1,5 @@
+/// <reference path="playbookData.ts" />
+/// <reference path="constants.ts" />
 // Dark City, Shining Babel - Sheet Worker Calculations
 // Auto-calculation functions for derived values
 
@@ -31,6 +33,178 @@ const mySetAttrs = (
     } else if (callback) {
         callback();
     }
+};
+
+// =============================================================================
+// PLAYBOOK POPULATION FUNCTIONS
+// =============================================================================
+
+/**
+ * Set starting action dots for a playbook (only if currently 0)
+ */
+const setStartingActions = (actions: { [action: string]: number }) => {
+    const actionNames = Object.keys(actions);
+    getAttrs(actionNames, v => {
+        const updates: { [key: string]: number } = {};
+        for (const [action, dots] of Object.entries(actions)) {
+            // Only set if action is currently 0 or undefined
+            if (!v[action] || parseInt(v[action]) === 0) {
+                updates[action] = dots;
+            }
+        }
+        if (Object.keys(updates).length > 0) {
+            setAttrs(updates);
+        }
+    });
+};
+
+/**
+ * Clear auto-generated rows and populate new ones
+ * Uses "autogen" flag to distinguish from user-created rows
+ */
+const clearAndPopulateRepeatingSection = <T>(
+    section: string,
+    items: T[],
+    formatter: (item: T, rowId: string) => { [key: string]: AttributeContent }
+) => {
+    getSectionIDs(`repeating_${section}`, ids => {
+        // Get all autogen flags
+        const autogenAttrs = ids.map(id => `repeating_${section}_${id}_autogen`);
+        getAttrs(autogenAttrs, v => {
+            // Remove only auto-generated rows
+            ids.forEach(id => {
+                if (v[`repeating_${section}_${id}_autogen`] === "1") {
+                    removeRepeatingRow(`repeating_${section}_${id}`);
+                }
+            });
+
+            // Add new items with autogen flag
+            items.forEach(item => {
+                const rowId = generateRowID();
+                const attrs = formatter(item, rowId);
+                attrs[`repeating_${section}_${rowId}_autogen`] = "1";
+                setAttrs(attrs);
+            });
+        });
+    });
+};
+
+/**
+ * Format a playbook item for the repeating_items section
+ */
+const formatPlaybookItem = (
+    item: { name: string; load: number; special?: boolean },
+    rowId: string
+): { [key: string]: AttributeContent } => {
+    const name = item.special ? `*${item.name}*` : item.name;
+    return {
+        [`repeating_items_${rowId}_item_name`]: name,
+        [`repeating_items_${rowId}_item_load`]: item.load,
+        [`repeating_items_${rowId}_item_carried`]: "0"
+    };
+};
+
+/**
+ * Format a cybernetic ability for the repeating_abilities section
+ */
+const formatCybernetic = (
+    cyber: { tier: number; name: string; description: string },
+    rowId: string
+): { [key: string]: AttributeContent } => {
+    return {
+        [`repeating_abilities_${rowId}_ability_name`]: `[T${cyber.tier}] ${cyber.name}`,
+        [`repeating_abilities_${rowId}_ability_desc`]: cyber.description,
+        [`repeating_abilities_${rowId}_ability_taken`]: "0"
+    };
+};
+
+/**
+ * Handle playbook change - populate XP trigger, items, abilities (NOT actions)
+ * Actions are only set via explicit reset to preserve advanced characters
+ */
+const handlePlaybookChange = (newPlaybook: string) => {
+    if (!newPlaybook || !PLAYBOOK_DATA[newPlaybook]) return;
+
+    const data = PLAYBOOK_DATA[newPlaybook];
+
+    // 1. Set XP trigger
+    setAttrs({ xp_trigger: data.xpTrigger });
+
+    // 2. Clear old autogen items, populate new ones
+    clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
+
+    // 3. Clear old autogen abilities, populate new ones
+    clearAndPopulateRepeatingSection("abilities", data.cybernetics, formatCybernetic);
+
+    // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
+};
+
+/**
+ * Reset character to playbook defaults - clears everything and sets starting actions
+ * Used for new characters or when explicitly resetting
+ */
+const resetToPlaybookDefaults = () => {
+    getAttrs(['playbook', 'character_name'], v => {
+        const playbook = v.playbook;
+        const charName = v.character_name || 'Character';
+
+        if (!playbook || !PLAYBOOK_DATA[playbook]) {
+            // No playbook selected - notify via chat
+            startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Select a playbook first before resetting.}}`,
+                results => finishRoll(results.rollId, {}));
+            return;
+        }
+
+        const data = PLAYBOOK_DATA[playbook];
+
+        // 1. Reset all 12 actions to 0
+        const actionReset: { [key: string]: number } = {};
+        ACTIONS.forEach(action => {
+            actionReset[action] = 0;
+        });
+        setAttrs(actionReset);
+
+        // 2. Set starting actions for this playbook
+        setAttrs(data.actions);
+
+        // 3. Set XP trigger
+        setAttrs({ xp_trigger: data.xpTrigger });
+
+        // 4. Clear ALL items (autogen and user-created) and repopulate
+        clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
+
+        // 5. Clear ALL abilities (autogen and user-created) and repopulate
+        clearAllAndPopulateRepeatingSection("abilities", data.cybernetics, formatCybernetic);
+
+        // 6. Notify success via chat
+        startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`,
+            results => finishRoll(results.rollId, {}));
+    });
+};
+
+/**
+ * Clear ALL rows in a repeating section (not just autogen) and populate new ones
+ * Used for full reset
+ */
+const clearAllAndPopulateRepeatingSection = <T>(
+    section: string,
+    items: T[],
+    formatter: (item: T, rowId: string) => { [key: string]: AttributeContent }
+) => {
+    getSectionIDs(`repeating_${section}`, ids => {
+        // Remove ALL rows
+        ids.forEach(id => {
+            removeRepeatingRow(`repeating_${section}_${id}`);
+        });
+
+        // Add new items with autogen flag
+        items.forEach(item => {
+            const rowId = generateRowID();
+            const attrs = formatter(item, rowId);
+            attrs[`repeating_${section}_${rowId}_autogen`] = "1";
+            setAttrs(attrs);
+        });
+    });
 };
 
 // =============================================================================

@@ -302,8 +302,15 @@ $spacing-xl: 24px;
             gap: $spacing-xs;
             cursor: pointer;
             color: $zine-grey;
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid $zine-grey;
+            border-radius: 2px;
+            transition: all 0.15s;
 
-            input { margin: 0; }
+            &:hover {
+                border-color: $zine-ink;
+                color: $zine-ink;
+            }
         }
     }
 
@@ -614,10 +621,30 @@ $spacing-xl: 24px;
                 text-transform: uppercase;
             }
 
+            .xp-trigger-row {
+                margin-top: 2px;
+            }
+
             .xp-trigger {
+                width: 100%;
                 font-size: 9px;
                 font-style: italic;
                 color: $zine-grey;
+                background: transparent;
+                border: none;
+                border-bottom: 1px dashed $zine-grey;
+                padding: 2px 0;
+                font-family: $font-typewriter;
+
+                &::placeholder {
+                    color: lighten($zine-grey, 20%);
+                    font-style: italic;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-bottom-color: $zine-accent;
+                }
             }
         }
     }
@@ -763,7 +790,7 @@ $spacing-xl: 24px;
         }
     }
 
-    .healing-clock {
+    .healing-clock-wrapper {
         display: flex;
         align-items: center;
         gap: $spacing-sm;
@@ -771,6 +798,81 @@ $spacing-xl: 24px;
         .clock-label {
             font-size: 9px;
             text-transform: uppercase;
+        }
+    }
+
+    // Circular clock (4 quadrants)
+    .clock-circle {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid $zine-ink;
+        background: transparent;
+        overflow: hidden;
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .clock-wedge {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            cursor: pointer;
+            background: transparent;
+            transition: background 0.1s;
+            box-sizing: border-box;
+
+            // Position each quadrant
+            &[data-segment="1"] {
+                top: 0;
+                right: 0;
+            }
+            &[data-segment="2"] {
+                bottom: 0;
+                right: 0;
+            }
+            &[data-segment="3"] {
+                bottom: 0;
+                left: 0;
+            }
+            &[data-segment="4"] {
+                top: 0;
+                left: 0;
+            }
+
+            &:hover {
+                background: rgba($zine-ink, 0.3);
+            }
+        }
+
+        input[type="checkbox"]:checked + .clock-wedge {
+            background: $zine-ink;
+        }
+
+        // Cross-hairs for visual division
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            background: $zine-ink;
+            z-index: 1;
+            pointer-events: none;
+        }
+        &::before {
+            width: 100%;
+            height: 1px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+        &::after {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
         }
     }
 
@@ -1509,7 +1611,41 @@ $spacing-xl: 24px;
                 grid-template-columns: repeat(3, 1fr);
                 gap: $spacing-md;
             }
+
+            &.reset-row {
+                display: flex;
+                align-items: center;
+                gap: $spacing-md;
+                margin-top: $spacing-md;
+                padding-top: $spacing-sm;
+                border-top: 1px dashed $zine-grey;
+            }
         }
+    }
+
+    .reset-btn {
+        padding: $spacing-xs $spacing-md;
+        font-family: $font-typewriter;
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: transparent;
+        border: 1px solid $status-warning;
+        color: $status-warning;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        &:hover {
+            background: $status-warning;
+            color: $zine-paper;
+        }
+    }
+
+    .reset-hint {
+        font-size: 9px;
+        font-style: italic;
+        color: $zine-grey;
     }
 
     // ==========================================================================
@@ -1570,6 +1706,288 @@ $spacing-xl: 24px;
         right: 0;
         height: 3px;
         background: #ff1493;
+    }
+}
+
+// =============================================================================
+// EDIT MODE (must be outside .charsheet - checkbox is sibling)
+// =============================================================================
+
+// Hide the root-level checkbox
+.edit-mode-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+// -----------------------------------------------------------------------------
+// Display Mode (default - edit checkbox unchecked)
+// -----------------------------------------------------------------------------
+
+// Hide edit-only elements and repeating section controls
+.charsheet .edit,
+.charsheet .repcontrol,
+.charsheet .itemcontrol {
+    display: none;
+}
+
+// -----------------------------------------------------------------------------
+// Edit Mode (checkbox checked)
+// -----------------------------------------------------------------------------
+
+// Show edit elements, hide display elements
+.edit-mode-checkbox:checked ~ .charsheet .edit {
+    display: block;
+}
+
+.edit-mode-checkbox:checked ~ .charsheet .display {
+    display: none;
+}
+
+// Show repeating section add/modify/delete buttons
+.edit-mode-checkbox:checked ~ .charsheet .repcontrol,
+.edit-mode-checkbox:checked ~ .charsheet .itemcontrol {
+    display: block;
+}
+
+// Visual feedback - accent border when in edit mode
+.edit-mode-checkbox:checked ~ .charsheet {
+    outline: 2px solid $zine-accent;
+    outline-offset: -2px;
+}
+
+// Style the edit toggle label to show checked state
+.edit-mode-checkbox:checked ~ .charsheet .edit-toggle {
+    background: $zine-ink;
+    color: $zine-paper;
+}
+
+// =============================================================================
+// DISPLAY MODE STYLING
+// =============================================================================
+
+.charsheet {
+    // -----------------------------------------------------------------------------
+    // Identity Section Display
+    // -----------------------------------------------------------------------------
+    .identity-display {
+        padding: 0.5rem 0;
+
+        .identity-name-line {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .char-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .alias-wrapper {
+            font-style: italic;
+            color: $zine-grey;
+        }
+
+        .quote {
+            color: $zine-grey;
+        }
+
+        .identity-look {
+            font-size: 0.9em;
+            margin: 0.25rem 0;
+            font-style: italic;
+        }
+
+        .identity-classification {
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: $zine-grey;
+
+            .sep {
+                margin: 0 0.5em;
+            }
+
+            .playbook-value {
+                color: $zine-accent;
+                font-weight: bold;
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Cybernetics Section Display
+    // -----------------------------------------------------------------------------
+    .cyber-display {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+        border-bottom: 1px dashed rgba($zine-grey, 0.3);
+
+        .cyber-slots {
+            display: flex;
+            gap: 2px;
+        }
+
+        .cyber-tier-display {
+            color: $zine-accent;
+            font-weight: bold;
+        }
+
+        .cyber-tier-value {
+            color: $zine-accent;
+            font-weight: bold;
+        }
+
+        .cyber-name-display {
+            font-weight: bold;
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Abilities Section Display
+    // -----------------------------------------------------------------------------
+    .ability-entry {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+    }
+
+    .ability-name-display {
+        font-weight: bold;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Contacts Section Display
+    // -----------------------------------------------------------------------------
+    .contact-entry {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+    }
+
+    .contact-name-display {
+        font-weight: bold;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Items Section Display
+    // -----------------------------------------------------------------------------
+    .item-display {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.25rem;
+
+        .item-name-display {
+            font-weight: bold;
+        }
+
+        .item-load-display,
+        .item-load-value {
+            font-size: 0.8em;
+            color: $zine-grey;
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Harm Section Display
+    // -----------------------------------------------------------------------------
+    .harm-display {
+        .harm-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed rgba($zine-grey, 0.3);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .level-num {
+            font-weight: bold;
+            width: 1.5em;
+            text-align: center;
+        }
+
+        .harm-value {
+            font-style: italic;
+
+            &:empty::before {
+                content: '-';
+                color: $zine-grey;
+            }
+        }
+
+        .harm-sep {
+            color: $zine-grey;
+            margin: 0 0.25rem;
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Vice Section Display
+    // -----------------------------------------------------------------------------
+    .vice-display {
+        padding: 0.25rem 0;
+
+        .vice-type-display {
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .vice-sep {
+            margin-right: 0.5rem;
+        }
+
+        .vice-purveyor-display {
+            font-style: italic;
+        }
+
+        .vice-details-display {
+            color: $zine-grey;
+            margin-left: 0.5rem;
+
+            &::before {
+                content: '- ';
+            }
+
+            &:empty::before {
+                content: '';
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Trauma Conditions Display
+    // -----------------------------------------------------------------------------
+    .trauma-conditions-display {
+        display: block;
+        font-style: italic;
+        color: $zine-grey;
+        margin-top: 0.25rem;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Notes Section Display
+    // -----------------------------------------------------------------------------
+    .notes-display {
+        display: block;
+        white-space: pre-wrap;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.9em;
+        line-height: 1.4;
+        padding: 0.5rem;
+        min-height: 3rem;
+        background: rgba($zine-grey, 0.05);
+        border: 1px dashed rgba($zine-grey, 0.3);
     }
 }
 
