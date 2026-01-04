@@ -1,0 +1,419 @@
+// Dark City, Shining Babel - Character Sheet Styles
+// Visual Design: Underground Zine aesthetic
+// - Photocopied, hand-annotated, punk
+// - High contrast B&W base + spot color
+// - Typewriter/hand-drawn typography feel
+
+// =============================================================================
+// VARIABLES
+// =============================================================================
+
+// Color Palette - Underground Zine
+$zine-paper: #f5f5f0;           // Aged photocopy paper
+$zine-ink: #1a1a1a;             // High contrast black
+$zine-grey: #666666;            // Photocopier grey
+$zine-light-grey: #cccccc;      // Faded areas
+
+// Spot colors (pick one accent - TBD in Phase 2)
+$zine-accent: #ff1493;          // Neon pink (placeholder)
+// $zine-accent: #00bfff;       // Electric blue alternative
+// $zine-accent: #ffcc00;       // Warning yellow alternative
+
+// Status colors
+$status-good: #2d5a27;          // Dark green (hand-drawn)
+$status-warning: #cc7700;       // Orange (highlighted)
+$status-danger: #8b0000;        // Dark red (circled)
+
+// Typography
+$font-typewriter: 'Courier New', Courier, monospace;
+$font-header: 'Impact', 'Arial Black', sans-serif;
+$font-body: 'Arial', sans-serif;
+
+// Spacing
+$spacing-xs: 2px;
+$spacing-sm: 4px;
+$spacing-md: 8px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+
+// =============================================================================
+// BASE STYLES
+// =============================================================================
+
+.charsheet {
+    font-family: $font-typewriter;
+    font-size: 12px;
+    color: $zine-ink;
+    background: $zine-paper;
+    padding: $spacing-lg;
+
+    // Subtle paper texture (via noise)
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+
+    // ==========================================================================
+    // INPUTS
+    // ==========================================================================
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        font-family: $font-typewriter;
+        font-size: 12px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid $zine-grey;
+        padding: $spacing-xs $spacing-sm;
+
+        &:focus {
+            outline: none;
+            border-bottom-color: $zine-ink;
+        }
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border: 2px solid $zine-ink;
+        cursor: pointer;
+
+        &:checked {
+            background: $zine-ink;
+        }
+    }
+
+    input[type="radio"] {
+        border-radius: 50%;
+    }
+
+    // ==========================================================================
+    // TYPOGRAPHY
+    // ==========================================================================
+
+    h1 {
+        font-family: $font-header;
+        font-size: 24px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0;
+    }
+
+    h2 {
+        font-family: $font-header;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid $zine-ink;
+        margin: $spacing-md 0;
+        padding-bottom: $spacing-xs;
+    }
+
+    h3 {
+        font-family: $font-typewriter;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: $spacing-sm 0;
+    }
+
+    // ==========================================================================
+    // HEADER
+    // ==========================================================================
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px solid $zine-ink;
+        padding-bottom: $spacing-md;
+        margin-bottom: $spacing-lg;
+
+        .title {
+            .subtitle {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: $zine-grey;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            gap: $spacing-sm;
+        }
+    }
+
+    .tab-button {
+        font-family: $font-typewriter;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: $zine-paper;
+        border: 2px solid $zine-ink;
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+
+        &:hover {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+
+    // ==========================================================================
+    // SECTIONS
+    // ==========================================================================
+
+    .section {
+        margin-bottom: $spacing-lg;
+        padding: $spacing-md;
+        border: 1px solid $zine-grey;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        cursor: pointer;
+
+        input[type="checkbox"] {
+            display: none;
+        }
+    }
+
+    // ==========================================================================
+    // ACTION RATINGS
+    // ==========================================================================
+
+    .action-rating {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        margin: $spacing-xs 0;
+
+        .action-name {
+            width: 100px;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid $zine-ink;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        input[type="radio"] {
+            display: none;
+
+            &:checked ~ .dot {
+                background: $zine-ink;
+            }
+        }
+    }
+
+    .attribute-group {
+        margin-bottom: $spacing-md;
+        padding: $spacing-sm;
+        border-left: 3px solid $zine-ink;
+    }
+
+    // ==========================================================================
+    // TRACKERS (Stress, Trauma, etc.)
+    // ==========================================================================
+
+    .stress-track,
+    .trauma-track,
+    .rep-track,
+    .heat-track,
+    .wanted-track {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        margin: $spacing-sm 0;
+
+        span:first-child {
+            width: 80px;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .stress-box,
+        .trauma-box,
+        .rep-box,
+        .heat-box,
+        .wanted-box {
+            width: 16px;
+            height: 16px;
+            border: 2px solid $zine-ink;
+            display: inline-block;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            &:checked + span {
+                background: $zine-ink;
+            }
+        }
+    }
+
+    .trauma-track .trauma-box {
+        // Trauma boxes are X'd out, not filled
+        position: relative;
+    }
+
+    // ==========================================================================
+    // HARM TRACK
+    // ==========================================================================
+
+    .harm-track {
+        .harm-level {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            margin: $spacing-xs 0;
+
+            > span:first-child {
+                width: 20px;
+                font-weight: bold;
+            }
+
+            .text-input {
+                flex: 1;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // CLOCKS
+    // ==========================================================================
+
+    .clock {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-xs;
+
+        .clock-label {
+            margin-right: $spacing-sm;
+        }
+
+        .segment {
+            width: 20px;
+            height: 20px;
+            border: 2px solid $zine-ink;
+            display: inline-block;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            &:checked + .segment {
+                background: $zine-ink;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // TAB VISIBILITY
+    // ==========================================================================
+
+    .tab-input:not([value="character"]) ~ .character {
+        display: none;
+    }
+
+    .tab-input:not([value="crew"]) ~ .crew {
+        display: none;
+    }
+
+    // ==========================================================================
+    // GRIDS
+    // ==========================================================================
+
+    .identity-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
+    }
+
+    .select-row {
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-xs;
+
+            span {
+                font-size: 10px;
+                text-transform: uppercase;
+                color: $zine-grey;
+            }
+        }
+    }
+
+    // ==========================================================================
+    // TEXT INPUTS WITH LABELS
+    // ==========================================================================
+
+    .text-input,
+    .number-input {
+        display: flex;
+        flex-direction: column;
+
+        .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: $zine-grey;
+        }
+    }
+
+} // End .charsheet
+
+// =============================================================================
+// ROLL TEMPLATES
+// =============================================================================
+
+.sheet-rolltemplate-dcsb-action,
+.sheet-rolltemplate-dcsb-fortune,
+.sheet-rolltemplate-dcsb-resistance {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f5f5f0;
+    border: 2px solid #1a1a1a;
+    padding: 8px;
+    margin: 4px 0;
+
+    .rolltemplate-container {
+        .rolltemplate-header {
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
+
+            .charname {
+                font-weight: bold;
+            }
+
+            .title {
+                text-transform: uppercase;
+                font-size: 11px;
+            }
+        }
+
+        .rolltemplate-body {
+            .roll-result {
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
+
+        .rolltemplate-footer {
+            border-top: 1px solid #666;
+            padding-top: 4px;
+            margin-top: 4px;
+            font-size: 10px;
+            color: #666;
+        }
+    }
+}

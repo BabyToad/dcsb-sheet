@@ -1,0 +1,41 @@
+//- Dark City, Shining Babel - Roll Templates
+
+//- Standard action roll template
+rolltemplate.sheet-rolltemplate-dcsb-action
+    .rolltemplate-container
+        .rolltemplate-header
+            span.charname {{charname}}
+            span.title {{title}}
+        .rolltemplate-body
+            .roll-result {{roll}}
+            if position
+                .position Position: {{position}}
+            if effect
+                .effect Effect: {{effect}}
+        if notes
+            .rolltemplate-footer
+                span.notes {{notes}}
+
+//- Fortune roll template
+rolltemplate.sheet-rolltemplate-dcsb-fortune
+    .rolltemplate-container
+        .rolltemplate-header
+            span.charname {{charname}}
+            span.title Fortune Roll
+        .rolltemplate-body
+            .roll-result {{roll}}
+        if notes
+            .rolltemplate-footer
+                span.notes {{notes}}
+
+//- Resistance roll template
+rolltemplate.sheet-rolltemplate-dcsb-resistance
+    .rolltemplate-container
+        .rolltemplate-header
+            span.charname {{charname}}
+            span.title Resistance
+        .rolltemplate-body
+            .roll-result {{roll}}
+            .attribute {{attribute}}
+        if stress
+            .stress Stress: {{stress}}

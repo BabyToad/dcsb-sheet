@@ -1,0 +1,50 @@
+//- Dark City, Shining Babel - Reusable Pug Mixins
+
+//- Text input with label
+mixin text-input(name, label, extraclass)
+    label(class=["text-input", extraclass])&attributes(attributes)
+        input(type="text", name=`attr_${name}`)
+        .label(data-i18n=label)
+            block
+
+//- Number input with label
+mixin number-input(name, label, extraclass)
+    label(class=["number-input", extraclass])&attributes(attributes)
+        input(type="number", name=`attr_${name}`)
+        .label(data-i18n=label)
+            block
+
+//- Checkbox input
+mixin checkbox(name, value, label)
+    label.checkbox&attributes(attributes)
+        input(type="checkbox", name=`attr_${name}`, value=value)
+        span(data-i18n=label)
+
+//- Action rating dots (0-4)
+mixin action-dots(name, label)
+    .action-rating
+        span.action-name(data-i18n=label)
+        - for (var i = 0; i <= 4; i++)
+            input(type="radio", name=`attr_${name}`, value=i, checked=(i === 0))
+            span.dot
+
+//- Clock segments (configurable size)
+mixin clock(name, segments, label)
+    .clock(data-segments=segments)
+        if label
+            span.clock-label(data-i18n=label)
+        - for (var i = 1; i <= segments; i++)
+            input(type="checkbox", name=`attr_${name}_${i}`, value="1")
+            span.segment
+
+//- Section header (collapsible)
+mixin sectionheader(name, label)
+    .section-header
+        input(type="checkbox", name=`attr_show_${name}`, value="1", checked)
+        h2(data-i18n=label)
+            block
+
+//- Repeating section wrapper
+mixin repeating(name)
+    fieldset(class=`repeating_${name}`)
+        block

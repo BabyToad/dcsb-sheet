@@ -1,0 +1,31 @@
+//- Dark City, Shining Babel - Main Template
+//- Roll20 Character Sheet for a Blades in the Dark hack
+
+include pug/mixins.pug
+
+//- Hidden state inputs (for CSS tab switching)
+input(type="hidden", name="attr_sheet_type", value="character").sheet-type-input
+input(type="hidden", name="attr_tab", value="character").tab-input
+input(type="hidden", name="attr_edit_mode", value="1").editmode
+
+//- Main container
+.charsheet
+    include pug/header.pug
+
+    //- Character tab content
+    .character.content
+        include pug/character.pug
+
+    //- Crew tab content
+    .crew.content
+        include pug/crew.pug
+
+    //- Roll templates
+    include pug/rolltemplate.pug
+
+//- Sheet workers
+script(type="text/worker")
+    | (function () {
+    |   "use strict";
+    include:uglify-es workers.js
+    | })();

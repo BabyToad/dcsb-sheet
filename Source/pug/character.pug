@@ -1,0 +1,113 @@
+//- Dark City, Shining Babel - Character Sheet Content
+
+//- Identity Section
+.section.identity
+    +sectionheader("identity", "IDENTITY")
+    .identity-grid
+        +text-input("character_name", "NAME")
+        +text-input("alias", "ALIAS")
+        +text-input("look", "LOOK")
+
+        .select-row
+            label
+                span(data-i18n="PLAYBOOK") Playbook
+                select(name="attr_playbook")
+                    option(value="") --
+                    option(value="face", data-i18n="FACE") Face
+                    option(value="fixer", data-i18n="FIXER") Fixer
+                    option(value="l337", data-i18n="L337") L337
+                    option(value="midnighter", data-i18n="MIDNIGHTER") MidNighter
+                    option(value="murk", data-i18n="MURK") Murk
+                    option(value="street_warrior", data-i18n="STREET_WARRIOR") Street Warrior
+
+        .select-row
+            label
+                span(data-i18n="HERITAGE") Heritage
+                select(name="attr_heritage")
+                    option(value="") --
+                    option(value="sub_cities", data-i18n="SUB_CITIES") Sub Cities
+                    option(value="the_well", data-i18n="THE_WELL") The Well
+                    option(value="the_jungle", data-i18n="THE_JUNGLE") The Jungle
+                    option(value="the_syndicate", data-i18n="THE_SYNDICATE") The Syndicate
+                    option(value="labor_colonies", data-i18n="LABOR_COLONIES") Labor Colonies
+
+        .select-row
+            label
+                span(data-i18n="BACKGROUND") Background
+                select(name="attr_background")
+                    option(value="") --
+                    option(value="entertainment", data-i18n="ENTERTAINMENT") Entertainment
+                    option(value="law", data-i18n="LAW") Law
+                    option(value="labor", data-i18n="LABOR") Labor
+                    option(value="corporate", data-i18n="CORPORATE") Corporate
+                    option(value="underworld", data-i18n="UNDERWORLD") Underworld
+                    option(value="fringe", data-i18n="FRINGE") Fringe
+
+//- Actions Section
+.section.actions
+    +sectionheader("actions", "ACTIONS")
+
+    .attribute-group
+        h3(data-i18n="ACUITY") ACUITY
+        +action-dots("hack", "HACK")
+        +action-dots("recon", "RECON")
+        +action-dots("scrutinize", "SCRUTINIZE")
+        +action-dots("tamper", "TAMPER")
+
+    .attribute-group
+        h3(data-i18n="GRIT") GRIT
+        +action-dots("brawl", "BRAWL")
+        +action-dots("hunt", "HUNT")
+        +action-dots("skulk", "SKULK")
+        +action-dots("vandalize", "VANDALIZE")
+
+    .attribute-group
+        h3(data-i18n="RESOLVE") RESOLVE
+        +action-dots("consort", "CONSORT")
+        +action-dots("dominate", "DOMINATE")
+        +action-dots("finesse", "FINESSE")
+        +action-dots("sway", "SWAY")
+
+//- Stress & Trauma Section
+.section.stress-trauma
+    +sectionheader("stress", "STRESS_TRAUMA")
+
+    .stress-track
+        span(data-i18n="STRESS") Stress
+        - for (var i = 1; i <= 9; i++)
+            input(type="checkbox", name=`attr_stress_${i}`, value="1")
+            span.stress-box
+
+    .trauma-track
+        span(data-i18n="TRAUMA") Trauma
+        - for (var i = 1; i <= 4; i++)
+            input(type="checkbox", name=`attr_trauma_${i}`, value="1")
+            span.trauma-box
+
+//- Harm Section
+.section.harm
+    +sectionheader("harm", "HARM")
+
+    .harm-track
+        .harm-level
+            span 3
+            +text-input("harm_3", "HARM_SEVERE")
+        .harm-level
+            span 2
+            +text-input("harm_2a", "HARM_MODERATE")
+            +text-input("harm_2b", "HARM_MODERATE")
+        .harm-level
+            span 1
+            +text-input("harm_1a", "HARM_LESSER")
+            +text-input("harm_1b", "HARM_LESSER")
+
+    .healing-clock
+        span(data-i18n="HEALING") Healing
+        +clock("healing", 4)
+
+//- TODO: Add more sections
+//- - Cybernetics
+//- - Equipment/Load
+//- - Vice
+//- - XP
+//- - Notes

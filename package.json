@@ -1,0 +1,27 @@
+{
+  "name": "dcsb-sheet",
+  "version": "0.1.0",
+  "description": "Roll20 character sheet for Dark City, Shining Babel (Blades in the Dark hack)",
+  "author": "allknivesnobagels",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BabyToad/dcsb-sheet.git"
+  },
+  "scripts": {
+    "dev": "npx tsc -p Source/tsconfig.json && npx run-p --race \"build:ts -- -w\" \"build:pug -- -w\" \"build:sass -- --watch\"",
+    "build": "npx tsc -p Source/tsconfig.json && npx run-p --race build:pug build:sass",
+    "build:ts": "npx tsc -p Source/tsconfig.json",
+    "build:pug": "npx pug -o . Source/dcsb.pug",
+    "build:sass": "npx sass --no-source-map --style expanded Source/dcsb.scss ./dcsb.css"
+  },
+  "devDependencies": {
+    "@types/underscore": "^1.10.24",
+    "jstransformer-uglify-es": "^0.2.1",
+    "npm-run-all": "^4.1.5",
+    "pug": "^3.0.3",
+    "pug-cli": "^1.0.0-alpha6",
+    "sass": "^1.32.8",
+    "typescript": "^4.1.5"
+  }
+}

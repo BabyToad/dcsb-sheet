@@ -1,0 +1,55 @@
+//- Dark City, Shining Babel - Crew Sheet Content
+
+//- Crew Identity
+.section.crew-identity
+    +sectionheader("crew_identity", "CREW_IDENTITY")
+
+    +text-input("crew_name", "CREW_NAME")
+
+    .select-row
+        label
+            span(data-i18n="CREW_TYPE") Crew Type
+            select(name="attr_crew_type")
+                option(value="") --
+                option(value="firebrands", data-i18n="FIREBRANDS") Firebrands
+                option(value="leeches", data-i18n="LEECHES") Leeches
+                option(value="runners", data-i18n="RUNNERS") Runners
+                option(value="zokus", data-i18n="ZOKUS") Zokus
+
+    +text-input("hunting_grounds", "HUNTING_GROUNDS")
+    +text-input("lair", "LAIR")
+    +text-input("reputation", "REPUTATION")
+
+//- Crew Stats
+.section.crew-stats
+    +sectionheader("crew_stats", "CREW_STATS")
+
+    .tier-rep
+        label
+            span(data-i18n="TIER") Tier
+            input(type="number", name="attr_crew_tier", value="0", min="0", max="4")
+
+        .rep-track
+            span(data-i18n="REP") Rep
+            - for (var i = 1; i <= 12; i++)
+                input(type="checkbox", name=`attr_rep_${i}`, value="1")
+                span.rep-box
+
+    .heat-wanted
+        .heat-track
+            span(data-i18n="HEAT") Heat
+            - for (var i = 1; i <= 9; i++)
+                input(type="checkbox", name=`attr_heat_${i}`, value="1")
+                span.heat-box
+
+        .wanted-track
+            span(data-i18n="WANTED") Wanted
+            - for (var i = 1; i <= 4; i++)
+                input(type="checkbox", name=`attr_wanted_${i}`, value="1")
+                span.wanted-box
+
+//- TODO: Add more sections
+//- - Crew Upgrades
+//- - Cohorts
+//- - Faction Status
+//- - Crew Abilities

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "none",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outFile": "./workers.js",
+    "lib": ["ES5", "ES2015.Promise"]
+  },
+  "include": ["./ts/**/*.ts", "./Roll20.d.ts"]
+}

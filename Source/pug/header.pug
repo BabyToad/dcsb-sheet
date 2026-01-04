@@ -1,0 +1,21 @@
+//- Dark City, Shining Babel - Header and Navigation
+
+.header
+    .title
+        h1 DARK CITY, SHINING BABEL
+        span.subtitle Runner Dossier
+
+    .tabs
+        button(type="action", name="act_tab_character").tab-button
+            span(data-i18n="CHARACTER") CHARACTER
+        button(type="action", name="act_tab_crew").tab-button
+            span(data-i18n="CREW") CREW
+
+.settings
+    //- Sheet type toggle (for switching between character/crew sheets)
+    .setting
+        label
+            span(data-i18n="SHEET_TYPE") Sheet Type
+            select(name="attr_sheet_type")
+                option(value="character", data-i18n="CHARACTER") Character
+                option(value="crew", data-i18n="CREW") Crew
