@@ -105,21 +105,21 @@ const formatPlaybookItem = (
 };
 
 /**
- * Format a cybernetic ability for the repeating_abilities section
+ * Format a cybernetic for the repeating_cybernetics section
  */
 const formatCybernetic = (
     cyber: { tier: number; name: string; description: string },
     rowId: string
 ): { [key: string]: AttributeContent } => {
     return {
-        [`repeating_abilities_${rowId}_ability_name`]: `[T${cyber.tier}] ${cyber.name}`,
-        [`repeating_abilities_${rowId}_ability_desc`]: cyber.description,
-        [`repeating_abilities_${rowId}_ability_taken`]: "0"
+        [`repeating_cybernetics_${rowId}_cyber_tier`]: cyber.tier.toString(),
+        [`repeating_cybernetics_${rowId}_cyber_name`]: cyber.name,
+        [`repeating_cybernetics_${rowId}_cyber_desc`]: cyber.description
     };
 };
 
 /**
- * Handle playbook change - populate XP trigger, items, abilities (NOT actions)
+ * Handle playbook change - populate XP trigger, items, cybernetics (NOT actions)
  * Actions are only set via explicit reset to preserve advanced characters
  */
 const handlePlaybookChange = (newPlaybook: string) => {
@@ -133,8 +133,8 @@ const handlePlaybookChange = (newPlaybook: string) => {
     // 2. Clear old autogen items, populate new ones
     clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
-    // 3. Clear old autogen abilities, populate new ones
-    clearAndPopulateRepeatingSection("abilities", data.cybernetics, formatCybernetic);
+    // 3. Clear old autogen cybernetics, populate new ones
+    clearAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
 
     // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
 };
@@ -173,8 +173,8 @@ const resetToPlaybookDefaults = () => {
         // 4. Clear ALL items (autogen and user-created) and repopulate
         clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
-        // 5. Clear ALL abilities (autogen and user-created) and repopulate
-        clearAllAndPopulateRepeatingSection("abilities", data.cybernetics, formatCybernetic);
+        // 5. Clear ALL cybernetics (autogen and user-created) and repopulate
+        clearAllAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
 
         // 6. Notify success via chat
         startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`,
@@ -277,29 +277,17 @@ const calculateLoad = () => {
 
 /**
  * Calculate cybernetics capacity used
- * Each filled slot costs (tier - 1) capacity
+ * Only counts installed (checked) cybernetics
  */
 const calculateCyberCapacity = () => {
     getSectionIDs('repeating_cybernetics', ids => {
-        const attrs = ids.flatMap(id => [
-            `repeating_cybernetics_${id}_cyber_tier`,
-            `repeating_cybernetics_${id}_cyber_slot_1`,
-            `repeating_cybernetics_${id}_cyber_slot_2`,
-            `repeating_cybernetics_${id}_cyber_slot_3`
-        ]);
+        const installedAttrs = ids.map(id => `repeating_cybernetics_${id}_cyber_installed`);
 
-        getAttrs([...attrs, 'cyber_used', 'cyber_max'], v => {
-            let totalUsed = 0;
-
-            ids.forEach(id => {
-                const tier = int(v[`repeating_cybernetics_${id}_cyber_tier`], 2);
-                const slots = [1, 2, 3].filter(n =>
-                    v[`repeating_cybernetics_${id}_cyber_slot_${n}`] === '1'
-                ).length;
-
-                // Each filled slot costs (tier - 1) capacity
-                totalUsed += slots * (tier - 1);
-            });
+        getAttrs([...installedAttrs, 'cyber_used', 'cyber_max'], v => {
+            // Count only installed cybernetics
+            const totalUsed = ids.filter(id =>
+                v[`repeating_cybernetics_${id}_cyber_installed`] === '1'
+            ).length;
 
             mySetAttrs({ cyber_used: totalUsed }, v);
         });

@@ -85,6 +85,7 @@
         //- ───────────────────────────────────────────────────────────
         //- SECTION 3: CONDITION REPORT
         //- Framing: Medical chart / trauma assessment
+        //- All elements always interactive (no edit/display split)
         //- ───────────────────────────────────────────────────────────
         .section.condition
             .section-header
@@ -107,12 +108,9 @@
                         - for (var i = 1; i <= 4; i++)
                             input(type="checkbox", name=`attr_trauma_${i}`, value="1", id=`trauma_${i}`)
                             label.trauma-box(for=`trauma_${i}`)
-                    //- Trauma conditions: display/edit modes
-                    span.display.trauma-conditions-display(name="attr_trauma_conditions")
-                    .edit
-                        +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
+                    +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
 
-                //- Harm Track
+                //- Harm Track (always editable - changes during play)
                 .harm-block
                     .harm-header
                         .track-label(data-i18n="HARM") HARM
@@ -123,27 +121,10 @@
                                     input(type="checkbox", name=`attr_healing_${i}`, value="1", id=`healing_seg_${i}`)
                                     label.clock-wedge(for=`healing_seg_${i}`, data-segment=i)
 
-                    //- Display mode - harm as text
-                    .display.harm-display
+                    .harm-track
                         .harm-level.severe
                             span.level-num 3
-                            span.harm-value(name="attr_harm_3")
-                        .harm-level.moderate
-                            span.level-num 2
-                            span.harm-value(name="attr_harm_2a")
-                            span.harm-sep /
-                            span.harm-value(name="attr_harm_2b")
-                        .harm-level.lesser
-                            span.level-num 1
-                            span.harm-value(name="attr_harm_1a")
-                            span.harm-sep /
-                            span.harm-value(name="attr_harm_1b")
-
-                    //- Edit mode - harm as inputs
-                    .edit.harm-edit
-                        .harm-level.severe
-                            span.level-num 3
-                            +text-input("harm_3", "HARM_SEVERE")
+                            +text-input("harm_3", "")
                         .harm-level.moderate
                             span.level-num 2
                             +text-input("harm_2a", "")
@@ -173,6 +154,8 @@
         //- ───────────────────────────────────────────────────────────
         //- SECTION 4: AUGMENTATION RECORD
         //- Framing: Tech spec sheet / warranty documentation
+        //- In DC,SB, Cybernetics replace Special Abilities from BitD
+        //- Description always visible (you need to know what your augs do)
         //- ───────────────────────────────────────────────────────────
         .section.cybernetics
             .section-header
@@ -184,64 +167,46 @@
                 input(type="number", name="attr_cyber_used", value="0", readonly).cyber-used
                 span /
                 input(type="number", name="attr_cyber_max", value="4").cyber-max
+                span.capacity-hint.edit (expand via Playbook XP)
 
             +repeating("cybernetics")
                 .cyber-entry
-                    //- Display mode - compact row with slots visible
-                    .display.cyber-display
-                        .cyber-slots
-                            - for (var i = 1; i <= 3; i++)
-                                input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
-                                label.slot-box(for=`cyber_slot_${i}`)
-                        span.cyber-tier-display T
-                        span.cyber-tier-value(name="attr_cyber_tier")
-                        span.cyber-name-display(name="attr_cyber_name")
+                    //- Installed checkbox - standard Roll20 pattern: input inside label
+                    label.cyber-installed
+                        input.cyber-check(type="checkbox", name="attr_cyber_installed", value="1")
+                        span.installed-box
 
-                    //- Edit mode - full form
-                    .edit.cyber-edit
-                        .cyber-tier
-                            select(name="attr_cyber_tier")
-                                option(value="2") T2
-                                option(value="3") T3
-                                option(value="4") T4
-                                option(value="5") T5
-                        input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
-                        .cyber-slots
-                            - for (var i = 1; i <= 3; i++)
-                                input(type="checkbox", name=`attr_cyber_slot_${i}`, value="1", id=`cyber_slot_${i}`)
-                                label.slot-box(for=`cyber_slot_${i}`)
-                        textarea(name="attr_cyber_desc", placeholder="Description & effects").cyber-desc
+                    //- Content wrapper
+                    .cyber-content
+                            //- Display mode - full card with description visible
+                            .display.cyber-display
+                                .cyber-header-display
+                                    span.cyber-tier-badge
+                                        span T
+                                        span.cyber-tier-value(name="attr_cyber_tier")
+                                    span.cyber-name-display(name="attr_cyber_name")
+                                span.cyber-desc-display(name="attr_cyber_desc")
 
-        //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: SPECIAL ABILITIES
-        //- Framing: Classified capabilities / redacted dossier
-        //- ───────────────────────────────────────────────────────────
-        .section.abilities
-            .section-header
-                .section-stamp SPECIAL ABILITIES
-                .section-number 06
-
-            +repeating("abilities")
-                .ability-entry
-                    //- Checkbox always visible (interactive during play)
-                    input(type="checkbox", name="attr_ability_taken", value="1").ability-check
-
-                    //- Display mode - just the name
-                    span.display.ability-name-display(name="attr_ability_name")
-
-                    //- Edit mode - name input and description
-                    .edit.ability-edit
-                        input(type="text", name="attr_ability_name", placeholder="Ability name").ability-name
-                        textarea(name="attr_ability_desc", placeholder="Description").ability-desc
+                            //- Edit mode - full editable form
+                            .edit.cyber-edit
+                                .cyber-header-edit
+                                    .cyber-tier-select
+                                        select(name="attr_cyber_tier")
+                                            option(value="2") T2
+                                            option(value="3") T3
+                                            option(value="4") T4
+                                            option(value="5") T5
+                                    input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
+                                textarea(name="attr_cyber_desc", placeholder="Description & effects - what does this augment let you do?").cyber-desc
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: VICE
+        //- SECTION 6: VICE
         //- Framing: Handwritten notes / off-the-record intel
         //- ───────────────────────────────────────────────────────────
         .section.vice
             .section-header
                 .section-stamp VICE
-                .section-number 07
+                .section-number 06
 
             .vice-block
                 //- Display mode - compact vice summary
@@ -267,13 +232,13 @@
                     +text-input("vice_details", "DETAILS")
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: CIRCLES
+        //- SECTION 7: CIRCLES
         //- Framing: Contact cards / post-it notes / rolodex
         //- ───────────────────────────────────────────────────────────
         .section.circles
             .section-header
                 .section-stamp CIRCLES
-                .section-number 08
+                .section-number 07
 
             .circles-intro(data-i18n="CIRCLES_DESC") "I know a guy..."
 
@@ -297,13 +262,13 @@
                         input(type="text", name="attr_contact_desc", placeholder="Description / usefulness").contact-desc
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 9: NOTES
+        //- SECTION 8: NOTES
         //- Framing: Margin scrawl / personal annotations
         //- ───────────────────────────────────────────────────────────
         .section.notes
             .section-header
                 .section-stamp NOTES
-                .section-number 09
+                .section-number 08
 
             //- Display mode - read-only text
             span.display.notes-display(name="attr_notes")

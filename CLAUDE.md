@@ -104,7 +104,7 @@ $status-danger: #8b0000;   // Dark red
 
 ### Custom Mechanics (Phase 4)
 
-1. **Cybernetics** - Replace special abilities. Tiered system (T2-T5), expandable slots.
+1. **Cybernetics** - Fully replace BitD Special Abilities. Tiered system (T2-T5), capacity limit expandable via XP. Each augment has name, tier, and description visible at all times.
 2. **Heat Gauge** - 6-clock tracked during scores, affects Disengagement Roll.
 3. **Disengagement Roll** - Escape mechanic based on Heat Gauge state.
 4. **Mental Harm** - Separate from physical harm, cleared via Vice.
@@ -162,14 +162,15 @@ getSectionIDs("repeating_section", (ids) => {
 | # | Section | Framing | Content |
 |---|---------|---------|---------|
 | 01 | Subject Identification | Corporate intake form | Name, Alias, Look, Playbook, Heritage, Background |
-| 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), roll buttons |
-| 03 | Condition Report | Medical chart | Stress (9), Trauma (4), Physical Harm, Mental Harm, Armor |
-| 04 | Augmentation Record | Tech spec sheet | Cybernetics repeating section with tier/slots |
+| 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), Playbook XP, Attribute XP |
+| 03 | Condition Report | Medical chart | Stress (9), Trauma (4), Harm levels, Armor |
+| 04 | Augmentation Record | Tech spec sheet | Cybernetics with tier & description (replaces BitD Special Abilities) |
 | 05 | Equipment Manifest | Quartermaster checklist | Load selector, standard items, playbook items |
-| 06 | Special Abilities | Classified capabilities | Repeating section for abilities |
-| 07 | Vice & Advancement | Off-the-record notes | Vice type/purveyor, Playbook XP (8), Attribute XP (6 each) |
-| 08 | Circles | Contact cards | Friends/Rivals repeating section |
-| 09 | Notes | Margin scrawl | Free-form text area |
+| 06 | Vice | Off-the-record notes | Vice type/purveyor/details |
+| 07 | Circles | Contact cards | Friends/Rivals repeating section |
+| 08 | Notes | Margin scrawl | Free-form text area |
+
+**Note**: DC,SB has no separate Special Abilities section - Cybernetics replace that role entirely.
 
 ### Crew Sheet Sections
 

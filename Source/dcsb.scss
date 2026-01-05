@@ -784,6 +784,10 @@ $spacing-xl: 24px;
                 color: $status-danger;
             }
 
+            &.moderate .level-num {
+                color: $status-warning;
+            }
+
             .text-input {
                 flex: 1;
             }
@@ -1128,46 +1132,6 @@ $spacing-xl: 24px;
         }
     }
 
-    .cyber-entry {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: $spacing-sm;
-        padding: $spacing-sm;
-        margin-bottom: $spacing-sm;
-        border: 1px dashed $zine-grey;
-        align-items: start;
-
-        .cyber-tier select {
-            font-size: 10px;
-            padding: 2px;
-        }
-
-        .cyber-name {
-            font-weight: bold;
-        }
-
-        .cyber-slots {
-            display: flex;
-            gap: 2px;
-
-            .slot-box {
-                width: 12px;
-                height: 12px;
-                border: 1px solid $zine-ink;
-                cursor: pointer;
-            }
-
-            input:checked + .slot-box {
-                background: $zine-ink;
-            }
-        }
-
-        .cyber-desc {
-            grid-column: 1 / -1;
-            font-size: 10px;
-            min-height: 40px;
-        }
-    }
 
     // ==========================================================================
     // XP TRACKS
@@ -1819,47 +1783,137 @@ $spacing-xl: 24px;
     }
 
     // -----------------------------------------------------------------------------
-    // Cybernetics Section Display
+    // Cybernetics/Augmentation Section Display
+    // Full card layout - shows name, tier, AND description (you need to know what augs do)
     // -----------------------------------------------------------------------------
-    .cyber-display {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.25rem 0;
+    .cyber-entry {
+        display: table;
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
         border-bottom: 1px dashed rgba($zine-grey, 0.3);
 
-        .cyber-slots {
-            display: flex;
-            gap: 2px;
+        &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+    }
+
+    // Installed checkbox label - standard Roll20 pattern
+    .cyber-installed {
+        display: table-cell;
+        width: 24px;
+        vertical-align: top;
+        padding-right: 0.5rem;
+        cursor: pointer;
+
+        // Hide the actual checkbox
+        .cyber-check {
+            display: none;
         }
 
-        .cyber-tier-display {
-            color: $zine-accent;
-            font-weight: bold;
+        // Visual checkbox
+        .installed-box {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid $zine-ink;
+            background: transparent;
+            position: relative;
         }
 
-        .cyber-tier-value {
-            color: $zine-accent;
+        // Checked state - fill the box
+        .cyber-check:checked + .installed-box {
+            background: $zine-ink;
+
+            &::after {
+                content: '✓';
+                color: $zine-paper;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    // Content wrapper takes remaining space
+    .cyber-content {
+        display: table-cell;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .cyber-display {
+        .cyber-header-display {
+            margin-bottom: 0.25rem;
+        }
+
+        .cyber-tier-badge {
+            display: inline-block;
+            background: $zine-ink;
+            color: $zine-paper;
+            padding: 0.1rem 0.35rem;
+            font-size: 0.75em;
             font-weight: bold;
+            font-family: $font-typewriter;
+            margin-right: 0.5rem;
         }
 
         .cyber-name-display {
+            display: inline;
             font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .cyber-desc-display {
+            display: block;
+            font-size: 0.9em;
+            color: $zine-grey;
+            line-height: 1.4;
+            padding-left: 0.5rem;
+            border-left: 2px solid rgba($zine-grey, 0.3);
+            margin-left: 0.25rem;
+            margin-top: 0.25rem;
+            white-space: pre-wrap;  // Preserve line breaks
+
+            &:empty {
+                display: none;
+            }
         }
     }
 
-    // -----------------------------------------------------------------------------
-    // Abilities Section Display
-    // -----------------------------------------------------------------------------
-    .ability-entry {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.25rem 0;
+    .cyber-edit {
+        .cyber-header-edit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cyber-tier-select select {
+            padding: 0.25rem;
+            font-weight: bold;
+        }
+
+        .cyber-name {
+            flex: 1;
+        }
+
+        .cyber-desc {
+            width: 100%;
+            min-height: 3rem;
+            font-size: 0.9em;
+        }
     }
 
-    .ability-name-display {
-        font-weight: bold;
+    .capacity-hint {
+        font-size: 0.8em;
+        color: $zine-grey;
+        font-style: italic;
+        margin-left: 0.5rem;
     }
 
     // -----------------------------------------------------------------------------
@@ -1895,42 +1949,6 @@ $spacing-xl: 24px;
         }
     }
 
-    // -----------------------------------------------------------------------------
-    // Harm Section Display
-    // -----------------------------------------------------------------------------
-    .harm-display {
-        .harm-level {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0;
-            border-bottom: 1px dashed rgba($zine-grey, 0.3);
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-
-        .level-num {
-            font-weight: bold;
-            width: 1.5em;
-            text-align: center;
-        }
-
-        .harm-value {
-            font-style: italic;
-
-            &:empty::before {
-                content: '-';
-                color: $zine-grey;
-            }
-        }
-
-        .harm-sep {
-            color: $zine-grey;
-            margin: 0 0.25rem;
-        }
-    }
 
     // -----------------------------------------------------------------------------
     // Vice Section Display
