@@ -275,14 +275,6 @@
                 .section-stamp CAPABILITY ASSESSMENT
                 .section-number 02
 
-            //- Playbook XP (at top of section)
-            .playbook-xp-block
-                .xp-label-row
-                    span.xp-label(data-i18n="PLAYBOOK_XP") Playbook XP
-                .xp-trigger-row
-                    input.xp-trigger(type="text", name="attr_xp_trigger", readonly, placeholder="Select a playbook...")
-                +xp-track("playbook", 8)
-
             //- ACUITY Attribute Block
             .attribute-block.acuity
                 .attribute-header-row
@@ -324,6 +316,14 @@
                     +action-row("dominate", "DOMINATE")
                     +action-row("finesse", "FINESSE")
                     +action-row("sway", "SWAY")
+
+            //- Playbook XP (at bottom for full trigger text visibility)
+            .playbook-xp-block
+                .xp-label-row
+                    span.xp-label(data-i18n="PLAYBOOK_XP") Playbook XP
+                .xp-trigger-row
+                    span.xp-trigger-text(name="attr_xp_trigger")
+                +xp-track("playbook", 8)
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 5: EQUIPMENT MANIFEST

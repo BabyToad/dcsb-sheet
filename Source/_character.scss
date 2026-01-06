@@ -132,47 +132,39 @@
         }
     }
 
-    // Playbook XP block
+    // Playbook XP block (at bottom of section)
     .playbook-xp-block {
-        margin-top: $spacing-sm;
+        margin-top: $spacing-md;
         padding: $spacing-sm;
         border: 1px dashed $zine-grey;
         background: rgba(0,0,0,0.02);
 
         .xp-label-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: $spacing-xs;
 
             .xp-label {
                 @include uppercase-label(10px, inherit, 0.5px);
             }
+        }
 
-            .xp-trigger-row {
-                margin-top: 2px;
-            }
+        .xp-trigger-row {
+            margin-bottom: $spacing-sm;
+        }
 
-            .xp-trigger {
-                width: 100%;
-                font-size: 9px;
-                font-style: italic;
-                color: $zine-grey;
-                background: transparent;
-                border: none;
-                border-bottom: 1px dashed $zine-grey;
-                padding: 2px 0;
-                font-family: $font-typewriter;
+        .xp-trigger-text {
+            display: block;
+            font-size: $type-sm;
+            font-style: italic;
+            color: $zine-grey;
+            font-family: $font-typewriter;
+            line-height: 1.4;
+            padding: $spacing-xs 0;
+            border-left: 2px solid $terminal-amber;
+            padding-left: $spacing-sm;
 
-                &::placeholder {
-                    color: $form-grey-light;
-                    font-style: italic;
-                }
-
-                &:focus {
-                    outline: none;
-                    border-bottom-color: $zine-accent;
-                }
+            &:empty::after {
+                content: 'XP trigger not set...';
+                color: $form-grey-light;
             }
         }
     }
