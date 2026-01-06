@@ -48,18 +48,14 @@ Traces of the city's multilingual, multicultural streets.
 | Token | Hex | Usage |
 |-------|-----|-------|
 | `$form-paper` | #e5e5e0 | Main background - grey government form |
-| `$form-paper-dark` | #d8d8d3 | Alternating rows, subtle differentiation |
 | `$form-ink` | #1a1a1a | Primary text, borders |
 | `$form-grey` | #888888 | Labels, secondary text, form field hints |
 | `$form-grey-light` | #bbbbbb | Disabled/faded elements |
-| `$form-field-bg` | #f0f0eb | Input field backgrounds |
 
-### Accent Colors (Terminal/Network)
+### Accent Color (Terminal/Network)
 | Token | Hex | Usage |
 |-------|-----|-------|
-| `$terminal-amber` | #ffb000 | **Primary accent** - focus, checked, active |
-| `$terminal-amber-dim` | #cc8c00 | Hover states |
-| `$terminal-amber-glow` | rgba(255,176,0,0.15) | Glow effects on focus |
+| `$terminal-amber` | #ffb000 | **Primary accent** - focus, checked, active, hover |
 
 ### Status Colors
 | Token | Hex | Usage |
@@ -115,20 +111,19 @@ $font-mono: 'Courier New', Courier, monospace;  // Primary - EVERYTHING
 | `$space-3` | 8px | Field gaps, padding |
 | `$space-4` | 12px | Component padding |
 | `$space-5` | 16px | Section gaps |
-| `$space-6` | 24px | Major section breaks |
-| `$space-7` | 32px | Sheet margins |
+
+**Legacy aliases**: `$spacing-xs/sm/md/lg` map to corresponding `$space-*` values.
 
 ---
 
 ## Box/Checkbox Sizing
 
-| Token | Size | Usage |
-|-------|------|-------|
-| `$box-xs` | 10px | Dense tracks |
-| `$box-sm` | 12px | Standard checkboxes |
-| `$box-md` | 14px | Action dots, XP boxes |
-| `$box-lg` | 16px | Prominent checkboxes (armor, cybernetics) |
-| `$box-xl` | 20px | Clock segments |
+Use the `square-box()` mixin with explicit sizes:
+```scss
+@include square-box(12px);  // Standard checkboxes
+@include square-box(14px);  // Action dots, XP boxes
+@include square-box(16px);  // Prominent checkboxes
+```
 
 ---
 
@@ -137,10 +132,9 @@ $font-mono: 'Courier New', Courier, monospace;  // Primary - EVERYTHING
 ### CSS Borders
 | Token | Value | Usage |
 |-------|-------|-------|
-| `$border-solid` | 1px solid $form-ink | Standard borders |
 | `$border-dashed` | 1px dashed $form-grey | Form fields, separators |
-| `$border-double` | 3px double $form-ink | Emphasized sections |
-| `$border-heavy` | 2px solid $form-ink | Primary borders |
+
+Other border styles defined inline where needed (solid, double).
 
 ### Box-Drawing Characters (ANSI)
 Used throughout for section headers and borders:

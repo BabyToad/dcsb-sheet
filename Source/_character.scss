@@ -321,15 +321,18 @@
         @include grid(1fr 1fr, $spacing-md);
     }
 
+    // Standard item checkbox (fixed items like Blade, Pistol, etc.)
     .item-checkbox {
         @include flex-row($spacing-xs);
         cursor: pointer;
-        font-size: 10px;
+        font-size: $type-sm;
         padding: $spacing-xs 0;
+        color: $form-ink;
 
         .item-box {
             @include square-box(12px);
             border: 1px solid $zine-ink;
+            flex-shrink: 0;
         }
 
         input[type="checkbox"] {
@@ -339,9 +342,9 @@
                 @include checkbox-checked-fill($terminal-amber);
             }
 
+            // Bold when carried, not strikethrough
             &:checked ~ .item-name {
-                text-decoration: line-through;
-                color: $zine-grey;
+                font-weight: bold;
             }
         }
 

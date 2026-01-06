@@ -21,9 +21,16 @@ npm run dev          # Watch mode with auto-rebuild
 dcsb-sheet/
 ├── Source/
 │   ├── dcsb.pug              # Main template entry point
-│   ├── dcsb.scss             # Main styles (imports tokens & mixins)
+│   ├── dcsb.scss             # Main styles (imports all partials)
 │   ├── _tokens.scss          # Design tokens (colors, typography, spacing)
 │   ├── _mixins.scss          # SCSS mixins (box patterns, flex, typography)
+│   ├── _header.scss          # Header, title block, tab navigation
+│   ├── _layout.scss          # Columns, grids, sections
+│   ├── _inputs.scss          # Form fields, checkboxes, radios
+│   ├── _tracks.scss          # Stress, XP, clocks, heat gauge
+│   ├── _character.scss       # Character sheet specific styles
+│   ├── _crew.scss            # Crew sheet specific styles
+│   ├── _modes.scss           # Tab switching, edit/display modes
 │   ├── Roll20.d.ts           # Roll20 API type definitions
 │   ├── tsconfig.json         # TypeScript config
 │   ├── workers.js            # Compiled sheet workers (generated)
@@ -144,8 +151,10 @@ $status-danger: #8b0000;        // Dark red (harm, trauma)
 ### Checkbox-based Trackers
 ```scss
 input[type="checkbox"] {
-    display: none;
-    &:checked + span { background: $zine-ink; }
+    @include hidden-checkbox-base();
+    &:checked + span {
+        @include checkbox-checked-fill($terminal-amber);
+    }
 }
 ```
 

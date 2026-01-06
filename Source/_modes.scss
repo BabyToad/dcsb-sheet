@@ -285,25 +285,6 @@
     }
 
     // -------------------------------------------------------------------------
-    // Items Section Display
-    // -------------------------------------------------------------------------
-    .item-display {
-        display: inline-flex;
-        align-items: baseline;
-        gap: 0.25rem;
-
-        .item-name-display {
-            font-weight: bold;
-        }
-
-        .item-load-display,
-        .item-load-value {
-            font-size: 0.8em;
-            color: $zine-grey;
-        }
-    }
-
-    // -------------------------------------------------------------------------
     // Vice Section Display
     // -------------------------------------------------------------------------
     .vice-display {

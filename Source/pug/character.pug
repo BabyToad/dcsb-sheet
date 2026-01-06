@@ -383,16 +383,16 @@
                 .equipment-column.playbook
                     h4(data-i18n="PLAYBOOK_ITEMS") Playbook Items
                     +repeating("items")
-                        .item-entry
-                            //- Checkbox always visible (toggled during play)
-                            input(type="checkbox", name="attr_item_carried", value="1").item-carried
+                        label.item-checkbox
+                            //- Checkbox (hidden, controls visual box)
+                            input(type="checkbox", name="attr_item_carried", value="1")
+                            span.item-box
 
                             //- Display mode - name and load as text
-                            .display.item-display
-                                span.item-name-display(name="attr_item_name")
-                                span.item-load-display (
-                                span.item-load-value(name="attr_item_load")
-                                span.item-load-display )
+                            span.display.item-name(name="attr_item_name")
+                            span.display.item-load (
+                                span(name="attr_item_load")
+                                | )
 
                             //- Edit mode - editable inputs
                             .edit.item-edit
