@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2019",
     "module": "none",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

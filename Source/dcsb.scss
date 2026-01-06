@@ -8,8 +8,8 @@
 // =============================================================================
 // DESIGN TOKENS & MIXINS
 // =============================================================================
-@import 'tokens';
-@import 'mixins';
+@use 'tokens' as *;
+@use 'mixins' as *;
 
 // =============================================================================
 // BASE STYLES
@@ -625,7 +625,7 @@
                 font-family: $font-typewriter;
 
                 &::placeholder {
-                    color: lighten($zine-grey, 20%);
+                    color: $form-grey-light;  // Use token instead of lighten()
                     font-style: italic;
                 }
 
