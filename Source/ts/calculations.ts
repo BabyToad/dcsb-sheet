@@ -212,16 +212,17 @@ const clearAllAndPopulateRepeatingSection = <T>(
 // =============================================================================
 
 /**
- * Calculate attribute rating as max of its associated actions
+ * Calculate attribute rating as count of actions with at least 1 dot
  */
 const calculateAttributeRating = (attribute: string) => {
     const actions = ATTRIBUTES[attribute as keyof typeof ATTRIBUTES];
     if (!actions) return;
 
-    const attrs = [...actions, `${attribute}_rating`];
+    const actionList = [...actions] as string[];
+    const attrs = [...actionList, `${attribute}_rating`];
     getAttrs(attrs, v => {
-        const max = Math.max(...actions.map(a => int(v[a])));
-        mySetAttrs({ [`${attribute}_rating`]: max }, v);
+        const count = actionList.filter(a => int(v[a]) > 0).length;
+        mySetAttrs({ [`${attribute}_rating`]: count }, v);
     });
 };
 
