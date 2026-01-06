@@ -60,9 +60,8 @@
         input[type="checkbox"] {
             display: none;
 
-            &:checked + .stress-box,
-            &:checked + .trauma-box {
-                background: $zine-ink;
+            &:checked + .stress-box {
+                background: $terminal-amber;
                 box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
             }
         }
@@ -157,7 +156,7 @@
             display: none;
 
             &:checked + .segment {
-                background: $zine-ink;
+                background: $terminal-amber;
             }
         }
     }

@@ -88,8 +88,8 @@
 
 // Style the edit toggle label to show checked state
 .edit-mode-checkbox:checked ~ .charsheet .edit-toggle {
-    background: $zine-ink;
-    color: $zine-paper;
+    background: $terminal-amber;
+    color: $form-ink;
 }
 
 // =============================================================================
@@ -185,11 +185,11 @@
         }
 
         .cyber-check:checked + .installed-box {
-            background: $zine-ink;
+            background: $terminal-amber;
 
             &::after {
                 content: '✓';
-                color: $zine-paper;
+                color: $form-ink;
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -213,8 +213,8 @@
 
         .cyber-tier-badge {
             display: inline-block;
-            background: $zine-ink;
-            color: $zine-paper;
+            background: $terminal-amber;
+            color: $form-ink;
             padding: 0.1rem 0.35rem;
             font-size: 0.75em;
             font-weight: bold;

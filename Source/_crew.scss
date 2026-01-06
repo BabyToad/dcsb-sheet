@@ -43,8 +43,8 @@
         }
 
         input:checked + .tier-box {
-            background: $zine-ink;
-            color: $zine-paper;
+            background: $terminal-amber;
+            color: $form-ink;
         }
     }
 
@@ -65,8 +65,8 @@
         }
 
         input:checked + .hold-option {
-            background: $zine-ink;
-            color: $zine-paper;
+            background: $terminal-amber;
+            color: $form-ink;
         }
     }
 
@@ -90,7 +90,7 @@
             cursor: pointer;
         }
 
-        input:checked + .rep-box { background: $zine-ink; }
+        input:checked + .rep-box { background: $terminal-amber; border-color: $terminal-amber; }
         input:checked + .heat-box { background: $status-warning; border-color: $status-warning; }
         input:checked + .wanted-box { background: $status-danger; border-color: $status-danger; }
     }
@@ -160,7 +160,8 @@
         }
 
         input:checked + .upgrade-box {
-            background: $zine-ink;
+            background: $terminal-amber;
+            border-color: $terminal-amber;
         }
 
         .upgrade-cost {
