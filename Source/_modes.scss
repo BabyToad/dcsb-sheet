@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 // =============================================================================
 // TAB SWITCHING (must be outside .charsheet - radio buttons are siblings)
@@ -104,9 +105,7 @@
         padding: 0.5rem 0;
 
         .identity-name-line {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
+            @include flex-row(0.5rem, baseline);
             margin-bottom: 0.25rem;
         }
 
@@ -172,20 +171,19 @@
         cursor: pointer;
 
         .cyber-check {
-            display: none;
+            @include hidden-checkbox-base();
         }
 
         .installed-box {
             display: block;
-            width: 16px;
-            height: 16px;
+            @include square-box(16px);
             border: 2px solid $zine-ink;
             background: transparent;
             position: relative;
         }
 
         .cyber-check:checked + .installed-box {
-            background: $terminal-amber;
+            @include checkbox-checked-fill($terminal-amber);
 
             &::after {
                 content: '✓';
@@ -247,9 +245,7 @@
 
     .cyber-edit {
         .cyber-header-edit {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            @include flex-row(0.5rem);
             margin-bottom: 0.5rem;
         }
 
@@ -280,9 +276,7 @@
     // Contacts Section Display
     // -------------------------------------------------------------------------
     .contact-entry {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        @include flex-row(0.5rem);
         padding: 0.25rem 0;
     }
 

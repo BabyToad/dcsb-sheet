@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -10,9 +11,7 @@
     // =========================================================================
 
     .sheet-columns {
-        display: grid;
-        grid-template-columns: 55% 45%;
-        gap: $spacing-lg;
+        @include grid(55% 45%, $spacing-lg);
         align-items: start;
 
         @media (max-width: 700px) {
@@ -22,9 +21,7 @@
 
     .left-column,
     .right-column {
-        display: flex;
-        flex-direction: column;
-        gap: $spacing-md;
+        @include flex-column($spacing-md);
     }
 
     // =========================================================================
@@ -32,23 +29,12 @@
     // =========================================================================
 
     .section {
-        margin-bottom: $space-5;
-        padding: $space-3;
-        position: relative;
-        background: $form-paper;
-
-        // Subtle shadow for depth
-        box-shadow: $shadow-paper;
-
-        // Dashed border like a form field
-        border: $border-dashed;
+        @include section-block();
     }
 
     // Section header with box-drawing border (ANSI terminal aesthetic)
     .section-header {
-        display: flex;
-        align-items: center;
-        gap: $space-3;
+        @include flex-row($space-3);
         margin-bottom: $space-3;
         padding: $space-2 $space-3;
         position: relative;
@@ -56,7 +42,6 @@
 
         // Box-drawing border using ::before for top line
         &::before {
-            content: '┌' attr(data-section-title) '┐';
             content: '┌──────────────────────────────────────────────────┐';
             position: absolute;
             top: -2px;
@@ -88,12 +73,8 @@
 
     // Section title text (inside box-drawing frame)
     .section-stamp {
+        @include uppercase-label($type-sm, $form-ink, 1px);
         font-family: $font-mono;
-        font-size: $type-sm;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: $form-ink;
         flex-grow: 1;
     }
 
@@ -103,13 +84,11 @@
         font-size: $type-md;
         font-weight: bold;
         color: $terminal-amber;
-        width: 28px;
-        height: 28px;
+        @include square-box(28px, false);
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        flex-shrink: 0;
 
         // Hand-drawn circle effect (in amber - human annotation over corporate form)
         &::before {
@@ -149,21 +128,15 @@
             margin-bottom: $spacing-sm;
 
             &.primary {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: $spacing-md;
+                @include grid(1fr 1fr, $spacing-md);
             }
 
             &.classification {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: $spacing-md;
+                @include grid(repeat(3, 1fr), $spacing-md);
             }
 
             &.reset-row {
-                display: flex;
-                align-items: center;
-                gap: $spacing-md;
+                @include flex-row($spacing-md);
                 margin-top: $spacing-md;
                 padding-top: $spacing-sm;
                 border-top: 1px dashed $zine-grey;

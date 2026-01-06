@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -10,17 +11,11 @@
     // =========================================================================
 
     .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: $spacing-md;
+        @include grid(repeat(3, 1fr), $spacing-md);
     }
 
     .stat-label {
-        font-size: 10px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: $spacing-xs;
+        @include track-label();
     }
 
     // =========================================================================
@@ -28,12 +23,10 @@
     // =========================================================================
 
     .tier-selector {
-        display: flex;
-        gap: 2px;
+        @include flex-row(2px, stretch);
 
         .tier-box {
-            width: 24px;
-            height: 24px;
+            @include square-box(24px);
             border: 2px solid $zine-ink;
             display: flex;
             align-items: center;
@@ -43,7 +36,7 @@
         }
 
         input:checked + .tier-box {
-            background: $terminal-amber;
+            @include checkbox-checked-fill($terminal-amber);
             color: $form-ink;
         }
     }
@@ -53,19 +46,18 @@
     // =========================================================================
 
     .hold-selector {
-        display: flex;
-        gap: $spacing-sm;
+        @include flex-row($spacing-sm, stretch);
 
         .hold-option {
             padding: $spacing-xs $spacing-sm;
             border: 1px solid $zine-ink;
             cursor: pointer;
-            font-size: 10px;
+            font-size: $type-sm;
             text-transform: uppercase;
         }
 
         input:checked + .hold-option {
-            background: $terminal-amber;
+            @include checkbox-checked-fill($terminal-amber);
             color: $form-ink;
         }
     }
@@ -77,22 +69,25 @@
     .rep-track,
     .heat-track,
     .wanted-track {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2px;
+        @include flex-wrap(2px);
 
         .rep-box,
         .heat-box,
         .wanted-box {
-            width: 14px;
-            height: 14px;
+            @include square-box(14px);
             border: 1px solid $zine-ink;
             cursor: pointer;
         }
 
-        input:checked + .rep-box { background: $terminal-amber; border-color: $terminal-amber; }
-        input:checked + .heat-box { background: $status-warning; border-color: $status-warning; }
-        input:checked + .wanted-box { background: $status-danger; border-color: $status-danger; }
+        input:checked + .rep-box {
+            @include checkbox-checked-fill($terminal-amber, $terminal-amber);
+        }
+        input:checked + .heat-box {
+            @include checkbox-checked-fill($status-warning, $status-warning);
+        }
+        input:checked + .wanted-box {
+            @include checkbox-checked-fill($status-danger, $status-danger);
+        }
     }
 
     // =========================================================================
@@ -100,13 +95,10 @@
     // =========================================================================
 
     .vault-boxes {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2px;
+        @include flex-wrap(2px);
 
         .vault-box {
-            width: 14px;
-            height: 14px;
+            @include square-box(14px);
             border: 1px solid $zine-ink;
             cursor: pointer;
 
@@ -116,13 +108,12 @@
         }
 
         input:checked + .vault-box {
-            background: $status-good;
-            border-color: $status-good;
+            @include checkbox-checked-fill($status-good, $status-good);
         }
     }
 
     .coin-warning {
-        font-size: 9px;
+        font-size: $type-xs;
         color: $status-warning;
         font-style: italic;
     }
@@ -132,9 +123,7 @@
     // =========================================================================
 
     .upgrades-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: $spacing-md;
+        @include grid(repeat(3, 1fr), $spacing-md);
     }
 
     .upgrade-category {
@@ -146,22 +135,18 @@
     }
 
     .upgrade-checkbox {
-        display: flex;
-        align-items: center;
-        gap: $spacing-xs;
+        @include flex-row($spacing-xs);
         cursor: pointer;
-        font-size: 10px;
+        font-size: $type-sm;
         padding: 2px 0;
 
         .upgrade-box {
-            width: 10px;
-            height: 10px;
+            @include square-box(10px);
             border: 1px solid $zine-ink;
         }
 
         input:checked + .upgrade-box {
-            background: $terminal-amber;
-            border-color: $terminal-amber;
+            @include checkbox-checked-fill($terminal-amber, $terminal-amber);
         }
 
         .upgrade-cost {
@@ -180,32 +165,26 @@
         margin-bottom: $spacing-sm;
 
         .cohort-header {
-            display: flex;
-            gap: $spacing-sm;
+            @include flex-row($spacing-sm, stretch);
             margin-bottom: $spacing-xs;
         }
 
         .cohort-harm {
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
+            @include flex-row($spacing-xs);
             margin: $spacing-xs 0;
 
             .harm-label {
-                font-size: 10px;
-                text-transform: uppercase;
+                @include uppercase-label($type-sm, inherit, 0);
             }
 
             .harm-box {
-                width: 14px;
-                height: 14px;
+                @include square-box(14px);
                 border: 1px solid $zine-ink;
                 cursor: pointer;
             }
 
             input:checked + .harm-box {
-                background: $status-danger;
-                border-color: $status-danger;
+                @include checkbox-checked-fill($status-danger, $status-danger);
             }
         }
     }
@@ -215,28 +194,23 @@
     // =========================================================================
 
     .faction-legend {
-        font-size: 9px;
+        font-size: $type-xs;
         color: $zine-grey;
         margin-bottom: $spacing-sm;
-        display: flex;
-        gap: $spacing-md;
+        @include flex-row($spacing-md, stretch);
     }
 
     .faction-row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: $spacing-sm;
+        @include grid(1fr auto, $spacing-sm);
         padding: $spacing-xs 0;
         border-bottom: 1px dotted $zine-light-grey;
         align-items: center;
 
         .status-track {
-            display: flex;
-            gap: 1px;
+            @include flex-row(1px, stretch);
 
             .status-pip {
-                width: 16px;
-                height: 16px;
+                @include square-box(16px);
                 border: 1px solid $zine-grey;
                 display: flex;
                 align-items: center;
@@ -268,16 +242,13 @@
     // =========================================================================
 
     .claim-entry {
-        display: grid;
-        grid-template-columns: auto 1fr 1fr;
-        gap: $spacing-sm;
+        @include grid(auto 1fr 1fr, $spacing-sm);
         padding: $spacing-xs 0;
         border-bottom: 1px dotted $zine-light-grey;
         align-items: center;
 
         .claim-check {
-            width: 14px;
-            height: 14px;
+            @include square-box(14px);
         }
     }
 }

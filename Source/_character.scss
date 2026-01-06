@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -17,9 +18,7 @@
         background: rgba(0,0,0,0.02);
 
         .attribute-header-row {
-            display: flex;
-            align-items: center;
-            gap: $spacing-sm;
+            @include flex-row($spacing-sm);
             margin-bottom: $spacing-sm;
 
             .attr-name {
@@ -35,7 +34,7 @@
                 cursor: pointer;
                 color: $zine-ink;
                 text-align: left;
-                transition: color 0.15s;
+                @include transition(color);
 
                 &:hover {
                     color: $zine-accent;
@@ -44,15 +43,12 @@
         }
 
         .attribute-xp {
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
+            @include flex-row($spacing-xs);
             margin-bottom: $spacing-sm;
 
             .xp-label {
-                font-size: 9px;
-                text-transform: uppercase;
-                color: $zine-grey;
+                @include uppercase-label(9px, $zine-grey, 0.5px);
+                font-weight: normal;
                 min-width: 20px;
             }
         }
@@ -60,33 +56,18 @@
 
     // Attribute rating track (fakeradio inverse-fill)
     .attribute-track {
-        display: flex;
-        align-items: center;
-        gap: 2px;
-
-        .fakeradio.zero {
-            display: none;
-        }
-
-        .fakeradio {
-            display: none;
-        }
+        @include flex-row(2px);
+        @include fakeradio-hidden();
 
         .attr-dot {
-            width: 12px;
-            height: 12px;
-            min-width: 12px;
-            min-height: 12px;
-            max-width: 12px;
-            max-height: 12px;
+            @include square-box(12px);
             border: 1px solid $zine-grey;
             border-radius: 1px;
             cursor: pointer;
             display: block;
-            flex-shrink: 0;
             flex-grow: 0;
             background: $zine-grey;
-            transition: background 0.1s;
+            @include transition(background);
             line-height: 0;
             font-size: 0;
             padding: 0;
@@ -94,22 +75,16 @@
         }
 
         // Inverse fill: dots AFTER checked become empty
-        .fakeradio:checked ~ .fakeradio + .attr-dot {
-            background: transparent;
-        }
+        @include fakeradio-inverse-fill(attr-dot);
     }
 
     .action-list {
-        display: flex;
-        flex-direction: column;
-        gap: $spacing-xs;
+        @include flex-column($spacing-xs);
     }
 
     // Action row (clickable name + dots)
     .action-row {
-        display: flex;
-        align-items: center;
-        gap: $spacing-sm;
+        @include flex-row($spacing-sm);
 
         .action-name {
             width: 75px;
@@ -126,7 +101,7 @@
             margin: 0;
             cursor: pointer;
             color: $zine-ink;
-            transition: color 0.15s;
+            @include transition(color);
 
             &:hover {
                 color: $zine-accent;
@@ -134,31 +109,16 @@
         }
 
         .action-dots {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-
-            .fakeradio.zero {
-                display: none;
-            }
-
-            .fakeradio {
-                display: none;
-            }
+            @include flex-row(2px);
+            @include fakeradio-hidden();
 
             .dot {
-                width: 16px;
-                height: 16px;
-                min-width: 16px;
-                min-height: 16px;
-                max-width: 16px;
-                max-height: 16px;
+                @include square-box(16px);
                 border: 2px solid $zine-ink;
                 border-radius: 1px;
                 display: block;
                 cursor: pointer;
-                transition: all 0.1s;
-                flex-shrink: 0;
+                @include transition();
                 flex-grow: 0;
                 background: $zine-ink;
                 line-height: 0;
@@ -168,9 +128,7 @@
             }
 
             // Inverse fill: dots AFTER checked become empty
-            .fakeradio:checked ~ .fakeradio + .dot {
-                background: transparent;
-            }
+            @include fakeradio-inverse-fill(dot);
         }
     }
 
@@ -188,9 +146,7 @@
             margin-bottom: $spacing-xs;
 
             .xp-label {
-                font-size: 10px;
-                font-weight: bold;
-                text-transform: uppercase;
+                @include uppercase-label(10px, inherit, 0.5px);
             }
 
             .xp-trigger-row {
@@ -251,9 +207,7 @@
 
     .harm-track {
         .harm-level {
-            display: flex;
-            align-items: center;
-            gap: $spacing-sm;
+            @include flex-row($spacing-sm);
             margin: $spacing-xs 0;
             padding: $spacing-xs 0;
             border-bottom: 1px dotted $zine-light-grey;
@@ -280,13 +234,11 @@
     }
 
     .healing-clock-wrapper {
-        display: flex;
-        align-items: center;
-        gap: $spacing-sm;
+        @include flex-row($spacing-sm);
 
         .clock-label {
-            font-size: 9px;
-            text-transform: uppercase;
+            @include uppercase-label(9px, inherit, 0.5px);
+            font-weight: normal;
         }
     }
 
@@ -296,33 +248,26 @@
 
     .armor-block {
         .armor-track {
-            display: flex;
-            gap: $spacing-md;
+            @include flex-row($spacing-md, stretch);
         }
 
         .armor-checkbox {
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
+            @include flex-row($spacing-xs);
             cursor: pointer;
             font-size: 10px;
             text-transform: uppercase;
 
             .armor-box {
-                width: 14px;
-                height: 14px;
-                min-width: 14px;
-                min-height: 14px;
+                @include square-box(14px);
                 border: 2px solid $zine-ink;
                 display: inline-block;
-                flex-shrink: 0;
             }
 
             input[type="checkbox"] {
-                display: none;
+                @include hidden-checkbox-base();
 
                 &:checked + .armor-box {
-                    background: $zine-ink;
+                    @include checkbox-checked-fill($terminal-amber);
                 }
             }
         }
@@ -336,33 +281,25 @@
         margin-bottom: $spacing-sm;
 
         .load-options {
-            display: flex;
-            gap: $spacing-md;
+            @include flex-row($spacing-md, stretch);
         }
 
         .load-option {
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
+            @include flex-row($spacing-xs);
             cursor: pointer;
             font-size: 10px;
 
             .load-box {
-                width: 12px;
-                height: 12px;
-                min-width: 12px;
-                min-height: 12px;
+                @include square-box(12px);
                 border: 2px solid $zine-ink;
                 border-radius: 1px;
-                flex-shrink: 0;
             }
 
             input[type="radio"] {
-                display: none;
+                @include hidden-checkbox-base();
 
                 &:checked + .load-box {
-                    background: $zine-accent;
-                    border-color: $zine-accent;
+                    @include checkbox-checked-fill($zine-accent, $zine-accent);
                 }
             }
         }
@@ -381,33 +318,25 @@
     }
 
     .equipment-columns {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: $spacing-md;
+        @include grid(1fr 1fr, $spacing-md);
     }
 
     .item-checkbox {
-        display: flex;
-        align-items: center;
-        gap: $spacing-xs;
+        @include flex-row($spacing-xs);
         cursor: pointer;
         font-size: 10px;
         padding: $spacing-xs 0;
 
         .item-box {
-            width: 12px;
-            height: 12px;
-            min-width: 12px;
-            min-height: 12px;
+            @include square-box(12px);
             border: 1px solid $zine-ink;
-            flex-shrink: 0;
         }
 
         input[type="checkbox"] {
-            display: none;
+            @include hidden-checkbox-base();
 
             &:checked + .item-box {
-                background: $zine-ink;
+                @include checkbox-checked-fill($terminal-amber);
             }
 
             &:checked ~ .item-name {
@@ -447,9 +376,7 @@
 
     .vice-block {
         .vice-fields {
-            display: grid;
-            grid-template-columns: auto 1fr 1fr;
-            gap: $spacing-sm;
+            @include grid(auto 1fr 1fr, $spacing-sm);
             align-items: end;
         }
     }
@@ -466,50 +393,41 @@
     }
 
     .contact-entry {
-        display: grid;
-        grid-template-columns: auto 1fr 2fr;
-        gap: $spacing-sm;
+        @include grid(auto 1fr 2fr, $spacing-sm);
         padding: $spacing-xs 0;
         border-bottom: 1px dotted $zine-light-grey;
         align-items: center;
 
         .contact-status {
-            display: flex;
-            gap: 2px;
+            @include flex-row(2px, stretch);
 
             input[type="radio"] {
-                display: none;
+                @include hidden-checkbox-base();
             }
 
             .status-friend,
             .status-neutral,
             .status-rival {
-                width: 18px;
-                height: 18px;
-                min-width: 18px;
-                min-height: 18px;
+                @include square-box(18px);
                 border: 1px solid $zine-grey;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 font-size: 10px;
-                flex-shrink: 0;
             }
 
             input:checked + .status-friend {
-                background: $status-good;
+                @include checkbox-checked-fill($status-good, $status-good);
                 color: white;
-                border-color: $status-good;
             }
             input:checked + .status-neutral {
-                background: $zine-grey;
+                @include checkbox-checked-fill($zine-grey);
                 color: white;
             }
             input:checked + .status-rival {
-                background: $status-danger;
+                @include checkbox-checked-fill($status-danger, $status-danger);
                 color: white;
-                border-color: $status-danger;
             }
         }
     }
@@ -549,7 +467,7 @@
         border: 1px solid $status-warning;
         color: $status-warning;
         cursor: pointer;
-        transition: all 0.15s;
+        @include transition();
 
         &:hover {
             background: $status-warning;
@@ -575,7 +493,7 @@
         background: $zine-paper;
         border: 2px solid $zine-ink;
         cursor: pointer;
-        transition: all 0.15s;
+        @include transition();
 
         &:hover {
             background: $zine-ink;

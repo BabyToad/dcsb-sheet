@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -10,11 +11,7 @@
     // =========================================================================
 
     .track-label {
-        font-size: 10px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: $spacing-xs;
+        @include track-label();
     }
 
     // =========================================================================
@@ -22,9 +19,7 @@
     // =========================================================================
 
     .condition-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: $spacing-md;
+        @include grid(1fr 1fr, $spacing-md);
     }
 
     .stress-block,
@@ -34,40 +29,28 @@
 
     .stress-track,
     .trauma-track {
-        display: flex;
-        gap: 2px;
+        @include flex-row(2px, stretch);
 
         .stress-box,
         .trauma-box {
-            width: 16px;
-            height: 16px;
-            min-width: 16px;
-            min-height: 16px;
+            @include square-box(16px);
+            @include hand-drawn-rotation();
             border: 2px solid $zine-ink;
             cursor: pointer;
-            transition: all 0.1s;
-            flex-shrink: 0;
-
-            // Hand-drawn imperfection
-            &:nth-child(odd) {
-                transform: rotate(0.5deg);
-            }
-            &:nth-child(even) {
-                transform: rotate(-0.5deg);
-            }
+            @include transition();
         }
 
         input[type="checkbox"] {
-            display: none;
+            @include hidden-checkbox-base();
 
             &:checked + .stress-box {
-                background: $terminal-amber;
+                @include checkbox-checked-fill($terminal-amber);
                 box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
             }
         }
     }
 
-    // Trauma gets X marks
+    // Trauma gets X marks (special styling)
     .trauma-track {
         .trauma-box {
             position: relative;
@@ -100,26 +83,20 @@
     // =========================================================================
 
     .xp-boxes {
-        display: flex;
-        gap: 2px;
+        @include flex-row(2px, stretch);
 
         input[type="checkbox"] {
-            display: none;
+            @include hidden-checkbox-base();
         }
 
         .xp-box {
-            width: 12px;
-            height: 12px;
-            min-width: 12px;
-            min-height: 12px;
+            @include square-box(12px);
             border: 1px solid $zine-ink;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         input:checked + .xp-box {
-            background: $zine-accent;
-            border-color: $zine-accent;
+            @include checkbox-checked-fill($terminal-amber, $terminal-amber);
         }
     }
 
@@ -132,16 +109,14 @@
         align-items: center;
 
         .clock-segments {
-            display: flex;
-            gap: 1px;
+            @include flex-row(1px, stretch);
         }
 
         .segment {
-            width: 16px;
-            height: 16px;
+            @include square-box(16px);
             border: 2px solid $zine-ink;
             cursor: pointer;
-            transition: background 0.1s;
+            @include transition(background);
 
             // Make them look like pie segments
             &:first-child {
@@ -153,10 +128,10 @@
         }
 
         input[type="checkbox"] {
-            display: none;
+            @include hidden-checkbox-base();
 
             &:checked + .segment {
-                background: $terminal-amber;
+                @include checkbox-checked-fill($terminal-amber);
             }
         }
     }
@@ -164,15 +139,14 @@
     // Circular clock (4 quadrants)
     .clock-circle {
         position: relative;
-        width: 32px;
-        height: 32px;
+        @include square-box(32px, false);
         border-radius: 50%;
         border: 2px solid $zine-ink;
         background: transparent;
         overflow: hidden;
 
         input[type="checkbox"] {
-            display: none;
+            @include hidden-checkbox-base();
         }
 
         .clock-wedge {
@@ -181,26 +155,14 @@
             height: 50%;
             cursor: pointer;
             background: transparent;
-            transition: background 0.1s;
+            @include transition(background);
             box-sizing: border-box;
 
             // Position each quadrant
-            &[data-segment="1"] {
-                top: 0;
-                right: 0;
-            }
-            &[data-segment="2"] {
-                bottom: 0;
-                right: 0;
-            }
-            &[data-segment="3"] {
-                bottom: 0;
-                left: 0;
-            }
-            &[data-segment="4"] {
-                top: 0;
-                left: 0;
-            }
+            &[data-segment="1"] { top: 0; right: 0; }
+            &[data-segment="2"] { bottom: 0; right: 0; }
+            &[data-segment="3"] { bottom: 0; left: 0; }
+            &[data-segment="4"] { top: 0; left: 0; }
 
             &:hover {
                 background: rgba($zine-ink, 0.3);
@@ -252,41 +214,31 @@
         );
 
         .gauge-label {
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: $spacing-xs;
+            @include track-label();
         }
 
         .gauge-segments {
-            display: flex;
-            gap: 2px;
+            @include flex-row(2px, stretch);
             margin-bottom: $spacing-xs;
 
             .heat-segment {
-                width: 24px;
-                height: 24px;
-                min-width: 24px;
-                min-height: 24px;
+                @include square-box(24px);
                 border: 2px solid $zine-ink;
                 cursor: pointer;
-                transition: all 0.15s;
-                flex-shrink: 0;
+                @include transition();
             }
 
             input[type="checkbox"] {
-                display: none;
+                @include hidden-checkbox-base();
 
                 &:checked + .heat-segment {
-                    background: $status-danger;
-                    border-color: $status-danger;
+                    @include checkbox-checked-fill($status-danger, $status-danger);
                 }
             }
         }
 
         .gauge-dice {
-            font-size: 10px;
+            font-size: $type-sm;
             color: $zine-grey;
 
             .dice-count {

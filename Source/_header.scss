@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -77,8 +78,7 @@
     // =========================================================================
 
     .tab-nav {
-        display: flex;
-        gap: $spacing-xs;
+        @include flex-row($spacing-xs, stretch);
     }
 
     .tab-button {
@@ -92,7 +92,7 @@
         padding: $spacing-sm $spacing-lg;
         cursor: pointer;
         position: relative;
-        transition: all 0.15s;
+        @include transition();
 
         // Folder tab shape
         clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
@@ -110,17 +110,15 @@
 
     .header-controls {
         .edit-toggle {
+            @include flex-row($spacing-xs);
             font-size: 10px;
             text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: $spacing-xs;
             cursor: pointer;
             color: $zine-grey;
             padding: $spacing-xs $spacing-sm;
             border: 1px solid $zine-grey;
             border-radius: 2px;
-            transition: all 0.15s;
+            @include transition();
 
             &:hover {
                 border-color: $zine-ink;

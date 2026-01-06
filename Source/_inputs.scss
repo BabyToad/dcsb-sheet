@@ -3,6 +3,7 @@
 // =============================================================================
 
 @use 'tokens' as *;
+@use 'mixins' as *;
 
 .charsheet {
     // =========================================================================
@@ -19,7 +20,7 @@
         border: none;
         border-bottom: 1px dashed $zine-grey;
         padding: $spacing-xs $spacing-sm;
-        transition: border-color 0.2s;
+        @include transition(border-color, 0.2s);
 
         &:focus {
             outline: none;
@@ -61,17 +62,11 @@
     input[type="radio"] {
         appearance: none;
         -webkit-appearance: none;
-        width: 14px;
-        height: 14px;
-        min-width: 14px;
-        min-height: 14px;
-        max-width: 14px;
-        max-height: 14px;
-        flex-shrink: 0;
+        @include square-box(14px);
         border: 2px solid $zine-ink;
         cursor: pointer;
         position: relative;
-        transition: all 0.1s;
+        @include transition();
         margin: 0;
         padding: 0;
 
@@ -94,14 +89,11 @@
 
     .text-input,
     .number-input {
-        display: flex;
-        flex-direction: column;
+        @include flex-column(0);
 
         .label {
-            font-size: 9px;
-            text-transform: uppercase;
-            color: $zine-grey;
-            letter-spacing: 0.5px;
+            @include uppercase-label(9px, $zine-grey, 0.5px);
+            font-weight: normal;
         }
 
         input, textarea {
@@ -111,9 +103,8 @@
 
     .select-field {
         .field-label {
-            font-size: 9px;
-            text-transform: uppercase;
-            color: $zine-grey;
+            @include uppercase-label(9px, $zine-grey, 0);
+            font-weight: normal;
             display: block;
             margin-bottom: 2px;
         }
