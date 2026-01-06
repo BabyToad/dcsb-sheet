@@ -1,0 +1,125 @@
+// =============================================================================
+// INPUTS - Form fields, checkboxes, radios
+// =============================================================================
+
+@use 'tokens' as *;
+
+.charsheet {
+    // =========================================================================
+    // TEXT INPUTS
+    // =========================================================================
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        font-family: $font-typewriter;
+        font-size: 12px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px dashed $zine-grey;
+        padding: $spacing-xs $spacing-sm;
+        transition: border-color 0.2s;
+
+        &:focus {
+            outline: none;
+            border-bottom: 2px solid $zine-accent;
+        }
+
+        &::placeholder {
+            color: $form-grey-light;
+            font-style: italic;
+        }
+    }
+
+    textarea {
+        border: 1px dashed $zine-grey;
+        min-height: 60px;
+        resize: vertical;
+
+        &:focus {
+            border-color: $zine-accent;
+        }
+    }
+
+    select {
+        border: 1px solid $zine-grey;
+        border-radius: 0;
+        padding: $spacing-xs;
+        cursor: pointer;
+
+        &:focus {
+            border-color: $zine-accent;
+        }
+    }
+
+    // =========================================================================
+    // CHECKBOXES & RADIO - Hand-drawn feel
+    // =========================================================================
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        min-width: 14px;
+        min-height: 14px;
+        max-width: 14px;
+        max-height: 14px;
+        flex-shrink: 0;
+        border: 2px solid $zine-ink;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.1s;
+        margin: 0;
+        padding: 0;
+
+        &:checked {
+            background: $zine-ink;
+        }
+
+        &:hover {
+            border-color: $zine-accent;
+        }
+    }
+
+    input[type="radio"] {
+        border-radius: 50%;
+    }
+
+    // =========================================================================
+    // TEXT INPUTS WITH LABELS
+    // =========================================================================
+
+    .text-input,
+    .number-input {
+        display: flex;
+        flex-direction: column;
+
+        .label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: $zine-grey;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea {
+            width: 100%;
+        }
+    }
+
+    .select-field {
+        .field-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: $zine-grey;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        select {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,78 @@
+// =============================================================================
+// BASE STYLES - Root charsheet setup, resets, typography
+// =============================================================================
+
+@use 'tokens' as *;
+
+.charsheet {
+    font-family: $font-typewriter;
+    font-size: 12px;
+    color: $zine-ink;
+    background: $zine-paper;
+    padding: $spacing-lg;
+    max-width: 800px;
+
+    // Subtle scan lines (Roll20-safe, no data URLs)
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.01) 2px,
+            rgba(0,0,0,0.01) 4px
+        );
+
+    // Subtle vignette effect
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.05);
+
+    // Reset Roll20 defaults for common elements
+    div, span, label, textarea, button, h1, h2, h3 {
+        box-sizing: border-box;
+    }
+
+    label {
+        margin: 0;
+        padding: 0;
+        color: inherit;
+        display: inline-block;
+    }
+
+    // =========================================================================
+    // TYPOGRAPHY
+    // =========================================================================
+
+    h1 {
+        font-family: $font-mono;
+        font-size: $type-xl;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-family: $font-mono;
+        font-size: $type-md;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: $space-3 0 $space-2;
+    }
+
+    h3 {
+        font-family: $font-mono;
+        font-size: $type-base;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: $space-2 0;
+    }
+
+    h4 {
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $zine-grey;
+        margin: $spacing-sm 0;
+    }
+}

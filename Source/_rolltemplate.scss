@@ -1,0 +1,48 @@
+// =============================================================================
+// ROLL TEMPLATES
+// =============================================================================
+
+@use 'tokens' as *;
+
+.sheet-rolltemplate-dcsb-action,
+.sheet-rolltemplate-dcsb-fortune,
+.sheet-rolltemplate-dcsb-resistance {
+    font-family: $font-mono;
+    background: $form-paper;
+    border: 2px solid $form-ink;
+    padding: $space-3;
+    margin: $space-2 0;
+
+    .rolltemplate-container {
+        .rolltemplate-header {
+            border-bottom: 1px solid $form-ink;
+            padding-bottom: $space-2;
+            margin-bottom: $space-2;
+
+            .charname {
+                font-weight: bold;
+            }
+
+            .title {
+                text-transform: uppercase;
+                font-size: $type-sm;
+                color: $terminal-amber;
+            }
+        }
+
+        .rolltemplate-body {
+            .roll-result {
+                font-size: $type-lg;
+                font-weight: bold;
+            }
+        }
+
+        .rolltemplate-footer {
+            border-top: 1px solid $form-grey;
+            padding-top: $space-2;
+            margin-top: $space-2;
+            font-size: $type-sm;
+            color: $form-grey;
+        }
+    }
+}

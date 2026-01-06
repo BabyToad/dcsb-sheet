@@ -1,0 +1,173 @@
+// =============================================================================
+// LAYOUT - Columns, grids, sections
+// =============================================================================
+
+@use 'tokens' as *;
+
+.charsheet {
+    // =========================================================================
+    // TWO-COLUMN LAYOUT
+    // =========================================================================
+
+    .sheet-columns {
+        display: grid;
+        grid-template-columns: 55% 45%;
+        gap: $spacing-lg;
+        align-items: start;
+
+        @media (max-width: 700px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .left-column,
+    .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    // =========================================================================
+    // SECTIONS - Paper layers with stamps
+    // =========================================================================
+
+    .section {
+        margin-bottom: $space-5;
+        padding: $space-3;
+        position: relative;
+        background: $form-paper;
+
+        // Subtle shadow for depth
+        box-shadow: $shadow-paper;
+
+        // Dashed border like a form field
+        border: $border-dashed;
+    }
+
+    // Section header with box-drawing border (ANSI terminal aesthetic)
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+        margin-bottom: $space-3;
+        padding: $space-2 $space-3;
+        position: relative;
+        font-family: $font-mono;
+
+        // Box-drawing border using ::before for top line
+        &::before {
+            content: '┌' attr(data-section-title) '┐';
+            content: '┌──────────────────────────────────────────────────┐';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            font-family: $font-mono;
+            font-size: $type-sm;
+            color: $form-grey;
+            letter-spacing: -1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        // Box-drawing border using ::after for bottom line
+        &::after {
+            content: '└──────────────────────────────────────────────────┘';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            font-family: $font-mono;
+            font-size: $type-sm;
+            color: $form-grey;
+            letter-spacing: -1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+
+    // Section title text (inside box-drawing frame)
+    .section-stamp {
+        font-family: $font-mono;
+        font-size: $type-sm;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $form-ink;
+        flex-grow: 1;
+    }
+
+    // Hand-circled section number (reclamation layer - human annotation)
+    .section-number {
+        font-family: $font-mono;
+        font-size: $type-md;
+        font-weight: bold;
+        color: $terminal-amber;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        flex-shrink: 0;
+
+        // Hand-drawn circle effect (in amber - human annotation over corporate form)
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 2px solid $terminal-amber;
+            border-radius: 50%;
+            transform: rotate(5deg);
+        }
+
+        // Second slightly offset circle for hand-drawn feel
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border: 1px solid rgba($terminal-amber, 0.5);
+            border-radius: 50%;
+            transform: rotate(-3deg);
+        }
+    }
+
+    // =========================================================================
+    // TAB CONTENT
+    // =========================================================================
+
+    .tab-content {
+        display: none;
+    }
+
+    // =========================================================================
+    // IDENTITY GRID
+    // =========================================================================
+
+    .identity-grid {
+        .identity-row {
+            margin-bottom: $spacing-sm;
+
+            &.primary {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: $spacing-md;
+            }
+
+            &.classification {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: $spacing-md;
+            }
+
+            &.reset-row {
+                display: flex;
+                align-items: center;
+                gap: $spacing-md;
+                margin-top: $spacing-md;
+                padding-top: $spacing-sm;
+                border-top: 1px dashed $zine-grey;
+            }
+        }
+    }
+}

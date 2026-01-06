@@ -1,0 +1,282 @@
+// =============================================================================
+// CREW - Crew sheet specific sections
+// =============================================================================
+
+@use 'tokens' as *;
+
+.charsheet {
+    // =========================================================================
+    // STATS GRID
+    // =========================================================================
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-md;
+    }
+
+    .stat-label {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: $spacing-xs;
+    }
+
+    // =========================================================================
+    // TIER SELECTOR
+    // =========================================================================
+
+    .tier-selector {
+        display: flex;
+        gap: 2px;
+
+        .tier-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid $zine-ink;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input:checked + .tier-box {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+
+    // =========================================================================
+    // HOLD SELECTOR
+    // =========================================================================
+
+    .hold-selector {
+        display: flex;
+        gap: $spacing-sm;
+
+        .hold-option {
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        input:checked + .hold-option {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+
+    // =========================================================================
+    // REP/HEAT/WANTED TRACKS
+    // =========================================================================
+
+    .rep-track,
+    .heat-track,
+    .wanted-track {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+
+        .rep-box,
+        .heat-box,
+        .wanted-box {
+            width: 14px;
+            height: 14px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+        }
+
+        input:checked + .rep-box { background: $zine-ink; }
+        input:checked + .heat-box { background: $status-warning; border-color: $status-warning; }
+        input:checked + .wanted-box { background: $status-danger; border-color: $status-danger; }
+    }
+
+    // =========================================================================
+    // VAULT
+    // =========================================================================
+
+    .vault-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+
+        .vault-box {
+            width: 14px;
+            height: 14px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+
+            &:nth-child(4n) {
+                margin-right: $spacing-xs;
+            }
+        }
+
+        input:checked + .vault-box {
+            background: $status-good;
+            border-color: $status-good;
+        }
+    }
+
+    .coin-warning {
+        font-size: 9px;
+        color: $status-warning;
+        font-style: italic;
+    }
+
+    // =========================================================================
+    // UPGRADES
+    // =========================================================================
+
+    .upgrades-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-md;
+    }
+
+    .upgrade-category {
+        h4 {
+            border-bottom: 1px solid $zine-grey;
+            padding-bottom: $spacing-xs;
+            margin-bottom: $spacing-xs;
+        }
+    }
+
+    .upgrade-checkbox {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        cursor: pointer;
+        font-size: 10px;
+        padding: 2px 0;
+
+        .upgrade-box {
+            width: 10px;
+            height: 10px;
+            border: 1px solid $zine-ink;
+        }
+
+        input:checked + .upgrade-box {
+            background: $zine-ink;
+        }
+
+        .upgrade-cost {
+            color: $zine-grey;
+            margin-left: auto;
+        }
+    }
+
+    // =========================================================================
+    // COHORTS
+    // =========================================================================
+
+    .cohort-entry {
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        margin-bottom: $spacing-sm;
+
+        .cohort-header {
+            display: flex;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-xs;
+        }
+
+        .cohort-harm {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            margin: $spacing-xs 0;
+
+            .harm-label {
+                font-size: 10px;
+                text-transform: uppercase;
+            }
+
+            .harm-box {
+                width: 14px;
+                height: 14px;
+                border: 1px solid $zine-ink;
+                cursor: pointer;
+            }
+
+            input:checked + .harm-box {
+                background: $status-danger;
+                border-color: $status-danger;
+            }
+        }
+    }
+
+    // =========================================================================
+    // FACTION STATUS
+    // =========================================================================
+
+    .faction-legend {
+        font-size: 9px;
+        color: $zine-grey;
+        margin-bottom: $spacing-sm;
+        display: flex;
+        gap: $spacing-md;
+    }
+
+    .faction-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .status-track {
+            display: flex;
+            gap: 1px;
+
+            .status-pip {
+                width: 16px;
+                height: 16px;
+                border: 1px solid $zine-grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 8px;
+
+                &[data-value="-3"],
+                &[data-value="-2"],
+                &[data-value="-1"] {
+                    border-color: $status-danger;
+                }
+                &[data-value="1"],
+                &[data-value="2"],
+                &[data-value="3"] {
+                    border-color: $status-good;
+                }
+            }
+
+            input:checked + .status-pip {
+                background: $zine-ink;
+                color: $zine-paper;
+            }
+        }
+    }
+
+    // =========================================================================
+    // CLAIMS
+    // =========================================================================
+
+    .claim-entry {
+        display: grid;
+        grid-template-columns: auto 1fr 1fr;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .claim-check {
+            width: 14px;
+            height: 14px;
+        }
+    }
+}

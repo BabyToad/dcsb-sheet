@@ -1,0 +1,369 @@
+// =============================================================================
+// MODES - Tab switching, edit mode, display mode styling
+// =============================================================================
+
+@use 'tokens' as *;
+
+// =============================================================================
+// TAB SWITCHING (must be outside .charsheet - radio buttons are siblings)
+// =============================================================================
+
+.tab-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tab-radio[value="character"]:checked ~ .charsheet .character-content {
+    display: block;
+}
+
+.tab-radio[value="crew"]:checked ~ .charsheet .crew-content {
+    display: block;
+}
+
+// Active tab styling with accent underline
+.tab-radio[value="character"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_character"],
+.tab-radio[value="crew"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_crew"] {
+    background: $form-ink;
+    color: $form-paper;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: $terminal-amber;
+    }
+}
+
+// =============================================================================
+// EDIT MODE (must be outside .charsheet - checkbox is sibling)
+// =============================================================================
+
+// Hide the root-level checkbox
+.edit-mode-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+// -----------------------------------------------------------------------------
+// Display Mode (default - edit checkbox unchecked)
+// -----------------------------------------------------------------------------
+
+// Hide edit-only elements and repeating section controls
+.charsheet .edit,
+.charsheet .repcontrol,
+.charsheet .itemcontrol {
+    display: none;
+}
+
+// -----------------------------------------------------------------------------
+// Edit Mode (checkbox checked)
+// -----------------------------------------------------------------------------
+
+// Show edit elements, hide display elements
+.edit-mode-checkbox:checked ~ .charsheet .edit {
+    display: block;
+}
+
+.edit-mode-checkbox:checked ~ .charsheet .display {
+    display: none;
+}
+
+// Show repeating section add/modify/delete buttons
+.edit-mode-checkbox:checked ~ .charsheet .repcontrol,
+.edit-mode-checkbox:checked ~ .charsheet .itemcontrol {
+    display: block;
+}
+
+// Visual feedback - accent border when in edit mode
+.edit-mode-checkbox:checked ~ .charsheet {
+    outline: 2px solid $zine-accent;
+    outline-offset: -2px;
+}
+
+// Style the edit toggle label to show checked state
+.edit-mode-checkbox:checked ~ .charsheet .edit-toggle {
+    background: $zine-ink;
+    color: $zine-paper;
+}
+
+// =============================================================================
+// DISPLAY MODE STYLING
+// =============================================================================
+
+.charsheet {
+    // -------------------------------------------------------------------------
+    // Identity Section Display
+    // -------------------------------------------------------------------------
+    .identity-display {
+        padding: 0.5rem 0;
+
+        .identity-name-line {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .char-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            font-family: $font-mono;
+        }
+
+        .alias-wrapper {
+            font-style: italic;
+            color: $zine-grey;
+        }
+
+        .quote {
+            color: $zine-grey;
+        }
+
+        .identity-look {
+            font-size: 0.9em;
+            margin: 0.25rem 0;
+            font-style: italic;
+        }
+
+        .identity-classification {
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: $zine-grey;
+
+            .sep {
+                margin: 0 0.5em;
+            }
+
+            .playbook-value {
+                color: $zine-accent;
+                font-weight: bold;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Cybernetics/Augmentation Section Display
+    // -------------------------------------------------------------------------
+    .cyber-entry {
+        display: table;
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px dashed rgba($zine-grey, 0.3);
+
+        &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+    }
+
+    .cyber-installed {
+        display: table-cell;
+        width: 24px;
+        vertical-align: top;
+        padding-right: 0.5rem;
+        cursor: pointer;
+
+        .cyber-check {
+            display: none;
+        }
+
+        .installed-box {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid $zine-ink;
+            background: transparent;
+            position: relative;
+        }
+
+        .cyber-check:checked + .installed-box {
+            background: $zine-ink;
+
+            &::after {
+                content: '✓';
+                color: $zine-paper;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .cyber-content {
+        display: table-cell;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .cyber-display {
+        .cyber-header-display {
+            margin-bottom: 0.25rem;
+        }
+
+        .cyber-tier-badge {
+            display: inline-block;
+            background: $zine-ink;
+            color: $zine-paper;
+            padding: 0.1rem 0.35rem;
+            font-size: 0.75em;
+            font-weight: bold;
+            font-family: $font-typewriter;
+            margin-right: 0.5rem;
+        }
+
+        .cyber-name-display {
+            display: inline;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .cyber-desc-display {
+            display: block;
+            font-size: 0.9em;
+            color: $zine-grey;
+            line-height: 1.4;
+            padding-left: 0.5rem;
+            border-left: 2px solid rgba($zine-grey, 0.3);
+            margin-left: 0.25rem;
+            margin-top: 0.25rem;
+            white-space: pre-wrap;
+
+            &:empty {
+                display: none;
+            }
+        }
+    }
+
+    .cyber-edit {
+        .cyber-header-edit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cyber-tier-select select {
+            padding: 0.25rem;
+            font-weight: bold;
+        }
+
+        .cyber-name {
+            flex: 1;
+        }
+
+        .cyber-desc {
+            width: 100%;
+            min-height: 3rem;
+            font-size: 0.9em;
+        }
+    }
+
+    .capacity-hint {
+        font-size: 0.8em;
+        color: $zine-grey;
+        font-style: italic;
+        margin-left: 0.5rem;
+    }
+
+    // -------------------------------------------------------------------------
+    // Contacts Section Display
+    // -------------------------------------------------------------------------
+    .contact-entry {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0;
+    }
+
+    .contact-name-display {
+        font-weight: bold;
+    }
+
+    // -------------------------------------------------------------------------
+    // Items Section Display
+    // -------------------------------------------------------------------------
+    .item-display {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.25rem;
+
+        .item-name-display {
+            font-weight: bold;
+        }
+
+        .item-load-display,
+        .item-load-value {
+            font-size: 0.8em;
+            color: $zine-grey;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Vice Section Display
+    // -------------------------------------------------------------------------
+    .vice-display {
+        padding: 0.25rem 0;
+
+        .vice-type-display {
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .vice-sep {
+            margin-right: 0.5rem;
+        }
+
+        .vice-purveyor-display {
+            font-style: italic;
+        }
+
+        .vice-details-display {
+            color: $zine-grey;
+            margin-left: 0.5rem;
+
+            &::before {
+                content: '- ';
+            }
+
+            &:empty::before {
+                content: '';
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Trauma Conditions Display
+    // -------------------------------------------------------------------------
+    .trauma-conditions-display {
+        display: block;
+        font-style: italic;
+        color: $zine-grey;
+        margin-top: 0.25rem;
+    }
+
+    // -------------------------------------------------------------------------
+    // Notes Section Display
+    // -------------------------------------------------------------------------
+    .notes-display {
+        display: block;
+        white-space: pre-wrap;
+        font-family: $font-mono;
+        font-size: 0.9em;
+        line-height: 1.4;
+        padding: 0.5rem;
+        min-height: 3rem;
+        background: rgba($zine-grey, 0.05);
+        border: 1px dashed rgba($zine-grey, 0.3);
+    }
+}

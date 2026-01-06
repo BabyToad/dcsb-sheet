@@ -1,0 +1,585 @@
+// =============================================================================
+// CHARACTER - Character sheet specific sections
+// =============================================================================
+
+@use 'tokens' as *;
+
+.charsheet {
+    // =========================================================================
+    // ACTION RATINGS - Fakeradio Checkbox Pattern (Inverse Fill)
+    // =========================================================================
+
+    // Attribute blocks (vertical stack in right column)
+    .attribute-block {
+        margin-bottom: $spacing-sm;
+        padding: $spacing-sm;
+        border-left: 3px solid $zine-ink;
+        background: rgba(0,0,0,0.02);
+
+        .attribute-header-row {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-sm;
+
+            .attr-name {
+                margin: 0;
+                font-size: 11px;
+                font-weight: bold;
+                font-family: $font-typewriter;
+                text-transform: uppercase;
+                min-width: 55px;
+                background: transparent;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                color: $zine-ink;
+                text-align: left;
+                transition: color 0.15s;
+
+                &:hover {
+                    color: $zine-accent;
+                }
+            }
+        }
+
+        .attribute-xp {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            margin-bottom: $spacing-sm;
+
+            .xp-label {
+                font-size: 9px;
+                text-transform: uppercase;
+                color: $zine-grey;
+                min-width: 20px;
+            }
+        }
+    }
+
+    // Attribute rating track (fakeradio inverse-fill)
+    .attribute-track {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+
+        .fakeradio.zero {
+            display: none;
+        }
+
+        .fakeradio {
+            display: none;
+        }
+
+        .attr-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            max-width: 12px;
+            max-height: 12px;
+            border: 1px solid $zine-grey;
+            border-radius: 1px;
+            cursor: pointer;
+            display: block;
+            flex-shrink: 0;
+            flex-grow: 0;
+            background: $zine-grey;
+            transition: background 0.1s;
+            line-height: 0;
+            font-size: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        // Inverse fill: dots AFTER checked become empty
+        .fakeradio:checked ~ .fakeradio + .attr-dot {
+            background: transparent;
+        }
+    }
+
+    .action-list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+    }
+
+    // Action row (clickable name + dots)
+    .action-row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .action-name {
+            width: 75px;
+            font-family: $font-typewriter;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            // Remove button styling
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            color: $zine-ink;
+            transition: color 0.15s;
+
+            &:hover {
+                color: $zine-accent;
+            }
+        }
+
+        .action-dots {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+
+            .fakeradio.zero {
+                display: none;
+            }
+
+            .fakeradio {
+                display: none;
+            }
+
+            .dot {
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                min-height: 16px;
+                max-width: 16px;
+                max-height: 16px;
+                border: 2px solid $zine-ink;
+                border-radius: 1px;
+                display: block;
+                cursor: pointer;
+                transition: all 0.1s;
+                flex-shrink: 0;
+                flex-grow: 0;
+                background: $zine-ink;
+                line-height: 0;
+                font-size: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+            // Inverse fill: dots AFTER checked become empty
+            .fakeradio:checked ~ .fakeradio + .dot {
+                background: transparent;
+            }
+        }
+    }
+
+    // Playbook XP block
+    .playbook-xp-block {
+        margin-top: $spacing-sm;
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        background: rgba(0,0,0,0.02);
+
+        .xp-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-xs;
+
+            .xp-label {
+                font-size: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .xp-trigger-row {
+                margin-top: 2px;
+            }
+
+            .xp-trigger {
+                width: 100%;
+                font-size: 9px;
+                font-style: italic;
+                color: $zine-grey;
+                background: transparent;
+                border: none;
+                border-bottom: 1px dashed $zine-grey;
+                padding: 2px 0;
+                font-family: $font-typewriter;
+
+                &::placeholder {
+                    color: $form-grey-light;
+                    font-style: italic;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-bottom-color: $zine-accent;
+                }
+            }
+        }
+    }
+
+    // =========================================================================
+    // HARM TRACKS
+    // =========================================================================
+
+    .harm-block {
+        margin-bottom: $spacing-md;
+
+        &.mental {
+            .harm-header {
+                border-left: 3px solid $zine-accent;
+                padding-left: $spacing-sm;
+            }
+        }
+    }
+
+    .harm-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+
+        .harm-note {
+            font-size: 9px;
+            color: $zine-accent;
+            font-style: italic;
+        }
+    }
+
+    .harm-track {
+        .harm-level {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+            margin: $spacing-xs 0;
+            padding: $spacing-xs 0;
+            border-bottom: 1px dotted $zine-light-grey;
+
+            .level-num {
+                font-size: 14px;
+                font-weight: bold;
+                width: 20px;
+                text-align: center;
+            }
+
+            &.severe .level-num {
+                color: $status-danger;
+            }
+
+            &.moderate .level-num {
+                color: $status-warning;
+            }
+
+            .text-input {
+                flex: 1;
+            }
+        }
+    }
+
+    .healing-clock-wrapper {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .clock-label {
+            font-size: 9px;
+            text-transform: uppercase;
+        }
+    }
+
+    // =========================================================================
+    // ARMOR BLOCK
+    // =========================================================================
+
+    .armor-block {
+        .armor-track {
+            display: flex;
+            gap: $spacing-md;
+        }
+
+        .armor-checkbox {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-size: 10px;
+            text-transform: uppercase;
+
+            .armor-box {
+                width: 14px;
+                height: 14px;
+                min-width: 14px;
+                min-height: 14px;
+                border: 2px solid $zine-ink;
+                display: inline-block;
+                flex-shrink: 0;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+
+                &:checked + .armor-box {
+                    background: $zine-ink;
+                }
+            }
+        }
+    }
+
+    // =========================================================================
+    // EQUIPMENT
+    // =========================================================================
+
+    .load-selector {
+        margin-bottom: $spacing-sm;
+
+        .load-options {
+            display: flex;
+            gap: $spacing-md;
+        }
+
+        .load-option {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-size: 10px;
+
+            .load-box {
+                width: 12px;
+                height: 12px;
+                min-width: 12px;
+                min-height: 12px;
+                border: 2px solid $zine-ink;
+                border-radius: 1px;
+                flex-shrink: 0;
+            }
+
+            input[type="radio"] {
+                display: none;
+
+                &:checked + .load-box {
+                    background: $zine-accent;
+                    border-color: $zine-accent;
+                }
+            }
+        }
+    }
+
+    .load-tracker {
+        font-size: 10px;
+        margin-bottom: $spacing-sm;
+        color: $zine-grey;
+
+        .load-num {
+            width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    .equipment-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-md;
+    }
+
+    .item-checkbox {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        cursor: pointer;
+        font-size: 10px;
+        padding: $spacing-xs 0;
+
+        .item-box {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            border: 1px solid $zine-ink;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+
+            &:checked + .item-box {
+                background: $zine-ink;
+            }
+
+            &:checked ~ .item-name {
+                text-decoration: line-through;
+                color: $zine-grey;
+            }
+        }
+
+        .item-load {
+            color: $zine-grey;
+            margin-left: auto;
+        }
+    }
+
+    // =========================================================================
+    // CYBERNETICS
+    // =========================================================================
+
+    .cyber-capacity {
+        font-size: 11px;
+        margin-bottom: $spacing-sm;
+        padding: $spacing-xs $spacing-sm;
+        background: rgba(0,0,0,0.03);
+        border-left: 3px solid $zine-accent;
+
+        .cyber-used,
+        .cyber-max {
+            width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    // =========================================================================
+    // VICE
+    // =========================================================================
+
+    .vice-block {
+        .vice-fields {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: $spacing-sm;
+            align-items: end;
+        }
+    }
+
+    // =========================================================================
+    // CIRCLES (Contacts)
+    // =========================================================================
+
+    .circles-intro {
+        font-style: italic;
+        color: $zine-grey;
+        margin-bottom: $spacing-sm;
+        font-size: 11px;
+    }
+
+    .contact-entry {
+        display: grid;
+        grid-template-columns: auto 1fr 2fr;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dotted $zine-light-grey;
+        align-items: center;
+
+        .contact-status {
+            display: flex;
+            gap: 2px;
+
+            input[type="radio"] {
+                display: none;
+            }
+
+            .status-friend,
+            .status-neutral,
+            .status-rival {
+                width: 18px;
+                height: 18px;
+                min-width: 18px;
+                min-height: 18px;
+                border: 1px solid $zine-grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 10px;
+                flex-shrink: 0;
+            }
+
+            input:checked + .status-friend {
+                background: $status-good;
+                color: white;
+                border-color: $status-good;
+            }
+            input:checked + .status-neutral {
+                background: $zine-grey;
+                color: white;
+            }
+            input:checked + .status-rival {
+                background: $status-danger;
+                color: white;
+                border-color: $status-danger;
+            }
+        }
+    }
+
+    // =========================================================================
+    // NOTES
+    // =========================================================================
+
+    .notes-area {
+        width: 100%;
+        min-height: 100px;
+        font-family: $font-typewriter;
+        font-size: 11px;
+        line-height: 1.5;
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        background: repeating-linear-gradient(
+            transparent,
+            transparent 18px,
+            $zine-light-grey 18px,
+            $zine-light-grey 19px
+        );
+    }
+
+    // =========================================================================
+    // BUTTONS
+    // =========================================================================
+
+    .reset-btn {
+        padding: $spacing-xs $spacing-md;
+        font-family: $font-typewriter;
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: transparent;
+        border: 1px solid $status-warning;
+        color: $status-warning;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        &:hover {
+            background: $status-warning;
+            color: $zine-paper;
+        }
+    }
+
+    .reset-hint {
+        font-size: 9px;
+        font-style: italic;
+        color: $zine-grey;
+    }
+
+    .disengage-btn {
+        width: 100%;
+        padding: $spacing-sm;
+        margin-top: $spacing-sm;
+        font-family: $font-typewriter;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: $zine-paper;
+        border: 2px solid $zine-ink;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        &:hover {
+            background: $zine-ink;
+            color: $zine-paper;
+        }
+    }
+}
