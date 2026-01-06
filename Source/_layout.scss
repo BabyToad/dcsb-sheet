@@ -135,6 +135,13 @@
                 @include grid(repeat(3, 1fr), $spacing-md);
             }
 
+            &.vice-row {
+                @include grid(1fr 1fr 1fr, $spacing-md);
+                margin-top: $spacing-sm;
+                padding-top: $spacing-sm;
+                border-top: 1px dashed $zine-grey;
+            }
+
             &.reset-row {
                 @include flex-row($spacing-md);
                 margin-top: $spacing-md;
@@ -142,5 +149,14 @@
                 border-top: 1px dashed $zine-grey;
             }
         }
+    }
+
+    // Vice action button (always visible)
+    .vice-action {
+        @include flex-row($spacing-sm);
+        margin-top: $spacing-sm;
+        padding: $spacing-sm;
+        background: rgba($form-ink, 0.03);
+        border-left: 3px solid $terminal-amber;
     }
 }

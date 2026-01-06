@@ -115,3 +115,28 @@ on("change:playbook", eventInfo => {
 on("clicked:reset_to_playbook", () => {
     resetToPlaybookDefaults();
 });
+
+// =============================================================================
+// INDULGE VICE ROLL
+// =============================================================================
+
+on("clicked:indulge_vice", () => {
+    getAttrs(['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type'], v => {
+        const acuity = int(v.acuity_rating);
+        const grit = int(v.grit_rating);
+        const resolve = int(v.resolve_rating);
+        const charName = v.character_name || 'Unknown';
+        const viceType = v.vice_type || 'Vice';
+
+        // Roll lowest attribute (BitD rules)
+        const lowestRating = Math.min(acuity, grit, resolve);
+        const rollFormula = buildRollFormula(lowestRating);
+
+        startRoll(
+            `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=Indulge ${viceType}}} {{roll=[[${rollFormula}]]}} {{notes=Clear stress equal to highest die. 6+ may overindulge.}}`,
+            results => {
+                finishRoll(results.rollId, {});
+            }
+        );
+    });
+});

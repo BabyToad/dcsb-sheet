@@ -173,9 +173,26 @@ mixin upgrade-checkbox(name, label, cost)
             span.upgrade-cost= `(${cost})`
 
 //- ═══════════════════════════════════════════════════════════════
+//- SECTION EDIT TOGGLE
+//- Per-section edit mode with pencil icon
+//- ═══════════════════════════════════════════════════════════════
+
+//- Section header with edit toggle
+//- @param {string} name - Section identifier (e.g., "identity", "cyber")
+//- @param {string} stamp - Display text for section stamp
+//- @param {string} number - Section number (e.g., "01", "02")
+mixin section-header-editable(name, stamp, number)
+    input.section-edit-toggle(type="checkbox", name=`attr_edit_${name}`, id=`edit_${name}`)
+    .section-header
+        .section-stamp= stamp
+        .section-number-group
+            .section-number= number
+            label.section-edit-btn(for=`edit_${name}`, title="Edit this section") ✎
+
+//- ═══════════════════════════════════════════════════════════════
 //- EDIT/DISPLAY MODE COMPONENTS
 //- These output both edit and display versions of fields
-//- CSS toggles visibility based on .edit-mode-checkbox state
+//- CSS toggles visibility based on section edit toggle state
 //- ═══════════════════════════════════════════════════════════════
 
 //- Text field with edit/display modes

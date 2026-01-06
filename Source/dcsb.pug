@@ -8,8 +8,7 @@ include pug/mixins.pug
 input(type="radio", name="attr_sheet_tab", value="character", checked, id="tab_character").tab-radio
 input(type="radio", name="attr_sheet_tab", value="crew", id="tab_crew").tab-radio
 
-//- Edit mode checkbox MUST be at root level for CSS sibling selectors
-input(type="checkbox", name="attr_edit_mode", value="1", id="edit_mode_toggle").edit-mode-checkbox
+//- Edit mode is now per-section (checkbox inside each editable section)
 
 //- Main container
 .charsheet

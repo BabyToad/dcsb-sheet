@@ -13,11 +13,11 @@
         //- Framing: Corporate intake form / employee file
         //- ───────────────────────────────────────────────────────────
         .section.identity
-            .section-header
-                .section-stamp SUBJECT IDENTIFICATION
-                .section-number 01
+            +section-header-editable("identity", "SUBJECT IDENTIFICATION", "01")
 
-            //- Display mode - compact read-only view
+            //- ═══════════════════════════════════════════════════════════
+            //- DISPLAY MODE - Unified dossier view
+            //- ═══════════════════════════════════════════════════════════
             .display.identity-display
                 .identity-name-line
                     span.char-name(name="attr_character_name")
@@ -25,7 +25,7 @@
                         span.quote "
                         span.alias-value(name="attr_alias")
                         span.quote "
-                .identity-look(name="attr_look")
+                span.identity-look(name="attr_look")
                 .identity-classification
                     span.playbook-value(name="attr_playbook")
                     span.sep |
@@ -33,7 +33,18 @@
                     span.sep |
                     span.background-value(name="attr_background")
 
-            //- Edit mode - full form
+                //- Vice integrated into display
+                .identity-vice
+                    .vice-header
+                        span.vice-label VICE:
+                        span.vice-type-value(name="attr_vice_type")
+                    .vice-body
+                        span.vice-purveyor-value(name="attr_vice_purveyor")
+                        span.vice-details-value(name="attr_vice_details")
+
+            //- ═══════════════════════════════════════════════════════════
+            //- EDIT MODE - Full form with all fields
+            //- ═══════════════════════════════════════════════════════════
             .edit.identity-grid
                 .identity-row.primary
                     +text-input("character_name", "LEGAL_NAME")
@@ -78,9 +89,31 @@
                                 option(value="underworld", data-i18n="UNDERWORLD") Underworld
                                 option(value="fringe", data-i18n="FRINGE") Fringe
 
+                //- Vice fields in edit mode
+                .identity-row.vice-row
+                    .select-field.vice-type-field
+                        label
+                            span.field-label Vice
+                            select(name="attr_vice_type")
+                                option(value="") --
+                                option(value="Faith") Faith
+                                option(value="Gambling") Gambling
+                                option(value="Luxury") Luxury
+                                option(value="Obligation") Obligation
+                                option(value="Pleasure") Pleasure
+                                option(value="Stupor") Stupor
+                                option(value="Weird") Weird
+                    +text-input("vice_purveyor", "PURVEYOR")
+                    +text-input("vice_details", "DETAILS")
+
                 .identity-row.reset-row
                     button.reset-btn(type="action", name="act_reset_to_playbook") Reset to Playbook Defaults
                     span.reset-hint Clears items, abilities, and actions
+
+            //- Indulge Vice button - always visible (it's an action)
+            .vice-action
+                button.vice-roll-btn(type="action", name="act_indulge_vice") Indulge Vice
+                span.vice-hint Clears mental harm
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 3: CONDITION REPORT
@@ -154,9 +187,7 @@
         //- Description always visible (you need to know what your augs do)
         //- ───────────────────────────────────────────────────────────
         .section.cybernetics
-            .section-header
-                .section-stamp AUGMENTATION RECORD
-                .section-number 04
+            +section-header-editable("cyber", "AUGMENTATION RECORD", "04")
 
             .cyber-capacity
                 span.capacity-label(data-i18n="CAPACITY") Capacity:
@@ -196,81 +227,38 @@
                                 textarea(name="attr_cyber_desc", placeholder="Description & effects - what does this augment let you do?").cyber-desc
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: VICE
-        //- Framing: Handwritten notes / off-the-record intel
-        //- ───────────────────────────────────────────────────────────
-        .section.vice
-            .section-header
-                .section-stamp VICE
-                .section-number 06
-
-            .vice-block
-                //- Display mode - compact vice summary
-                .display.vice-display
-                    span.vice-type-display(name="attr_vice_type")
-                    span.vice-sep :
-                    span.vice-purveyor-display(name="attr_vice_purveyor")
-                    span.vice-details-display(name="attr_vice_details")
-
-                //- Edit mode - full form
-                .edit.vice-fields
-                    .select-field
-                        select(name="attr_vice_type")
-                            option(value="") --
-                            option(value="faith", data-i18n="FAITH") Faith
-                            option(value="gambling", data-i18n="GAMBLING") Gambling
-                            option(value="luxury", data-i18n="LUXURY") Luxury
-                            option(value="obligation", data-i18n="OBLIGATION") Obligation
-                            option(value="pleasure", data-i18n="PLEASURE") Pleasure
-                            option(value="stupor", data-i18n="STUPOR") Stupor
-                            option(value="weird", data-i18n="WEIRD") Weird
-                    +text-input("vice_purveyor", "PURVEYOR")
-                    +text-input("vice_details", "DETAILS")
-
-        //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: CIRCLES
-        //- Framing: Contact cards / post-it notes / rolodex
+        //- SECTION 6: CIRCLES
+        //- Framing: Rolodex cards / contact file
         //- ───────────────────────────────────────────────────────────
         .section.circles
-            .section-header
-                .section-stamp CIRCLES
-                .section-number 07
+            +section-header-editable("circles", "CIRCLES", "06")
 
             .circles-intro(data-i18n="CIRCLES_DESC") "I know a guy..."
 
-            +repeating("contacts")
-                .contact-entry
-                    //- Status radios always visible (small, useful in play)
-                    .contact-status
-                        input(type="radio", name="attr_contact_relation", value="friend", id="contact_friend")
-                        label(for="contact_friend").status-friend ✓
-                        input(type="radio", name="attr_contact_relation", value="neutral", checked, id="contact_neutral")
-                        label(for="contact_neutral").status-neutral ○
-                        input(type="radio", name="attr_contact_relation", value="rival", id="contact_rival")
-                        label(for="contact_rival").status-rival ✗
+            .contacts-grid
+                +repeating("contacts")
+                    .contact-card
+                        //- Status badge - colored indicator at top
+                        .contact-status
+                            label.status-option.status-friend(title="Friend")
+                                input(type="radio", name="attr_contact_relation", value="friend")
+                                span.status-badge ✓
+                            label.status-option.status-neutral(title="Neutral")
+                                input(type="radio", name="attr_contact_relation", value="neutral", checked)
+                                span.status-badge ○
+                            label.status-option.status-rival(title="Rival")
+                                input(type="radio", name="attr_contact_relation", value="rival")
+                                span.status-badge ✗
 
-                    //- Display mode - just the name
-                    span.display.contact-name-display(name="attr_contact_name")
+                        //- Display mode - name and description as text
+                        .contact-display.display
+                            span.contact-name(name="attr_contact_name")
+                            span.contact-desc(name="attr_contact_desc")
 
-                    //- Edit mode - name and description inputs
-                    .edit.contact-edit
-                        input(type="text", name="attr_contact_name", placeholder="Name").contact-name
-                        input(type="text", name="attr_contact_desc", placeholder="Description / usefulness").contact-desc
-
-        //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: NOTES
-        //- Framing: Margin scrawl / personal annotations
-        //- ───────────────────────────────────────────────────────────
-        .section.notes
-            .section-header
-                .section-stamp NOTES
-                .section-number 08
-
-            //- Display mode - read-only text
-            span.display.notes-display(name="attr_notes")
-
-            //- Edit mode - textarea
-            textarea.edit.notes-area(name="attr_notes", placeholder="Personal notes, background details, mission logs...")
+                        //- Edit mode - editable inputs
+                        .contact-edit.edit
+                            input.contact-name-input(type="text", name="attr_contact_name", placeholder="Contact name")
+                            input.contact-desc-input(type="text", name="attr_contact_desc", placeholder="Role / usefulness")
 
     //- ═══════════════════════════════════════════════════════════════
     //- RIGHT COLUMN
@@ -342,9 +330,7 @@
         //- Framing: Quartermaster checklist / gear loadout
         //- ───────────────────────────────────────────────────────────
         .section.equipment
-            .section-header
-                .section-stamp EQUIPMENT MANIFEST
-                .section-number 05
+            +section-header-editable("equipment", "EQUIPMENT MANIFEST", "05")
 
             .load-selector
                 .load-label(data-i18n="LOAD") LOAD
@@ -398,3 +384,16 @@
                             .edit.item-edit
                                 input(type="text", name="attr_item_name", placeholder="Item name")
                                 input(type="number", name="attr_item_load", value="1", min="0", max="6")
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 7: NOTES
+        //- Framing: Margin scrawl / personal annotations
+        //- ───────────────────────────────────────────────────────────
+        .section.notes
+            +section-header-editable("notes", "NOTES", "07")
+
+            //- Display mode - read-only text
+            span.display.notes-display(name="attr_notes")
+
+            //- Edit mode - textarea
+            textarea.edit.notes-area(name="attr_notes", placeholder="Personal notes, background details, mission logs...")

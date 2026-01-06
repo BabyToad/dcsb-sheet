@@ -41,56 +41,130 @@
 }
 
 // =============================================================================
-// EDIT MODE (must be outside .charsheet - checkbox is sibling)
+// PER-SECTION EDIT MODE
 // =============================================================================
 
-// Hide the root-level checkbox
-.edit-mode-checkbox {
+// Hide the section edit toggle checkbox
+.section-edit-toggle {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
 
 // -----------------------------------------------------------------------------
-// Display Mode (default - edit checkbox unchecked)
+// Default State (display mode)
 // -----------------------------------------------------------------------------
 
-// Hide edit-only elements and repeating section controls
+// Hide edit-only elements and repcontrol by default
+// Note: itemcontrol is managed by Roll20's Modify button, don't override it
 .charsheet .edit,
-.charsheet .repcontrol,
-.charsheet .itemcontrol {
+.charsheet .repcontrol {
     display: none;
 }
 
 // -----------------------------------------------------------------------------
-// Edit Mode (checkbox checked)
+// Section Edit Mode (per-section toggle)
 // -----------------------------------------------------------------------------
 
-// Show edit elements, hide display elements
-.edit-mode-checkbox:checked ~ .charsheet .edit {
+// When section toggle is checked, show edit elements within that section
+// Need to cover both direct siblings and nested elements
+.section-edit-toggle:checked ~ .edit,
+.section-edit-toggle:checked ~ * .edit {
     display: block;
 }
 
-.edit-mode-checkbox:checked ~ .charsheet .display {
+.section-edit-toggle:checked ~ .display,
+.section-edit-toggle:checked ~ * .display {
     display: none;
 }
 
-// Show repeating section add/modify/delete buttons
-.edit-mode-checkbox:checked ~ .charsheet .repcontrol,
-.edit-mode-checkbox:checked ~ .charsheet .itemcontrol {
+// Show repeating section controls when in edit mode
+// Note: itemcontrol visibility is also controlled by Roll20's Modify button
+.section-edit-toggle:checked ~ .repcontrol,
+.section-edit-toggle:checked ~ * .repcontrol {
     display: block;
 }
 
-// Visual feedback - accent border when in edit mode
-.edit-mode-checkbox:checked ~ .charsheet {
-    outline: 2px solid $zine-accent;
-    outline-offset: -2px;
+// Don't force itemcontrol - let Roll20's Modify button control it
+// We just ensure it's not hidden by our base rules when modify is active
+
+// Style the repeating section controls
+.repcontrol {
+    margin-top: $spacing-sm;
+    padding: $spacing-xs;
+    background: rgba($form-ink, 0.05);
+
+    button {
+        font-family: $font-mono;
+        font-size: $type-xs;
+        padding: $spacing-xs $spacing-sm;
+        cursor: pointer;
+        margin-right: $spacing-xs;
+    }
 }
 
-// Style the edit toggle label to show checked state
-.edit-mode-checkbox:checked ~ .charsheet .edit-toggle {
+.itemcontrol {
+    position: relative;
+    z-index: 10;
+    margin-bottom: $spacing-xs;
+    padding: $spacing-xs;
+    background: rgba($terminal-amber, 0.1);
+    border: 1px dashed $terminal-amber;
+
+    button {
+        font-family: $font-mono;
+        font-size: $type-xs;
+        padding: $spacing-xs $spacing-sm;
+        cursor: pointer;
+        margin-right: $spacing-xs;
+        background: $form-paper;
+        border: 1px solid $form-ink;
+
+        &:hover {
+            background: $terminal-amber;
+        }
+    }
+}
+
+// Visual feedback - amber left border when section is in edit mode
+.section-edit-toggle:checked ~ .section-header {
+    border-left: 3px solid $terminal-amber;
+    margin-left: -3px;
+}
+
+// Style the edit button when section is in edit mode
+.section-edit-toggle:checked ~ .section-header .section-edit-btn {
     background: $terminal-amber;
     color: $form-ink;
+}
+
+// -----------------------------------------------------------------------------
+// Section Edit Button Styling
+// -----------------------------------------------------------------------------
+
+.section-number-group {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+}
+
+.section-edit-btn {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid $zine-grey;
+    color: $zine-grey;
+    @include transition();
+
+    &:hover {
+        border-color: $terminal-amber;
+        color: $terminal-amber;
+    }
 }
 
 // =============================================================================
@@ -125,9 +199,14 @@
         }
 
         .identity-look {
+            display: block;
             font-size: 0.9em;
             margin: 0.25rem 0;
             font-style: italic;
+
+            &:empty {
+                display: none;
+            }
         }
 
         .identity-classification {
@@ -143,6 +222,66 @@
             .playbook-value {
                 color: $zine-accent;
                 font-weight: bold;
+            }
+        }
+
+        // Vice integrated into identity display
+        .identity-vice {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed $zine-grey;
+            font-family: $font-mono;
+
+            .vice-header {
+                font-size: 0.85em;
+                margin-bottom: 0.25rem;
+
+                .vice-label {
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    color: $zine-grey;
+                    margin-right: 0.25em;
+                }
+
+                .vice-type-value {
+                    color: $terminal-amber;
+                    font-weight: bold;
+                    text-transform: uppercase;
+
+                    &:empty::after {
+                        content: '???';
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+            .vice-body {
+                padding-left: 0.5rem;
+                border-left: 2px solid $terminal-amber;
+
+                .vice-purveyor-value {
+                    display: block;
+                    font-weight: bold;
+                    font-size: 0.95em;
+
+                    &:empty::after {
+                        content: 'No purveyor set...';
+                        color: $form-grey-light;
+                        font-weight: normal;
+                        font-style: italic;
+                    }
+                }
+
+                .vice-details-value {
+                    display: block;
+                    font-size: 0.85em;
+                    color: $zine-grey;
+                    font-style: italic;
+
+                    &:empty {
+                        display: none;
+                    }
+                }
             }
         }
     }
@@ -275,47 +414,7 @@
     // -------------------------------------------------------------------------
     // Contacts Section Display
     // -------------------------------------------------------------------------
-    .contact-entry {
-        @include flex-row(0.5rem);
-        padding: 0.25rem 0;
-    }
-
-    .contact-name-display {
-        font-weight: bold;
-    }
-
-    // -------------------------------------------------------------------------
-    // Vice Section Display
-    // -------------------------------------------------------------------------
-    .vice-display {
-        padding: 0.25rem 0;
-
-        .vice-type-display {
-            font-weight: bold;
-            text-transform: capitalize;
-        }
-
-        .vice-sep {
-            margin-right: 0.5rem;
-        }
-
-        .vice-purveyor-display {
-            font-style: italic;
-        }
-
-        .vice-details-display {
-            color: $zine-grey;
-            margin-left: 0.5rem;
-
-            &::before {
-                content: '- ';
-            }
-
-            &:empty::before {
-                content: '';
-            }
-        }
-    }
+    // (Styling moved to _character.scss - contact-card component)
 
     // -------------------------------------------------------------------------
     // Trauma Conditions Display

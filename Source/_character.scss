@@ -374,63 +374,174 @@
     }
 
     // =========================================================================
-    // VICE
+    // VICE - Indulge button styling
     // =========================================================================
 
-    .vice-block {
-        .vice-fields {
-            @include grid(auto 1fr 1fr, $spacing-sm);
-            align-items: end;
+    .vice-roll-btn {
+        font-family: $font-mono;
+        font-size: $type-sm;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: $form-ink;
+        color: $form-paper;
+        border: none;
+        padding: $spacing-xs $spacing-md;
+        cursor: pointer;
+        @include transition();
+
+        &:hover {
+            background: $terminal-amber;
+            color: $form-ink;
         }
     }
 
+    .vice-hint {
+        font-family: $font-mono;
+        font-size: $type-xs;
+        color: $form-grey;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
     // =========================================================================
-    // CIRCLES (Contacts)
+    // CIRCLES (Contacts) - Rolodex card aesthetic
     // =========================================================================
 
     .circles-intro {
+        font-family: $font-mono;
         font-style: italic;
         color: $zine-grey;
-        margin-bottom: $spacing-sm;
+        margin-bottom: $spacing-md;
         font-size: 11px;
     }
 
-    .contact-entry {
-        @include grid(auto 1fr 2fr, $spacing-sm);
-        padding: $spacing-xs 0;
-        border-bottom: 1px dotted $zine-light-grey;
-        align-items: center;
+    .contacts-grid {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+    }
 
+    .contact-card {
+        position: relative;
+        background: $form-paper;
+        border: 1px solid $form-ink;
+        border-left: 3px solid $zine-grey;
+        padding: $spacing-sm $spacing-md;
+        font-family: $font-mono;
+
+        // Slight alternating rotation for rolodex feel
+        &:nth-child(odd) {
+            transform: rotate(-0.3deg);
+        }
+        &:nth-child(even) {
+            transform: rotate(0.2deg);
+        }
+
+        // Status controls at top right
         .contact-status {
-            @include flex-row(2px, stretch);
+            position: absolute;
+            top: $spacing-xs;
+            right: $spacing-xs;
+            display: flex;
+            gap: 2px;
 
-            input[type="radio"] {
-                @include hidden-checkbox-base();
-            }
-
-            .status-friend,
-            .status-neutral,
-            .status-rival {
-                @include square-box(18px);
-                border: 1px solid $zine-grey;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            .status-option {
                 cursor: pointer;
-                font-size: 10px;
+
+                input[type="radio"] {
+                    @include hidden-checkbox-base();
+                }
+
+                .status-badge {
+                    @include square-box(18px);
+                    border: 1px solid $zine-grey;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 10px;
+                    background: $form-paper;
+                    @include transition();
+                }
+
+                &:hover .status-badge {
+                    border-color: $form-ink;
+                }
             }
 
-            input:checked + .status-friend {
-                @include checkbox-checked-fill($status-good, $status-good);
+            // Friend - amber accent (flagged as useful)
+            .status-friend input:checked + .status-badge {
+                background: $terminal-amber;
+                border-color: $terminal-amber;
+                color: $form-ink;
+            }
+
+            // Neutral - grey (standard contact)
+            .status-neutral input:checked + .status-badge {
+                background: $zine-grey;
+                border-color: $zine-grey;
                 color: white;
             }
-            input:checked + .status-neutral {
-                @include checkbox-checked-fill($zine-grey);
+
+            // Rival - dark/ink (marked as hostile)
+            .status-rival input:checked + .status-badge {
+                background: $form-ink;
+                border-color: $form-ink;
                 color: white;
             }
-            input:checked + .status-rival {
-                @include checkbox-checked-fill($status-danger, $status-danger);
-                color: white;
+        }
+
+        // Update left border color based on selection
+        &:has(.status-friend input:checked) {
+            border-left-color: $terminal-amber;
+        }
+        &:has(.status-rival input:checked) {
+            border-left-color: $form-ink;
+        }
+
+        // Display mode content
+        .contact-display {
+            padding-right: 60px; // Space for status badges
+
+            .contact-name {
+                display: block;
+                font-weight: bold;
+                font-size: $type-md;
+                margin-bottom: 2px;
+
+                &:empty::after {
+                    content: 'Contact name...';
+                    color: $form-grey-light;
+                    font-weight: normal;
+                    font-style: italic;
+                }
+            }
+
+            .contact-desc {
+                display: block;
+                font-size: $type-sm;
+                color: $zine-grey;
+
+                &:empty {
+                    display: none;
+                }
+            }
+        }
+
+        // Edit mode content - NO display property here (let mode toggle handle it)
+        .contact-edit {
+            padding-right: 60px;
+
+            .contact-name-input {
+                width: 100%;
+                font-weight: bold;
+                font-size: $type-md;
+                margin-bottom: $spacing-xs;
+            }
+
+            .contact-desc-input {
+                width: 100%;
+                font-size: $type-sm;
             }
         }
     }
