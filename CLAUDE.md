@@ -21,61 +21,84 @@ npm run dev          # Watch mode with auto-rebuild
 dcsb-sheet/
 ├── Source/
 │   ├── dcsb.pug              # Main template entry point
-│   ├── dcsb.scss             # All styles
+│   ├── dcsb.scss             # Main styles (imports tokens & mixins)
+│   ├── _tokens.scss          # Design tokens (colors, typography, spacing)
+│   ├── _mixins.scss          # SCSS mixins (box patterns, flex, typography)
 │   ├── Roll20.d.ts           # Roll20 API type definitions
 │   ├── tsconfig.json         # TypeScript config
 │   ├── workers.js            # Compiled sheet workers (generated)
 │   ├── pug/
-│   │   ├── mixins.pug        # Reusable components
+│   │   ├── mixins.pug        # Reusable components (+checkbox-track, etc.)
 │   │   ├── header.pug        # Tab navigation
 │   │   ├── character.pug     # PC sheet
 │   │   ├── crew.pug          # Crew sheet
 │   │   └── rolltemplate.pug  # Roll templates
 │   └── ts/
+│       ├── constants.ts      # Game constants (DICE, LOAD, ROLL_TEMPLATES, etc.)
 │       ├── calculations.ts   # Auto-calculation functions
 │       ├── eventHandlers.ts  # Event bindings
-│       └── constants.ts      # Game data (actions, playbooks, etc.)
+│       └── playbookData.ts   # Playbook-specific data
 ├── dcsb.html                 # Compiled output (generated)
 ├── dcsb.css                  # Compiled output (generated)
+├── STYLE_GUIDE.md            # Visual design documentation
 ├── translation.json          # i18n strings
 ├── sheet.json               # Roll20 sheet metadata
 └── package.json
 ```
 
-## Visual Design: Underground Zine
+## Visual Design: Reclaimed Corporate Form
 
-The sheet uses a diegetic "underground zine" aesthetic - a photocopied document passed between runners. Key elements:
+The sheet uses a diegetic "reclaimed corporate form" aesthetic - a corporate intake document liberated from Babel's networks, annotated by runners who've made it their own.
 
-- High contrast B&W base with spot color accent
-- Typewriter/hand-drawn typography
-- Paper texture, photocopier artifacts
-- Hand-annotated feel (circled items, margin notes)
+**See `STYLE_GUIDE.md` for comprehensive documentation.**
 
-### Color Palette (Confirmed Phase 2)
+### Concept
+
+This is a corporate intake form - the kind Babel's corps use to process wage-slaves. But it's been **liberated from the network**, passed hand-to-hand through the underworld, annotated by runners. The aesthetic tells a story: corporations made this to dehumanize you, but we've taken it back.
+
+### Visual Layers
+
+1. **Corporate Brutalist (Base)** - Grey institutional paper, monospace typography, numbered sections, form fields
+2. **Terminal/Network (ANSI)** - Box-drawing borders (┌─┐│└─┘), amber accent, terminal feel
+3. **Reclamation (Punk/Samizdat)** - Hand-circled section numbers, human annotations
+4. **Vernacular Babel** - Street culture traces, label-maker aesthetic
+
+### Color Palette
 
 ```scss
-$zine-paper: #f5f5f0;      // Aged photocopy paper
-$zine-ink: #1a1a1a;        // High contrast black
-$zine-grey: #666666;       // Photocopier grey
-$zine-accent: #ff1493;     // Neon pink (confirmed)
-$status-good: #2d5a27;     // Dark green
-$status-warning: #cc7700;  // Orange
-$status-danger: #8b0000;   // Dark red
+// Base (Corporate Brutalist)
+$form-paper: #e5e5e0;           // Grey government form paper
+$form-ink: #1a1a1a;             // Black ink
+$form-grey: #888888;            // Bureaucratic grey
+
+// Accent (Terminal/Network)
+$terminal-amber: #ffb000;       // Amber phosphor - PRIMARY ACCENT
+
+// Status
+$status-good: #2d5a27;          // Dark green
+$status-warning: #cc7700;       // Orange
+$status-danger: #8b0000;        // Dark red (harm, trauma)
 ```
 
-### Visual Elements (Phase 2)
+### Visual Elements
 
 | Element | Treatment |
 |---------|-----------|
-| Section headers | Rubber stamp style, slight rotation, ink bleed effect |
-| Section numbers | Hand-circled in accent pink, double circle for hand-drawn feel |
-| Tabs | Folder tab shape (clip-path), hover lift, accent underline when active |
-| Checkboxes | Hand-drawn imperfection, ink bleed on check, X marks for trauma |
-| Paper texture | Layered noise + subtle scan lines + vignette |
-| Sections | Dashed borders, tape marks in corners, paper shadow stack |
-| Inputs | Dashed underline, accent color on focus |
-| XP boxes | Accent pink when filled |
-| Heat gauge | Danger red when filled, hazard stripe background |
+| Section headers | Box-drawing borders (┌──┐), monospace, all caps |
+| Section numbers | Hand-circled in amber (human annotation over corporate form) |
+| Tabs | Monospace, amber underline when active |
+| Checkboxes | Amber fill when checked (not black) |
+| Paper texture | Subtle scan lines + slight vignette |
+| Sections | Dashed borders, clean (no tape marks) |
+| Inputs | Dashed underline, amber on focus |
+| XP/Stress boxes | Amber when filled |
+| Heat gauge | Danger red when filled |
+
+### Typography
+
+- **Everything is monospace** - this is a terminal/form document
+- Headers differentiated by CAPS, weight, and spacing - not font change
+- No decorative fonts
 
 ## Key Differences from Standard Blades in the Dark
 

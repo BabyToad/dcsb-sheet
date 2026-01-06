@@ -97,17 +97,13 @@
                 .stress-block
                     .track-label(data-i18n="STRESS") STRESS
                     .stress-track
-                        - for (var i = 1; i <= 9; i++)
-                            input(type="checkbox", name=`attr_stress_${i}`, value="1", id=`stress_${i}`)
-                            label.stress-box(for=`stress_${i}`)
+                        +checkbox-track("stress", 9, "stress-box")
 
                 //- Trauma Track
                 .trauma-block
                     .track-label(data-i18n="TRAUMA") TRAUMA
                     .trauma-track
-                        - for (var i = 1; i <= 4; i++)
-                            input(type="checkbox", name=`attr_trauma_${i}`, value="1", id=`trauma_${i}`)
-                            label.trauma-box(for=`trauma_${i}`)
+                        +checkbox-track("trauma", 4, "trauma-box")
                     +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
 
                 //- Harm Track (always editable - changes during play)

@@ -1,0 +1,146 @@
+// =============================================================================
+// DESIGN TOKENS - Reclaimed Corporate Form
+// =============================================================================
+// Visual concept: Corporate intake form liberated from Babel's networks,
+// annotated by runners. See STYLE_GUIDE.md for full documentation.
+
+// =============================================================================
+// COLOR PALETTE
+// =============================================================================
+
+// Layer 1: Corporate Brutalist (Base)
+$form-paper: #e5e5e0;           // Grey government form paper
+$form-paper-dark: #d8d8d3;      // Slightly darker for alternating rows
+$form-ink: #1a1a1a;             // Black ink - primary text/borders
+$form-grey: #888888;            // Bureaucratic grey - labels, hints
+$form-grey-light: #bbbbbb;      // Faded/disabled text
+$form-field-bg: #f0f0eb;        // Input field backgrounds
+
+// Layer 2: Terminal/Network (ANSI Influence)
+$terminal-amber: #ffb000;       // Amber phosphor - PRIMARY ACCENT
+$terminal-amber-dim: #cc8c00;   // Dimmed amber for hover states
+$terminal-amber-glow: rgba(255, 176, 0, 0.15);  // Glow effect on focus
+
+// Layer 3: Reclamation accents
+$highlighter: #f4a020;          // Gold/amber highlighter marks
+$redaction: #1a1a1a;            // Blacked out bars
+
+// Status Colors
+$status-good: #2d5a27;          // Dark green - positive states
+$status-warning: #cc7700;       // Orange - warning states
+$status-danger: #8b0000;        // Dark red - harm, trauma, danger
+
+// =============================================================================
+// LEGACY ALIASES (for gradual migration)
+// =============================================================================
+// These map old variable names to new tokens for backwards compatibility
+// TODO: Remove after full migration
+
+$zine-paper: $form-paper;
+$zine-ink: $form-ink;
+$zine-grey: $form-grey;
+$zine-light-grey: $form-grey-light;
+$zine-accent: $terminal-amber;
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+// Font Stacks
+$font-mono: 'Courier New', Courier, monospace;  // Primary - everything
+$font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;  // Fallback only
+
+// Legacy alias
+$font-typewriter: $font-mono;
+
+// Type Scale (based on 12px base)
+$type-xs: 9px;      // Fine print, load values
+$type-sm: 10px;     // Labels, secondary info
+$type-base: 12px;   // Body text, inputs
+$type-md: 14px;     // Section content headers
+$type-lg: 16px;     // Character name, major headers
+$type-xl: 20px;     // Sheet title only
+
+// =============================================================================
+// SPACING
+// =============================================================================
+
+$space-1: 2px;      // Tight gaps (between checkbox boxes)
+$space-2: 4px;      // Small gaps (inline elements)
+$space-3: 8px;      // Field gaps, padding
+$space-4: 12px;     // Component padding
+$space-5: 16px;     // Section gaps
+$space-6: 24px;     // Major section breaks
+$space-7: 32px;     // Sheet margins
+
+// Legacy aliases
+$spacing-xs: $space-1;
+$spacing-sm: $space-2;
+$spacing-md: $space-3;
+$spacing-lg: $space-5;
+$spacing-xl: $space-6;
+
+// =============================================================================
+// BOX/CHECKBOX SIZING
+// =============================================================================
+
+$box-xs: 10px;      // Dense tracks
+$box-sm: 12px;      // Standard checkboxes
+$box-md: 14px;      // Action dots, XP boxes
+$box-lg: 16px;      // Prominent checkboxes (armor, cybernetics)
+$box-xl: 20px;      // Clock segments
+
+// =============================================================================
+// BORDERS
+// =============================================================================
+
+$border-width-thin: 1px;
+$border-width-medium: 2px;
+$border-width-thick: 3px;
+
+// Composed border values (use in shorthand properties)
+$border-solid: $border-width-thin solid $form-ink;
+$border-dashed: $border-width-thin dashed $form-grey;
+$border-double: $border-width-thick double $form-ink;
+$border-heavy: $border-width-medium solid $form-ink;
+
+// =============================================================================
+// BOX-DRAWING CHARACTERS (ANSI)
+// =============================================================================
+
+$box-tl: '┌';       // Top-left corner
+$box-tr: '┐';       // Top-right corner
+$box-bl: '└';       // Bottom-left corner
+$box-br: '┘';       // Bottom-right corner
+$box-h: '─';        // Horizontal line
+$box-v: '│';        // Vertical line
+$box-lt: '├';       // Left T-junction
+$box-rt: '┤';       // Right T-junction
+$box-tt: '┬';       // Top T-junction
+$box-bt: '┴';       // Bottom T-junction
+$box-x: '┼';        // Cross
+
+// =============================================================================
+// TRANSITIONS
+// =============================================================================
+
+$transition-quick: 0.1s ease;
+$transition-normal: 0.15s ease;
+$transition-slow: 0.25s ease;
+
+// =============================================================================
+// SHADOWS
+// =============================================================================
+
+$shadow-none: none;
+$shadow-paper: 0 1px 2px rgba(0, 0, 0, 0.1);
+$shadow-focus: 0 0 0 2px $terminal-amber-glow;
+
+// =============================================================================
+// Z-INDEX SCALE
+// =============================================================================
+
+$z-base: 0;
+$z-dropdown: 10;
+$z-overlay: 100;
+$z-modal: 1000;

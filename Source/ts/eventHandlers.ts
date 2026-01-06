@@ -37,13 +37,11 @@ ACTIONS.forEach(action => {
         getAttrs([action, 'character_name'], v => {
             const dice = int(v[action]);
             const charName = v.character_name || 'Unknown';
-            const actionName = action.charAt(0).toUpperCase() + action.slice(1);
-
-            // Zero dice rule: roll 2d6, keep lowest
-            const rollFormula = dice > 0 ? `${dice}d6kh1` : `2d6kl1`;
+            const actionName = capitalize(action);
+            const rollFormula = buildRollFormula(dice);
 
             startRoll(
-                `&{template:dcsb-action} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}}`,
+                `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}}`,
                 results => {
                     finishRoll(results.rollId, {});
                 }
@@ -61,17 +59,15 @@ ATTRIBUTE_NAMES.forEach(attr => {
         getAttrs([`${attr}_rating`, 'character_name'], v => {
             const dice = int(v[`${attr}_rating`]);
             const charName = v.character_name || 'Unknown';
-            const attrName = attr.charAt(0).toUpperCase() + attr.slice(1);
-
-            // Zero dice rule: roll 2d6, keep lowest
-            const rollFormula = dice > 0 ? `${dice}d6kh1` : `2d6kl1`;
+            const attrName = capitalize(attr);
+            const rollFormula = buildRollFormula(dice);
 
             startRoll(
-                `&{template:dcsb-resistance} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}}`,
+                `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}}`,
                 results => {
                     // Calculate stress from roll result (6 - highest die)
                     const rollResult = results.results.roll.result;
-                    const stress = Math.max(0, 6 - rollResult);
+                    const stress = Math.max(0, DICE.SIZE - rollResult);
                     finishRoll(results.rollId, { stress });
                 }
             );

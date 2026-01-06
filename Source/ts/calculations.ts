@@ -261,7 +261,7 @@ const calculateLoad = () => {
             });
 
             // Load max from selection (3=Light, 5=Normal, 6=Heavy)
-            const loadMax = int(v.load, 5);
+            const loadMax = int(v.load, LOAD.DEFAULT);
 
             mySetAttrs({
                 load_current: total,
@@ -302,7 +302,10 @@ const calculateCyberCapacity = () => {
  * Calculate heat gauge dice (unchecked segments)
  */
 const calculateHeatDice = () => {
-    const heatAttrs = [1, 2, 3, 4, 5, 6].map(n => `score_heat_${n}`);
+    const heatAttrs = Array.from(
+        { length: HEAT_GAUGE.SEGMENTS },
+        (_, i) => `score_heat_${i + 1}`
+    );
 
     getAttrs([...heatAttrs, 'score_heat_dice'], v => {
         // Count UNCHECKED segments = dice pool for disengagement

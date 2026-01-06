@@ -1,6 +1,79 @@
 // Dark City, Shining Babel - Game Data Constants
 // Static data for actions, playbooks, cybernetics, etc.
 
+// =============================================================================
+// GAME RULES CONSTANTS
+// =============================================================================
+
+// Dice system (Blades in the Dark derived)
+const DICE = {
+    SIZE: 6,                    // d6 system
+    ZERO_DICE_COUNT: 2,         // Roll 2 dice at 0 rating
+    KEEP_HIGHEST: 'kh1',        // Keep highest 1 (standard)
+    KEEP_LOWEST: 'kl1',         // Keep lowest 1 (zero dice)
+} as const;
+
+// Roll templates
+const ROLL_TEMPLATES = {
+    ACTION: 'dcsb-action',
+    RESISTANCE: 'dcsb-resistance',
+    FORTUNE: 'dcsb-fortune',
+} as const;
+
+// Load settings
+const LOAD = {
+    LIGHT: 3,
+    NORMAL: 5,
+    HEAVY: 6,
+    DEFAULT: 5,
+} as const;
+
+// Heat gauge (score tracker)
+const HEAT_GAUGE = {
+    SEGMENTS: 6,
+} as const;
+
+// Stress system
+const STRESS = {
+    MAX: 9,
+    TRAUMA_THRESHOLD: 9,
+} as const;
+
+// Trauma system
+const TRAUMA = {
+    MAX: 4,
+} as const;
+
+// Cybernetics capacity
+const CYBER = {
+    DEFAULT_MAX: 4,
+} as const;
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
+
+/**
+ * Build a roll formula for the Blades dice system
+ * @param diceCount - Number of action dots (0 = disadvantage)
+ * @returns Roll20 roll formula string
+ */
+const buildRollFormula = (diceCount: number): string => {
+    if (diceCount > 0) {
+        return `${diceCount}d${DICE.SIZE}${DICE.KEEP_HIGHEST}`;
+    }
+    return `${DICE.ZERO_DICE_COUNT}d${DICE.SIZE}${DICE.KEEP_LOWEST}`;
+};
+
+/**
+ * Capitalize first letter of string
+ */
+const capitalize = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+
+// =============================================================================
+// CHARACTER DATA
+// =============================================================================
+
 // Attributes and their associated actions
 const ATTRIBUTES = {
     acuity: ['hack', 'recon', 'scrutinize', 'tamper'],

@@ -72,9 +72,7 @@
         .rep-block
             .stat-label(data-i18n="REP") REP
             .rep-track
-                - for (var i = 1; i <= 12; i++)
-                    input(type="checkbox", name=`attr_rep_${i}`, value="1", id=`rep_${i}`)
-                    label.rep-box(for=`rep_${i}`)
+                +checkbox-track("rep", 12, "rep-box")
 
         //- Turf
         .turf-block
@@ -85,17 +83,13 @@
         .heat-block
             .stat-label(data-i18n="HEAT") HEAT
             .heat-track
-                - for (var i = 1; i <= 9; i++)
-                    input(type="checkbox", name=`attr_heat_${i}`, value="1", id=`heat_${i}`)
-                    label.heat-box(for=`heat_${i}`)
+                +checkbox-track("heat", 9, "heat-box")
 
         //- Wanted Level (4 boxes)
         .wanted-block
             .stat-label(data-i18n="WANTED") WANTED
             .wanted-track
-                - for (var i = 1; i <= 4; i++)
-                    input(type="checkbox", name=`attr_wanted_${i}`, value="1", id=`wanted_${i}`)
-                    label.wanted-box(for=`wanted_${i}`)
+                +checkbox-track("wanted", 4, "wanted-box")
 
 //- ═══════════════════════════════════════════════════════════════
 //- SECTION 3: SCORE TRACKER (Heat Gauge)
@@ -245,9 +239,7 @@
         .vault-track
             .stat-label(data-i18n="VAULT") VAULT
             .vault-boxes
-                - for (var i = 1; i <= 16; i++)
-                    input(type="checkbox", name=`attr_vault_${i}`, value="1", id=`vault_${i}`)
-                    label.vault-box(for=`vault_${i}`)
+                +checkbox-track("vault", 16, "vault-box")
 
 //- ═══════════════════════════════════════════════════════════════
 //- SECTION 10: CREW NOTES

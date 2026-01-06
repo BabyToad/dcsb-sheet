@@ -1,0 +1,287 @@
+// =============================================================================
+// SCSS MIXINS - Reusable Component Patterns
+// =============================================================================
+// These mixins consolidate repeated patterns throughout dcsb.scss
+// See STYLE_GUIDE.md for design philosophy
+
+@use 'sass:math';
+
+// =============================================================================
+// BOX SIZING MIXINS
+// =============================================================================
+
+/// Creates a fixed-size square box (common for checkboxes, dots, etc.)
+/// @param {Number} $size - The width and height of the box
+/// @param {Boolean} $flex-shrink - Whether to prevent flex shrinking (default: true)
+@mixin square-box($size, $flex-shrink: true) {
+    width: $size;
+    height: $size;
+    min-width: $size;
+    min-height: $size;
+    @if $flex-shrink {
+        flex-shrink: 0;
+    }
+}
+
+/// Creates a track box element (stress, trauma, xp, etc.)
+/// @param {Number} $size - Box size
+/// @param {Number} $border-width - Border thickness (default: 2px)
+/// @param {Color} $border-color - Border color (default: $form-ink)
+@mixin track-box($size, $border-width: 2px, $border-color: $form-ink) {
+    @include square-box($size);
+    border: $border-width solid $border-color;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+}
+
+// =============================================================================
+// CHECKBOX PATTERNS
+// =============================================================================
+
+/// Hides checkbox input and styles adjacent label on checked state
+/// @param {Color} $checked-bg - Background color when checked (default: $form-ink)
+/// @param {String} $sibling - CSS selector for the styled sibling (default: +)
+@mixin hidden-checkbox-base() {
+    display: none;
+}
+
+/// Applies checked state to sibling element
+/// @param {Color} $bg - Background color (default: $form-ink)
+/// @param {Color} $border-color - Border color (default: null, uses $bg)
+@mixin checkbox-checked-fill($bg: $form-ink, $border-color: null) {
+    background: $bg;
+    @if $border-color {
+        border-color: $border-color;
+    }
+}
+
+/// Complete hidden checkbox pattern with checked state styling
+/// Use inside a container that has input[type="checkbox"] + label structure
+/// @param {Color} $checked-bg - Background when checked
+/// @param {String} $label-class - Class of the styled label element
+@mixin checkbox-track-pattern($checked-bg: $form-ink, $label-class: null) {
+    input[type="checkbox"] {
+        @include hidden-checkbox-base();
+
+        @if $label-class {
+            &:checked + .#{$label-class} {
+                @include checkbox-checked-fill($checked-bg);
+            }
+        } @else {
+            &:checked + * {
+                @include checkbox-checked-fill($checked-bg);
+            }
+        }
+    }
+}
+
+// =============================================================================
+// FLEXBOX UTILITIES
+// =============================================================================
+
+/// Flex row with centered alignment
+/// @param {Number} $gap - Gap between items (default: $space-2)
+/// @param {String} $align - Align-items value (default: center)
+@mixin flex-row($gap: $space-2, $align: center) {
+    display: flex;
+    align-items: $align;
+    gap: $gap;
+}
+
+/// Flex column
+/// @param {Number} $gap - Gap between items (default: $space-2)
+@mixin flex-column($gap: $space-2) {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+}
+
+/// Flex row that wraps
+/// @param {Number} $gap - Gap between items
+@mixin flex-wrap($gap: $space-2) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $gap;
+}
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+/// Uppercase label styling (form labels, section headers)
+/// @param {Number} $size - Font size (default: $type-sm)
+/// @param {Color} $color - Text color (default: $form-grey)
+/// @param {Number} $spacing - Letter spacing (default: 1px)
+@mixin uppercase-label($size: $type-sm, $color: $form-grey, $spacing: 1px) {
+    font-size: $size;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: $spacing;
+    color: $color;
+}
+
+/// Track label (stress, trauma, xp labels)
+@mixin track-label() {
+    @include uppercase-label($type-sm, $form-grey, 1px);
+    margin-bottom: $space-2;
+}
+
+// =============================================================================
+// INPUT FOCUS STATES
+// =============================================================================
+
+/// Standard focus state with accent color
+/// @param {Color} $color - Focus indicator color (default: $terminal-amber)
+/// @param {String} $style - Border style: 'bottom', 'full', 'glow' (default: bottom)
+@mixin input-focus($color: $terminal-amber, $style: 'bottom') {
+    &:focus {
+        outline: none;
+        @if $style == 'bottom' {
+            border-bottom: 2px solid $color;
+        } @else if $style == 'full' {
+            border-color: $color;
+        } @else if $style == 'glow' {
+            border-color: $color;
+            box-shadow: 0 0 0 2px rgba($color, 0.15);
+        }
+    }
+}
+
+/// Hover state with accent color
+/// @param {Color} $color - Hover color (default: $terminal-amber)
+@mixin hover-accent($color: $terminal-amber) {
+    &:hover {
+        border-color: $color;
+    }
+}
+
+// =============================================================================
+// VISUAL EFFECTS
+// =============================================================================
+
+/// Hand-drawn imperfection rotation (alternating slight rotations)
+/// Apply to container, uses nth-child to rotate children
+@mixin hand-drawn-rotation($angle: 0.5deg) {
+    &:nth-child(odd) {
+        transform: rotate($angle);
+    }
+    &:nth-child(even) {
+        transform: rotate(-$angle);
+    }
+}
+
+/// Transition helper
+/// @param {String} $property - Property to transition (default: all)
+/// @param {Number} $duration - Duration (default: $transition-quick)
+@mixin transition($property: all, $duration: $transition-quick) {
+    transition: $property $duration;
+}
+
+// =============================================================================
+// STRUCTURAL PATTERNS
+// =============================================================================
+
+/// Section block with shadow and border
+@mixin section-block() {
+    margin-bottom: $space-5;
+    padding: $space-3;
+    position: relative;
+    background: $form-paper;
+    box-shadow: $shadow-paper;
+    border: $border-dashed;
+}
+
+/// Grid layout helper
+/// @param {List} $columns - Grid columns definition
+/// @param {Number} $gap - Gap between items
+@mixin grid($columns, $gap: $space-3) {
+    display: grid;
+    grid-template-columns: $columns;
+    gap: $gap;
+}
+
+// =============================================================================
+// BUTTON PATTERNS
+// =============================================================================
+
+/// Base button styling
+/// @param {Color} $bg - Background color (default: transparent)
+/// @param {Color} $border-color - Border color (default: $form-ink)
+/// @param {Color} $text-color - Text color (default: $form-ink)
+@mixin button-base($bg: transparent, $border-color: $form-ink, $text-color: $form-ink) {
+    font-family: $font-mono;
+    font-size: $type-sm;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: $bg;
+    border: 2px solid $border-color;
+    color: $text-color;
+    cursor: pointer;
+    @include transition(all, $transition-normal);
+}
+
+/// Button hover state (inverts colors)
+/// @param {Color} $bg - Hover background (default: $form-ink)
+/// @param {Color} $text-color - Hover text color (default: $form-paper)
+@mixin button-hover-invert($bg: $form-ink, $text-color: $form-paper) {
+    &:hover {
+        background: $bg;
+        color: $text-color;
+    }
+}
+
+// =============================================================================
+// FAKERADIO PATTERN (Inverse Fill)
+// =============================================================================
+// Roll20-specific pattern where all dots start filled,
+// and dots AFTER the checked one become empty
+
+/// Hides fakeradio inputs
+@mixin fakeradio-hidden() {
+    .fakeradio.zero,
+    .fakeradio {
+        display: none;
+    }
+}
+
+/// Inverse fill pattern - dots after checked become empty
+/// @param {String} $dot-class - Class of the dot element
+/// @param {Color} $empty-bg - Background when empty (default: transparent)
+@mixin fakeradio-inverse-fill($dot-class, $empty-bg: transparent) {
+    .fakeradio:checked ~ .fakeradio + .#{$dot-class} {
+        background: $empty-bg;
+    }
+}
+
+// =============================================================================
+// COMPOUND PATTERNS
+// =============================================================================
+
+/// Complete track styling (stress, trauma, etc.)
+/// @param {Number} $box-size - Size of track boxes
+/// @param {Color} $checked-bg - Background when checked
+/// @param {Number} $gap - Gap between boxes (default: $space-1)
+@mixin track-complete($box-size, $checked-bg: $form-ink, $gap: $space-1) {
+    @include flex-row($gap);
+
+    input[type="checkbox"] {
+        @include hidden-checkbox-base();
+
+        &:checked + * {
+            @include checkbox-checked-fill($checked-bg);
+        }
+    }
+}
+
+/// Action/attribute dot styling (for fakeradio pattern)
+/// @param {Number} $size - Dot size
+/// @param {Color} $filled-bg - Background when filled (default: $form-ink)
+@mixin action-dot($size, $filled-bg: $form-ink) {
+    @include track-box($size);
+    background: $filled-bg;
+}

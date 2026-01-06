@@ -1,37 +1,15 @@
 // Dark City, Shining Babel - Character Sheet Styles
-// Visual Design: Underground Zine aesthetic
-// - Photocopied, hand-annotated, punk
-// - High contrast B&W base + neon pink accent
-// - Typewriter typography, rubber stamp headers
+// Visual Design: Reclaimed Corporate Form
+// - Corporate intake form liberated from Babel's networks
+// - Annotated by runners, made human
+// - Terminal/ANSI aesthetic with amber accent
+// See STYLE_GUIDE.md for full documentation.
 
 // =============================================================================
-// VARIABLES
+// DESIGN TOKENS & MIXINS
 // =============================================================================
-
-// Color Palette - Underground Zine
-$zine-paper: #f5f5f0;           // Aged photocopy paper
-$zine-ink: #1a1a1a;             // High contrast black
-$zine-grey: #666666;            // Photocopier grey
-$zine-light-grey: #cccccc;      // Faded areas
-
-// Accent - Neon Pink (confirmed)
-$zine-accent: #ff1493;
-
-// Status colors (muted, hand-drawn feel)
-$status-good: #2d5a27;          // Dark green
-$status-warning: #cc7700;       // Orange
-$status-danger: #8b0000;        // Dark red
-
-// Typography
-$font-typewriter: 'Courier New', Courier, monospace;
-$font-header: 'Impact', 'Arial Black', sans-serif;
-
-// Spacing
-$spacing-xs: 2px;
-$spacing-sm: 4px;
-$spacing-md: 8px;
-$spacing-lg: 16px;
-$spacing-xl: 24px;
+@import 'tokens';
+@import 'mixins';
 
 // =============================================================================
 // BASE STYLES
@@ -158,28 +136,29 @@ $spacing-xl: 24px;
     // ==========================================================================
 
     h1 {
-        font-family: $font-header;
-        font-size: 24px;
+        font-family: $font-mono;
+        font-size: $type-xl;
         text-transform: uppercase;
         letter-spacing: 3px;
         margin: 0;
+        font-weight: bold;
     }
 
     h2 {
-        font-family: $font-typewriter;
-        font-size: 14px;
+        font-family: $font-mono;
+        font-size: $type-md;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin: $spacing-md 0 $spacing-sm;
+        margin: $space-3 0 $space-2;
     }
 
     h3 {
-        font-family: $font-typewriter;
-        font-size: 12px;
+        font-family: $font-mono;
+        font-size: $type-base;
         font-weight: bold;
         text-transform: uppercase;
-        margin: $spacing-sm 0;
+        margin: $space-2 0;
     }
 
     h4 {
@@ -220,8 +199,9 @@ $spacing-xl: 24px;
 
     .title-block {
         .title-main {
-            font-family: $font-header;
-            font-size: 20px;
+            font-family: $font-mono;
+            font-size: $type-xl;
+            font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
 
@@ -319,83 +299,91 @@ $spacing-xl: 24px;
     // ==========================================================================
 
     .section {
-        margin-bottom: $spacing-lg;
-        padding: $spacing-md;
+        margin-bottom: $space-5;
+        padding: $space-3;
         position: relative;
-        background: $zine-paper;
+        background: $form-paper;
 
-        // Layered paper shadow
-        box-shadow:
-            2px 2px 0 rgba(0,0,0,0.05),
-            4px 4px 0 rgba(0,0,0,0.03);
+        // Subtle shadow for depth
+        box-shadow: $shadow-paper;
 
-        // Dashed border like a form
-        border: 1px dashed $zine-grey;
-
-        // Tape mark in corner
-        &::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: 20px;
-            width: 40px;
-            height: 12px;
-            background: rgba(255, 235, 180, 0.6);
-            transform: rotate(-2deg);
-            border: 1px solid rgba(0,0,0,0.1);
-        }
+        // Dashed border like a form field
+        border: $border-dashed;
     }
 
+    // Section header with box-drawing border (ANSI terminal aesthetic)
     .section-header {
         display: flex;
         align-items: center;
-        gap: $spacing-md;
-        margin-bottom: $spacing-md;
-        padding-bottom: $spacing-sm;
-        border-bottom: 1px solid $zine-light-grey;
-    }
-
-    // Rubber stamp effect for section titles
-    .section-stamp {
-        font-family: $font-typewriter;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        padding: $spacing-xs $spacing-sm;
-        border: 2px solid $zine-ink;
-        display: inline-block;
-        transform: rotate(-0.5deg);
+        gap: $space-3;
+        margin-bottom: $space-3;
+        padding: $space-2 $space-3;
         position: relative;
+        font-family: $font-mono;
 
-        // Ink bleed / stamp imperfection
-        &::after {
-            content: '';
+        // Box-drawing border using ::before for top line
+        &::before {
+            content: '┌' attr(data-section-title) '┐';
+            content: '┌──────────────────────────────────────────────────┐';
             position: absolute;
-            inset: -1px;
-            border: 1px solid rgba($zine-ink, 0.3);
-            pointer-events: none;
+            top: -2px;
+            left: 0;
+            right: 0;
+            font-family: $font-mono;
+            font-size: $type-sm;
+            color: $form-grey;
+            letter-spacing: -1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        // Box-drawing border using ::after for bottom line
+        &::after {
+            content: '└──────────────────────────────────────────────────┘';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            font-family: $font-mono;
+            font-size: $type-sm;
+            color: $form-grey;
+            letter-spacing: -1px;
+            overflow: hidden;
+            white-space: nowrap;
         }
     }
 
-    // Hand-circled section number
-    .section-number {
-        font-family: $font-typewriter;
-        font-size: 14px;
+    // Section title text (inside box-drawing frame)
+    .section-stamp {
+        font-family: $font-mono;
+        font-size: $type-sm;
         font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $form-ink;
+        flex-grow: 1;
+    }
+
+    // Hand-circled section number (reclamation layer - human annotation)
+    .section-number {
+        font-family: $font-mono;
+        font-size: $type-md;
+        font-weight: bold;
+        color: $terminal-amber;
         width: 28px;
         height: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
+        flex-shrink: 0;
 
-        // Hand-drawn circle effect
+        // Hand-drawn circle effect (in amber - human annotation over corporate form)
         &::before {
             content: '';
             position: absolute;
             inset: 0;
-            border: 2px solid $zine-accent;
+            border: 2px solid $terminal-amber;
             border-radius: 50%;
             transform: rotate(5deg);
         }
@@ -405,7 +393,7 @@ $spacing-xl: 24px;
             content: '';
             position: absolute;
             inset: 1px;
-            border: 1px solid rgba($zine-accent, 0.5);
+            border: 1px solid rgba($terminal-amber, 0.5);
             border-radius: 50%;
             transform: rotate(-3deg);
         }
@@ -1659,8 +1647,8 @@ $spacing-xl: 24px;
 // Active tab styling with accent underline
 .tab-radio[value="character"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_character"],
 .tab-radio[value="crew"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_crew"] {
-    background: #1a1a1a;
-    color: #f5f5f0;
+    background: $form-ink;
+    color: $form-paper;
 
     &::after {
         content: '';
@@ -1669,7 +1657,7 @@ $spacing-xl: 24px;
         left: 0;
         right: 0;
         height: 3px;
-        background: #ff1493;
+        background: $terminal-amber;
     }
 }
 
@@ -1747,7 +1735,7 @@ $spacing-xl: 24px;
         .char-name {
             font-size: 1.4em;
             font-weight: bold;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: $font-mono;
         }
 
         .alias-wrapper {
@@ -1999,7 +1987,7 @@ $spacing-xl: 24px;
     .notes-display {
         display: block;
         white-space: pre-wrap;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: $font-mono;
         font-size: 0.9em;
         line-height: 1.4;
         padding: 0.5rem;
@@ -2016,17 +2004,17 @@ $spacing-xl: 24px;
 .sheet-rolltemplate-dcsb-action,
 .sheet-rolltemplate-dcsb-fortune,
 .sheet-rolltemplate-dcsb-resistance {
-    font-family: 'Courier New', Courier, monospace;
-    background: #f5f5f0;
-    border: 2px solid #1a1a1a;
-    padding: 8px;
-    margin: 4px 0;
+    font-family: $font-mono;
+    background: $form-paper;
+    border: 2px solid $form-ink;
+    padding: $space-3;
+    margin: $space-2 0;
 
     .rolltemplate-container {
         .rolltemplate-header {
-            border-bottom: 1px solid #1a1a1a;
-            padding-bottom: 4px;
-            margin-bottom: 4px;
+            border-bottom: 1px solid $form-ink;
+            padding-bottom: $space-2;
+            margin-bottom: $space-2;
 
             .charname {
                 font-weight: bold;
@@ -2034,24 +2022,24 @@ $spacing-xl: 24px;
 
             .title {
                 text-transform: uppercase;
-                font-size: 11px;
-                color: #ff1493;
+                font-size: $type-sm;
+                color: $terminal-amber;
             }
         }
 
         .rolltemplate-body {
             .roll-result {
-                font-size: 18px;
+                font-size: $type-lg;
                 font-weight: bold;
             }
         }
 
         .rolltemplate-footer {
-            border-top: 1px solid #666;
-            padding-top: 4px;
-            margin-top: 4px;
-            font-size: 10px;
-            color: #666;
+            border-top: 1px solid $form-grey;
+            padding-top: $space-2;
+            margin-top: $space-2;
+            font-size: $type-sm;
+            color: $form-grey;
         }
     }
 }

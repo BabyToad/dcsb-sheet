@@ -67,6 +67,15 @@ mixin xp-track(name, count)
 //- TRACKER COMPONENTS
 //- ═══════════════════════════════════════════════════════════════
 
+//- Generic checkbox track (stress, trauma, rep, heat, etc.)
+//- @param {string} name - Base attribute name (e.g., "stress", "rep")
+//- @param {number} count - Number of boxes
+//- @param {string} boxClass - CSS class for label boxes (e.g., "stress-box", "rep-box")
+mixin checkbox-track(name, count, boxClass)
+    - for (var i = 1; i <= count; i++)
+        input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_${i}`)
+        label(class=boxClass, for=`${name}_${i}`)
+
 //- Clock segments (configurable size)
 mixin clock(name, segments, label)
     .clock(data-segments=segments)
