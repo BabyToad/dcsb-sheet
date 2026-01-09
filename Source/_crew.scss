@@ -203,6 +203,106 @@
     }
 
     // =========================================================================
+    // CREW ABILITIES (mirrors cybernetics pattern)
+    // =========================================================================
+
+    .ability-entry {
+        display: table;
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px dashed rgba($zine-grey, 0.3);
+
+        &:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+    }
+
+    .ability-taken {
+        display: table-cell;
+        width: 24px;
+        vertical-align: top;
+        padding-right: 0.5rem;
+        cursor: pointer;
+
+        .ability-check {
+            @include hidden-checkbox-base();
+        }
+
+        .taken-box {
+            display: block;
+            @include square-box(16px);
+            border: 2px solid $zine-ink;
+            background: transparent;
+            position: relative;
+        }
+
+        .ability-check:checked + .taken-box {
+            @include checkbox-checked-fill($terminal-amber);
+
+            &::after {
+                content: '✓';
+                color: $form-ink;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .ability-content {
+        display: table-cell;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .ability-display {
+        .ability-header-display {
+            margin-bottom: 0.25rem;
+        }
+
+        .ability-name-display {
+            display: inline;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        .ability-desc-display {
+            display: block;
+            font-size: 0.9em;
+            color: $zine-grey;
+            line-height: 1.4;
+            padding-left: 0.5rem;
+            border-left: 2px solid rgba($zine-grey, 0.3);
+            margin-left: 0.25rem;
+            margin-top: 0.25rem;
+            white-space: pre-wrap;
+
+            &:empty {
+                display: none;
+            }
+        }
+    }
+
+    .ability-edit {
+        .ability-name-input {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .ability-desc-input {
+            width: 100%;
+            min-height: 3rem;
+            font-size: 0.9em;
+        }
+    }
+
+    // =========================================================================
     // COHORTS
     // =========================================================================
 

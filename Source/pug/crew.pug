@@ -180,17 +180,30 @@
         //- ───────────────────────────────────────────────────────────
         //- SECTION 6: CREW ABILITIES
         //- Framing: Special operations / classified capabilities
+        //- Pattern: Matches cybernetics/augmentation section
         //- ───────────────────────────────────────────────────────────
         .section.crew-abilities
-            .section-header
-                .section-stamp CREW ABILITIES
-                .section-number 06
+            +section-header-editable("crewabilities", "CREW ABILITIES", "06")
 
-            +repeating("crew_abilities")
-                .crew-ability-entry
-                    input(type="checkbox", name="attr_crew_ability_taken", value="1").ability-check
-                    input(type="text", name="attr_crew_ability_name", placeholder="Ability name").ability-name
-                    textarea(name="attr_crew_ability_desc", placeholder="Description").ability-desc
+            +repeating("crewabilities")
+                .ability-entry
+                    //- Taken checkbox - standard Roll20 pattern: input inside label
+                    label.ability-taken
+                        input.ability-check(type="checkbox", name="attr_crew_ability_taken", value="1")
+                        span.taken-box
+
+                    //- Content wrapper
+                    .ability-content
+                        //- Display mode - shows name and description
+                        .display.ability-display
+                            .ability-header-display
+                                span.ability-name-display(name="attr_crew_ability_name")
+                            span.ability-desc-display(name="attr_crew_ability_desc")
+
+                        //- Edit mode - editable inputs
+                        .edit.ability-edit
+                            input(type="text", name="attr_crew_ability_name", placeholder="Ability name").ability-name-input
+                            textarea(name="attr_crew_ability_desc", placeholder="Description & effects").ability-desc-input
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 7: COHORTS

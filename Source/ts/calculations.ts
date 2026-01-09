@@ -386,16 +386,16 @@ const calculateHeatDice = () => {
 // =============================================================================
 
 /**
- * Format a crew ability for the repeating_crew_abilities section
+ * Format a crew ability for the repeating_crewabilities section
  */
 const formatCrewAbility = (
     ability: { name: string; description: string },
     rowId: string
 ): { [key: string]: AttributeContent } => {
     return {
-        [`repeating_crew_abilities_${rowId}_crew_ability_name`]: ability.name,
-        [`repeating_crew_abilities_${rowId}_crew_ability_desc`]: ability.description,
-        [`repeating_crew_abilities_${rowId}_crew_ability_taken`]: "0"
+        [`repeating_crewabilities_${rowId}_crew_ability_name`]: ability.name,
+        [`repeating_crewabilities_${rowId}_crew_ability_desc`]: ability.description,
+        [`repeating_crewabilities_${rowId}_crew_ability_taken`]: "0"
     };
 };
 
@@ -468,7 +468,7 @@ const handleCrewTypeChange = (newCrewType: string) => {
     const data = CREW_DATA[newCrewType];
 
     // 1. Clear and populate crew abilities
-    clearAndPopulateRepeatingSection("crew_abilities", data.abilities, formatCrewAbility);
+    clearAndPopulateRepeatingSection("crewabilities", data.abilities, formatCrewAbility);
 
     // 2. Clear and populate cohorts
     clearAndPopulateRepeatingSection("cohorts", data.cohorts, formatCrewCohort);
