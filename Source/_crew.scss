@@ -7,11 +7,16 @@
 
 .charsheet {
     // =========================================================================
-    // STATS GRID
+    // STATS GRID - Row-based layout
     // =========================================================================
 
     .stats-grid {
-        @include grid(repeat(3, 1fr), $spacing-md);
+        @include flex-column($spacing-sm);
+    }
+
+    .stats-row {
+        @include flex-row($spacing-lg, stretch);
+        align-items: flex-end;
     }
 
     .stat-label {
@@ -24,6 +29,10 @@
 
     .tier-selector {
         @include flex-row(2px, stretch);
+
+        input[type="radio"] {
+            @include hidden-checkbox-base();
+        }
 
         .tier-box {
             @include square-box(24px);
@@ -48,6 +57,10 @@
     .hold-selector {
         @include flex-row($spacing-sm, stretch);
 
+        input[type="radio"] {
+            @include hidden-checkbox-base();
+        }
+
         .hold-option {
             padding: $spacing-xs $spacing-sm;
             border: 1px solid $zine-ink;
@@ -63,59 +76,78 @@
     }
 
     // =========================================================================
-    // REP/HEAT/WANTED TRACKS
+    // REP/HEAT/WANTED/VAULT TRACKS - Forward fill pattern (fakeradio)
+    // Boxes start filled, empty after the checked value
     // =========================================================================
 
     .rep-track,
     .heat-track,
-    .wanted-track {
-        @include flex-wrap(2px);
+    .wanted-track,
+    .vault-track {
+        @include flex-row(2px, stretch);
+        @include fakeradio-hidden();
+    }
 
-        .rep-box,
-        .heat-box,
-        .wanted-box {
-            @include square-box(14px);
-            border: 1px solid $zine-ink;
+    // Rep track - amber fill
+    .rep-track {
+        .rep-box {
+            @include square-box(18px);
+            border: 2px solid $zine-ink;
             cursor: pointer;
-        }
-
-        input:checked + .rep-box {
             @include checkbox-checked-fill($terminal-amber, $terminal-amber);
         }
-        input:checked + .heat-box {
+        // Empty boxes after checked value
+        .fakeradio:checked ~ .fakeradio + .rep-box {
+            background: transparent;
+            border-color: $zine-ink;
+        }
+    }
+
+    // Heat track - warning/orange fill
+    .heat-track {
+        .heat-box {
+            @include square-box(18px);
+            border: 2px solid $zine-ink;
+            cursor: pointer;
             @include checkbox-checked-fill($status-warning, $status-warning);
         }
-        input:checked + .wanted-box {
+        .fakeradio:checked ~ .fakeradio + .heat-box {
+            background: transparent;
+            border-color: $zine-ink;
+        }
+    }
+
+    // Wanted track - danger/red fill
+    .wanted-track {
+        .wanted-box {
+            @include square-box(18px);
+            border: 2px solid $zine-ink;
+            cursor: pointer;
             @include checkbox-checked-fill($status-danger, $status-danger);
         }
+        .fakeradio:checked ~ .fakeradio + .wanted-box {
+            background: transparent;
+            border-color: $zine-ink;
+        }
     }
 
-    // =========================================================================
-    // VAULT
-    // =========================================================================
-
-    .vault-boxes {
-        @include flex-wrap(2px);
-
+    // Vault track - good/green fill
+    .vault-track {
         .vault-box {
-            @include square-box(14px);
-            border: 1px solid $zine-ink;
+            @include square-box(18px);
+            border: 2px solid $zine-ink;
             cursor: pointer;
+            @include checkbox-checked-fill($status-good, $status-good);
 
-            &:nth-child(4n) {
-                margin-right: $spacing-xs;
+            // Visual grouping every 8 boxes (input+label pairs)
+            &:nth-of-type(8n) {
+                margin-right: $spacing-sm;
             }
         }
-
-        input:checked + .vault-box {
-            @include checkbox-checked-fill($status-good, $status-good);
+        .fakeradio:checked ~ .fakeradio + .vault-box {
+            background: transparent;
+            border-color: $zine-ink;
         }
-    }
-
-    .coin-warning {
-        font-size: $type-xs;
-        color: $status-warning;
-        font-style: italic;
     }
 
     // =========================================================================

@@ -1,253 +1,231 @@
 //- Dark City, Shining Babel - Crew Sheet Content
+//- Layout: Two-column with Identity/Stats/Operations on left, Abilities/Relationships on right
 //- Information Architecture: Gang Dossier framing
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 1: CREW IDENTIFICATION
-//- Framing: Corporate registration / syndicate charter
-//- ═══════════════════════════════════════════════════════════════
-.section.crew-identity
-    .section-header
-        .section-stamp CREW IDENTIFICATION
-        .section-number 01
+.sheet-columns
+    //- ═══════════════════════════════════════════════════════════════
+    //- LEFT COLUMN - Identity, Stats, Operations, Upgrades
+    //- ═══════════════════════════════════════════════════════════════
+    .left-column
 
-    .crew-id-grid
-        .crew-primary
-            +text-input("crew_name", "CREW_NAME")
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 1: CREW IDENTIFICATION
+        //- Framing: Corporate registration / syndicate charter
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-identity
+            .section-header
+                .section-stamp CREW IDENTIFICATION
+                .section-number 01
 
-        .crew-classification
-            .select-field
-                label
-                    span.field-label(data-i18n="CREW_TYPE") Crew Type
-                    select(name="attr_crew_type")
-                        option(value="") --
-                        option(value="firebrands", data-i18n="FIREBRANDS") Firebrands
-                        option(value="leeches", data-i18n="LEECHES") Leeches
-                        option(value="runners", data-i18n="RUNNERS") Runners
-                        option(value="zokus", data-i18n="ZOKUS") Zokus
+            .crew-id-grid
+                .crew-primary
+                    +text-input("crew_name", "CREW_NAME")
 
-            .select-field
-                label
-                    span.field-label(data-i18n="REPUTATION") Reputation
-                    select(name="attr_reputation")
-                        option(value="") --
-                        option(value="ambitious") Ambitious
-                        option(value="mercenary") Mercenary
-                        option(value="flashy") Flashy
-                        option(value="brutal") Brutal
-                        option(value="savvy") Savvy
-                        option(value="strange") Strange
+                .crew-classification
+                    .select-field
+                        label
+                            span.field-label(data-i18n="CREW_TYPE") Crew Type
+                            select(name="attr_crew_type")
+                                option(value="") --
+                                option(value="firebrands", data-i18n="FIREBRANDS") Firebrands
+                                option(value="leeches", data-i18n="LEECHES") Leeches
+                                option(value="runners", data-i18n="RUNNERS") Runners
+                                option(value="zokus", data-i18n="ZOKUS") Zokus
 
-        .crew-location
-            +text-input("hunting_grounds", "HUNTING_GROUNDS")
-            +text-input("lair", "LAIR")
+                    .text-field
+                        label
+                            span.field-label(data-i18n="REPUTATION") Reputation
+                            input(type="text", name="attr_reputation", list="reputation_list", placeholder="Ambitious, Brutal, etc.")
+                            datalist#reputation_list
+                                option(value="Ambitious")
+                                option(value="Brutal")
+                                option(value="Flashy")
+                                option(value="Mercenary")
+                                option(value="Savvy")
+                                option(value="Strange")
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 2: CREW STATS
-//- Framing: Performance metrics / syndicate standing
-//- ═══════════════════════════════════════════════════════════════
-.section.crew-stats
-    .section-header
-        .section-stamp CREW STATS
-        .section-number 02
+                .crew-location
+                    +text-input("hunting_grounds", "HUNTING_GROUNDS")
+                    +text-input("lair", "LAIR")
 
-    .stats-grid
-        //- Tier
-        .tier-block
-            .stat-label(data-i18n="TIER") TIER
-            .tier-selector
-                - for (var i = 0; i <= 4; i++)
-                    input(type="radio", name="attr_crew_tier", value=i, checked=(i === 0), id=`tier_${i}`)
-                    label.tier-box(for=`tier_${i}`)= i
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 2: CREW STATS
+        //- Framing: Performance metrics / syndicate standing
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-stats
+            .section-header
+                .section-stamp CREW STATS
+                .section-number 02
 
-        //- Hold
-        .hold-block
-            .stat-label(data-i18n="HOLD") HOLD
-            .hold-selector
-                input(type="radio", name="attr_hold", value="weak", id="hold_weak")
-                label.hold-option(for="hold_weak", data-i18n="WEAK") Weak
-                input(type="radio", name="attr_hold", value="strong", checked, id="hold_strong")
-                label.hold-option(for="hold_strong", data-i18n="STRONG") Strong
+            .stats-grid
+                //- Row 1: Tier and Hold
+                .stats-row.tier-hold-row
+                    .tier-block
+                        .stat-label(data-i18n="TIER") TIER
+                        .tier-selector
+                            - for (var i = 0; i <= 4; i++)
+                                input(type="radio", name="attr_crew_tier", value=i, checked=(i === 0), id=`tier_${i}`)
+                                label.tier-box(for=`tier_${i}`)= i
 
-        //- Rep Track (12 boxes)
-        .rep-block
-            .stat-label(data-i18n="REP") REP
-            .rep-track
-                +checkbox-track("rep", 12, "rep-box")
+                    .hold-block
+                        .stat-label(data-i18n="HOLD") HOLD
+                        .hold-selector
+                            input(type="radio", name="attr_hold", value="weak", id="hold_weak")
+                            label.hold-option(for="hold_weak", data-i18n="WEAK") Weak
+                            input(type="radio", name="attr_hold", value="strong", checked, id="hold_strong")
+                            label.hold-option(for="hold_strong", data-i18n="STRONG") Strong
 
-        //- Turf
-        .turf-block
-            .stat-label(data-i18n="TURF") TURF
-            input(type="number", name="attr_turf", value="0", min="0")
+                //- Row 2: Rep Track (12 boxes) - forward fill
+                .stats-row.rep-row
+                    .rep-block
+                        .stat-label(data-i18n="REP") REP
+                        .rep-track
+                            +fakeradio-track("rep", 12, "rep-box")
 
-        //- Heat Track (9 boxes)
-        .heat-block
-            .stat-label(data-i18n="HEAT") HEAT
-            .heat-track
-                +checkbox-track("heat", 9, "heat-box")
+                //- Row 3: Heat and Wanted - forward fill
+                .stats-row.heat-wanted-row
+                    .heat-block
+                        .stat-label(data-i18n="HEAT") HEAT
+                        .heat-track
+                            +fakeradio-track("heat", 9, "heat-box")
 
-        //- Wanted Level (4 boxes)
-        .wanted-block
-            .stat-label(data-i18n="WANTED") WANTED
-            .wanted-track
-                +checkbox-track("wanted", 4, "wanted-box")
+                    .wanted-block
+                        .stat-label(data-i18n="WANTED") WANTED
+                        .wanted-track
+                            +fakeradio-track("wanted", 4, "wanted-box")
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 3: SCORE TRACKER (Heat Gauge)
-//- Framing: Mission control / tactical display
-//- ═══════════════════════════════════════════════════════════════
-.section.score-tracker
-    .section-header
-        .section-stamp SCORE TRACKER
-        .section-number 03
+                //- Row 4: Vault Track (16 boxes) - forward fill
+                .stats-row.vault-row
+                    .vault-block
+                        .stat-label(data-i18n="VAULT") VAULT
+                        .vault-track
+                            +fakeradio-track("vault", 16, "vault-box")
 
-    .score-grid
-        //- Heat Gauge (6 segments - for active scores)
-        +heat-gauge("score_heat")
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 3: SCORE TRACKER (Heat Gauge)
+        //- Framing: Mission control / tactical display
+        //- ───────────────────────────────────────────────────────────
+        .section.score-tracker
+            .section-header
+                .section-stamp SCORE TRACKER
+                .section-number 03
 
-        .score-info
-            +text-input("current_score", "CURRENT_SCORE")
-            +text-input("score_target", "TARGET")
+            .score-grid
+                //- Heat Gauge (6 segments - for active scores)
+                +heat-gauge("score_heat")
 
-        //- Disengagement Roll button
-        button(type="action", name="act_disengage_roll").disengage-btn
-            span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
+                .score-info
+                    +text-input("current_score", "CURRENT_SCORE")
+                    +text-input("score_target", "TARGET")
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 4: CREW UPGRADES
-//- Framing: Asset manifest / resource allocation
-//- ═══════════════════════════════════════════════════════════════
-.section.crew-upgrades
-    .section-header
-        .section-stamp CREW UPGRADES
-        .section-number 04
+                //- Disengagement Roll button
+                button(type="action", name="act_disengage_roll").disengage-btn
+                    span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
 
-    .upgrades-grid
-        //- Lair Upgrades
-        .upgrade-category.lair
-            h4(data-i18n="LAIR") Lair
-            .upgrade-list
-                +upgrade-checkbox("lair_rides_1", "Rides", 2)
-                +upgrade-checkbox("lair_rides_2", "Rides", 2)
-                +upgrade-checkbox("lair_specialty", "Specialty Transport", 2)
-                +upgrade-checkbox("lair_specialty_2", "Specialty Transport", 2)
-                +upgrade-checkbox("lair_hidden", "Hidden", 1)
-                +upgrade-checkbox("lair_quarters", "Quarters", 1)
-                +upgrade-checkbox("lair_secure_1", "Secure", 2)
-                +upgrade-checkbox("lair_secure_2", "Secure", 2)
-                +upgrade-checkbox("lair_encryption_1", "BC Encryption (8)", 2)
-                +upgrade-checkbox("lair_encryption_2", "BC Encryption (16)", 2)
-                +upgrade-checkbox("lair_workshop", "Workshop", 1)
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 4: CREW UPGRADES
+        //- Framing: Asset manifest / resource allocation
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-upgrades
+            .section-header
+                .section-stamp CREW UPGRADES
+                .section-number 04
 
-        //- Training Upgrades
-        .upgrade-category.training
-            h4(data-i18n="TRAINING") Training
-            .upgrade-list
-                +upgrade-checkbox("train_acuity", "Acuity", 1)
-                +upgrade-checkbox("train_grit", "Grit", 1)
-                +upgrade-checkbox("train_resolve", "Resolve", 1)
-                +upgrade-checkbox("train_personal", "Personal", 1)
-                +upgrade-checkbox("train_mastery_1", "Mastery", 4)
-                +upgrade-checkbox("train_mastery_2", "Mastery", 4)
-                +upgrade-checkbox("train_mastery_3", "Mastery", 4)
-                +upgrade-checkbox("train_mastery_4", "Mastery", 4)
+            .upgrades-grid
+                //- Lair Upgrades
+                .upgrade-category.lair
+                    h4(data-i18n="LAIR") Lair
+                    .upgrade-list
+                        +upgrade-checkbox("lair_rides_1", "Rides", 2)
+                        +upgrade-checkbox("lair_rides_2", "Rides", 2)
+                        +upgrade-checkbox("lair_specialty", "Specialty Transport", 2)
+                        +upgrade-checkbox("lair_specialty_2", "Specialty Transport", 2)
+                        +upgrade-checkbox("lair_hidden", "Hidden", 1)
+                        +upgrade-checkbox("lair_quarters", "Quarters", 1)
+                        +upgrade-checkbox("lair_secure_1", "Secure", 2)
+                        +upgrade-checkbox("lair_secure_2", "Secure", 2)
+                        +upgrade-checkbox("lair_encryption_1", "BC Encryption (8)", 2)
+                        +upgrade-checkbox("lair_encryption_2", "BC Encryption (16)", 2)
+                        +upgrade-checkbox("lair_workshop", "Workshop", 1)
 
-        //- Quality Upgrades
-        .upgrade-category.quality
-            h4(data-i18n="QUALITY") Quality
-            .upgrade-list
-                +upgrade-checkbox("qual_documents", "Documents", 1)
-                +upgrade-checkbox("qual_gear", "Gear", 1)
-                +upgrade-checkbox("qual_implements", "Implements", 1)
-                +upgrade-checkbox("qual_supplies", "Supplies", 1)
-                +upgrade-checkbox("qual_tools", "Tools", 1)
-                +upgrade-checkbox("qual_weapons", "Weapons", 1)
+                //- Training Upgrades
+                .upgrade-category.training
+                    h4(data-i18n="TRAINING") Training
+                    .upgrade-list
+                        +upgrade-checkbox("train_acuity", "Acuity", 1)
+                        +upgrade-checkbox("train_grit", "Grit", 1)
+                        +upgrade-checkbox("train_resolve", "Resolve", 1)
+                        +upgrade-checkbox("train_personal", "Personal", 1)
+                        +upgrade-checkbox("train_mastery_1", "Mastery", 4)
+                        +upgrade-checkbox("train_mastery_2", "Mastery", 4)
+                        +upgrade-checkbox("train_mastery_3", "Mastery", 4)
+                        +upgrade-checkbox("train_mastery_4", "Mastery", 4)
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 5: CREW ABILITIES
-//- Framing: Special operations / classified capabilities
-//- ═══════════════════════════════════════════════════════════════
-.section.crew-abilities
-    .section-header
-        .section-stamp CREW ABILITIES
-        .section-number 05
+                //- Quality Upgrades
+                .upgrade-category.quality
+                    h4(data-i18n="QUALITY") Quality
+                    .upgrade-list
+                        +upgrade-checkbox("qual_documents", "Documents", 1)
+                        +upgrade-checkbox("qual_gear", "Gear", 1)
+                        +upgrade-checkbox("qual_implements", "Implements", 1)
+                        +upgrade-checkbox("qual_supplies", "Supplies", 1)
+                        +upgrade-checkbox("qual_tools", "Tools", 1)
+                        +upgrade-checkbox("qual_weapons", "Weapons", 1)
 
-    +repeating("crew_abilities")
-        .crew-ability-entry
-            input(type="checkbox", name="attr_crew_ability_taken", value="1").ability-check
-            input(type="text", name="attr_crew_ability_name", placeholder="Ability name").ability-name
-            textarea(name="attr_crew_ability_desc", placeholder="Description").ability-desc
+    //- ═══════════════════════════════════════════════════════════════
+    //- RIGHT COLUMN - Abilities, Cohorts, Factions, Claims, Notes
+    //- ═══════════════════════════════════════════════════════════════
+    .right-column
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 6: COHORTS
-//- Framing: Personnel files / asset registry
-//- ═══════════════════════════════════════════════════════════════
-.section.cohorts
-    .section-header
-        .section-stamp COHORTS
-        .section-number 06
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 5: CREW ABILITIES
+        //- Framing: Special operations / classified capabilities
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-abilities
+            .section-header
+                .section-stamp CREW ABILITIES
+                .section-number 05
 
-    +repeating("cohorts")
-        +cohort-block()
+            +repeating("crew_abilities")
+                .crew-ability-entry
+                    input(type="checkbox", name="attr_crew_ability_taken", value="1").ability-check
+                    input(type="text", name="attr_crew_ability_name", placeholder="Ability name").ability-name
+                    textarea(name="attr_crew_ability_desc", placeholder="Description").ability-desc
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 7: FACTION STATUS
-//- Framing: Intelligence briefing / relationship matrix
-//- ═══════════════════════════════════════════════════════════════
-.section.factions
-    .section-header
-        .section-stamp FACTION STATUS
-        .section-number 07
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 6: COHORTS
+        //- Framing: Personnel files / asset registry
+        //- ───────────────────────────────────────────────────────────
+        .section.cohorts
+            .section-header
+                .section-stamp COHORTS
+                .section-number 06
 
-    .faction-legend
-        span.legend-war(data-i18n="WAR") W = War
-        span.legend-neutral(data-i18n="NEUTRAL") 0 = Neutral
-        span.legend-ally(data-i18n="ALLY") A = Allied
+            +repeating("cohorts")
+                +cohort-block()
 
-    +repeating("factions")
-        +faction-status("fac")
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 7: CLAIMS / TERRITORY
+        //- Framing: Territory map / sphere of influence
+        //- ───────────────────────────────────────────────────────────
+        .section.claims
+            .section-header
+                .section-stamp CLAIMS
+                .section-number 07
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 8: CLAIMS / TERRITORY
-//- Framing: Territory map / sphere of influence
-//- ═══════════════════════════════════════════════════════════════
-.section.claims
-    .section-header
-        .section-stamp CLAIMS
-        .section-number 08
+            +repeating("claims")
+                .claim-entry
+                    input(type="checkbox", name="attr_claim_held", value="1").claim-check
+                    input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
+                    input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
 
-    +repeating("claims")
-        .claim-entry
-            input(type="checkbox", name="attr_claim_held", value="1").claim-check
-            input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
-            input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 8: CREW NOTES
+        //- Framing: Mission logs / operational notes
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-notes
+            .section-header
+                .section-stamp CREW NOTES
+                .section-number 08
 
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 9: VAULT & RESOURCES
-//- Framing: Treasury / resource allocation
-//- ═══════════════════════════════════════════════════════════════
-.section.vault
-    .section-header
-        .section-stamp VAULT
-        .section-number 09
-
-    .vault-grid
-        .coin-block
-            .stat-label(data-i18n="COIN") COIN
-            input(type="number", name="attr_crew_coin", value="0", min="0")
-            .coin-warning(data-i18n="COIN_WARNING") (4+ draws Heat)
-
-        .vault-track
-            .stat-label(data-i18n="VAULT") VAULT
-            .vault-boxes
-                +checkbox-track("vault", 16, "vault-box")
-
-//- ═══════════════════════════════════════════════════════════════
-//- SECTION 10: CREW NOTES
-//- Framing: Mission logs / operational notes
-//- ═══════════════════════════════════════════════════════════════
-.section.crew-notes
-    .section-header
-        .section-stamp CREW NOTES
-        .section-number 10
-
-    textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
+            textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
