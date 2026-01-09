@@ -13,7 +13,7 @@
     "build": "npx tsc -p Source/tsconfig.json && npx run-p --race build:pug build:sass",
     "build:ts": "npx tsc -p Source/tsconfig.json",
     "build:pug": "npx pug -o . Source/dcsb.pug",
-    "build:sass": "npx sass --no-source-map --style expanded Source/dcsb.scss ./dcsb.css"
+    "build:sass": "npx sass --no-source-map --no-charset --style expanded Source/dcsb.scss ./dcsb.css"
   },
   "devDependencies": {
     "@types/underscore": "^1.10.24",

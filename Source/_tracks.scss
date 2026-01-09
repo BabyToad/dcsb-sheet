@@ -15,50 +15,79 @@
     }
 
     // =========================================================================
-    // CONDITION GRID (Stress/Trauma)
+    // CONDITION TRACKS (Stress/Trauma)
     // =========================================================================
 
-    .condition-grid {
-        @include grid(1fr 1fr, $spacing-md);
+    .condition-tracks {
+        display: flex;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-sm;
     }
 
     .stress-block,
     .trauma-block {
-        margin-bottom: $spacing-sm;
+        flex: 1;
     }
 
-    .stress-track,
+    .trauma-conditions-row {
+        margin-bottom: $spacing-md;
+
+        .trauma-conditions-input {
+            width: 100%;
+            font-size: $type-sm;
+            font-style: italic;
+            color: $zine-grey;
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed $zine-grey;
+            padding: $spacing-xs 0;
+            font-family: $font-typewriter;
+
+            &::placeholder {
+                color: $form-grey-light;
+            }
+
+            &:focus {
+                outline: none;
+                border-bottom-color: $terminal-amber;
+            }
+        }
+    }
+
+    .stress-track {
+        @include flex-row(2px, stretch);
+        @include fakeradio-hidden();
+
+        .stress-box {
+            @include square-box(16px);
+            @include hand-drawn-rotation();
+            border: 2px solid $zine-ink;
+            cursor: pointer;
+            @include transition();
+            // Forward fill: start FILLED, empty after checked value
+            @include checkbox-checked-fill($terminal-amber);
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+        }
+
+        // Empty boxes after the checked value (forward fill pattern)
+        .fakeradio:checked ~ .fakeradio + .stress-box {
+            background: transparent;
+            box-shadow: none;
+        }
+    }
+
     .trauma-track {
         @include flex-row(2px, stretch);
+        @include fakeradio-hidden();
 
-        .stress-box,
         .trauma-box {
             @include square-box(16px);
             @include hand-drawn-rotation();
             border: 2px solid $zine-ink;
             cursor: pointer;
             @include transition();
-        }
-
-        input[type="checkbox"] {
-            @include hidden-checkbox-base();
-
-            &:checked + .stress-box {
-                @include checkbox-checked-fill($terminal-amber);
-                box-shadow: 1px 1px 0 rgba(0,0,0,0.2);
-            }
-        }
-    }
-
-    // Trauma gets X marks (special styling)
-    .trauma-track {
-        .trauma-box {
             position: relative;
-        }
-
-        input[type="checkbox"]:checked + .trauma-box {
-            background: transparent;
-
+            // Forward fill: start with X marks (filled state)
             &::before,
             &::after {
                 content: '';
@@ -74,6 +103,14 @@
             }
             &::after {
                 transform: translate(-50%, -50%) rotate(-45deg);
+            }
+        }
+
+        // Empty boxes after the checked value (forward fill pattern)
+        .fakeradio:checked ~ .fakeradio + .trauma-box {
+            &::before,
+            &::after {
+                content: none;
             }
         }
     }

@@ -14,6 +14,60 @@ const int = (val: string | undefined, def: number = 0): number =>
     parseInt(val || '') || def;
 
 /**
+ * Count sixes in a dice roll result
+ * Roll20 dice array is plain numbers: [3, 6, 2, 6] per the wiki
+ * @param dice - Array of die results from Roll20
+ * @returns Number of 6s rolled
+ */
+const countSixes = (dice: number[]): number =>
+    dice.filter(d => d === DICE.SIZE).length;
+
+/**
+ * Check if roll is a critical (2+ sixes)
+ * @param dice - Array of die results from Roll20
+ * @returns true if critical, false otherwise
+ */
+const isCrit = (dice: number[]): boolean =>
+    countSixes(dice) >= 2;
+
+/**
+ * Get action roll label with typography emphasis for crits
+ */
+const getActionLabel = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !!';
+    if (result >= 6) return 'SUCCESS';
+    if (result >= 4) return 'PARTIAL';
+    return 'FAILURE';
+};
+
+/**
+ * Get fortune roll label with typography emphasis for crits
+ */
+const getFortuneLabel = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !!';
+    if (result >= 6) return 'BEST OUTCOME';
+    if (result >= 4) return 'MIXED RESULT';
+    return 'POOR OUTCOME';
+};
+
+/**
+ * Get resistance roll stress message
+ */
+const getStressMessage = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !! Clear 1 stress';
+    if (result >= 6) return 'No stress (rolled 6)';
+    const stress = 6 - result;
+    return `Take ${stress} stress`;
+};
+
+/**
+ * Get vice roll label
+ */
+const getViceLabel = (crit: boolean): string => {
+    return crit ? '!! CRITICAL !!' : 'CLEAR STRESS';
+};
+
+/**
  * Set attributes only if they've changed (reduces API calls)
  */
 const mySetAttrs = (

@@ -76,6 +76,19 @@ mixin checkbox-track(name, count, boxClass)
         input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_${i}`)
         label(class=boxClass, for=`${name}_${i}`)
 
+//- Fakeradio track with forward fill (clicking fills all boxes up to and including clicked)
+//- Uses fakeradio pattern: boxes start filled, clicking empties boxes after selection
+//- @param {string} name - Attribute name (stores the count as value)
+//- @param {number} count - Number of boxes
+//- @param {string} boxClass - CSS class for label boxes
+mixin fakeradio-track(name, count, boxClass)
+    //- Hidden zero-value checkbox (default state = nothing filled)
+    input.fakeradio.zero(type="checkbox", name=`attr_${name}`, value="0", checked)
+    //- Visible boxes with incrementing values
+    - for (var i = 1; i <= count; i++)
+        input.fakeradio(type="checkbox", name=`attr_${name}`, value=i, id=`${name}_${i}`)
+        label(class=boxClass, for=`${name}_${i}`)
+
 //- Clock segments (configurable size)
 mixin clock(name, segments, label)
     .clock(data-segments=segments)

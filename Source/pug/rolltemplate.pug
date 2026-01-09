@@ -1,41 +1,123 @@
 //- Dark City, Shining Babel - Roll Templates
+//- Styled for the "reclaimed corporate form" aesthetic
+//-
+//- Uses computed values from sheet workers for result labels.
+//- Crit detection (2+ sixes) handled in JavaScript, displayed with typography emphasis.
 
-//- Standard action roll template
+//- =============================================================================
+//- ACTION ROLL
+//- =============================================================================
+
 rolltemplate.sheet-rolltemplate-dcsb-action
-    .rolltemplate-container
-        .rolltemplate-header
-            span.charname {{charname}}
-            span.title {{title}}
-        .rolltemplate-body
-            .roll-result {{roll}}
-            if position
-                .position Position: {{position}}
-            if effect
-                .effect Effect: {{effect}}
-        if notes
-            .rolltemplate-footer
-                span.notes {{notes}}
+    .rt-container
+        .rt-header
+            .rt-header-border ┌──────────────────────────────────────────────────┐
+            .rt-header-content
+                span.rt-charname {{charname}}
+                span.rt-action {{title}}
+            .rt-header-border └──────────────────────────────────────────────────┘
 
-//- Fortune roll template
+        .rt-body
+            .rt-result
+                .rt-result-label {{computed::label}}
+                .rt-result-value {{roll}}
+
+            //- Position and Effect (if provided)
+            | {{#position}}
+            .rt-context
+                span.rt-context-label POSITION:
+                span.rt-context-value {{position}}
+            | {{/position}}
+            | {{#effect}}
+            .rt-context
+                span.rt-context-label EFFECT:
+                span.rt-context-value {{effect}}
+            | {{/effect}}
+
+        //- Notes footer
+        | {{#notes}}
+        .rt-footer
+            span.rt-notes {{notes}}
+        | {{/notes}}
+
+
+//- =============================================================================
+//- FORTUNE ROLL
+//- =============================================================================
+
 rolltemplate.sheet-rolltemplate-dcsb-fortune
-    .rolltemplate-container
-        .rolltemplate-header
-            span.charname {{charname}}
-            span.title Fortune Roll
-        .rolltemplate-body
-            .roll-result {{roll}}
-        if notes
-            .rolltemplate-footer
-                span.notes {{notes}}
+    .rt-container
+        .rt-header
+            .rt-header-border ┌──────────────────────────────────────────────────┐
+            .rt-header-content
+                span.rt-charname {{charname}}
+                span.rt-action {{title}}
+            .rt-header-border └──────────────────────────────────────────────────┘
 
-//- Resistance roll template
+        .rt-body
+            .rt-result
+                .rt-result-label {{computed::label}}
+                .rt-result-value {{roll}}
+
+        | {{#notes}}
+        .rt-footer
+            span.rt-notes {{notes}}
+        | {{/notes}}
+
+
+//- =============================================================================
+//- RESISTANCE ROLL
+//- =============================================================================
+
 rolltemplate.sheet-rolltemplate-dcsb-resistance
-    .rolltemplate-container
-        .rolltemplate-header
-            span.charname {{charname}}
-            span.title Resistance
-        .rolltemplate-body
-            .roll-result {{roll}}
-            .attribute {{attribute}}
-        if stress
-            .stress Stress: {{stress}}
+    .rt-container.rt-resist
+        .rt-header
+            .rt-header-border ┌──────────────────────────────────────────────────┐
+            .rt-header-content
+                span.rt-charname {{charname}}
+                span.rt-action RESIST
+            .rt-header-border └──────────────────────────────────────────────────┘
+
+        .rt-body
+            .rt-result.rt-resist-result
+                .rt-result-label {{attribute}}
+                .rt-result-value {{roll}}
+
+            .rt-stress-result
+                span.rt-stress-text {{computed::stressmsg}}
+
+        | {{#notes}}
+        .rt-footer
+            span.rt-notes {{notes}}
+        | {{/notes}}
+
+
+//- =============================================================================
+//- VICE ROLL
+//- =============================================================================
+
+rolltemplate.sheet-rolltemplate-dcsb-vice
+    .rt-container
+        .rt-header
+            .rt-header-border ┌──────────────────────────────────────────────────┐
+            .rt-header-content
+                span.rt-charname {{charname}}
+                span.rt-action INDULGE VICE
+            .rt-header-border └──────────────────────────────────────────────────┘
+
+        .rt-body
+            .rt-result.rt-vice-result
+                .rt-result-label {{computed::label}}
+                .rt-result-value {{roll}}
+
+            //- Overindulgence warning (6+)
+            | {{#rollGreater() roll 5}}
+            .rt-vice-warning
+                span.rt-warning-icon !
+                span.rt-warning-text Overindulgence? (6+)
+            | {{/rollGreater() roll 5}}
+
+        | {{#notes}}
+        .rt-footer
+            span.rt-notes {{notes}}
+        | {{/notes}}

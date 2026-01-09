@@ -2,6 +2,13 @@
 // Project: Dark City, Shining Babel Roll20 Sheet
 // Based on definitions by: Karl Erik Hofseth https://github.com/Karlinator
 
+// Browser console for debugging
+declare const console: {
+    log(...args: any[]): void;
+    error(...args: any[]): void;
+    warn(...args: any[]): void;
+};
+
 declare type EventInfo = {
     sourceAttribute: string,
     sourceType: string,
@@ -31,12 +38,13 @@ declare function setDefaultToken(values: {[key: string]: string}): void
 declare function on(event: string, callback: (eventInfo: EventInfo) => void): void
 
 // Roll20 Custom Roll Parsing API
+// Per wiki: dice is "An ordered array of the results of all dice in the roll (e.g., [9,9,20,4,4,1])"
 declare interface RollResults {
     rollId: string;
     results: {
         [key: string]: {
             result: number;
-            dice: number[];
+            dice: number[];  // Plain array of die values
             expression: string;
         }
     }

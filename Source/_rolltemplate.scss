@@ -1,48 +1,347 @@
 // =============================================================================
-// ROLL TEMPLATES
+// ROLL TEMPLATES - Dark City, Shining Babel
 // =============================================================================
+// Styled as "reclaimed corporate forms" - terminal aesthetic with
+// box-drawing characters, amber phosphor highlights, brutalist layout
+//
+// NOTE: Roll20 auto-prefixes ALL classes in roll templates with "sheet-"
+// Internal classes must be nested under the rolltemplate selector
 
 @use 'tokens' as *;
 
+// =============================================================================
+// SHARED ROLLTEMPLATE STYLES
+// =============================================================================
+
 .sheet-rolltemplate-dcsb-action,
 .sheet-rolltemplate-dcsb-fortune,
-.sheet-rolltemplate-dcsb-resistance {
+.sheet-rolltemplate-dcsb-resistance,
+.sheet-rolltemplate-dcsb-vice {
+    // Roll20 chat positioning
+    margin-left: -37px;
+    width: 290px;
     font-family: $font-mono;
-    background: $form-paper;
-    border: 2px solid $form-ink;
-    padding: $space-3;
-    margin: $space-2 0;
+    font-size: 13px;  // Larger base for chat readability
+    color: $form-ink;
+    line-height: 1.5;
 
-    .rolltemplate-container {
-        .rolltemplate-header {
-            border-bottom: 1px solid $form-ink;
-            padding-bottom: $space-2;
-            margin-bottom: $space-2;
+    // Remove Roll20's default inline roll styling
+    .inlinerollresult {
+        padding: 0 !important;
+        font-family: inherit !important;
+        background: transparent !important;
+        border: none !important;
+    }
 
-            .charname {
-                font-weight: bold;
-            }
+    // =========================================================================
+    // CONTAINER
+    // =========================================================================
+    .sheet-rt-container {
+        background: $form-paper;
+        border: 2px solid $form-ink;
+        position: relative;
+        overflow: hidden;
+    }
 
-            .title {
-                text-transform: uppercase;
-                font-size: $type-sm;
-                color: $terminal-amber;
-            }
-        }
+    // =========================================================================
+    // HEADER
+    // =========================================================================
+    .sheet-rt-header {
+        padding: $space-2 $space-3;
+        position: relative;
+        border-bottom: 1px solid $form-grey;
+    }
 
-        .rolltemplate-body {
-            .roll-result {
-                font-size: $type-lg;
-                font-weight: bold;
-            }
-        }
+    .sheet-rt-header-border {
+        font-size: 10px;
+        color: #555555;  // Darker grey for better contrast
+        letter-spacing: 0;
+        line-height: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        user-select: none;
+        // Stretch to fill container width
+        display: block;
+        width: 100%;
+    }
 
-        .rolltemplate-footer {
-            border-top: 1px solid $form-grey;
-            padding-top: $space-2;
-            margin-top: $space-2;
-            font-size: $type-sm;
-            color: $form-grey;
+    .sheet-rt-header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: $space-2 0;
+    }
+
+    .sheet-rt-charname {
+        font-weight: bold;
+        font-size: 15px;  // Larger character name
+        color: $form-ink;
+        max-width: 170px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sheet-rt-action {
+        text-transform: uppercase;
+        font-size: 12px;  // Larger action name
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: #996600;  // Darker amber for readability on cream
+    }
+
+    // =========================================================================
+    // BODY
+    // =========================================================================
+    .sheet-rt-body {
+        padding: $space-3;
+    }
+
+    // =========================================================================
+    // RESULT DISPLAY
+    // =========================================================================
+    .sheet-rt-result {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: $space-3;
+        margin-bottom: $space-2;
+        position: relative;
+        border-left: 4px solid $form-grey;
+        background: rgba(0, 0, 0, 0.03);
+    }
+
+    .sheet-rt-result-label {
+        font-size: 13px;  // Larger for readability
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $form-ink;  // Ensure high contrast
+    }
+
+    .sheet-rt-result-value {
+        font-size: 28px;  // Larger die result
+        font-weight: bold;
+        line-height: 1;
+        color: $form-ink;  // Black for readability
+
+        .inlinerollresult {
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            color: inherit !important;
         }
     }
+
+    // -------------------------------------------------------------------------
+    // Result States
+    // -------------------------------------------------------------------------
+    .sheet-rt-crit {
+        border-left-color: $terminal-amber;
+        background: rgba($terminal-amber, 0.15);
+
+        .sheet-rt-result-label {
+            color: $form-ink;
+            text-shadow: 1px 1px 0 $terminal-amber;
+        }
+        .sheet-rt-result-value {
+            color: $terminal-amber;
+        }
+    }
+
+    .sheet-rt-success {
+        border-left-color: $terminal-amber;
+        background: rgba($terminal-amber, 0.08);
+
+        .sheet-rt-result-label {
+            color: $form-ink;
+        }
+        .sheet-rt-result-value {
+            color: $terminal-amber;
+        }
+    }
+
+    .sheet-rt-partial {
+        border-left-color: $form-grey;
+        background: rgba($form-grey, 0.1);
+
+        .sheet-rt-result-label {
+            color: $form-grey;
+        }
+        .sheet-rt-result-value {
+            color: $form-ink;
+        }
+    }
+
+    .sheet-rt-failure {
+        border-left-color: $status-danger;
+        background: rgba($status-danger, 0.08);
+
+        .sheet-rt-result-label {
+            color: $status-danger;
+        }
+        .sheet-rt-result-value {
+            color: $status-danger;
+        }
+    }
+
+    // =========================================================================
+    // CONTEXT (Position/Effect)
+    // =========================================================================
+    .sheet-rt-context {
+        display: flex;
+        gap: $space-3;
+        font-size: 12px;  // Readable size
+        padding: $space-2 0;
+        border-bottom: 1px dotted #999999;
+
+        &:last-of-type {
+            border-bottom: none;
+        }
+    }
+
+    .sheet-rt-context-label {
+        color: #555555;  // Darker for better contrast
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: bold;
+        min-width: 65px;
+    }
+
+    .sheet-rt-context-value {
+        color: $form-ink;
+        text-transform: capitalize;
+        font-weight: bold;
+    }
+
+    // =========================================================================
+    // STRESS DISPLAY (Resistance)
+    // =========================================================================
+    .sheet-rt-stress-result {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+        padding: $space-3;
+        margin-top: $space-3;
+        font-size: 13px;  // Larger for readability
+        border: 2px dashed #666666;  // Darker border
+    }
+
+    .sheet-rt-stress-icon {
+        font-size: 16px;
+        min-width: 24px;
+        font-weight: bold;
+    }
+
+    .sheet-rt-stress-text {
+        color: $form-ink;
+        font-weight: bold;
+    }
+
+    .sheet-rt-stress-none {
+        border-color: $status-good;
+        background: rgba($status-good, 0.08);
+        .sheet-rt-stress-icon,
+        .sheet-rt-stress-text {
+            color: $status-good;
+        }
+    }
+
+    .sheet-rt-stress-crit {
+        border-color: $terminal-amber;
+        background: rgba($terminal-amber, 0.15);
+        .sheet-rt-stress-icon {
+            color: $terminal-amber;
+        }
+        .sheet-rt-stress-text {
+            color: $form-ink;
+            font-weight: bold;
+        }
+    }
+
+    .sheet-rt-stress-low {
+        border-color: $status-warning;
+        background: rgba($status-warning, 0.08);
+        .sheet-rt-stress-icon {
+            color: $status-warning;
+        }
+    }
+
+    .sheet-rt-stress-high {
+        border-color: $status-danger;
+        background: rgba($status-danger, 0.08);
+        .sheet-rt-stress-icon,
+        .sheet-rt-stress-text {
+            color: $status-danger;
+        }
+    }
+
+    // =========================================================================
+    // VICE WARNING
+    // =========================================================================
+    .sheet-rt-vice-result {
+        border-left-color: $terminal-amber;
+        background: rgba($terminal-amber, 0.05);
+
+        .sheet-rt-result-label {
+            color: $form-grey;
+        }
+        .sheet-rt-result-value {
+            color: $terminal-amber;
+        }
+    }
+
+    .sheet-rt-vice-warning {
+        display: flex;
+        align-items: center;
+        gap: $space-2;
+        padding: $space-2;
+        margin-top: $space-2;
+        background: rgba($status-warning, 0.15);
+        border: 1px solid $status-warning;
+    }
+
+    .sheet-rt-warning-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        background: $status-warning;
+        color: $form-paper;
+        font-weight: bold;
+        font-size: $type-md;
+    }
+
+    .sheet-rt-warning-text {
+        color: #994400;  // Darker orange for contrast
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    // =========================================================================
+    // FOOTER
+    // =========================================================================
+    .sheet-rt-footer {
+        padding: $space-3;
+        border-top: 1px dashed #666666;
+        background: rgba(0, 0, 0, 0.03);
+    }
+
+    .sheet-rt-notes {
+        font-size: 12px;
+        font-style: italic;
+        color: #555555;  // Darker for readability
+        display: block;
+    }
+}
+
+// =============================================================================
+// WITHOUT AVATARS ADJUSTMENT
+// =============================================================================
+.sheet-withoutavatars .sheet-rolltemplate-dcsb-action,
+.sheet-withoutavatars .sheet-rolltemplate-dcsb-fortune,
+.sheet-withoutavatars .sheet-rolltemplate-dcsb-resistance,
+.sheet-withoutavatars .sheet-rolltemplate-dcsb-vice {
+    margin-left: -7px;
 }

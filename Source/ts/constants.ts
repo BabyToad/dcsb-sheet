@@ -18,6 +18,7 @@ const ROLL_TEMPLATES = {
     ACTION: 'dcsb-action',
     RESISTANCE: 'dcsb-resistance',
     FORTUNE: 'dcsb-fortune',
+    VICE: 'dcsb-vice',
 } as const;
 
 // Load settings

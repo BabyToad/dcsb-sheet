@@ -125,60 +125,73 @@
                 .section-stamp CONDITION REPORT
                 .section-number 03
 
-            .condition-grid
-                //- Stress Track
+            //- Top row: Stress and Trauma side by side
+            .condition-tracks
                 .stress-block
                     .track-label(data-i18n="STRESS") STRESS
                     .stress-track
-                        +checkbox-track("stress", 9, "stress-box")
+                        +fakeradio-track("stress", 9, "stress-box")
 
-                //- Trauma Track
                 .trauma-block
                     .track-label(data-i18n="TRAUMA") TRAUMA
                     .trauma-track
-                        +checkbox-track("trauma", 4, "trauma-box")
-                    +text-input("trauma_conditions", "TRAUMA_CONDITIONS")
+                        +fakeradio-track("trauma", 4, "trauma-box")
 
-                //- Harm Track (always editable - changes during play)
-                .harm-block
-                    .harm-header
-                        .track-label(data-i18n="HARM") HARM
-                        .healing-clock-wrapper
-                            span.clock-label(data-i18n="HEALING") Healing
-                            .clock-circle(data-segments="4")
-                                - for (var i = 1; i <= 4; i++)
-                                    input(type="checkbox", name=`attr_healing_${i}`, value="1", id=`healing_seg_${i}`)
-                                    label.clock-wedge(for=`healing_seg_${i}`, data-segment=i)
+            //- Trauma conditions below tracks
+            .trauma-conditions-row
+                input.trauma-conditions-input(type="text", name="attr_trauma_conditions", placeholder="Trauma conditions...")
 
-                    .harm-track
-                        .harm-level.severe
+            //- Harm Section with healing clock
+            .harm-section
+                .harm-header
+                    .track-label(data-i18n="HARM") HARM
+                    .healing-clock-group
+                        .clock-circle(data-segments="4")
+                            - for (var i = 1; i <= 4; i++)
+                                input(type="checkbox", name=`attr_healing_${i}`, value="1", id=`healing_seg_${i}`)
+                                label.clock-wedge(for=`healing_seg_${i}`, data-segment=i)
+                        .healing-controls
+                            span.clock-label Healing
+                            button.healing-roll-btn(type="action", name="act_roll_healing") ⚄
+
+                //- Harm track with larger fields
+                .harm-track
+                    .harm-level.severe
+                        .level-indicator
                             span.level-num 3
-                            +text-input("harm_3", "")
-                        .harm-level.moderate
+                            span.level-label SEVERE
+                        input.harm-input(type="text", name="attr_harm_3", placeholder="Need Help")
+                    .harm-level.moderate
+                        .level-indicator
                             span.level-num 2
-                            +text-input("harm_2a", "")
-                            +text-input("harm_2b", "")
-                        .harm-level.lesser
+                            span.level-label MODERATE
+                        .harm-inputs
+                            input.harm-input(type="text", name="attr_harm_2a", placeholder="-1d")
+                            input.harm-input(type="text", name="attr_harm_2b", placeholder="-1d")
+                    .harm-level.lesser
+                        .level-indicator
                             span.level-num 1
-                            +text-input("harm_1a", "")
-                            +text-input("harm_1b", "")
+                            span.level-label LESSER
+                        .harm-inputs
+                            input.harm-input(type="text", name="attr_harm_1a", placeholder="Less Effect")
+                            input.harm-input(type="text", name="attr_harm_1b", placeholder="Less Effect")
 
-                //- Armor
-                .armor-block
-                    .track-label(data-i18n="ARMOR") ARMOR
-                    .armor-track
-                        label.armor-checkbox
-                            input(type="checkbox", name="attr_armor", value="1")
-                            span.armor-box
-                            span(data-i18n="ARMOR") Armor
-                        label.armor-checkbox
-                            input(type="checkbox", name="attr_heavy_armor", value="1")
-                            span.armor-box
-                            span(data-i18n="HEAVY") +Heavy
-                        label.armor-checkbox
-                            input(type="checkbox", name="attr_special_armor", value="1")
-                            span.armor-box
-                            span(data-i18n="SPECIAL") Special
+            //- Armor row
+            .armor-row
+                .track-label(data-i18n="ARMOR") ARMOR
+                .armor-track
+                    label.armor-checkbox
+                        input(type="checkbox", name="attr_armor", value="1")
+                        span.armor-box
+                        span Armor
+                    label.armor-checkbox
+                        input(type="checkbox", name="attr_heavy_armor", value="1")
+                        span.armor-box
+                        span +Heavy
+                    label.armor-checkbox
+                        input(type="checkbox", name="attr_special_armor", value="1")
+                        span.armor-box
+                        span Special
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 4: AUGMENTATION RECORD

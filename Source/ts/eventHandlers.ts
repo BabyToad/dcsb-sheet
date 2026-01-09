@@ -41,9 +41,13 @@ ACTIONS.forEach(action => {
             const rollFormula = buildRollFormula(dice);
 
             startRoll(
-                `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}}`,
+                `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}}`,
                 results => {
-                    finishRoll(results.rollId, {});
+                    const diceArray = results.results.roll.dice;
+                    const rollResult = results.results.roll.result;
+                    const crit = isCrit(diceArray);
+                    const label = getActionLabel(rollResult, crit);
+                    finishRoll(results.rollId, { label });
                 }
             );
         });
@@ -63,12 +67,13 @@ ATTRIBUTE_NAMES.forEach(attr => {
             const rollFormula = buildRollFormula(dice);
 
             startRoll(
-                `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}}`,
+                `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}} {{stressmsg=[[0]]}}`,
                 results => {
-                    // Calculate stress from roll result (6 - highest die)
+                    const diceArray = results.results.roll.dice;
                     const rollResult = results.results.roll.result;
-                    const stress = Math.max(0, DICE.SIZE - rollResult);
-                    finishRoll(results.rollId, { stress });
+                    const crit = isCrit(diceArray);
+                    const stressmsg = getStressMessage(rollResult, crit);
+                    finishRoll(results.rollId, { stressmsg });
                 }
             );
         });
@@ -126,16 +131,41 @@ on("clicked:indulge_vice", () => {
         const grit = int(v.grit_rating);
         const resolve = int(v.resolve_rating);
         const charName = v.character_name || 'Unknown';
-        const viceType = v.vice_type || 'Vice';
 
         // Roll lowest attribute (BitD rules)
         const lowestRating = Math.min(acuity, grit, resolve);
         const rollFormula = buildRollFormula(lowestRating);
 
         startRoll(
-            `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=Indulge ${viceType}}} {{roll=[[${rollFormula}]]}} {{notes=Clear stress equal to highest die. 6+ may overindulge.}}`,
+            `&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=Clear stress equal to highest die. 6+ may overindulge.}}`,
             results => {
-                finishRoll(results.rollId, {});
+                const diceArray = results.results.roll.dice;
+                const crit = isCrit(diceArray);
+                const label = getViceLabel(crit);
+                finishRoll(results.rollId, { label });
+            }
+        );
+    });
+});
+
+// =============================================================================
+// HEALING FORTUNE ROLL
+// =============================================================================
+
+on("clicked:roll_healing", () => {
+    getAttrs(['character_name'], v => {
+        const charName = v.character_name || 'Unknown';
+        // Recovery is a fortune roll - typically 1d (can be modified by abilities)
+        const rollFormula = buildRollFormula(1);
+
+        startRoll(
+            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Recovery}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=1-3: 1 tick, 4-5: 2 ticks, 6: 3 ticks, Crit: 5 ticks. Fill clock to heal 1 harm level.}}`,
+            results => {
+                const diceArray = results.results.roll.dice;
+                const rollResult = results.results.roll.result;
+                const crit = isCrit(diceArray);
+                const label = getFortuneLabel(rollResult, crit);
+                finishRoll(results.rollId, { label });
             }
         );
     });

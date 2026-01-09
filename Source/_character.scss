@@ -170,18 +170,14 @@
     }
 
     // =========================================================================
-    // HARM TRACKS
+    // HARM SECTION
     // =========================================================================
 
-    .harm-block {
+    .harm-section {
         margin-bottom: $spacing-md;
-
-        &.mental {
-            .harm-header {
-                border-left: 3px solid $zine-accent;
-                padding-left: $spacing-sm;
-            }
-        }
+        padding: $spacing-sm;
+        border: 1px dashed $zine-grey;
+        background: rgba(0,0,0,0.02);
     }
 
     .harm-header {
@@ -189,26 +185,77 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: $spacing-sm;
+        padding-bottom: $spacing-sm;
+        border-bottom: 1px solid $zine-light-grey;
+    }
 
-        .harm-note {
-            font-size: 9px;
-            color: $zine-accent;
-            font-style: italic;
+    .healing-clock-group {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .healing-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+
+            .clock-label {
+                @include uppercase-label(8px, $zine-grey, 0.5px);
+                font-weight: normal;
+            }
+        }
+
+        .healing-roll-btn {
+            font-size: 14px;
+            padding: 2px 6px;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid $zine-grey;
+            color: $zine-grey;
+            @include transition();
+
+            &:hover {
+                border-color: $terminal-amber;
+                color: $terminal-amber;
+                background: rgba($terminal-amber, 0.1);
+            }
         }
     }
 
     .harm-track {
         .harm-level {
-            @include flex-row($spacing-sm);
-            margin: $spacing-xs 0;
-            padding: $spacing-xs 0;
+            display: flex;
+            align-items: stretch;
+            gap: $spacing-sm;
+            margin-bottom: $spacing-sm;
+            padding-bottom: $spacing-sm;
             border-bottom: 1px dotted $zine-light-grey;
 
-            .level-num {
-                font-size: 14px;
-                font-weight: bold;
-                width: 20px;
-                text-align: center;
+            &:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+            .level-indicator {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-width: 50px;
+
+                .level-num {
+                    font-size: 18px;
+                    font-weight: bold;
+                    line-height: 1;
+                }
+
+                .level-label {
+                    font-size: 7px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    color: $zine-grey;
+                }
             }
 
             &.severe .level-num {
@@ -219,48 +266,81 @@
                 color: $status-warning;
             }
 
-            .text-input {
+            &.lesser .level-num {
+                color: $zine-grey;
+            }
+
+            .harm-inputs {
+                flex: 1;
+                min-width: 0;  // Allow shrinking in flex context
+                display: flex;
+                gap: $spacing-sm;
+            }
+
+            .harm-input {
+                flex: 1;
+                min-width: 0;  // Allow shrinking in flex context
+                font-size: $type-sm;
+                font-family: $font-typewriter;
+                padding: $spacing-xs $spacing-sm;
+                background: $form-paper;
+                border: 1px solid $zine-light-grey;
+                min-height: 28px;
+
+                &::placeholder {
+                    color: $form-grey-light;
+                    font-style: italic;
+                    font-size: 9px;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: $terminal-amber;
+                }
+            }
+
+            // Single input for severe harm
+            > .harm-input {
                 flex: 1;
             }
         }
     }
 
-    .healing-clock-wrapper {
-        @include flex-row($spacing-sm);
+    // =========================================================================
+    // ARMOR ROW
+    // =========================================================================
 
-        .clock-label {
-            @include uppercase-label(9px, inherit, 0.5px);
-            font-weight: normal;
-        }
+    .armor-row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding-top: $spacing-sm;
+        border-top: 1px dashed $zine-grey;
     }
 
-    // =========================================================================
-    // ARMOR BLOCK
-    // =========================================================================
+    // Armor track (inside armor-row)
+    .armor-track {
+        display: flex;
+        gap: $spacing-md;
+    }
 
-    .armor-block {
-        .armor-track {
-            @include flex-row($spacing-md, stretch);
+    .armor-checkbox {
+        @include flex-row($spacing-xs);
+        cursor: pointer;
+        font-size: 10px;
+        text-transform: uppercase;
+
+        .armor-box {
+            @include square-box(14px);
+            border: 2px solid $zine-ink;
+            display: inline-block;
         }
 
-        .armor-checkbox {
-            @include flex-row($spacing-xs);
-            cursor: pointer;
-            font-size: 10px;
-            text-transform: uppercase;
+        input[type="checkbox"] {
+            @include hidden-checkbox-base();
 
-            .armor-box {
-                @include square-box(14px);
-                border: 2px solid $zine-ink;
-                display: inline-block;
-            }
-
-            input[type="checkbox"] {
-                @include hidden-checkbox-base();
-
-                &:checked + .armor-box {
-                    @include checkbox-checked-fill($terminal-amber);
-                }
+            &:checked + .armor-box {
+                @include checkbox-checked-fill($terminal-amber);
             }
         }
     }
