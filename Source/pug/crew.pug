@@ -1,10 +1,10 @@
 //- Dark City, Shining Babel - Crew Sheet Content
-//- Layout: Two-column with Identity/Stats/Operations on left, Abilities/Relationships on right
+//- Layout: Two-column with Identity/Stats/Operations/Notes on left, Upgrades/Abilities/Cohorts/Claims on right
 //- Information Architecture: Gang Dossier framing
 
 .sheet-columns
     //- ═══════════════════════════════════════════════════════════════
-    //- LEFT COLUMN - Identity, Stats, Operations, Upgrades
+    //- LEFT COLUMN - Identity, Stats, Score Tracker, Notes
     //- ═══════════════════════════════════════════════════════════════
     .left-column
 
@@ -119,13 +119,29 @@
                     span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 4: CREW UPGRADES
+        //- SECTION 4: CREW NOTES
+        //- Framing: Mission logs / operational notes
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-notes
+            .section-header
+                .section-stamp CREW NOTES
+                .section-number 04
+
+            textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
+
+    //- ═══════════════════════════════════════════════════════════════
+    //- RIGHT COLUMN - Upgrades, Abilities, Cohorts, Claims
+    //- ═══════════════════════════════════════════════════════════════
+    .right-column
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 5: CREW UPGRADES
         //- Framing: Asset manifest / resource allocation
         //- ───────────────────────────────────────────────────────────
         .section.crew-upgrades
             .section-header
                 .section-stamp CREW UPGRADES
-                .section-number 04
+                .section-number 05
 
             .upgrades-grid
                 //- Lair Upgrades
@@ -168,19 +184,14 @@
                         +upgrade-checkbox("qual_tools", "Tools", 1)
                         +upgrade-checkbox("qual_weapons", "Weapons", 1)
 
-    //- ═══════════════════════════════════════════════════════════════
-    //- RIGHT COLUMN - Abilities, Cohorts, Factions, Claims, Notes
-    //- ═══════════════════════════════════════════════════════════════
-    .right-column
-
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 5: CREW ABILITIES
+        //- SECTION 6: CREW ABILITIES
         //- Framing: Special operations / classified capabilities
         //- ───────────────────────────────────────────────────────────
         .section.crew-abilities
             .section-header
                 .section-stamp CREW ABILITIES
-                .section-number 05
+                .section-number 06
 
             +repeating("crew_abilities")
                 .crew-ability-entry
@@ -189,39 +200,28 @@
                     textarea(name="attr_crew_ability_desc", placeholder="Description").ability-desc
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: COHORTS
+        //- SECTION 7: COHORTS
         //- Framing: Personnel files / asset registry
         //- ───────────────────────────────────────────────────────────
         .section.cohorts
             .section-header
                 .section-stamp COHORTS
-                .section-number 06
+                .section-number 07
 
             +repeating("cohorts")
                 +cohort-block()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: CLAIMS / TERRITORY
+        //- SECTION 8: CLAIMS / TERRITORY
         //- Framing: Territory map / sphere of influence
         //- ───────────────────────────────────────────────────────────
         .section.claims
             .section-header
                 .section-stamp CLAIMS
-                .section-number 07
+                .section-number 08
 
             +repeating("claims")
                 .claim-entry
                     input(type="checkbox", name="attr_claim_held", value="1").claim-check
                     input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
                     input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
-
-        //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: CREW NOTES
-        //- Framing: Mission logs / operational notes
-        //- ───────────────────────────────────────────────────────────
-        .section.crew-notes
-            .section-header
-                .section-stamp CREW NOTES
-                .section-number 08
-
-            textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
