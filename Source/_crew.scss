@@ -172,6 +172,10 @@
         font-size: $type-sm;
         padding: 2px 0;
 
+        input[type="checkbox"] {
+            @include hidden-checkbox-base();
+        }
+
         .upgrade-box {
             @include square-box(10px);
             border: 1px solid $zine-ink;
@@ -207,6 +211,10 @@
 
             .harm-label {
                 @include uppercase-label($type-sm, inherit, 0);
+            }
+
+            input[type="checkbox"] {
+                @include hidden-checkbox-base();
             }
 
             .harm-box {
@@ -281,6 +289,14 @@
 
         .claim-check {
             @include square-box(14px);
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+
+            &:checked {
+                @include checkbox-checked-fill($terminal-amber, $terminal-amber);
+            }
         }
     }
 }
