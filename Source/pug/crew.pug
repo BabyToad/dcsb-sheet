@@ -210,9 +210,7 @@
         //- Framing: Personnel files / asset registry
         //- ───────────────────────────────────────────────────────────
         .section.cohorts
-            .section-header
-                .section-stamp COHORTS
-                .section-number 07
+            +section-header-editable("cohorts", "COHORTS", "07")
 
             +repeating("cohorts")
                 +cohort-block()

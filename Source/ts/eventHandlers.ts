@@ -182,6 +182,69 @@ on("clicked:indulge_vice", () => {
 });
 
 // =============================================================================
+// COHORT ROLL (Repeating Section)
+// Gang: Tier dice, Expert: Tier+1 dice, Elite: +1d, Harm: -1d per level
+// =============================================================================
+
+on("clicked:repeating_cohorts:cohortroll", () => {
+    getAttrs([
+        'crew_tier',
+        'crew_name',
+        'repeating_cohorts_cohort_name',
+        'repeating_cohorts_cohort_type',
+        'repeating_cohorts_cohort_elite',
+        'repeating_cohorts_cohort_harm'
+    ], v => {
+        const tier = int(v.crew_tier);
+        const crewName = v.crew_name || 'Crew';
+        const cohortName = v.repeating_cohorts_cohort_name || 'Cohort';
+        const cohortType = v.repeating_cohorts_cohort_type || 'gang';
+        const isElite = v.repeating_cohorts_cohort_elite === '1';
+        const harm = int(v.repeating_cohorts_cohort_harm);
+
+        // Check if cohort can act (broken=3, dead=4)
+        if (harm >= 3) {
+            const harmLabel = harm >= 4 ? 'DEAD' : 'BROKEN';
+            const harmNote = harm >= 4 ? 'Cohort is dead.' : 'Cohort is broken and cannot act.';
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=${cohortName}}} {{roll=[[0d6]]}} {{label=${harmLabel}}} {{notes=${harmNote}}}`,
+                results => finishRoll(results.rollId, {})
+            );
+            return;
+        }
+
+        // Calculate dice pool
+        // Gang: Tier, Expert: Tier+1, Elite: +1d, Harm: -1d per level
+        let dice = tier;
+        if (cohortType === 'expert') dice += 1;
+        if (isElite) dice += 1;
+        dice -= harm;
+
+        // Build notes showing modifiers
+        const mods: string[] = [];
+        mods.push(`Tier ${tier}`);
+        if (cohortType === 'expert') mods.push('+1d Expert');
+        if (isElite) mods.push('+1d Elite');
+        if (harm === 1) mods.push('-1d Weak');
+        if (harm === 2) mods.push('-2d Impaired');
+
+        const rollFormula = buildRollFormula(dice);
+        const typeLabel = cohortType === 'expert' ? 'Expert' : 'Gang';
+
+        startRoll(
+            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=${cohortName} (${typeLabel})}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${mods.join(', ')}}}`,
+            results => {
+                const diceArray = results.results.roll.dice;
+                const rollResult = results.results.roll.result;
+                const crit = isCrit(diceArray);
+                const label = getFortuneLabel(rollResult, crit);
+                finishRoll(results.rollId, { label });
+            }
+        );
+    });
+});
+
+// =============================================================================
 // HEALING FORTUNE ROLL
 // =============================================================================
 

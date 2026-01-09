@@ -310,33 +310,159 @@
         padding: $spacing-sm;
         border: 1px dashed $zine-grey;
         margin-bottom: $spacing-sm;
+    }
 
-        .cohort-header {
-            @include flex-row($spacing-sm, stretch);
-            margin-bottom: $spacing-xs;
+    // Header row
+    .cohort-header-row {
+        @include flex-row($spacing-sm);
+        align-items: center;
+        margin-bottom: $spacing-xs;
+    }
+
+    .cohort-header-display {
+        @include flex-row($spacing-xs);
+        align-items: center;
+    }
+
+    .cohort-name-display {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .cohort-type-display {
+        color: $zine-grey;
+        font-size: $type-sm;
+    }
+
+    .cohort-type-value {
+        color: $zine-grey;
+        font-size: $type-sm;
+        text-transform: capitalize;
+    }
+
+    .cohort-header-edit {
+        @include flex-row($spacing-sm);
+        align-items: center;
+    }
+
+    // Info section
+    .cohort-info-display {
+        @include flex-column(2px);
+        margin: $spacing-xs 0;
+        padding-left: $spacing-sm;
+        border-left: 2px solid rgba($zine-grey, 0.3);
+
+        .info-row {
+            @include flex-row($spacing-xs);
         }
 
-        .cohort-harm {
-            @include flex-row($spacing-xs);
-            margin: $spacing-xs 0;
+        .info-label {
+            @include uppercase-label($type-xs, $zine-grey, 0);
+        }
 
-            .harm-label {
-                @include uppercase-label($type-sm, inherit, 0);
+        .info-value {
+            font-size: $type-sm;
+
+            &:empty::after {
+                content: "—";
+                color: $zine-light-grey;
             }
+        }
+    }
 
-            input[type="checkbox"] {
+    .cohort-info-edit {
+        @include flex-column($spacing-xs);
+        margin: $spacing-xs 0;
+    }
+
+    // Elite checkbox
+    .cohort-elite-label {
+        @include flex-row($spacing-xs);
+        align-items: center;
+        cursor: pointer;
+        margin-left: auto;
+
+        .cohort-elite-check {
+            @include hidden-checkbox-base();
+        }
+
+        .elite-box {
+            @include square-box(12px);
+            border: 1px solid $zine-ink;
+        }
+
+        .cohort-elite-check:checked + .elite-box {
+            @include checkbox-checked-fill($terminal-amber, $terminal-amber);
+        }
+
+        .elite-label {
+            @include uppercase-label($type-xs, $zine-grey, 0);
+        }
+
+        .cohort-elite-check:checked ~ .elite-label {
+            color: $terminal-amber;
+            font-weight: bold;
+        }
+    }
+
+    // Harm track (simple radio buttons)
+    .cohort-harm {
+        @include flex-row($spacing-sm);
+        align-items: center;
+        margin: $spacing-xs 0;
+
+        .harm-label {
+            @include uppercase-label($type-sm, inherit, 0);
+        }
+
+        .harm-track {
+            @include flex-row($spacing-sm);
+            align-items: center;
+        }
+
+        .harm-option {
+            @include flex-row(2px);
+            align-items: center;
+            cursor: pointer;
+
+            input[type="radio"] {
                 @include hidden-checkbox-base();
             }
 
-            .harm-box {
-                @include square-box(14px);
-                border: 1px solid $zine-ink;
-                cursor: pointer;
+            .harm-text {
+                font-size: $type-xs;
+                padding: 2px 4px;
+                border: 1px solid transparent;
             }
 
-            input:checked + .harm-box {
-                @include checkbox-checked-fill($status-danger, $status-danger);
+            // Highlight selected option
+            input:checked + .harm-text {
+                background: $status-danger;
+                color: white;
+                border-color: $status-danger;
             }
+
+            // None option uses different color
+            input[value="0"]:checked + .harm-text {
+                background: $status-good;
+                border-color: $status-good;
+            }
+        }
+    }
+
+    // Roll button
+    .cohort-roll-btn {
+        padding: $spacing-xs $spacing-sm;
+        font-size: $type-sm;
+        text-transform: uppercase;
+        background: transparent;
+        border: 1px solid $zine-ink;
+        cursor: pointer;
+        margin-top: $spacing-xs;
+
+        &:hover {
+            background: $terminal-amber;
+            color: $form-ink;
         }
     }
 

@@ -157,24 +157,65 @@ mixin faction-status(name)
                     else if i === 3
                         span A
 
-//- Cohort block
+//- Cohort block with edit/display modes
 mixin cohort-block()
     .cohort-entry
-        .cohort-header
-            input(type="text", name="attr_cohort_name", placeholder="Cohort name").cohort-name
-            select(name="attr_cohort_type")
-                option(value="gang") Gang
-                option(value="expert") Expert
-        .cohort-tags
+        //- Header row (always visible)
+        .cohort-header-row
+            .display.cohort-header-display
+                span.cohort-name-display(name="attr_cohort_name")
+                span.cohort-type-display (
+                span.cohort-type-value(name="attr_cohort_type")
+                span.cohort-type-display )
+            .edit.cohort-header-edit
+                input(type="text", name="attr_cohort_name", placeholder="Cohort name").cohort-name-input
+                select(name="attr_cohort_type").cohort-type-select
+                    option(value="gang") Gang
+                    option(value="expert") Expert
+            //- Elite toggle (always visible)
+            label.cohort-elite-label
+                input(type="checkbox", name="attr_cohort_elite", value="1").cohort-elite-check
+                span.elite-box
+                span.elite-label ELITE
+
+        //- Info section (display/edit modes)
+        .display.cohort-info-display
+            .info-row
+                span.info-label Tags:
+                span.info-value(name="attr_cohort_tags")
+            .info-row
+                span.info-label Edges:
+                span.info-value(name="attr_cohort_edges")
+            .info-row
+                span.info-label Flaws:
+                span.info-value(name="attr_cohort_flaws")
+        .edit.cohort-info-edit
             +text-input("cohort_tags", "TAGS")
-        .cohort-harm
-            span.harm-label(data-i18n="HARM") Harm:
-            - for (var i = 1; i <= 4; i++)
-                input(type="checkbox", name=`attr_cohort_harm_${i}`, value="1", id=`cohort_harm_${i}`)
-                label.harm-box(for=`cohort_harm_${i}`)
-        .cohort-edges-flaws
             +text-input("cohort_edges", "EDGES")
             +text-input("cohort_flaws", "FLAWS")
+
+        //- Harm track (always visible) - simple radio buttons
+        .cohort-harm
+            span.harm-label Harm:
+            .harm-track
+                label.harm-option
+                    input(type="radio", name="attr_cohort_harm", value="0", checked)
+                    span.harm-text None
+                label.harm-option
+                    input(type="radio", name="attr_cohort_harm", value="1")
+                    span.harm-text Weak
+                label.harm-option
+                    input(type="radio", name="attr_cohort_harm", value="2")
+                    span.harm-text Impaired
+                label.harm-option
+                    input(type="radio", name="attr_cohort_harm", value="3")
+                    span.harm-text Broken
+                label.harm-option
+                    input(type="radio", name="attr_cohort_harm", value="4")
+                    span.harm-text Dead
+
+        //- Roll button (always visible)
+        button(type="action", name="act_cohortroll").cohort-roll-btn Roll
 
 //- Upgrade checkbox (single level)
 mixin upgrade-checkbox(name, label, cost)
