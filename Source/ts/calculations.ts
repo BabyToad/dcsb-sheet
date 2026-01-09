@@ -1,4 +1,5 @@
 /// <reference path="playbookData.ts" />
+/// <reference path="crewData.ts" />
 /// <reference path="constants.ts" />
 // Dark City, Shining Babel - Sheet Worker Calculations
 // Auto-calculation functions for derived values
@@ -377,6 +378,104 @@ const calculateHeatDice = () => {
         const filled = int(v.score_heat);
         const dice = HEAT_GAUGE.SEGMENTS - filled;
         mySetAttrs({ score_heat_dice: dice }, v);
+    });
+};
+
+// =============================================================================
+// CREW TYPE POPULATION FUNCTIONS
+// =============================================================================
+
+/**
+ * Format a crew ability for the repeating_crew_abilities section
+ */
+const formatCrewAbility = (
+    ability: { name: string; description: string },
+    rowId: string
+): { [key: string]: AttributeContent } => {
+    return {
+        [`repeating_crew_abilities_${rowId}_crew_ability_name`]: ability.name,
+        [`repeating_crew_abilities_${rowId}_crew_ability_desc`]: ability.description,
+        [`repeating_crew_abilities_${rowId}_crew_ability_taken`]: "0"
+    };
+};
+
+/**
+ * Format a crew cohort for the repeating_cohorts section
+ */
+const formatCrewCohort = (
+    cohort: { name: string; type: string; tags?: string; edges?: string; flaws?: string },
+    rowId: string
+): { [key: string]: AttributeContent } => {
+    return {
+        [`repeating_cohorts_${rowId}_cohort_name`]: cohort.name,
+        [`repeating_cohorts_${rowId}_cohort_type`]: cohort.type,
+        [`repeating_cohorts_${rowId}_cohort_tags`]: cohort.tags || "",
+        [`repeating_cohorts_${rowId}_cohort_edges`]: cohort.edges || "",
+        [`repeating_cohorts_${rowId}_cohort_flaws`]: cohort.flaws || ""
+    };
+};
+
+/**
+ * Clear all crew upgrade checkboxes
+ */
+const clearCrewUpgrades = (callback?: () => void) => {
+    const updates: { [key: string]: string } = {};
+
+    // Clear single-level upgrades
+    CREW_UPGRADES_SINGLE.forEach(attr => {
+        updates[attr] = "0";
+    });
+
+    // Clear multi-level upgrades
+    Object.entries(CREW_UPGRADES_MULTI).forEach(([baseName, levels]) => {
+        for (let i = 1; i <= levels; i++) {
+            updates[`${baseName}_${i}`] = "0";
+        }
+    });
+
+    setAttrs(updates, { silent: true }, callback);
+};
+
+/**
+ * Set crew upgrades based on crew type data
+ */
+const setCrewUpgrades = (upgrades: { checkboxes: string[]; multi: { [baseName: string]: number } }) => {
+    const updates: { [key: string]: string } = {};
+
+    // Set single-level upgrades
+    upgrades.checkboxes.forEach(attr => {
+        updates[attr] = "1";
+    });
+
+    // Set multi-level upgrades (check up to the specified level)
+    Object.entries(upgrades.multi).forEach(([baseName, level]) => {
+        for (let i = 1; i <= level; i++) {
+            updates[`${baseName}_${i}`] = "1";
+        }
+    });
+
+    if (Object.keys(updates).length > 0) {
+        setAttrs(updates);
+    }
+};
+
+/**
+ * Handle crew type change - populate abilities, cohorts, and upgrades
+ */
+const handleCrewTypeChange = (newCrewType: string) => {
+    if (!newCrewType || !CREW_DATA[newCrewType]) return;
+
+    const data = CREW_DATA[newCrewType];
+
+    // 1. Clear and populate crew abilities
+    clearAndPopulateRepeatingSection("crew_abilities", data.abilities, formatCrewAbility);
+
+    // 2. Clear and populate cohorts
+    clearAndPopulateRepeatingSection("cohorts", data.cohorts, formatCrewCohort);
+
+    // 3. Clear all upgrades, then set the starting ones
+    clearCrewUpgrades(() => {
+        setCrewUpgrades(data.upgrades);
     });
 };
 

@@ -179,6 +179,7 @@
         .upgrade-box {
             @include square-box(10px);
             border: 1px solid $zine-ink;
+            cursor: pointer;
         }
 
         input:checked + .upgrade-box {
@@ -188,6 +189,16 @@
         .upgrade-cost {
             color: $zine-grey;
             margin-left: auto;
+        }
+
+        // Multi-level upgrades: boxes before label
+        &.upgrade-multi {
+            .upgrade-name {
+                order: 1;
+            }
+            .upgrade-cost {
+                order: 2;
+            }
         }
     }
 

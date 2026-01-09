@@ -131,3 +131,33 @@ const STANDARD_ITEMS: {[key: string]: number} = {
 
 // All attribute names
 const ATTRIBUTE_NAMES = ['acuity', 'grit', 'resolve'] as const;
+
+// =============================================================================
+// CREW UPGRADE ATTRIBUTES
+// =============================================================================
+
+// Single-level upgrade checkboxes
+const CREW_UPGRADES_SINGLE = [
+    'lair_hidden',
+    'lair_quarters',
+    'lair_workshop',
+    'train_acuity',
+    'train_grit',
+    'train_resolve',
+    'train_personal',
+    'qual_documents',
+    'qual_gear',
+    'qual_implements',
+    'qual_supplies',
+    'qual_tools',
+    'qual_weapons'
+] as const;
+
+// Multi-level upgrade base names (each has _1, _2, etc.)
+const CREW_UPGRADES_MULTI = {
+    'lair_rides': 2,
+    'lair_specialty': 2,
+    'lair_secure': 2,
+    'lair_encryption': 2,
+    'train_mastery': 4
+} as const;

@@ -176,11 +176,25 @@ mixin cohort-block()
             +text-input("cohort_edges", "EDGES")
             +text-input("cohort_flaws", "FLAWS")
 
-//- Upgrade checkbox
+//- Upgrade checkbox (single level)
 mixin upgrade-checkbox(name, label, cost)
     label.upgrade-checkbox
         input(type="checkbox", name=`attr_${name}`, value="1")
         span.upgrade-box
+        span.upgrade-name= label
+        if cost && cost > 1
+            span.upgrade-cost= `(${cost})`
+
+//- Multi-level upgrade (e.g., Rides [][] )
+//- @param {string} baseName - Base attribute name (boxes get _1, _2, etc.)
+//- @param {string} label - Display label
+//- @param {number} levels - Number of checkboxes
+//- @param {number} cost - Cost per level (shown if > 1)
+mixin upgrade-multi(baseName, label, levels, cost)
+    .upgrade-checkbox.upgrade-multi
+        - for (var i = 1; i <= levels; i++)
+            input(type="checkbox", name=`attr_${baseName}_${i}`, value="1", id=`${baseName}_${i}`)
+            label.upgrade-box(for=`${baseName}_${i}`)
         span.upgrade-name= label
         if cost && cost > 1
             span.upgrade-cost= `(${cost})`

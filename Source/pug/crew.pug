@@ -148,16 +148,12 @@
                 .upgrade-category.lair
                     h4(data-i18n="LAIR") Lair
                     .upgrade-list
-                        +upgrade-checkbox("lair_rides_1", "Rides", 2)
-                        +upgrade-checkbox("lair_rides_2", "Rides", 2)
-                        +upgrade-checkbox("lair_specialty", "Specialty Transport", 2)
-                        +upgrade-checkbox("lair_specialty_2", "Specialty Transport", 2)
+                        +upgrade-multi("lair_rides", "Rides", 2, 2)
+                        +upgrade-multi("lair_specialty", "Specialty Transport", 2, 2)
                         +upgrade-checkbox("lair_hidden", "Hidden", 1)
                         +upgrade-checkbox("lair_quarters", "Quarters", 1)
-                        +upgrade-checkbox("lair_secure_1", "Secure", 2)
-                        +upgrade-checkbox("lair_secure_2", "Secure", 2)
-                        +upgrade-checkbox("lair_encryption_1", "BC Encryption (8)", 2)
-                        +upgrade-checkbox("lair_encryption_2", "BC Encryption (16)", 2)
+                        +upgrade-multi("lair_secure", "Secure", 2, 2)
+                        +upgrade-multi("lair_encryption", "BC Encryption", 2, 2)
                         +upgrade-checkbox("lair_workshop", "Workshop", 1)
 
                 //- Training Upgrades
@@ -168,10 +164,7 @@
                         +upgrade-checkbox("train_grit", "Grit", 1)
                         +upgrade-checkbox("train_resolve", "Resolve", 1)
                         +upgrade-checkbox("train_personal", "Personal", 1)
-                        +upgrade-checkbox("train_mastery_1", "Mastery", 4)
-                        +upgrade-checkbox("train_mastery_2", "Mastery", 4)
-                        +upgrade-checkbox("train_mastery_3", "Mastery", 4)
-                        +upgrade-checkbox("train_mastery_4", "Mastery", 4)
+                        +upgrade-multi("train_mastery", "Mastery", 4, 4)
 
                 //- Quality Upgrades
                 .upgrade-category.quality
