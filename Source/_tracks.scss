@@ -236,54 +236,47 @@
     }
 
     // =========================================================================
-    // HEAT GAUGE - Special styling
+    // HEAT GAUGE - Forward fill pattern matching crew tracks
     // =========================================================================
 
     .heat-gauge {
-        padding: $spacing-sm;
-        border: 2px solid $zine-ink;
-        background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 5px,
-            rgba(0,0,0,0.02) 5px,
-            rgba(0,0,0,0.02) 10px
-        );
+        .gauge-header {
+            @include flex-row($spacing-md, stretch);
+            align-items: center;
+            margin-bottom: $spacing-xs;
+        }
 
         .gauge-label {
             @include track-label();
         }
 
-        .gauge-segments {
-            @include flex-row(2px, stretch);
-            margin-bottom: $spacing-xs;
-
-            .heat-segment {
-                @include square-box(24px);
-                border: 2px solid $zine-ink;
-                cursor: pointer;
-                @include transition();
-            }
-
-            input[type="checkbox"] {
-                @include hidden-checkbox-base();
-
-                &:checked + .heat-segment {
-                    @include checkbox-checked-fill($status-danger, $status-danger);
-                }
-            }
-        }
-
         .gauge-dice {
             font-size: $type-sm;
             color: $zine-grey;
+            margin-left: auto;
 
             .dice-count {
-                width: 30px;
-                text-align: center;
                 font-weight: bold;
-                border: none;
+                color: $terminal-amber;
+            }
+        }
+
+        .gauge-track {
+            @include flex-row(2px, stretch);
+            @include fakeradio-hidden();
+
+            .gauge-box {
+                @include square-box(24px);
+                border: 2px solid $zine-ink;
+                cursor: pointer;
+                // Start filled (danger red)
+                @include checkbox-checked-fill($status-danger, $status-danger);
+            }
+
+            // Empty boxes after checked value
+            .fakeradio:checked ~ .fakeradio + .gauge-box {
                 background: transparent;
+                border-color: $zine-ink;
             }
         }
     }

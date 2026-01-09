@@ -105,7 +105,31 @@ on("change:repeating_cybernetics remove:repeating_cybernetics", calculateCyberCa
 // HEAT GAUGE (Crew Sheet)
 // =============================================================================
 
-on("change:score_heat_1 change:score_heat_2 change:score_heat_3 change:score_heat_4 change:score_heat_5 change:score_heat_6", calculateHeatDice);
+on("change:score_heat", calculateHeatDice);
+
+// =============================================================================
+// DISENGAGEMENT ROLL (Crew Sheet)
+// =============================================================================
+
+on("clicked:disengage_roll", () => {
+    getAttrs(['score_heat', 'crew_name'], v => {
+        const filled = int(v.score_heat);
+        const dice = HEAT_GAUGE.SEGMENTS - filled;
+        const crewName = v.crew_name || 'Crew';
+        const rollFormula = buildRollFormula(dice);
+
+        startRoll(
+            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=Disengagement}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=1-3: 2 entanglements AND -2 coin. 4-5: -2 coin OR 2 entanglements. 6+: Clean getaway.}}`,
+            results => {
+                const diceArray = results.results.roll.dice;
+                const rollResult = results.results.roll.result;
+                const crit = isCrit(diceArray);
+                const label = getDisengageLabel(rollResult, crit);
+                finishRoll(results.rollId, { label });
+            }
+        );
+    });
+});
 
 // =============================================================================
 // PLAYBOOK SELECTION

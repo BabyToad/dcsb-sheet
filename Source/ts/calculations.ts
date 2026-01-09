@@ -68,6 +68,20 @@ const getViceLabel = (crit: boolean): string => {
 };
 
 /**
+ * Get disengagement roll label
+ * 1-3: Bad (2 entanglements AND -2 coin)
+ * 4-5: Mixed (choose one penalty)
+ * 6: Clean getaway
+ * Crit: Perfect escape
+ */
+const getDisengageLabel = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !! Perfect escape';
+    if (result >= 6) return 'CLEAN GETAWAY';
+    if (result >= 4) return 'MIXED - Choose one penalty';
+    return 'BAD - Both penalties';
+};
+
+/**
  * Set attributes only if they've changed (reduces API calls)
  */
 const mySetAttrs = (
@@ -354,18 +368,15 @@ const calculateCyberCapacity = () => {
 // =============================================================================
 
 /**
- * Calculate heat gauge dice (unchecked segments)
+ * Calculate heat gauge dice (unticked segments)
+ * Uses fakeradio pattern: score_heat stores 0-6 (number of filled segments)
+ * Disengage dice = 6 - filled segments
  */
 const calculateHeatDice = () => {
-    const heatAttrs = Array.from(
-        { length: HEAT_GAUGE.SEGMENTS },
-        (_, i) => `score_heat_${i + 1}`
-    );
-
-    getAttrs([...heatAttrs, 'score_heat_dice'], v => {
-        // Count UNCHECKED segments = dice pool for disengagement
-        const unchecked = heatAttrs.filter(attr => v[attr] !== '1').length;
-        mySetAttrs({ score_heat_dice: unchecked }, v);
+    getAttrs(['score_heat', 'score_heat_dice'], v => {
+        const filled = int(v.score_heat);
+        const dice = HEAT_GAUGE.SEGMENTS - filled;
+        mySetAttrs({ score_heat_dice: dice }, v);
     });
 };
 
