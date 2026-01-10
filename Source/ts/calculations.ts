@@ -83,6 +83,34 @@ const getDisengageLabel = (result: number, crit: boolean): string => {
 };
 
 /**
+ * Execute a roll with the current position dice modifier applied, then reset modifier to 0
+ * @param baseAttrNames - Attributes needed for the roll (excluding roll_modifier)
+ * @param getDiceCount - Function to calculate base dice from attributes
+ * @param rollFn - Function that performs the roll given (finalDice, attrs, modNotes)
+ */
+const rollWithModifier = (
+    baseAttrNames: string[],
+    getDiceCount: (v: Record<string, string>) => number,
+    rollFn: (dice: number, v: Record<string, string>, modNotes: string) => void
+): void => {
+    getAttrs([...baseAttrNames, 'roll_modifier'], v => {
+        const baseDice = getDiceCount(v);
+        const mod = int(v.roll_modifier);
+        const finalDice = baseDice + mod;
+
+        // Build modifier note for display
+        let modNotes = '';
+        if (mod > 0) modNotes = `+${mod}d Position`;
+        else if (mod < 0) modNotes = `${mod}d Position`;
+
+        // Reset modifier to 0 for next roll
+        setAttrs({ roll_modifier: '0' }, { silent: true });
+
+        rollFn(finalDice, v, modNotes);
+    });
+};
+
+/**
  * Set attributes only if they've changed (reduces API calls)
  */
 const mySetAttrs = (

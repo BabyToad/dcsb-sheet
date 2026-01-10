@@ -34,23 +34,27 @@ on("change:consort change:dominate change:finesse change:sway", () => {
 
 ACTIONS.forEach(action => {
     on(`clicked:roll_${action}`, () => {
-        getAttrs([action, 'character_name'], v => {
-            const dice = int(v[action]);
-            const charName = v.character_name || 'Unknown';
-            const actionName = capitalize(action);
-            const rollFormula = buildRollFormula(dice);
+        rollWithModifier(
+            [action, 'character_name'],
+            v => int(v[action]),
+            (dice, v, modNotes) => {
+                const charName = v.character_name || 'Unknown';
+                const actionName = capitalize(action);
+                const rollFormula = buildRollFormula(dice);
+                const notesSection = modNotes ? ` {{notes=${modNotes}}}` : '';
 
-            startRoll(
-                `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}}`,
-                results => {
-                    const diceArray = results.results.roll.dice;
-                    const rollResult = results.results.roll.result;
-                    const crit = isCrit(diceArray);
-                    const label = getActionLabel(rollResult, crit);
-                    finishRoll(results.rollId, { label });
-                }
-            );
-        });
+                startRoll(
+                    `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}}${notesSection}`,
+                    results => {
+                        const diceArray = results.results.roll.dice;
+                        const rollResult = results.results.roll.result;
+                        const crit = isCrit(diceArray);
+                        const label = getActionLabel(rollResult, crit);
+                        finishRoll(results.rollId, { label });
+                    }
+                );
+            }
+        );
     });
 });
 
@@ -60,23 +64,27 @@ ACTIONS.forEach(action => {
 
 ATTRIBUTE_NAMES.forEach(attr => {
     on(`clicked:roll_${attr}_resist`, () => {
-        getAttrs([`${attr}_rating`, 'character_name'], v => {
-            const dice = int(v[`${attr}_rating`]);
-            const charName = v.character_name || 'Unknown';
-            const attrName = capitalize(attr);
-            const rollFormula = buildRollFormula(dice);
+        rollWithModifier(
+            [`${attr}_rating`, 'character_name'],
+            v => int(v[`${attr}_rating`]),
+            (dice, v, modNotes) => {
+                const charName = v.character_name || 'Unknown';
+                const attrName = capitalize(attr);
+                const rollFormula = buildRollFormula(dice);
+                const notesSection = modNotes ? ` {{notes=${modNotes}}}` : '';
 
-            startRoll(
-                `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}} {{stressmsg=[[0]]}}`,
-                results => {
-                    const diceArray = results.results.roll.dice;
-                    const rollResult = results.results.roll.result;
-                    const crit = isCrit(diceArray);
-                    const stressmsg = getStressMessage(rollResult, crit);
-                    finishRoll(results.rollId, { stressmsg });
-                }
-            );
-        });
+                startRoll(
+                    `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}} {{stressmsg=[[0]]}}${notesSection}`,
+                    results => {
+                        const diceArray = results.results.roll.dice;
+                        const rollResult = results.results.roll.result;
+                        const crit = isCrit(diceArray);
+                        const stressmsg = getStressMessage(rollResult, crit);
+                        finishRoll(results.rollId, { stressmsg });
+                    }
+                );
+            }
+        );
     });
 });
 
@@ -112,23 +120,29 @@ on("change:score_heat", calculateHeatDice);
 // =============================================================================
 
 on("clicked:disengage_roll", () => {
-    getAttrs(['score_heat', 'crew_name'], v => {
-        const filled = int(v.score_heat);
-        const dice = HEAT_GAUGE.SEGMENTS - filled;
-        const crewName = v.crew_name || 'Crew';
-        const rollFormula = buildRollFormula(dice);
+    rollWithModifier(
+        ['score_heat', 'crew_name'],
+        v => HEAT_GAUGE.SEGMENTS - int(v.score_heat),
+        (dice, v, modNotes) => {
+            const crewName = v.crew_name || 'Crew';
+            const rollFormula = buildRollFormula(dice);
 
-        startRoll(
-            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=Disengagement}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=1-3: 2 entanglements AND -2 coin. 4-5: -2 coin OR 2 entanglements. 6+: Clean getaway.}}`,
-            results => {
-                const diceArray = results.results.roll.dice;
-                const rollResult = results.results.roll.result;
-                const crit = isCrit(diceArray);
-                const label = getDisengageLabel(rollResult, crit);
-                finishRoll(results.rollId, { label });
-            }
-        );
-    });
+            // Combine position modifier with existing notes
+            let notes = '1-3: 2 entanglements AND -2 coin. 4-5: -2 coin OR 2 entanglements. 6+: Clean getaway.';
+            if (modNotes) notes = `${modNotes} | ${notes}`;
+
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=Disengagement}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
+                results => {
+                    const diceArray = results.results.roll.dice;
+                    const rollResult = results.results.roll.result;
+                    const crit = isCrit(diceArray);
+                    const label = getDisengageLabel(rollResult, crit);
+                    finishRoll(results.rollId, { label });
+                }
+            );
+        }
+    );
 });
 
 // =============================================================================
@@ -159,26 +173,34 @@ on("change:crew_type", eventInfo => {
 // =============================================================================
 
 on("clicked:indulge_vice", () => {
-    getAttrs(['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type'], v => {
-        const acuity = int(v.acuity_rating);
-        const grit = int(v.grit_rating);
-        const resolve = int(v.resolve_rating);
-        const charName = v.character_name || 'Unknown';
+    rollWithModifier(
+        ['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type'],
+        v => {
+            const acuity = int(v.acuity_rating);
+            const grit = int(v.grit_rating);
+            const resolve = int(v.resolve_rating);
+            // Roll lowest attribute (BitD rules)
+            return Math.min(acuity, grit, resolve);
+        },
+        (dice, v, modNotes) => {
+            const charName = v.character_name || 'Unknown';
+            const rollFormula = buildRollFormula(dice);
 
-        // Roll lowest attribute (BitD rules)
-        const lowestRating = Math.min(acuity, grit, resolve);
-        const rollFormula = buildRollFormula(lowestRating);
+            // Combine position modifier with existing notes
+            let notes = 'Clear stress equal to highest die. 6+ may overindulge.';
+            if (modNotes) notes = `${modNotes} | ${notes}`;
 
-        startRoll(
-            `&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=Clear stress equal to highest die. 6+ may overindulge.}}`,
-            results => {
-                const diceArray = results.results.roll.dice;
-                const crit = isCrit(diceArray);
-                const label = getViceLabel(crit);
-                finishRoll(results.rollId, { label });
-            }
-        );
-    });
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
+                results => {
+                    const diceArray = results.results.roll.dice;
+                    const crit = isCrit(diceArray);
+                    const label = getViceLabel(crit);
+                    finishRoll(results.rollId, { label });
+                }
+            );
+        }
+    );
 });
 
 // =============================================================================
@@ -193,7 +215,8 @@ on("clicked:repeating_cohorts:cohortroll", () => {
         'repeating_cohorts_cohort_name',
         'repeating_cohorts_cohort_type',
         'repeating_cohorts_cohort_elite',
-        'repeating_cohorts_cohort_harm'
+        'repeating_cohorts_cohort_harm',
+        'roll_modifier'
     ], v => {
         const tier = int(v.crew_tier);
         const crewName = v.crew_name || 'Crew';
@@ -201,6 +224,10 @@ on("clicked:repeating_cohorts:cohortroll", () => {
         const cohortType = v.repeating_cohorts_cohort_type || 'gang';
         const isElite = v.repeating_cohorts_cohort_elite === '1';
         const harm = int(v.repeating_cohorts_cohort_harm);
+        const rollMod = int(v.roll_modifier);
+
+        // Reset modifier immediately
+        setAttrs({ roll_modifier: '0' }, { silent: true });
 
         // Check if cohort can act (broken=3, dead=4)
         if (harm >= 3) {
@@ -214,14 +241,17 @@ on("clicked:repeating_cohorts:cohortroll", () => {
         }
 
         // Calculate dice pool
-        // Gang: Tier, Expert: Tier+1, Elite: +1d, Harm: -1d per level
+        // Gang: Tier, Expert: Tier+1, Elite: +1d, Harm: -1d per level, Position modifier
         let dice = tier;
         if (cohortType === 'expert') dice += 1;
         if (isElite) dice += 1;
         dice -= harm;
+        dice += rollMod;
 
         // Build notes showing modifiers
         const mods: string[] = [];
+        if (rollMod > 0) mods.push(`+${rollMod}d Position`);
+        if (rollMod < 0) mods.push(`${rollMod}d Position`);
         mods.push(`Tier ${tier}`);
         if (cohortType === 'expert') mods.push('+1d Expert');
         if (isElite) mods.push('+1d Elite');
@@ -249,20 +279,27 @@ on("clicked:repeating_cohorts:cohortroll", () => {
 // =============================================================================
 
 on("clicked:roll_healing", () => {
-    getAttrs(['character_name'], v => {
-        const charName = v.character_name || 'Unknown';
-        // Recovery is a fortune roll - typically 1d (can be modified by abilities)
-        const rollFormula = buildRollFormula(1);
+    rollWithModifier(
+        ['character_name'],
+        () => 1,  // Base healing roll is 1d
+        (dice, v, modNotes) => {
+            const charName = v.character_name || 'Unknown';
+            const rollFormula = buildRollFormula(dice);
 
-        startRoll(
-            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Recovery}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=1-3: 1 tick, 4-5: 2 ticks, 6: 3 ticks, Crit: 5 ticks. Fill clock to heal 1 harm level.}}`,
-            results => {
-                const diceArray = results.results.roll.dice;
-                const rollResult = results.results.roll.result;
-                const crit = isCrit(diceArray);
-                const label = getFortuneLabel(rollResult, crit);
-                finishRoll(results.rollId, { label });
-            }
-        );
-    });
+            // Combine position modifier with existing notes
+            let notes = '1-3: 1 tick, 4-5: 2 ticks, 6: 3 ticks, Crit: 5 ticks. Fill clock to heal 1 harm level.';
+            if (modNotes) notes = `${modNotes} | ${notes}`;
+
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Recovery}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
+                results => {
+                    const diceArray = results.results.roll.dice;
+                    const rollResult = results.results.roll.result;
+                    const crit = isCrit(diceArray);
+                    const label = getFortuneLabel(rollResult, crit);
+                    finishRoll(results.rollId, { label });
+                }
+            );
+        }
+    );
 });

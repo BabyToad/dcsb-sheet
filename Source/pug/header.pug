@@ -17,4 +17,24 @@
             span.tab-text(data-i18n="CHARACTER") CHARACTER
         label.tab-button(for="tab_crew")
             span.tab-text(data-i18n="CREW") CREW
+
+    //- Roll modifier selector - adds/subtracts dice from all rolls
+    .roll-modifier-row
+        span.modifier-label DICE MOD
+        .modifier-options
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="-1", id="mod_neg1")
+            label.modifier-btn(for="mod_neg1") -1
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="0", checked, id="mod_0")
+            label.modifier-btn.mod-zero(for="mod_0") 0
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="1", id="mod_1")
+            label.modifier-btn(for="mod_1") +1
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="2", id="mod_2")
+            label.modifier-btn(for="mod_2") +2
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="3", id="mod_3")
+            label.modifier-btn(for="mod_3") +3
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="4", id="mod_4")
+            label.modifier-btn(for="mod_4") +4
+            input.fakeradio(type="radio", name="attr_roll_modifier", value="5", id="mod_5")
+            label.modifier-btn(for="mod_5") +5
+
     //- Edit mode is now per-section (click ✎ on each section header)

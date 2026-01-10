@@ -126,4 +126,72 @@
             }
         }
     }
+
+    // =========================================================================
+    // ROLL MODIFIER ROW - Dice position modifier toggle buttons
+    // =========================================================================
+
+    .roll-modifier-row {
+        @include flex-row($spacing-md, center);
+        justify-content: center;
+        padding: $spacing-sm $spacing-md;
+        margin-bottom: $spacing-md;
+        background: rgba($form-ink, 0.03);
+        border: 1px dashed $form-grey;
+        border-left: 3px solid $terminal-amber;
+
+        .modifier-label {
+            @include uppercase-label($type-xs, $form-grey, 0.5px);
+            margin-right: $spacing-sm;
+        }
+
+        .modifier-options {
+            @include flex-row($spacing-xs, stretch);
+        }
+
+        // Hide the radio inputs
+        .fakeradio {
+            display: none;
+        }
+
+        // Base button styling
+        .modifier-btn {
+            @include square-box(28px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: $font-mono;
+            font-size: $type-sm;
+            font-weight: bold;
+            background: $form-paper;
+            border: 2px solid $form-ink;
+            cursor: pointer;
+            @include transition();
+
+            &:hover {
+                border-color: $terminal-amber;
+                background: rgba($terminal-amber, 0.1);
+            }
+        }
+
+        // Zero button gets muted styling (default state)
+        .mod-zero {
+            border-color: $form-grey;
+            color: $form-grey;
+        }
+
+        // Active/selected state - amber highlight
+        .fakeradio:checked + .modifier-btn {
+            background: $terminal-amber;
+            border-color: $terminal-amber;
+            color: $form-ink;
+            box-shadow: 0 0 4px rgba($terminal-amber, 0.5);
+        }
+
+        // Negative modifier gets warning treatment
+        .fakeradio[value="-1"]:checked + .modifier-btn {
+            background: $status-warning;
+            border-color: $status-warning;
+        }
+    }
 }
