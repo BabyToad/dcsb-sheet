@@ -20,62 +20,88 @@
     }
 
     // =========================================================================
-    // ASCII ART TITLE BANNER
+    // TITLE BANNER - Terminal-style with CSS frame
     // =========================================================================
 
     .title-banner {
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-bottom: $spacing-md;
-        background: $form-paper;
+        margin-bottom: $spacing-lg;
     }
 
-    .ascii-art {
-        font-family: $font-mono;
-        font-size: 11px;
-        line-height: 1.15;
-        margin: 0;
-        padding: $spacing-sm;
-        color: $form-ink;
-        white-space: pre;
-        letter-spacing: 0;
+    .banner-frame {
         background: $form-paper;
+        border: 2px solid $form-grey;
+        border-left: 4px solid $terminal-amber;
+        width: 100%;
+        max-width: 700px;
+    }
 
-        // Border characters (box-drawing) - subtle grey
-        .border {
-            color: $form-grey;
-        }
+    .banner-content {
+        padding: $spacing-md $spacing-lg;
+        text-align: center;
+        border-bottom: 1px solid $form-grey;
+    }
 
-        // Big block letters "DC,SB" - amber with glow
+    .block-letters {
+        font-family: $font-mono;
+        font-size: 12px;
+        line-height: 1.1;
+        margin: 0 0 $spacing-md 0;
+        padding: 0;
+        white-space: pre;
+        display: inline-block;
+        text-align: left;
+
+        // Block letter characters - amber with glow
         .accent {
             color: $terminal-amber;
-            text-shadow: 0 0 6px rgba($terminal-amber, 0.5);
+            text-shadow: 0 0 8px rgba($terminal-amber, 0.4);
         }
 
-        // Dim decorative elements
-        .dim {
+        // Comma/separator in middle
+        .comma {
             color: $form-grey-light;
         }
+    }
 
-        // Comma/separator highlight
-        .comma {
-            color: $terminal-amber;
+    .title-text {
+        font-family: $font-mono;
+        font-size: $type-md;
+        letter-spacing: 3px;
+        margin-top: $spacing-sm;
+
+        .decoration {
+            color: $form-grey-light;
+            margin: 0 $spacing-sm;
         }
 
-        // Full title text "DARK CITY, SHINING BABEL"
         .title {
             color: $form-ink;
             font-weight: bold;
-            letter-spacing: 2px;
         }
 
-        // System text style
+        .comma {
+            color: $terminal-amber;
+            font-weight: bold;
+            margin: 0 2px;
+        }
+    }
+
+    .status-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-sm $spacing-md;
+        background: rgba($form-ink, 0.03);
+        font-family: $font-mono;
+        font-size: $type-xs;
+
         .system-text {
             color: $form-grey;
         }
 
-        // Status indicator (green connected)
         .status {
             color: $status-good;
             font-weight: bold;

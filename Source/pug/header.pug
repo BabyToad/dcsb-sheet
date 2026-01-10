@@ -1,24 +1,27 @@
 //- Dark City, Shining Babel - Header and Navigation
-//- Terminal/ANSI Art Header
+//- Terminal-style header with CSS frame
 
 .header
-    //- ASCII art title banner - wide cyberpunk terminal style
+    //- Title banner with CSS borders
     .title-banner
-        pre.ascii-art
-            | #[span.border ╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗]
-            | #[span.border ║]                                                                                                         #[span.border ║]
-            | #[span.border ║]  #[span.accent ██████╗]   #[span.accent ██████╗]    #[span.dim ░░░░░░░]    #[span.accent ███████╗] #[span.accent ██████╗]                                                       #[span.border ║]
-            | #[span.border ║]  #[span.accent ██╔══██╗] #[span.accent ██╔════╝]    #[span.dim ░░░░░░░]    #[span.accent ██╔════╝] #[span.accent ██╔══██╗]                                                      #[span.border ║]
-            | #[span.border ║]  #[span.accent ██║  ██║] #[span.accent ██║]        #[span.comma ▄█████▄]    #[span.accent ███████╗] #[span.accent ██████╔╝]                                                      #[span.border ║]
-            | #[span.border ║]  #[span.accent ██║  ██║] #[span.accent ██║]        #[span.dim ░░░░░░░]    #[span.accent ╚════██║] #[span.accent ██╔══██╗]                                                      #[span.border ║]
-            | #[span.border ║]  #[span.accent ██████╔╝]  #[span.accent ╚██████╗]   #[span.dim ░░░░░░░]    #[span.accent ███████║] #[span.accent ██████╔╝]                                                      #[span.border ║]
-            | #[span.border ║]  #[span.accent ╚═════╝]    #[span.accent ╚═════╝]   #[span.dim ░░░░░░░]    #[span.accent ╚══════╝] #[span.accent ╚═════╝]                                                       #[span.border ║]
-            | #[span.border ║]                                                                                                         #[span.border ║]
-            | #[span.border ║]          #[span.dim ░▒▓█]  #[span.title D A R K   C I T Y]#[span.comma ,]   #[span.title S H I N I N G   B A B E L]  #[span.dim █▓▒░]                                       #[span.border ║]
-            | #[span.border ║]                                                                                                         #[span.border ║]
-            | #[span.border ╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════╣]
-            | #[span.border ║]  #[span.system-text > SYSTEM://BABEL/RUNNER_DOSSIER.SYS]                                                          #[span.status ■ CONNECTED]  #[span.border ║]
-            | #[span.border ╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝]
+        .banner-frame
+            .banner-content
+                pre.block-letters
+                    | #[span.accent ██████╗]  #[span.accent ██████╗]   #[span.comma ░░░]   #[span.accent ███████╗] #[span.accent ██████╗]
+                    | #[span.accent ██╔══██╗]#[span.accent ██╔════╝]   #[span.comma ░░░]   #[span.accent ██╔════╝] #[span.accent ██╔══██╗]
+                    | #[span.accent ██║  ██║]#[span.accent ██║]       #[span.comma ─────]  #[span.accent ███████╗] #[span.accent ██████╔╝]
+                    | #[span.accent ██║  ██║]#[span.accent ██║]        #[span.comma ░░░]   #[span.accent ╚════██║] #[span.accent ██╔══██╗]
+                    | #[span.accent ██████╔╝] #[span.accent ╚██████╗]  #[span.comma ░░░]   #[span.accent ███████║] #[span.accent ██████╔╝]
+                    | #[span.accent ╚═════╝]   #[span.accent ╚═════╝]  #[span.comma ░░░]   #[span.accent ╚══════╝] #[span.accent ╚═════╝]
+                .title-text
+                    span.decoration ░▒▓█
+                    span.title DARK CITY
+                    span.comma ,
+                    span.title SHINING BABEL
+                    span.decoration █▓▒░
+            .status-bar
+                span.system-text > SYSTEM://BABEL/RUNNER_DOSSIER.SYS
+                span.status ■ CONNECTED
 
     //- Tab navigation - labels point to root-level radio buttons
     .tab-nav
