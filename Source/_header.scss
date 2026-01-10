@@ -12,49 +12,62 @@
 
     .header {
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        border-bottom: 4px double $zine-ink;
+        flex-direction: column;
+        align-items: center;
         padding-bottom: $spacing-md;
         margin-bottom: $spacing-lg;
         position: relative;
     }
 
-    .title-block {
-        // ASCII art title styling
-        .ascii-title {
-            font-family: $font-mono;
-            font-size: 11px;
-            line-height: 1.1;
-            color: $terminal-amber;
-            margin: 0;
-            padding: 0;
-            white-space: pre;
-            text-shadow: 0 0 8px rgba($terminal-amber, 0.4);
+    // =========================================================================
+    // ASCII ART TITLE BANNER
+    // =========================================================================
 
-            // Slight CRT glow effect
-            background: linear-gradient(
-                180deg,
-                transparent 0%,
-                rgba($terminal-amber, 0.02) 50%,
-                transparent 100%
-            );
+    .title-banner {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: $spacing-md;
+    }
+
+    .ascii-art {
+        font-family: $font-mono;
+        font-size: 12px;
+        line-height: 1.2;
+        margin: 0;
+        padding: 0;
+        color: $form-ink;
+        white-space: pre;
+        letter-spacing: 0;
+
+        // Accent letters (amber glow)
+        .accent {
+            color: $terminal-amber;
+            text-shadow: 0 0 8px rgba($terminal-amber, 0.6);
+            font-weight: bold;
         }
 
-        .title-sub {
-            margin-top: $spacing-sm;
+        // Dim letters (muted)
+        .dim {
+            color: $form-grey;
+        }
 
-            .dossier-type {
-                font-family: $font-typewriter;
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                padding: 2px 6px;
-                border: 1px solid $terminal-amber;
-                color: $terminal-amber;
-                display: inline-block;
-                background: rgba($form-ink, 0.8);
-            }
+        // Comma highlight
+        .comma {
+            color: $terminal-amber;
+            font-weight: bold;
+        }
+
+        // System text style
+        .system-text {
+            color: $form-grey;
+            font-size: 10px;
+        }
+
+        // Status indicator (green online)
+        .status {
+            color: $status-good;
+            font-weight: bold;
         }
     }
 
