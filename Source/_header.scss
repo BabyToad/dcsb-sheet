@@ -42,6 +42,7 @@
         padding: $spacing-md $spacing-lg;
         text-align: center;
         border-bottom: 1px solid $form-grey;
+        background: $form-paper;
     }
 
     .block-letters {
@@ -53,6 +54,7 @@
         white-space: pre;
         display: inline-block;
         text-align: left;
+        background: transparent;
 
         // Block letter characters - amber with glow
         .accent {
