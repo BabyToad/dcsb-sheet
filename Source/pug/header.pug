@@ -2,16 +2,23 @@
 //- Terminal/ANSI Art Header
 
 .header
-    //- ASCII art title banner
+    //- ASCII art title banner - wide cyberpunk terminal style
     .title-banner
         pre.ascii-art
-            | ╔══════════════════════════════════════════════════════╗
-            | ║  ░▒▓█                                        █▓▒░  ║
-            | ║       #[span.accent D]#[span.dim A]#[span.accent R]#[span.dim K]  #[span.accent C]#[span.dim I]#[span.accent T]#[span.dim Y]#[span.comma ,]  #[span.accent S]#[span.dim H]#[span.accent I]#[span.dim N]#[span.accent I]#[span.dim N]#[span.accent G]  #[span.accent B]#[span.dim A]#[span.accent B]#[span.dim E]#[span.accent L]       ║
-            | ║  ░▒▓█                                        █▓▒░  ║
-            | ╠══════════════════════════════════════════════════════╣
-            | ║  #[span.system-text > RUNNER_DOSSIER.SYS]                    #[span.status ■ ONLINE]  ║
-            | ╚══════════════════════════════════════════════════════╝
+            | #[span.border ╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗]
+            | #[span.border ║]                                                                                                         #[span.border ║]
+            | #[span.border ║]  #[span.accent ██████╗]   #[span.accent ██████╗]    #[span.dim ░░░░░░░]    #[span.accent ███████╗] #[span.accent ██████╗]                                                       #[span.border ║]
+            | #[span.border ║]  #[span.accent ██╔══██╗] #[span.accent ██╔════╝]    #[span.dim ░░░░░░░]    #[span.accent ██╔════╝] #[span.accent ██╔══██╗]                                                      #[span.border ║]
+            | #[span.border ║]  #[span.accent ██║  ██║] #[span.accent ██║]        #[span.comma ▄█████▄]    #[span.accent ███████╗] #[span.accent ██████╔╝]                                                      #[span.border ║]
+            | #[span.border ║]  #[span.accent ██║  ██║] #[span.accent ██║]        #[span.dim ░░░░░░░]    #[span.accent ╚════██║] #[span.accent ██╔══██╗]                                                      #[span.border ║]
+            | #[span.border ║]  #[span.accent ██████╔╝]  #[span.accent ╚██████╗]   #[span.dim ░░░░░░░]    #[span.accent ███████║] #[span.accent ██████╔╝]                                                      #[span.border ║]
+            | #[span.border ║]  #[span.accent ╚═════╝]    #[span.accent ╚═════╝]   #[span.dim ░░░░░░░]    #[span.accent ╚══════╝] #[span.accent ╚═════╝]                                                       #[span.border ║]
+            | #[span.border ║]                                                                                                         #[span.border ║]
+            | #[span.border ║]          #[span.dim ░▒▓█]  #[span.title D A R K   C I T Y]#[span.comma ,]   #[span.title S H I N I N G   B A B E L]  #[span.dim █▓▒░]                                       #[span.border ║]
+            | #[span.border ║]                                                                                                         #[span.border ║]
+            | #[span.border ╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════╣]
+            | #[span.border ║]  #[span.system-text > SYSTEM://BABEL/RUNNER_DOSSIER.SYS]                                                          #[span.status ■ CONNECTED]  #[span.border ║]
+            | #[span.border ╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝]
 
     //- Tab navigation - labels point to root-level radio buttons
     .tab-nav

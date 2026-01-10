@@ -28,43 +28,54 @@
         display: flex;
         justify-content: center;
         margin-bottom: $spacing-md;
+        background: $form-paper;
     }
 
     .ascii-art {
         font-family: $font-mono;
-        font-size: 12px;
-        line-height: 1.2;
+        font-size: 11px;
+        line-height: 1.15;
         margin: 0;
-        padding: 0;
+        padding: $spacing-sm;
         color: $form-ink;
         white-space: pre;
         letter-spacing: 0;
+        background: $form-paper;
 
-        // Accent letters (amber glow)
-        .accent {
-            color: $terminal-amber;
-            text-shadow: 0 0 8px rgba($terminal-amber, 0.6);
-            font-weight: bold;
-        }
-
-        // Dim letters (muted)
-        .dim {
+        // Border characters (box-drawing) - subtle grey
+        .border {
             color: $form-grey;
         }
 
-        // Comma highlight
+        // Big block letters "DC,SB" - amber with glow
+        .accent {
+            color: $terminal-amber;
+            text-shadow: 0 0 6px rgba($terminal-amber, 0.5);
+        }
+
+        // Dim decorative elements
+        .dim {
+            color: $form-grey-light;
+        }
+
+        // Comma/separator highlight
         .comma {
             color: $terminal-amber;
+        }
+
+        // Full title text "DARK CITY, SHINING BABEL"
+        .title {
+            color: $form-ink;
             font-weight: bold;
+            letter-spacing: 2px;
         }
 
         // System text style
         .system-text {
             color: $form-grey;
-            font-size: 10px;
         }
 
-        // Status indicator (green online)
+        // Status indicator (green connected)
         .status {
             color: $status-good;
             font-weight: bold;
