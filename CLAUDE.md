@@ -26,7 +26,7 @@ The `roll20-sheet-sync` Chrome extension (in vault root) allows one-click deploy
 1. Install the extension from `../../roll20-sheet-sync/`
 2. Navigate to Roll20 Campaign Settings → Character Sheet Template
 3. Configure GitHub source:
-   - Repository: `BabyToad/RPG-Notes`
+   - Repository: `BabyToad/Exocortex`
    - Branch: `main`
    - HTML: `Dark City Shining Babel/dcsb-sheet/dcsb.html`
    - CSS: `Dark City Shining Babel/dcsb-sheet/dcsb.css`
