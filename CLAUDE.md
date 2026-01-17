@@ -1,11 +1,42 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Dark City, Shining Babel - Roll20 Character Sheet
 
 ## Project Overview
 
 A Roll20 character sheet for Dark City, Shining Babel (DC,SB), a Blades in the Dark hack set in a 2070 Southeast Asian cyberpunk megacity called Babel.
 
-**Source Material**: `../Mini Rulebook.md`
+**Current Rulebook**: `../The New Babel.md` (WIP - authoritative source, pulled from Google Doc maintained by Dylan — do not edit)
+**Legacy Rulebook**: `../Mini Rulebook.md` (sheet was built from this)
 **Reference Project**: `../../The Golden Triangle/swn-sheet/`
+
+## Sheet Update Status
+
+⚠️ **The current sheet was built against Mini Rulebook and needs updating to match The New Babel.**
+
+### Required Updates
+
+| Area | Current (Mini Rulebook) | Target (The New Babel) |
+|------|------------------------|------------------------|
+| Terminology | "Cybernetics" | "Augments" (encompasses Bio-Mods too) |
+| Capacity | `cyber_max` cap, expandable via XP | No cap; maintenance clocks instead |
+| Maintenance | N/A | 4-tick clocks, Tier ticks per Augment, 1 BC per filled clock |
+| Advancement | XP trackers per attribute/playbook | Deep Cuts: 4× 6-segment advancement clocks |
+| L337 Playbook | "L337" | Renamed to "Hacker", updated items/Augments |
+| Heritage | Missing "Babel" | Add "Babel" option |
+| Friends/Rivals | Generic circles section | Playbook-specific Friends list + Friend/Rival selection |
+| Heat Gauge | 6-clock | 8-clock |
+| Augment Tiers | Original distribution | Shifted for most playbooks |
+
+### Key Files to Update
+
+- `Source/ts/playbookData.ts` - Rename L337→Hacker, update Augment lists/tiers, add Friends data
+- `Source/ts/constants.ts` - Update HEAT_GAUGE segments (6→8), add maintenance constants
+- `Source/ts/calculations.ts` - Add maintenance clock logic, remove capacity cap
+- `Source/pug/character.pug` - Rename Cybernetics→Augments, add maintenance UI, add Friends/Rivals section
+- `Source/_character.scss` - Styles for new sections
 
 ## Build Commands
 
@@ -139,12 +170,12 @@ $status-danger: #8b0000;        // Dark red (harm, trauma)
 - Headers differentiated by CAPS, weight, and spacing - not font change
 - No decorative fonts
 
-## Key Differences from Standard Blades in the Dark
+## DC,SB Game Mechanics
 
-### Actions (12 total, in 3 attributes)
+### Actions (12 total, in 3 attributes — same structure as BitD, different names)
 
-| Acuity | Grit | Resolve |
-|--------|------|---------|
+| Acuity (≈Insight) | Grit (≈Prowess) | Resolve |
+|-------------------|-----------------|---------|
 | Hack | Brawl | Consort |
 | Recon | Hunt | Dominate |
 | Scrutinize | Skulk | Sway |
@@ -153,7 +184,7 @@ $status-danger: #8b0000;        // Dark red (harm, trauma)
 ### Playbooks (6)
 - Face (manipulation/influence)
 - Fixer (connections/planning)
-- L337 (hacking/tech)
+- Hacker (hacking/tech) — *formerly L337*
 - MidNighter (stealth/infiltration)
 - Murk (shooting/tracking)
 - Street Warrior (combat/intimidation)
@@ -164,14 +195,16 @@ $status-danger: #8b0000;        // Dark red (harm, trauma)
 - Runners (corporate mercenaries)
 - Zokus (street racers/fighters)
 
-### Custom Mechanics
+### Custom Mechanics (vs Blades in the Dark)
 
 1. **Roll Modifier System** - Toggle buttons (-1 to +5) apply dice modifiers to all rolls, auto-reset after rolling
-2. **Cybernetics** - Fully replace BitD Special Abilities. Tiered system (T2-T5), capacity limit expandable via XP
-3. **Heat Gauge** - 6-clock tracked during scores, affects Disengagement Roll
-4. **Disengagement Roll** - Escape mechanic based on Heat Gauge state
-5. **Mental Harm** - Separate from physical harm, cleared via Vice
-6. **Circles** - "I know a guy" mechanic using Consort
+2. **Augments** - Replace BitD Special Abilities. Tiered system (T2-T5). *Current sheet uses capacity cap; target: maintenance clocks*
+3. **Score Flow** - Engagement → Score (Heat Gauge fills) → Disengagement Roll → Entanglements (Babel keeps entanglements)
+4. **Heat Gauge** - *Current: 6-clock; Target: 8-clock* — fills during score, empty segments = dice for Disengagement Roll
+5. **Disengagement Roll** - New mechanic; roll remaining Heat Gauge segments to escape cleanly
+6. **Mental Harm** - Separate from physical harm, cleared via Vice
+7. **Circles/Friends** - *Current: generic; Target: playbook-specific Friends list with Friend/Rival selection*
+8. **Advancement** - *Current: XP trackers; Target: Deep Cuts 4× 6-segment clocks*
 
 ## Sheet Worker Patterns
 
@@ -212,12 +245,23 @@ getSectionIDs("repeating_section", (ids) => {
 
 ## Development Phases
 
+### Original Build (Mini Rulebook)
 - [x] Phase 0: Foundation
 - [x] Phase 1: Information Architecture
 - [x] Phase 2: Visual Design
 - [x] Phase 3: Core Implementation (rolls, modifiers, calculations)
-- [ ] Phase 4: Custom Features (Cybernetics, Heat Gauge, etc.)
+- [x] Phase 4: Custom Features (Cybernetics, Heat Gauge, etc.)
 - [ ] Phase 5: Crew Sheet & Polish
+
+### The New Babel Update (Current Goal)
+- [ ] Rename Cybernetics → Augments throughout
+- [ ] Replace capacity cap with maintenance clocks
+- [ ] Update Heat Gauge (6 → 8 segments)
+- [ ] Update advancement to Deep Cuts (4× 6-segment clocks)
+- [ ] Rename L337 → Hacker, update items/Augments
+- [ ] Add Babel to Heritage options
+- [ ] Add playbook-specific Friends lists + Friend/Rival selection
+- [ ] Update Augment tiers per playbook
 
 ## Information Architecture
 
@@ -226,12 +270,12 @@ getSectionIDs("repeating_section", (ids) => {
 | # | Section | Framing | Content |
 |---|---------|---------|---------|
 | 01 | Subject Identification | Corporate intake form | Name, Alias, Look, Playbook, Heritage, Background |
-| 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), Playbook XP, Attribute XP |
+| 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), 4× Advancement Clocks (Deep Cuts) |
 | 03 | Condition Report | Medical chart | Stress (9), Trauma (4), Harm levels, Armor |
-| 04 | Augmentation Record | Tech spec sheet | Cybernetics with tier & description |
+| 04 | Augmentation Record | Tech spec sheet | Augments with tier, description, maintenance clocks |
 | 05 | Equipment Manifest | Quartermaster checklist | Load selector, standard items, playbook items |
 | 06 | Vice | Off-the-record notes | Vice type/purveyor/details |
-| 07 | Circles | Contact cards | Friends/Rivals repeating section |
+| 07 | Friends & Rivals | Contact cards | Playbook-specific Friends list, Friend/Rival selection |
 | 08 | Notes | Margin scrawl | Free-form text area |
 
 ### Crew Sheet Sections
@@ -240,7 +284,7 @@ getSectionIDs("repeating_section", (ids) => {
 |---|---------|---------|---------|
 | 01 | Crew Identification | Syndicate charter | Name, Type, Reputation, Hunting Grounds, Lair |
 | 02 | Crew Stats | Performance metrics | Tier (0-4), Hold, Rep (12), Turf, Heat (9), Wanted (4) |
-| 03 | Score Tracker | Mission control | Heat Gauge (6), Current Score, Disengagement Roll |
+| 03 | Score Tracker | Mission control | Heat Gauge (8), Current Score, Disengagement Roll |
 | 04 | Crew Upgrades | Asset manifest | Lair, Training, Quality upgrade checkboxes |
 | 05 | Crew Abilities | Special operations | Repeating section for crew abilities |
 | 06 | Cohorts | Personnel files | Gang/Expert repeating section with harm/edges/flaws |
