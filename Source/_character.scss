@@ -132,18 +132,28 @@
         }
     }
 
-    // Playbook XP block (at bottom of section)
-    .playbook-xp-block {
+    // Deep Cuts Advancement Block (replaces playbook XP)
+    .advancement-block {
         margin-top: $spacing-md;
         padding: $spacing-sm;
         border: 1px dashed $zine-grey;
         background: rgba(0,0,0,0.02);
 
-        .xp-label-row {
+        .advancement-header {
             margin-bottom: $spacing-xs;
+            display: flex;
+            align-items: baseline;
+            gap: $spacing-sm;
 
-            .xp-label {
+            .advancement-label {
                 @include uppercase-label(10px, inherit, 0.5px);
+                font-weight: bold;
+            }
+
+            .advancement-hint {
+                font-size: 9px;
+                color: $zine-grey;
+                font-style: italic;
             }
         }
 
@@ -166,6 +176,59 @@
                 content: 'XP trigger not set...';
                 color: $form-grey-light;
             }
+        }
+
+        // 4× 6-segment advancement clocks
+        .advancement-clocks {
+            display: flex;
+            gap: $spacing-md;
+            margin-bottom: $spacing-sm;
+            justify-content: space-between;
+        }
+
+        .adv-clock {
+            display: flex;
+            gap: 2px;
+            @include fakeradio-hidden();
+
+            .adv-segment {
+                @include square-box(14px);
+                border: 2px solid $zine-ink;
+                border-radius: 1px;
+                display: block;
+                cursor: pointer;
+                @include transition();
+                background: $form-paper;
+            }
+
+            // Forward fill: segments BEFORE and including checked are filled
+            @include fakeradio-inverse-fill(adv-segment, $terminal-amber);
+        }
+
+        // Advancement cost reference table
+        .advancement-costs {
+            font-size: 9px;
+            color: $zine-grey;
+            border-top: 1px dashed $zine-light-grey;
+            padding-top: $spacing-xs;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px $spacing-md;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            gap: $spacing-xs;
+        }
+
+        .cost-label {
+            font-family: $font-typewriter;
+        }
+
+        .cost-value {
+            font-weight: bold;
+            color: $terminal-amber;
         }
     }
 

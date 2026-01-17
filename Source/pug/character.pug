@@ -299,9 +299,6 @@
                 .attribute-header-row
                     button.attr-name(type="action", name="act_roll_acuity_resist", data-i18n="ACUITY") ACUITY
                     +attribute-track("acuity")
-                .attribute-xp
-                    span.xp-label XP
-                    +xp-track("acuity", 6)
                 .action-list
                     +action-row("hack", "HACK")
                     +action-row("recon", "RECON")
@@ -313,9 +310,6 @@
                 .attribute-header-row
                     button.attr-name(type="action", name="act_roll_grit_resist", data-i18n="GRIT") GRIT
                     +attribute-track("grit")
-                .attribute-xp
-                    span.xp-label XP
-                    +xp-track("grit", 6)
                 .action-list
                     +action-row("brawl", "BRAWL")
                     +action-row("hunt", "HUNT")
@@ -327,22 +321,37 @@
                 .attribute-header-row
                     button.attr-name(type="action", name="act_roll_resolve_resist", data-i18n="RESOLVE") RESOLVE
                     +attribute-track("resolve")
-                .attribute-xp
-                    span.xp-label XP
-                    +xp-track("resolve", 6)
                 .action-list
                     +action-row("consort", "CONSORT")
                     +action-row("dominate", "DOMINATE")
                     +action-row("finesse", "FINESSE")
                     +action-row("sway", "SWAY")
 
-            //- Playbook XP (at bottom for full trigger text visibility)
-            .playbook-xp-block
-                .xp-label-row
-                    span.xp-label(data-i18n="PLAYBOOK_XP") Playbook XP
+            //- Deep Cuts Advancement Clocks
+            //- Replaces playbook XP and attribute XP with 4× 6-segment clocks
+            .advancement-block
+                .advancement-header
+                    span.advancement-label ADVANCEMENT
+                    span.advancement-hint (mark when you do your XP trigger)
                 .xp-trigger-row
                     span.xp-trigger-text(name="attr_xp_trigger")
-                +xp-track("playbook", 8)
+                .advancement-clocks
+                    - for (var c = 1; c <= 4; c++)
+                        .adv-clock
+                            +fakeradio-track(`adv_clock_${c}`, 6, "adv-segment")
+                .advancement-costs
+                    .cost-row
+                        span.cost-label New Augment/Ability
+                        span.cost-value 2 clocks
+                    .cost-row
+                        span.cost-label Veteran Augment
+                        span.cost-value 3 clocks
+                    .cost-row
+                        span.cost-label Crew Upgrade
+                        span.cost-value 1 clock
+                    .cost-row
+                        span.cost-label Action/Attribute Dot
+                        span.cost-value = new rating
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 5: EQUIPMENT MANIFEST

@@ -899,26 +899,35 @@
 .charsheet .action-row .action-dots .fakeradio:checked ~ .fakeradio + .dot {
   background: transparent;
 }
-.charsheet .playbook-xp-block {
+.charsheet .advancement-block {
   margin-top: 8px;
   padding: 4px;
   border: 1px dashed #888888;
   background: rgba(0, 0, 0, 0.02);
 }
-.charsheet .playbook-xp-block .xp-label-row {
+.charsheet .advancement-block .advancement-header {
   margin-bottom: 2px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
 }
-.charsheet .playbook-xp-block .xp-label-row .xp-label {
+.charsheet .advancement-block .advancement-header .advancement-label {
   font-size: 10px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: inherit;
+  font-weight: bold;
 }
-.charsheet .playbook-xp-block .xp-trigger-row {
+.charsheet .advancement-block .advancement-header .advancement-hint {
+  font-size: 9px;
+  color: #888888;
+  font-style: italic;
+}
+.charsheet .advancement-block .xp-trigger-row {
   margin-bottom: 4px;
 }
-.charsheet .playbook-xp-block .xp-trigger-text {
+.charsheet .advancement-block .xp-trigger-text {
   display: block;
   font-size: 10px;
   font-style: italic;
@@ -929,9 +938,60 @@
   border-left: 2px solid #ffb000;
   padding-left: 4px;
 }
-.charsheet .playbook-xp-block .xp-trigger-text:empty::after {
+.charsheet .advancement-block .xp-trigger-text:empty::after {
   content: "XP trigger not set...";
   color: #bbbbbb;
+}
+.charsheet .advancement-block .advancement-clocks {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+  justify-content: space-between;
+}
+.charsheet .advancement-block .adv-clock {
+  display: flex;
+  gap: 2px;
+}
+.charsheet .advancement-block .adv-clock .fakeradio.zero,
+.charsheet .advancement-block .adv-clock .fakeradio {
+  display: none;
+}
+.charsheet .advancement-block .adv-clock .adv-segment {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  border: 2px solid #1a1a1a;
+  border-radius: 1px;
+  display: block;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  background: #e5e5e0;
+}
+.charsheet .advancement-block .adv-clock .fakeradio:checked ~ .fakeradio + .adv-segment {
+  background: #ffb000;
+}
+.charsheet .advancement-block .advancement-costs {
+  font-size: 9px;
+  color: #888888;
+  border-top: 1px dashed #bbbbbb;
+  padding-top: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 8px;
+}
+.charsheet .advancement-block .cost-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 2px;
+}
+.charsheet .advancement-block .cost-label {
+  font-family: "Courier New", Courier, monospace;
+}
+.charsheet .advancement-block .cost-value {
+  font-weight: bold;
+  color: #ffb000;
 }
 .charsheet .harm-section {
   margin-bottom: 8px;
