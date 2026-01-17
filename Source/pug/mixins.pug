@@ -299,3 +299,55 @@ mixin textarea-field(name, placeholder)
         span.display.field-value(name=`attr_${name}`)
         //- Edit mode - editable textarea
         textarea.edit(name=`attr_${name}`, placeholder=placeholder)
+
+//- ═══════════════════════════════════════════════════════════════
+//- CUSTOM CLOCKS (repeating section)
+//- Dynamic-size progress clocks with 4, 6, 8, 10, or 12 segments
+//- Uses visibility checkboxes to show/hide segment groups
+//- ═══════════════════════════════════════════════════════════════
+
+//- Fakeradio track for REPEATING sections (no id/for - uses label-wrapped inputs)
+//- This pattern works in repeating sections where static IDs would conflict
+mixin fakeradio-track-repeating(name, count, boxClass)
+    //- Hidden zero-value checkbox (default empty state)
+    input.fakeradio.zero(type="checkbox", name=`attr_${name}`, value="0", checked)
+    //- Visible boxes with incrementing values - input wrapped inside label
+    - for (var i = 1; i <= count; i++)
+        label(class=boxClass)
+            input.fakeradio(type="checkbox", name=`attr_${name}`, value=i)
+
+mixin clock-entry()
+    .clock-entry
+        //- Visibility controls (set by sheet worker on size change)
+        //- Default: show 6 segments (5-6 checked, others unchecked)
+        input.clock-show-5-6(type="checkbox", name="attr_clock_show_5_6", value="1", checked)
+        input.clock-show-7-8(type="checkbox", name="attr_clock_show_7_8", value="1")
+        input.clock-show-9-10(type="checkbox", name="attr_clock_show_9_10", value="1")
+        input.clock-show-11-12(type="checkbox", name="attr_clock_show_11_12", value="1")
+
+        //- Header: Name + Size
+        .clock-header
+            span.display.clock-name-display(name="attr_clock_name")
+            .edit
+                input.clock-name-input(type="text", name="attr_clock_name", placeholder="Clock name")
+            .clock-size-badge
+                span [
+                span.clock-size-value(name="attr_clock_size")
+                span ]
+            .edit.clock-size-select
+                select(name="attr_clock_size")
+                    option(value="4") 4
+                    option(value="6", selected) 6
+                    option(value="8") 8
+                    option(value="10") 10
+                    option(value="12") 12
+
+        //- Clock track (12 segments, visibility controlled by CSS)
+        //- Uses repeating-safe pattern (input inside label, no id/for)
+        .clock-track
+            +fakeradio-track-repeating("clock_value", 12, "clock-segment")
+
+        //- Notes
+        span.display.clock-notes-display(name="attr_clock_notes")
+        .edit
+            textarea.clock-notes-input(name="attr_clock_notes", placeholder="Notes...")

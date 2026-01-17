@@ -152,19 +152,30 @@
 
             textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
 
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 5: CLOCKS
+        //- Framing: Mission tracking / faction progress timers
+        //- Custom progress clocks with configurable sizes (4, 6, 8, 10, 12)
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-clocks
+            +section-header-editable("crewclocks", "CLOCKS", "05")
+
+            +repeating("crewclocks")
+                +clock-entry()
+
     //- ═══════════════════════════════════════════════════════════════
     //- RIGHT COLUMN - Upgrades, Abilities, Cohorts, Claims
     //- ═══════════════════════════════════════════════════════════════
     .right-column
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 5: CREW UPGRADES
+        //- SECTION 6: CREW UPGRADES
         //- Framing: Asset manifest / resource allocation
         //- ───────────────────────────────────────────────────────────
         .section.crew-upgrades
             .section-header
                 .section-stamp CREW UPGRADES
-                .section-number 05
+                .section-number 06
 
             .upgrades-grid
                 //- Lair Upgrades
@@ -208,12 +219,12 @@
                         +upgrade-multi("cohort_type", "Add Type", 4)
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: CREW TYPE UPGRADES
+        //- SECTION 7: CREW TYPE UPGRADES
         //- Framing: Crew-specific special upgrades
         //- Populated dynamically based on crew type
         //- ───────────────────────────────────────────────────────────
         .section.crew-type-upgrades
-            +section-header-editable("crewtypeupgrades", "CREW TYPE UPGRADES", "06")
+            +section-header-editable("crewtypeupgrades", "CREW TYPE UPGRADES", "07")
 
             +repeating("crewtypeupgrades")
                 .upgrade-entry
@@ -244,12 +255,12 @@
                             input(type="text", name="attr_upgrade_desc", placeholder="Description").upgrade-desc-input
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: CREW ABILITIES
+        //- SECTION 8: CREW ABILITIES
         //- Framing: Special operations / classified capabilities
         //- Pattern: Matches augments section
         //- ───────────────────────────────────────────────────────────
         .section.crew-abilities
-            +section-header-editable("crewabilities", "CREW ABILITIES", "07")
+            +section-header-editable("crewabilities", "CREW ABILITIES", "08")
 
             +repeating("crewabilities")
                 .ability-entry
@@ -272,23 +283,23 @@
                             textarea(name="attr_crew_ability_desc", placeholder="Description & effects").ability-desc-input
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: COHORTS
+        //- SECTION 9: COHORTS
         //- Framing: Personnel files / asset registry
         //- ───────────────────────────────────────────────────────────
         .section.cohorts
-            +section-header-editable("cohorts", "COHORTS", "08")
+            +section-header-editable("cohorts", "COHORTS", "09")
 
             +repeating("cohorts")
                 +cohort-block()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 9: CLAIMS / TERRITORY
+        //- SECTION 10: CLAIMS / TERRITORY
         //- Framing: Territory map / sphere of influence
         //- ───────────────────────────────────────────────────────────
         .section.claims
             .section-header
                 .section-stamp CLAIMS
-                .section-number 09
+                .section-number 10
 
             +repeating("claims")
                 .claim-entry

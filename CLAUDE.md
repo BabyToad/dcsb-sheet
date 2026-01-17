@@ -266,29 +266,29 @@ getSectionIDs("repeating_section", (ids) => {
 
 | # | Section | Framing | Content |
 |---|---------|---------|---------|
-| 01 | Subject Identification | Corporate intake form | Name, Alias, Look, Playbook, Heritage, Background |
+| 01 | Subject Identification | Corporate intake form | Name, Alias, Look, Playbook, Heritage, Background, Vice |
 | 02 | Capability Assessment | Psychometric evaluation | 3 Attributes × 4 Actions (12 total), 4× Advancement Clocks (Deep Cuts) |
 | 03 | Condition Report | Medical chart | Stress (9), Trauma (4), Harm levels, Armor |
 | 04 | Augmentation Record | Tech spec sheet | Augments with tier, description, maintenance clocks |
 | 05 | Equipment Manifest | Quartermaster checklist | Load selector, standard items, playbook items |
-| 06 | Vice | Off-the-record notes | Vice type/purveyor/details |
-| 07 | Friends & Rivals | Contact cards | Playbook-specific Friends list, Friend/Rival selection |
-| 08 | Notes | Margin scrawl | Free-form text area |
+| 06 | Friends & Rivals | Contact cards | Playbook-specific Friends list, Friend/Rival selection |
+| 07 | Notes | Margin scrawl | Free-form text area |
+| 08 | Clocks | Mission tracking | Custom progress clocks (4, 6, 8, 10, 12 segments) |
 
 ### Crew Sheet Sections
 
 | # | Section | Framing | Content |
 |---|---------|---------|---------|
 | 01 | Crew Identification | Syndicate charter | Name, Type, Reputation, Hunting Grounds, Lair |
-| 02 | Crew Stats | Performance metrics | Tier (0-4), Hold, Rep (12), Turf, Heat (9), Wanted (4) |
-| 03 | Score Tracker | Mission control | Heat Gauge (8), Current Score, Disengagement Roll |
-| 04 | Crew Upgrades | Asset manifest | Lair, Training, Quality upgrade checkboxes |
-| 05 | Crew Abilities | Special operations | Repeating section for crew abilities |
-| 06 | Cohorts | Personnel files | Gang/Expert repeating section with harm/edges/flaws |
-| 07 | Faction Status | Intelligence briefing | Faction relationship matrix (-3 to +3) |
-| 08 | Claims | Territory map | Repeating section for held claims |
-| 09 | Vault | Treasury | Coin counter, Vault track (16) |
-| 10 | Crew Notes | Mission logs | Free-form text area |
+| 02 | Crew Stats | Performance metrics | Tier (0-4), Hold, Rep (12), Heat (9), Wanted (4), Vault (16), Advancement |
+| 03 | Score Tracker | Mission control | Heat Gauge (8), Disengagement Roll |
+| 04 | Crew Notes | Mission logs | Free-form text area |
+| 05 | Clocks | Faction/mission tracking | Custom progress clocks (4, 6, 8, 10, 12 segments) |
+| 06 | Crew Upgrades | Asset manifest | Lair, Training, Quality, Cohort upgrade checkboxes |
+| 07 | Crew Type Upgrades | Crew-specific upgrades | Repeating section populated by crew type |
+| 08 | Crew Abilities | Special operations | Repeating section for crew abilities |
+| 09 | Cohorts | Personnel files | Gang/Expert repeating section with harm/edges/flaws |
+| 10 | Claims | Territory map | Repeating section for held claims |
 
 ## References
 

@@ -815,6 +815,146 @@
 .charsheet .arc-heat-gauge .arc-track .fakeradio:checked ~ .fakeradio + .arc-segment {
   background: transparent;
 }
+.charsheet .clock-entry {
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(136, 136, 136, 0.3);
+}
+.charsheet .clock-entry:last-child {
+  border-bottom: none;
+}
+.charsheet .clock-entry .clock-show-5-6,
+.charsheet .clock-entry .clock-show-7-8,
+.charsheet .clock-entry .clock-show-9-10,
+.charsheet .clock-entry .clock-show-11-12 {
+  display: none;
+}
+.charsheet .clock-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 2px;
+}
+.charsheet .clock-name-display {
+  font-weight: bold;
+  font-size: 12px;
+}
+.charsheet .clock-name-input {
+  font-weight: bold;
+  font-size: 12px;
+  font-family: "Courier New", Courier, monospace;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #888888;
+  padding: 2px 0;
+  width: 150px;
+}
+.charsheet .clock-name-input:focus {
+  outline: none;
+  border-bottom-color: #ffb000;
+}
+.charsheet .clock-size-badge {
+  font-size: 9px;
+  color: #888888;
+  margin-left: 4px;
+}
+.charsheet .clock-size-select {
+  margin-left: 4px;
+}
+.charsheet .clock-size-select select {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  background: transparent;
+  border: 1px solid #888888;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+.charsheet .clock-size-select select:focus {
+  outline: none;
+  border-color: #ffb000;
+}
+.charsheet .clock-track {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.charsheet .clock-track > input.fakeradio.zero {
+  display: none;
+}
+.charsheet .clock-track .clock-segment {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  background: #ffb000;
+}
+.charsheet .clock-track .clock-segment input.fakeradio {
+  display: none;
+}
+.charsheet .clock-track .clock-segment:has(input.fakeradio:checked) ~ .clock-segment {
+  background: transparent;
+}
+.charsheet .clock-track > input.fakeradio.zero:checked ~ .clock-segment {
+  background: transparent;
+}
+.charsheet .clock-track .clock-segment:nth-of-type(n+5):nth-of-type(-n+6) {
+  display: none;
+}
+.charsheet .clock-track .clock-segment:nth-of-type(n+7):nth-of-type(-n+8) {
+  display: none;
+}
+.charsheet .clock-track .clock-segment:nth-of-type(n+9):nth-of-type(-n+10) {
+  display: none;
+}
+.charsheet .clock-track .clock-segment:nth-of-type(n+11) {
+  display: none;
+}
+.charsheet .clock-entry .clock-show-5-6:checked ~ .clock-track .clock-segment:nth-of-type(n+5):nth-of-type(-n+6) {
+  display: block;
+}
+.charsheet .clock-entry .clock-show-7-8:checked ~ .clock-track .clock-segment:nth-of-type(n+7):nth-of-type(-n+8) {
+  display: block;
+}
+.charsheet .clock-entry .clock-show-9-10:checked ~ .clock-track .clock-segment:nth-of-type(n+9):nth-of-type(-n+10) {
+  display: block;
+}
+.charsheet .clock-entry .clock-show-11-12:checked ~ .clock-track .clock-segment:nth-of-type(n+11) {
+  display: block;
+}
+.charsheet .clock-notes-display {
+  font-size: 9px;
+  color: #888888;
+  display: block;
+  padding-left: 4px;
+}
+.charsheet .clock-notes-display:empty {
+  display: none;
+}
+.charsheet .clock-notes-display::before {
+  content: "└ ";
+}
+.charsheet .clock-notes-input {
+  width: 100%;
+  min-height: 2rem;
+  font-size: 9px;
+  font-family: "Courier New", Courier, monospace;
+  background: transparent;
+  border: 1px dashed #888888;
+  padding: 2px;
+  resize: vertical;
+}
+.charsheet .clock-notes-input::placeholder {
+  color: #bbbbbb;
+}
+.charsheet .clock-notes-input:focus {
+  outline: none;
+  border-color: #ffb000;
+}
 
 .charsheet .attribute-block {
   margin-bottom: 4px;

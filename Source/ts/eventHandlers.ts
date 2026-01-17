@@ -307,6 +307,45 @@ on("clicked:repeating_cohorts:cohortroll", () => {
 });
 
 // =============================================================================
+// CUSTOM CLOCKS - Size Change Handlers
+// =============================================================================
+
+// Character clocks - update visibility flags when size changes
+on("change:repeating_clocks:clock_size", (eventInfo) => {
+    const size = parseInt(eventInfo.newValue) || 6;
+
+    // Get the repeating row prefix from the source attribute
+    // e.g., "repeating_clocks_-ABC123_clock_size" -> "repeating_clocks_-ABC123"
+    const match = eventInfo.sourceAttribute.match(/^(repeating_clocks_[^_]+)_/);
+    if (!match) return;
+    const prefix = match[1];
+
+    setAttrs({
+        [`${prefix}_clock_show_5_6`]: size >= 6 ? "1" : "0",
+        [`${prefix}_clock_show_7_8`]: size >= 8 ? "1" : "0",
+        [`${prefix}_clock_show_9_10`]: size >= 10 ? "1" : "0",
+        [`${prefix}_clock_show_11_12`]: size >= 12 ? "1" : "0"
+    });
+});
+
+// Crew clocks - update visibility flags when size changes
+on("change:repeating_crewclocks:clock_size", (eventInfo) => {
+    const size = parseInt(eventInfo.newValue) || 6;
+
+    // Get the repeating row prefix from the source attribute
+    const match = eventInfo.sourceAttribute.match(/^(repeating_crewclocks_[^_]+)_/);
+    if (!match) return;
+    const prefix = match[1];
+
+    setAttrs({
+        [`${prefix}_clock_show_5_6`]: size >= 6 ? "1" : "0",
+        [`${prefix}_clock_show_7_8`]: size >= 8 ? "1" : "0",
+        [`${prefix}_clock_show_9_10`]: size >= 10 ? "1" : "0",
+        [`${prefix}_clock_show_11_12`]: size >= 12 ? "1" : "0"
+    });
+});
+
+// =============================================================================
 // HEALING FORTUNE ROLL
 // =============================================================================
 

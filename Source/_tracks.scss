@@ -307,4 +307,188 @@
             }
         }
     }
+
+    // =========================================================================
+    // CUSTOM CLOCKS (repeating section)
+    // Dynamic-size progress clocks with visibility-controlled segments
+    // =========================================================================
+
+    .clock-entry {
+        padding: $spacing-sm 0;
+        border-bottom: 1px dashed rgba($zine-grey, 0.3);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        // Hidden visibility controls (set by sheet worker on size change)
+        .clock-show-5-6,
+        .clock-show-7-8,
+        .clock-show-9-10,
+        .clock-show-11-12 {
+            @include hidden-checkbox-base();
+        }
+    }
+
+    .clock-header {
+        @include flex-row($spacing-sm);
+        align-items: center;
+        margin-bottom: $spacing-xs;
+    }
+
+    .clock-name-display {
+        font-weight: bold;
+        font-size: $type-base;
+    }
+
+    .clock-name-input {
+        font-weight: bold;
+        font-size: $type-base;
+        font-family: $font-mono;
+        background: transparent;
+        border: none;
+        border-bottom: 1px dashed $zine-grey;
+        padding: $spacing-xs 0;
+        width: 150px;
+
+        &:focus {
+            outline: none;
+            border-bottom-color: $terminal-amber;
+        }
+    }
+
+    .clock-size-badge {
+        font-size: $type-xs;
+        color: $zine-grey;
+        margin-left: $spacing-sm;
+    }
+
+    .clock-size-select {
+        margin-left: $spacing-sm;
+
+        select {
+            font-family: $font-mono;
+            font-size: $type-sm;
+            background: transparent;
+            border: 1px solid $zine-grey;
+            padding: 2px 4px;
+            cursor: pointer;
+
+            &:focus {
+                outline: none;
+                border-color: $terminal-amber;
+            }
+        }
+    }
+
+    .clock-track {
+        @include flex-row(2px, stretch);
+        margin-bottom: $spacing-xs;
+
+        // Hide the zero checkbox
+        > input.fakeradio.zero {
+            display: none;
+        }
+
+        .clock-segment {
+            @include square-box(14px);
+            border: 2px solid $zine-ink;
+            cursor: pointer;
+            @include transition();
+            // Forward fill: start FILLED
+            background: $terminal-amber;
+
+            // Hide the input inside the label
+            input.fakeradio {
+                display: none;
+            }
+        }
+
+        // Empty segments after checked value (forward fill pattern)
+        // When a fakeradio inside a label is checked, all following labels become empty
+        .clock-segment:has(input.fakeradio:checked) ~ .clock-segment {
+            background: transparent;
+        }
+
+        // When zero is checked (default), ALL segments are empty
+        > input.fakeradio.zero:checked ~ .clock-segment {
+            background: transparent;
+        }
+
+        // Segments 5-6: hidden by default (shown when clock_show_5_6 is checked)
+        // nth-of-type counts only .clock-segment labels: 1-4 visible, 5-6 hidden
+        .clock-segment:nth-of-type(n+5):nth-of-type(-n+6) {
+            display: none;
+        }
+
+        // Segments 7-8: hidden by default
+        .clock-segment:nth-of-type(n+7):nth-of-type(-n+8) {
+            display: none;
+        }
+
+        // Segments 9-10: hidden by default
+        .clock-segment:nth-of-type(n+9):nth-of-type(-n+10) {
+            display: none;
+        }
+
+        // Segments 11-12: hidden by default
+        .clock-segment:nth-of-type(n+11) {
+            display: none;
+        }
+    }
+
+    // Show segments 5-6 when flag is checked
+    .clock-entry .clock-show-5-6:checked ~ .clock-track .clock-segment:nth-of-type(n+5):nth-of-type(-n+6) {
+        display: block;
+    }
+
+    // Show segments 7-8 when flag is checked
+    .clock-entry .clock-show-7-8:checked ~ .clock-track .clock-segment:nth-of-type(n+7):nth-of-type(-n+8) {
+        display: block;
+    }
+
+    // Show segments 9-10 when flag is checked
+    .clock-entry .clock-show-9-10:checked ~ .clock-track .clock-segment:nth-of-type(n+9):nth-of-type(-n+10) {
+        display: block;
+    }
+
+    // Show segments 11-12 when flag is checked
+    .clock-entry .clock-show-11-12:checked ~ .clock-track .clock-segment:nth-of-type(n+11) {
+        display: block;
+    }
+
+    .clock-notes-display {
+        font-size: $type-xs;
+        color: $zine-grey;
+        display: block;
+        padding-left: $spacing-sm;
+
+        &:empty {
+            display: none;
+        }
+
+        &::before {
+            content: "└ ";
+        }
+    }
+
+    .clock-notes-input {
+        width: 100%;
+        min-height: 2rem;
+        font-size: $type-xs;
+        font-family: $font-mono;
+        background: transparent;
+        border: 1px dashed $zine-grey;
+        padding: $spacing-xs;
+        resize: vertical;
+
+        &::placeholder {
+            color: $form-grey-light;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $terminal-amber;
+        }
+    }
 }

@@ -446,3 +446,14 @@
 
             //- Edit mode - textarea
             textarea.edit.notes-area(name="attr_notes", placeholder="Personal notes, background details, mission logs...")
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 8: CLOCKS
+        //- Framing: Mission tracking / progress timers
+        //- Custom progress clocks with configurable sizes (4, 6, 8, 10, 12)
+        //- ───────────────────────────────────────────────────────────
+        .section.clocks
+            +section-header-editable("clocks", "CLOCKS", "08")
+
+            +repeating("clocks")
+                +clock-entry()
