@@ -989,10 +989,10 @@
   display: block;
   cursor: pointer;
   transition: all 0.1s ease;
-  background: #e5e5e0;
+  background: #ffb000;
 }
 .charsheet .advancement-block .adv-clock .fakeradio:checked ~ .fakeradio + .adv-segment {
-  background: #ffb000;
+  background: transparent;
 }
 .charsheet .advancement-block .advancement-costs {
   font-size: 9px;

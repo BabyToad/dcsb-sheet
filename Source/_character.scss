@@ -204,11 +204,14 @@
                 display: block;
                 cursor: pointer;
                 @include transition();
-                background: $form-paper;
+                // Forward fill: start filled
+                background: $terminal-amber;
             }
 
-            // Forward fill: segments BEFORE and including checked are filled
-            @include fakeradio-inverse-fill(adv-segment, $terminal-amber);
+            // Empty segments after checked value (forward fill pattern)
+            .fakeradio:checked ~ .fakeradio + .adv-segment {
+                background: transparent;
+            }
         }
 
         // Advancement cost reference table
