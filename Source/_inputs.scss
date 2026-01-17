@@ -112,5 +112,48 @@
         select {
             width: 100%;
         }
+
+        // With-detail variant: adds text input below dropdown
+        &.with-detail {
+            .detail-input {
+                width: 100%;
+                margin-top: 2px;
+                font-size: 10px;
+                font-style: italic;
+                padding: 2px 4px;
+                border: none;
+                border-bottom: 1px dashed $zine-light-grey;
+                background: transparent;
+
+                &::placeholder {
+                    color: $form-grey-light;
+                }
+
+                &:focus {
+                    outline: none;
+                    border-bottom-color: $terminal-amber;
+                }
+            }
+        }
+    }
+
+    // Detail value display (in identity classification)
+    .detail-value {
+        font-size: inherit;
+        font-style: italic;
+        color: $zine-grey;
+        margin-left: 4px;
+
+        &:empty {
+            display: none;
+        }
+
+        &::before {
+            content: '(';
+        }
+
+        &::after {
+            content: ')';
+        }
     }
 }

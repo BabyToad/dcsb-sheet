@@ -152,6 +152,38 @@
 .charsheet .select-field select {
   width: 100%;
 }
+.charsheet .select-field.with-detail .detail-input {
+  width: 100%;
+  margin-top: 2px;
+  font-size: 10px;
+  font-style: italic;
+  padding: 2px 4px;
+  border: none;
+  border-bottom: 1px dashed #bbbbbb;
+  background: transparent;
+}
+.charsheet .select-field.with-detail .detail-input::placeholder {
+  color: #bbbbbb;
+}
+.charsheet .select-field.with-detail .detail-input:focus {
+  outline: none;
+  border-bottom-color: #ffb000;
+}
+.charsheet .detail-value {
+  font-size: inherit;
+  font-style: italic;
+  color: #888888;
+  margin-left: 4px;
+}
+.charsheet .detail-value:empty {
+  display: none;
+}
+.charsheet .detail-value::before {
+  content: "(";
+}
+.charsheet .detail-value::after {
+  content: ")";
+}
 
 .charsheet .sheet-columns {
   display: grid;

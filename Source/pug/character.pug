@@ -30,8 +30,10 @@
                     span.playbook-value(name="attr_playbook")
                     span.sep |
                     span.heritage-value(name="attr_heritage")
+                    span.detail-value(name="attr_heritage_detail")
                     span.sep |
                     span.background-value(name="attr_background")
+                    span.detail-value(name="attr_background_detail")
 
                 //- Vice integrated into display
                 .identity-vice
@@ -66,7 +68,7 @@
                                 option(value="murk", data-i18n="MURK") Murk
                                 option(value="street_warrior", data-i18n="STREET_WARRIOR") Street Warrior
 
-                    .select-field
+                    .select-field.with-detail
                         label
                             span.field-label(data-i18n="HERITAGE") Heritage
                             select(name="attr_heritage")
@@ -77,8 +79,9 @@
                                 option(value="the_jungle", data-i18n="THE_JUNGLE") The Jungle
                                 option(value="the_syndicate", data-i18n="THE_SYNDICATE") The Syndicate
                                 option(value="labor_colonies", data-i18n="LABOR_COLONIES") Labor Colonies
+                        input.detail-input(type="text", name="attr_heritage_detail", placeholder="e.g. political dissident")
 
-                    .select-field
+                    .select-field.with-detail
                         label
                             span.field-label(data-i18n="BACKGROUND") Background
                             select(name="attr_background")
@@ -89,6 +92,7 @@
                                 option(value="corporate", data-i18n="CORPORATE") Corporate
                                 option(value="underworld", data-i18n="UNDERWORLD") Underworld
                                 option(value="fringe", data-i18n="FRINGE") Fringe
+                        input.detail-input(type="text", name="attr_background_detail", placeholder="e.g. hydroponics farmer")
 
                 //- Vice fields in edit mode
                 .identity-row.vice-row
