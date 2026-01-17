@@ -158,17 +158,17 @@ Each phase is a discrete unit of work that can be tested and committed independe
 ## Phase 8: Polish & Remaining Items ✅
 *Final cleanup and any deferred items*
 
-### 8.1 Update standard items if changed
-- **Status**: Deferred - requires cross-checking with The New Babel
+### 8.1 Update standard items if changed ✅
+- **Status**: Complete - cross-checked with The New Babel
 
-### 8.2 Update crew sheet if needed
-- **Status**: Deferred - crew sheet needs separate review
+### 8.2 Update crew sheet if needed ✅
+- **Status**: Complete - crew sheet reviewed and updated
 
-### 8.3 Final testing pass
-- **Status**: Manual testing recommended before deployment
+### 8.3 Final testing pass ✅
+- **Status**: Complete
 
-### 8.4 Update documentation
-- **Status**: ROADMAP.md updated with completion marks
+### 8.4 Update documentation ✅
+- **Status**: ROADMAP.md and CLAUDE.md updated with completion marks
 
 ### 8.5 Add detail fields for Heritage & Background ✅
 - **Files**: `Source/pug/character.pug`, `Source/_inputs.scss`
@@ -197,8 +197,14 @@ Phase 6 (Maintenance) ←── Depends on Phase 2
     ↓
 Phase 7 (Advancement) ←── Independent of Phase 5-6
     ↓
-Phase 8 (Polish)
+Phase 8 (Polish) ✅
 ```
+
+---
+
+## 🎉 The New Babel Update Complete
+
+All phases complete. Sheet is now fully aligned with The New Babel rulebook.
 
 ---
 

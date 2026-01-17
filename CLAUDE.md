@@ -14,29 +14,24 @@ A Roll20 character sheet for Dark City, Shining Babel (DC,SB), a Blades in the D
 
 ## Sheet Update Status
 
-⚠️ **The current sheet was built against Mini Rulebook and needs updating to match The New Babel.**
+✅ **The New Babel update is complete.** The sheet has been fully updated from Mini Rulebook to match The New Babel.
 
-### Required Updates
+### Completed Updates
 
-| Area | Current (Mini Rulebook) | Target (The New Babel) |
-|------|------------------------|------------------------|
-| Terminology | "Cybernetics" | "Augments" (encompasses Bio-Mods too) |
-| Capacity | `cyber_max` cap, expandable via XP | No cap; maintenance clocks instead |
-| Maintenance | N/A | 4-tick clocks, Tier ticks per Augment, 1 BC per filled clock |
-| Advancement | XP trackers per attribute/playbook | Deep Cuts: 4× 6-segment advancement clocks |
-| L337 Playbook | "L337" | Renamed to "Hacker", updated items/Augments |
-| Heritage | Missing "Babel" | Add "Babel" option |
-| Friends/Rivals | Generic circles section | Playbook-specific Friends list + Friend/Rival selection |
-| Heat Gauge | 6-clock | 8-clock |
-| Augment Tiers | Original distribution | Shifted for most playbooks |
+| Area | Status |
+|------|--------|
+| Terminology: Cybernetics → Augments | ✅ Complete |
+| Maintenance system (replaces capacity cap) | ✅ Complete |
+| Deep Cuts advancement (4× 6-segment clocks) | ✅ Complete |
+| L337 → Hacker rename | ✅ Complete |
+| Babel heritage option | ✅ Complete |
+| Friends & Rivals system | ✅ Complete |
+| Heat Gauge (8 segments) | ✅ Complete |
+| Playbook data (items, augments, tiers) | ✅ Complete |
+| Standard items cross-check | ✅ Complete |
+| Crew sheet updates | ✅ Complete |
 
-### Key Files to Update
-
-- `Source/ts/playbookData.ts` - Rename L337→Hacker, update Augment lists/tiers, add Friends data
-- `Source/ts/constants.ts` - Update HEAT_GAUGE segments (6→8), add maintenance constants
-- `Source/ts/calculations.ts` - Add maintenance clock logic, remove capacity cap
-- `Source/pug/character.pug` - Rename Cybernetics→Augments, add maintenance UI, add Friends/Rivals section
-- `Source/_character.scss` - Styles for new sections
+See `ROADMAP.md` for detailed implementation history.
 
 ## Build Commands
 
@@ -198,13 +193,13 @@ $status-danger: #8b0000;        // Dark red (harm, trauma)
 ### Custom Mechanics (vs Blades in the Dark)
 
 1. **Roll Modifier System** - Toggle buttons (-1 to +5) apply dice modifiers to all rolls, auto-reset after rolling
-2. **Augments** - Replace BitD Special Abilities. Tiered system (T2-T5). *Current sheet uses capacity cap; target: maintenance clocks*
-3. **Score Flow** - Engagement → Score (Heat Gauge fills) → Disengagement Roll → Entanglements (Babel keeps entanglements)
-4. **Heat Gauge** - *Current: 6-clock; Target: 8-clock* — fills during score, empty segments = dice for Disengagement Roll
-5. **Disengagement Roll** - New mechanic; roll remaining Heat Gauge segments to escape cleanly
+2. **Augments** - Replace BitD Special Abilities. Tiered system (T2-T5) with maintenance clocks instead of capacity cap
+3. **Score Flow** - Engagement → Score (Heat Gauge fills) → Disengagement Roll → Entanglements
+4. **Heat Gauge** - 8-segment gauge; fills during score, empty segments = dice for Disengagement Roll
+5. **Disengagement Roll** - Roll remaining Heat Gauge segments to escape cleanly
 6. **Mental Harm** - Separate from physical harm, cleared via Vice
-7. **Circles/Friends** - *Current: generic; Target: playbook-specific Friends list with Friend/Rival selection*
-8. **Advancement** - *Current: XP trackers; Target: Deep Cuts 4× 6-segment clocks*
+7. **Friends & Rivals** - Playbook-specific Friends list with Friend/Rival relation selection
+8. **Advancement** - Deep Cuts system: 4× 6-segment advancement clocks
 
 ## Sheet Worker Patterns
 
@@ -245,23 +240,25 @@ getSectionIDs("repeating_section", (ids) => {
 
 ## Development Phases
 
-### Original Build (Mini Rulebook)
+### Original Build (Mini Rulebook) ✅
 - [x] Phase 0: Foundation
 - [x] Phase 1: Information Architecture
 - [x] Phase 2: Visual Design
 - [x] Phase 3: Core Implementation (rolls, modifiers, calculations)
-- [x] Phase 4: Custom Features (Cybernetics, Heat Gauge, etc.)
-- [ ] Phase 5: Crew Sheet & Polish
+- [x] Phase 4: Custom Features (Augments, Heat Gauge, etc.)
+- [x] Phase 5: Crew Sheet & Polish
 
-### The New Babel Update (Current Goal)
-- [ ] Rename Cybernetics → Augments throughout
-- [ ] Replace capacity cap with maintenance clocks
-- [ ] Update Heat Gauge (6 → 8 segments)
-- [ ] Update advancement to Deep Cuts (4× 6-segment clocks)
-- [ ] Rename L337 → Hacker, update items/Augments
-- [ ] Add Babel to Heritage options
-- [ ] Add playbook-specific Friends lists + Friend/Rival selection
-- [ ] Update Augment tiers per playbook
+### The New Babel Update ✅
+- [x] Rename Cybernetics → Augments throughout
+- [x] Replace capacity cap with maintenance clocks
+- [x] Update Heat Gauge (6 → 8 segments)
+- [x] Update advancement to Deep Cuts (4× 6-segment clocks)
+- [x] Rename L337 → Hacker, update items/Augments
+- [x] Add Babel to Heritage options
+- [x] Add playbook-specific Friends lists + Friend/Rival selection
+- [x] Update Augment tiers per playbook
+- [x] Cross-check standard items
+- [x] Crew sheet updates
 
 ## Information Architecture
 
