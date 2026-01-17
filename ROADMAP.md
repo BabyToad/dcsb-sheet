@@ -74,42 +74,25 @@ Each phase is a discrete unit of work that can be tested and committed independe
 
 ---
 
-## Phase 4: Playbook Data Updates
+## Phase 4: Playbook Data Updates ✅
 *Update all playbook-specific data to match The New Babel*
 
-### 4.1 Rename L337 → Hacker in playbookData.ts
-- **Files**: `Source/ts/playbookData.ts`
-- **Changes**:
-  - Rename `l337` key → `hacker`
-  - Update `title: "L337"` → `title: "Hacker"`
-- **Test**: Selecting Hacker playbook populates correctly
-- **Commit**: `refactor(sheet): rename L337 to Hacker in playbook data`
+### 4.1 Rename L337 → Hacker ✅
+- **Note**: Done in Phase 1.2
 
-### 4.2 Update Hacker playbook items and Augments
+### 4.2 Update all playbook items and Augments ✅
 - **Files**: `Source/ts/playbookData.ts`
-- **Changes**: Update `hacker` entry with new items and Augments from The New Babel
-  - New items: Fine Hacking Deck (2 load), Electro-Goggles, Stimulants, Specialty Chipsets, etc.
-  - New Augments with updated tiers
-- **Reference**: `../The New Babel.md` lines 281-322
-- **Test**: Selecting Hacker populates correct items/Augments
-- **Commit**: `feat(sheet): update Hacker playbook items and Augments`
+- **Changes**: Updated all 6 playbooks with data from The New Babel
+  - Removed "Your Old CCID" from all playbooks
+  - Face: Renamed item, shifted augment tiers (3→T2, others shifted down)
+  - Fixer: Renamed item, all T3 augments moved to T2
+  - Hacker: New items (Chipsets, Surveillance), new T2 + T5 augments, renamed augment
+  - MidNighter, Murk, Street Warrior: Removed CCID, augments unchanged
+- **Commit**: `feat(sheet): update playbook data to match The New Babel`
 
-### 4.3 Update all other playbook Augments
-- **Files**: `Source/ts/playbookData.ts`
-- **Changes**: Update Augment lists and tiers for:
-  - Face (lines 213-246)
-  - Fixer (lines 248-279)
-  - MidNighter (lines 324-356)
-  - Murk (lines 358-390)
-  - Street Warrior (lines 392-424)
-- **Test**: Each playbook populates correct Augments with correct tiers
-- **Commit**: `feat(sheet): update Augment tiers for all playbooks`
-
-### 4.4 Add Chipset system for Hacker
-- **Files**: `Source/ts/playbookData.ts`, possibly new UI
-- **Note**: Hacker has a unique "Specialty Chipsets" mechanic - may need special handling
-- **Scope TBD**: Determine if this needs custom UI or just item entries
-- **Commit**: `feat(sheet): add Hacker Chipset system`
+### 4.3 Chipset system for Hacker
+- **Note**: Represented as item entries "Specialty Chipsets (Choose 3)" and "Extra Chipsets (Choose 2 more)"
+- **Future**: May need dedicated UI if players want to track which chipsets are chosen
 
 ---
 
