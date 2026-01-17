@@ -1,0 +1,54 @@
+# Changelog
+
+All notable changes to the DC,SB Roll20 Character Sheet.
+
+## [0.2.0] - 2025-01-17
+
+### The New Babel Update
+
+Major update aligning the sheet with The New Babel rulebook (replacing Mini Rulebook).
+
+#### Added
+- **Custom Clocks** - Repeating section for progress clocks (4, 6, 8, 10, or 12 segments) on both Character and Crew sheets
+- **Maintenance System** - Replaces Augment capacity cap; visual gauge showing BC owed with fortune roll for unpaid maintenance
+- **Deep Cuts Advancement** - Four 6-segment clocks replace XP trackers for character advancement
+- **Friends & Rivals** - Playbook-specific contacts section with Friend/Rival toggle, auto-populated on playbook selection
+- **Heritage/Background Details** - New text fields for expanded character backstory
+- **Babel Heritage** - Added to heritage dropdown options
+- **Heat Gauge** - Expanded from 6 to 8 segments per New Babel rules
+
+#### Changed
+- **Cybernetics → Augments** - Complete terminology rename throughout sheet
+- **L337 → Hacker** - Playbook renamed with updated items and abilities
+- **Playbook Data** - Updated all playbook items, Augments, and tier assignments per New Babel
+- **Standard Items** - Cross-checked and updated to match rulebook
+- **Crew Sheet Sections** - Reorganized and renumbered for Clocks section
+- **Advancement Costs** - Updated character sheet to show correct costs
+- **Equipment Load** - Boxes now visually indicate load amount directly
+
+#### Fixed
+- Advancement clocks now fill left-to-right (forward fill pattern)
+- Heritage/Background details display on separate row
+- Crew upgrade names display in correct color (black)
+
+### Visual Improvements
+- **ASCII Art Title Banner** - Redesigned with CSS frame, block letters "DC,SB"
+- **Roll Modifier System** - Position dice modifier (-1 to +5) applies to all rolls
+- Healing clock converted to linear gauge for consistency
+
+---
+
+## [0.1.0] - 2024-12-XX
+
+### Initial Release
+
+First complete implementation of the DC,SB character sheet, built against Mini Rulebook.
+
+- Character sheet with all 6 playbooks
+- Crew sheet with all 4 crew types
+- Full roll system (Action, Resistance, Fortune, Vice)
+- Stress/Trauma tracking
+- Cybernetics system with capacity
+- Load tracking
+- Cohort management
+- Claims tracking
