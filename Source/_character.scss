@@ -494,38 +494,94 @@
     // =========================================================================
 
     .augment-maintenance {
-        font-size: 11px;
         margin-bottom: $spacing-sm;
-        padding: $spacing-xs $spacing-sm;
+        padding: $spacing-sm;
         background: rgba(0,0,0,0.03);
         border-left: 3px solid $zine-accent;
-        display: flex;
-        align-items: center;
-        gap: $spacing-xs;
-        flex-wrap: wrap;
+
+        .maintenance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-xs;
+        }
 
         .maintenance-label {
+            font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .maintenance-ticks,
-        .maintenance-clocks,
-        .bc-value {
+        .maintenance-controls {
+            display: flex;
+            align-items: center;
+            gap: $spacing-sm;
+        }
+
+        .bc-owed {
+            font-size: 12px;
             font-weight: bold;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .maintenance-sep {
-            color: $zine-grey;
-            font-size: 10px;
-        }
-
-        .maintenance-bc-owed {
             color: $terminal-amber;
-            font-weight: bold;
+
+            .bc-value {
+                font-size: 14px;
+            }
+        }
+
+        .maintenance-roll-btn {
+            font-family: $font-mono;
+            font-size: 14px;
+            background: transparent;
+            border: 1px solid $zine-grey;
+            padding: 2px 8px;
+            cursor: pointer;
+            @include transition();
+
+            &:hover {
+                background: $terminal-amber;
+                border-color: $terminal-amber;
+            }
+        }
+
+        .maintenance-gauge {
+            @include flex-row(0, stretch);
+            @include fakeradio-hidden();
+
+            // Make gauge read-only (auto-calculated)
+            .maint-segment {
+                pointer-events: none;
+            }
+
+            .maint-segment {
+                width: 14px;
+                height: 14px;
+                border: 1px solid $zine-ink;
+                border-left-width: 0;
+                cursor: default;
+                @include transition(background);
+                // Forward fill: start filled
+                background: $terminal-amber;
+
+                &:first-of-type {
+                    border-left-width: 1px;
+                }
+
+                // Clock boundary markers - thicker border every 4 segments
+                &:nth-of-type(4n + 1) {
+                    border-left: 2px solid $zine-ink;
+                    margin-left: 3px;
+
+                    &:first-of-type {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            // Empty segments after checked value (forward fill pattern)
+            .fakeradio:checked ~ .fakeradio + .maint-segment {
+                background: transparent;
+            }
         }
     }
 

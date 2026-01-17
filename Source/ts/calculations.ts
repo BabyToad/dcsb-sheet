@@ -83,6 +83,20 @@ const getDisengageLabel = (result: number, crit: boolean): string => {
 };
 
 /**
+ * Get maintenance failure roll label (takes LOWEST die)
+ * Crit: Next downtime maintenance costs 0 BC
+ * 6: Everything still working
+ * 4-5: Player chooses augments to lose access to
+ * 1-3: GM secretly chooses augments that will fail during score
+ */
+const getMaintenanceLabel = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !! Free maintenance next downtime';
+    if (result >= 6) return 'STILL WORKING';
+    if (result >= 4) return 'CHOOSE FAILURES';
+    return 'GM CHOOSES FAILURES';
+};
+
+/**
  * Execute a roll with the current position dice modifier applied, then reset modifier to 0
  * @param baseAttrNames - Attributes needed for the roll (excluding roll_modifier)
  * @param getDiceCount - Function to calculate base dice from attributes

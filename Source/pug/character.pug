@@ -210,14 +210,17 @@
             +section-header-editable("augment", "AUGMENTATION RECORD", "04")
 
             .augment-maintenance
-                span.maintenance-label MAINTENANCE:
-                span.maintenance-ticks(name="attr_maintenance_ticks") 0
-                span.maintenance-sep ticks →
-                span.maintenance-clocks(name="attr_maintenance_clocks") 0
-                span.maintenance-sep clocks =
-                span.maintenance-bc-owed
-                    span.bc-value(name="attr_maintenance_clocks") 0
-                    span  BC owed
+                .maintenance-header
+                    span.maintenance-label MAINTENANCE
+                    .maintenance-controls
+                        span.bc-owed
+                            span.bc-value(name="attr_maintenance_clocks") 0
+                            span  BC
+                        button.maintenance-roll-btn(type="action", name="act_roll_maintenance", title="Roll maintenance failure") ⚄
+                .maintenance-gauge
+                    //- 16-segment gauge with clock boundaries every 4
+                    //- Auto-filled based on installed augment tiers
+                    +fakeradio-track("maintenance_ticks", 16, "maint-segment")
 
             +repeating("augments")
                 .augment-entry

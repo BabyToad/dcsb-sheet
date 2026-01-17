@@ -109,6 +109,38 @@ on("change:repeating_items remove:repeating_items", calculateLoad);
 
 on("change:repeating_augments remove:repeating_augments", calculateAugmentMaintenance);
 
+// Maintenance failure roll (when you can't pay BC owed)
+on("clicked:roll_maintenance", () => {
+    getAttrs(['maintenance_clocks', 'character_name'], v => {
+        const clocks = int(v.maintenance_clocks);
+        const charName = v.character_name || 'Unknown';
+
+        // No roll needed if no clocks owed
+        if (clocks <= 0) {
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Maintenance}} {{roll=[[0d6]]}} {{label=NO MAINTENANCE DUE}} {{notes=You have no unpaid maintenance clocks.}}`,
+                results => finishRoll(results.rollId, {})
+            );
+            return;
+        }
+
+        // Roll Xd6 take LOWEST where X = unpaid maintenance clocks
+        const rollFormula = `${clocks}d${DICE.SIZE}${DICE.KEEP_LOWEST}`;
+        const notes = 'Crit: Free next downtime. 6: Still working. 4-5: YOU choose augments to disable. 1-3: GM secretly chooses failures.';
+
+        startRoll(
+            `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Maintenance Failure (${clocks} unpaid)}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
+            results => {
+                const diceArray = results.results.roll.dice;
+                const rollResult = results.results.roll.result;
+                const crit = isCrit(diceArray);
+                const label = getMaintenanceLabel(rollResult, crit);
+                finishRoll(results.rollId, { label });
+            }
+        );
+    });
+});
+
 // =============================================================================
 // HEAT GAUGE (Crew Sheet)
 // =============================================================================
