@@ -398,8 +398,8 @@ const calculateAugmentCapacity = () => {
 
 /**
  * Calculate heat gauge dice (unticked segments)
- * Uses fakeradio pattern: score_heat stores 0-6 (number of filled segments)
- * Disengage dice = 6 - filled segments
+ * Uses fakeradio pattern: score_heat stores 0-8 (number of filled segments)
+ * Disengage dice = 8 - filled segments
  */
 const calculateHeatDice = () => {
     getAttrs(['score_heat', 'score_heat_dice'], v => {

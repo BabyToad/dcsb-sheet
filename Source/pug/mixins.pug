@@ -99,18 +99,18 @@ mixin clock(name, segments, label)
                 input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_seg_${i}`)
                 label.segment(for=`${name}_seg_${i}`)
 
-//- Heat Gauge (6-segment with forward fill pattern)
-//- Uses fakeradio pattern - stores single value 0-6
+//- Heat Gauge (8-segment with forward fill pattern)
+//- Uses fakeradio pattern - stores single value 0-8
 mixin heat-gauge(name)
     .heat-gauge
         .gauge-header
             .gauge-label(data-i18n="HEAT_GAUGE") HEAT GAUGE
             .gauge-dice
                 span.dice-label Disengage:
-                span.dice-count(name=`attr_${name}_dice`) 6
+                span.dice-count(name=`attr_${name}_dice`) 8
                 span d6
         .gauge-track
-            +fakeradio-track(name, 6, "gauge-box")
+            +fakeradio-track(name, 8, "gauge-box")
 
 //- ═══════════════════════════════════════════════════════════════
 //- EQUIPMENT COMPONENTS

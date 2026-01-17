@@ -31,7 +31,7 @@ const LOAD = {
 
 // Heat gauge (score tracker)
 const HEAT_GAUGE = {
-    SEGMENTS: 6,
+    SEGMENTS: 8,
 } as const;
 
 // Stress system
