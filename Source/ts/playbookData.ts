@@ -1,5 +1,6 @@
 // Dark City, Shining Babel - Playbook Data
-// All playbook-specific items, actions, cybernetics from Mini Rulebook
+// All playbook-specific items, actions, augments
+// NOTE: Data originally from Mini Rulebook, being updated to match The New Babel
 
 interface PlaybookItem {
     name: string;
@@ -69,8 +70,8 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
         ]
     },
 
-    l337: {
-        title: "L337",
+    hacker: {
+        title: "Hacker",
         xpTrigger: "You addressed a challenge with knowledge or technological prowess",
         actions: { hack: 2, scrutinize: 1 },
         items: [

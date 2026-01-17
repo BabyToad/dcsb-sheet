@@ -91,7 +91,7 @@ const ACTIONS = [
 
 // Playbooks
 const PLAYBOOKS = [
-    'face', 'fixer', 'l337', 'midnighter', 'murk', 'street_warrior'
+    'face', 'fixer', 'hacker', 'midnighter', 'murk', 'street_warrior'
 ] as const;
 
 // Crew types
