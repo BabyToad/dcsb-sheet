@@ -216,7 +216,41 @@ const formatAugment = (
 };
 
 /**
- * Handle playbook change - populate XP trigger, items, augments (NOT actions)
+ * Populate friend slots from playbook data
+ * Friends are fixed attributes (friend_1_name, etc.) not a repeating section
+ */
+const populateFriends = (friends: { name: string; description: string }[]) => {
+    const updates: { [key: string]: string } = {};
+
+    // Populate up to 5 friend slots
+    for (let i = 0; i < 5; i++) {
+        const friendNum = i + 1;
+        if (friends[i]) {
+            updates[`friend_${friendNum}_name`] = friends[i].name;
+            updates[`friend_${friendNum}_desc`] = friends[i].description;
+        } else {
+            // Clear slot if no friend data
+            updates[`friend_${friendNum}_name`] = '';
+            updates[`friend_${friendNum}_desc`] = '';
+        }
+    }
+
+    setAttrs(updates);
+};
+
+/**
+ * Reset friend relations to neutral (used on playbook reset)
+ */
+const resetFriendRelations = () => {
+    const updates: { [key: string]: string } = {};
+    for (let i = 1; i <= 5; i++) {
+        updates[`friend_${i}_relation`] = 'neutral';
+    }
+    setAttrs(updates);
+};
+
+/**
+ * Handle playbook change - populate XP trigger, items, augments, friends (NOT actions)
  * Actions are only set via explicit reset to preserve advanced characters
  */
 const handlePlaybookChange = (newPlaybook: string) => {
@@ -232,6 +266,9 @@ const handlePlaybookChange = (newPlaybook: string) => {
 
     // 3. Clear old autogen augments, populate new ones
     clearAndPopulateRepeatingSection("augments", data.augments, formatAugment);
+
+    // 4. Populate friends from playbook data
+    populateFriends(data.friends);
 
     // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
 };
@@ -273,7 +310,11 @@ const resetToPlaybookDefaults = () => {
         // 5. Clear ALL augments (autogen and user-created) and repopulate
         clearAllAndPopulateRepeatingSection("augments", data.augments, formatAugment);
 
-        // 6. Notify success via chat
+        // 6. Populate friends and reset their relations
+        populateFriends(data.friends);
+        resetFriendRelations();
+
+        // 7. Notify success via chat
         startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`,
             results => finishRoll(results.rollId, {}));
     });
