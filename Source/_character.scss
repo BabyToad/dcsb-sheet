@@ -427,18 +427,18 @@
     }
 
     // =========================================================================
-    // CYBERNETICS
+    // AUGMENTS
     // =========================================================================
 
-    .cyber-capacity {
+    .augment-capacity {
         font-size: 11px;
         margin-bottom: $spacing-sm;
         padding: $spacing-xs $spacing-sm;
         background: rgba(0,0,0,0.03);
         border-left: 3px solid $zine-accent;
 
-        .cyber-used,
-        .cyber-max {
+        .augment-used,
+        .augment-max {
             width: 30px;
             text-align: center;
             font-weight: bold;

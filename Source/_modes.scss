@@ -287,9 +287,9 @@
     }
 
     // -------------------------------------------------------------------------
-    // Cybernetics/Augmentation Section Display
+    // Augments Section Display
     // -------------------------------------------------------------------------
-    .cyber-entry {
+    .augment-entry {
         display: table;
         width: 100%;
         margin-bottom: 0.75rem;
@@ -302,14 +302,14 @@
         }
     }
 
-    .cyber-installed {
+    .augment-installed {
         display: table-cell;
         width: 24px;
         vertical-align: top;
         padding-right: 0.5rem;
         cursor: pointer;
 
-        .cyber-check {
+        .augment-check {
             @include hidden-checkbox-base();
         }
 
@@ -321,7 +321,7 @@
             position: relative;
         }
 
-        .cyber-check:checked + .installed-box {
+        .augment-check:checked + .installed-box {
             @include checkbox-checked-fill($terminal-amber);
 
             &::after {
@@ -337,18 +337,18 @@
         }
     }
 
-    .cyber-content {
+    .augment-content {
         display: table-cell;
         width: 100%;
         vertical-align: top;
     }
 
-    .cyber-display {
-        .cyber-header-display {
+    .augment-display {
+        .augment-header-display {
             margin-bottom: 0.25rem;
         }
 
-        .cyber-tier-badge {
+        .augment-tier-badge {
             display: inline-block;
             background: $terminal-amber;
             color: $form-ink;
@@ -359,13 +359,13 @@
             margin-right: 0.5rem;
         }
 
-        .cyber-name-display {
+        .augment-name-display {
             display: inline;
             font-weight: bold;
             font-size: 1.05em;
         }
 
-        .cyber-desc-display {
+        .augment-desc-display {
             display: block;
             font-size: 0.9em;
             color: $zine-grey;
@@ -382,22 +382,22 @@
         }
     }
 
-    .cyber-edit {
-        .cyber-header-edit {
+    .augment-edit {
+        .augment-header-edit {
             @include flex-row(0.5rem);
             margin-bottom: 0.5rem;
         }
 
-        .cyber-tier-select select {
+        .augment-tier-select select {
             padding: 0.25rem;
             font-weight: bold;
         }
 
-        .cyber-name {
+        .augment-name {
             flex: 1;
         }
 
-        .cyber-desc {
+        .augment-desc {
             width: 100%;
             min-height: 3rem;
             font-size: 0.9em;
