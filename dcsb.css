@@ -1158,15 +1158,15 @@
   color: #888888;
   margin-left: auto;
 }
-.charsheet .cyber-capacity {
+.charsheet .augment-capacity {
   font-size: 11px;
   margin-bottom: 4px;
   padding: 2px 4px;
   background: rgba(0, 0, 0, 0.03);
   border-left: 3px solid #ffb000;
 }
-.charsheet .cyber-capacity .cyber-used,
-.charsheet .cyber-capacity .cyber-max {
+.charsheet .augment-capacity .augment-used,
+.charsheet .augment-capacity .augment-max {
   width: 30px;
   text-align: center;
   font-weight: bold;
@@ -2074,28 +2074,28 @@
 .charsheet .identity-display .identity-vice .vice-body .vice-details-value:empty {
   display: none;
 }
-.charsheet .cyber-entry {
+.charsheet .augment-entry {
   display: table;
   width: 100%;
   margin-bottom: 0.75rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px dashed rgba(136, 136, 136, 0.3);
 }
-.charsheet .cyber-entry:last-child {
+.charsheet .augment-entry:last-child {
   border-bottom: none;
   margin-bottom: 0;
 }
-.charsheet .cyber-installed {
+.charsheet .augment-installed {
   display: table-cell;
   width: 24px;
   vertical-align: top;
   padding-right: 0.5rem;
   cursor: pointer;
 }
-.charsheet .cyber-installed .cyber-check {
+.charsheet .augment-installed .augment-check {
   display: none;
 }
-.charsheet .cyber-installed .installed-box {
+.charsheet .augment-installed .installed-box {
   display: block;
   width: 16px;
   height: 16px;
@@ -2106,10 +2106,10 @@
   background: transparent;
   position: relative;
 }
-.charsheet .cyber-installed .cyber-check:checked + .installed-box {
+.charsheet .augment-installed .augment-check:checked + .installed-box {
   background: #ffb000;
 }
-.charsheet .cyber-installed .cyber-check:checked + .installed-box::after {
+.charsheet .augment-installed .augment-check:checked + .installed-box::after {
   content: "✓";
   color: #1a1a1a;
   position: absolute;
@@ -2119,15 +2119,15 @@
   font-size: 12px;
   font-weight: bold;
 }
-.charsheet .cyber-content {
+.charsheet .augment-content {
   display: table-cell;
   width: 100%;
   vertical-align: top;
 }
-.charsheet .cyber-display .cyber-header-display {
+.charsheet .augment-display .augment-header-display {
   margin-bottom: 0.25rem;
 }
-.charsheet .cyber-display .cyber-tier-badge {
+.charsheet .augment-display .augment-tier-badge {
   display: inline-block;
   background: #ffb000;
   color: #1a1a1a;
@@ -2137,12 +2137,12 @@
   font-family: "Courier New", Courier, monospace;
   margin-right: 0.5rem;
 }
-.charsheet .cyber-display .cyber-name-display {
+.charsheet .augment-display .augment-name-display {
   display: inline;
   font-weight: bold;
   font-size: 1.05em;
 }
-.charsheet .cyber-display .cyber-desc-display {
+.charsheet .augment-display .augment-desc-display {
   display: block;
   font-size: 0.9em;
   color: #888888;
@@ -2153,23 +2153,23 @@
   margin-top: 0.25rem;
   white-space: pre-wrap;
 }
-.charsheet .cyber-display .cyber-desc-display:empty {
+.charsheet .augment-display .augment-desc-display:empty {
   display: none;
 }
-.charsheet .cyber-edit .cyber-header-edit {
+.charsheet .augment-edit .augment-header-edit {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
-.charsheet .cyber-edit .cyber-tier-select select {
+.charsheet .augment-edit .augment-tier-select select {
   padding: 0.25rem;
   font-weight: bold;
 }
-.charsheet .cyber-edit .cyber-name {
+.charsheet .augment-edit .augment-name {
   flex: 1;
 }
-.charsheet .cyber-edit .cyber-desc {
+.charsheet .augment-edit .augment-desc {
   width: 100%;
   min-height: 3rem;
   font-size: 0.9em;
