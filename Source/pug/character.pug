@@ -211,12 +211,10 @@
 
             .augment-maintenance
                 .maintenance-header
-                    span.maintenance-label MAINTENANCE
-                    .maintenance-controls
-                        span.bc-owed
-                            span.bc-value(name="attr_maintenance_clocks") 0
-                            span  BC
-                        button.maintenance-roll-btn(type="action", name="act_roll_maintenance", title="Roll maintenance failure") ⚄
+                    button.maintenance-label(type="action", name="act_roll_maintenance", title="Roll maintenance failure") MAINTENANCE
+                    span.bc-owed
+                        span.bc-value(name="attr_maintenance_clocks") 0
+                        span  BC
                 .maintenance-gauge
                     //- 16-segment gauge with clock boundaries every 4
                     //- Auto-filled based on installed augment tiers

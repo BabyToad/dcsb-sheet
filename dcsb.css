@@ -1248,15 +1248,19 @@
   margin-bottom: 2px;
 }
 .charsheet .augment-maintenance .maintenance-label {
+  font-family: "Courier New", Courier, monospace;
   font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.1s ease;
 }
-.charsheet .augment-maintenance .maintenance-controls {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.charsheet .augment-maintenance .maintenance-label:hover {
+  color: #ffb000;
 }
 .charsheet .augment-maintenance .bc-owed {
   font-size: 12px;
@@ -1265,19 +1269,6 @@
 }
 .charsheet .augment-maintenance .bc-owed .bc-value {
   font-size: 14px;
-}
-.charsheet .augment-maintenance .maintenance-roll-btn {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  background: transparent;
-  border: 1px solid #888888;
-  padding: 2px 8px;
-  cursor: pointer;
-  transition: all 0.1s ease;
-}
-.charsheet .augment-maintenance .maintenance-roll-btn:hover {
-  background: #ffb000;
-  border-color: #ffb000;
 }
 .charsheet .augment-maintenance .maintenance-gauge {
   display: flex;
