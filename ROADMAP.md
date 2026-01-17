@@ -59,20 +59,18 @@ Each phase is a discrete unit of work that can be tested and committed independe
 
 ---
 
-## Phase 3: Heat Gauge Update (6 → 8 segments)
+## Phase 3: Heat Gauge Update (6 → 8 segments) ✅
 *Simple constant change with minor UI adjustment*
 
-### 3.1 Update Heat Gauge constant
-- **Files**: `Source/ts/constants.ts`
-- **Change**: `HEAT_GAUGE.SEGMENTS: 6` → `8`
-- **Test**: Disengagement Roll calculation still works (rolls 8 - filled segments)
-- **Commit**: `feat(sheet): update Heat Gauge to 8 segments`
+### 3.1 Update Heat Gauge constant ✅
+- **Files**: `Source/ts/constants.ts`, `Source/ts/calculations.ts`
+- **Change**: `HEAT_GAUGE.SEGMENTS: 6` → `8`, update comments
+- **Commit**: `feat(sheet): update Heat Gauge from 6 to 8 segments`
 
-### 3.2 Update Heat Gauge UI (if hardcoded)
-- **Files**: `Source/pug/crew.pug` (check if segments are hardcoded or generated)
-- **Change**: If hardcoded, add 2 more segment checkboxes
-- **Test**: Crew sheet shows 8 Heat Gauge segments
-- **Commit**: `feat(sheet): update Heat Gauge UI to 8 segments`
+### 3.2 Update Heat Gauge UI ✅
+- **Files**: `Source/pug/mixins.pug`
+- **Change**: Updated heat-gauge mixin from 6 to 8 segments
+- **Note**: Combined with 3.1 in single commit
 
 ---
 
