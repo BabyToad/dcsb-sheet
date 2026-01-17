@@ -104,10 +104,10 @@ Object.keys(STANDARD_ITEMS).forEach(item => {
 on("change:repeating_items remove:repeating_items", calculateLoad);
 
 // =============================================================================
-// AUGMENT CAPACITY (legacy - will be replaced by maintenance clocks)
+// AUGMENT MAINTENANCE
 // =============================================================================
 
-on("change:repeating_augments remove:repeating_augments", calculateAugmentCapacity);
+on("change:repeating_augments remove:repeating_augments", calculateAugmentMaintenance);
 
 // =============================================================================
 // HEAT GAUGE (Crew Sheet)

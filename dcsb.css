@@ -1158,17 +1158,35 @@
   color: #888888;
   margin-left: auto;
 }
-.charsheet .augment-capacity {
+.charsheet .augment-maintenance {
   font-size: 11px;
   margin-bottom: 4px;
   padding: 2px 4px;
   background: rgba(0, 0, 0, 0.03);
   border-left: 3px solid #ffb000;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-wrap: wrap;
 }
-.charsheet .augment-capacity .augment-used,
-.charsheet .augment-capacity .augment-max {
-  width: 30px;
+.charsheet .augment-maintenance .maintenance-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.charsheet .augment-maintenance .maintenance-ticks,
+.charsheet .augment-maintenance .maintenance-clocks,
+.charsheet .augment-maintenance .bc-value {
+  font-weight: bold;
+  min-width: 20px;
   text-align: center;
+}
+.charsheet .augment-maintenance .maintenance-sep {
+  color: #888888;
+  font-size: 10px;
+}
+.charsheet .augment-maintenance .maintenance-bc-owed {
+  color: #ffb000;
   font-weight: bold;
 }
 .charsheet .vice-roll-btn {

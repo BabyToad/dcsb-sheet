@@ -411,24 +411,35 @@ const calculateLoad = () => {
 };
 
 // =============================================================================
-// AUGMENT CALCULATIONS
+// AUGMENT MAINTENANCE CALCULATIONS
 // =============================================================================
 
 /**
- * Calculate augment capacity used (legacy - will be replaced by maintenance clocks)
- * Only counts installed (checked) augments
+ * Calculate augment maintenance ticks and clocks
+ * Total ticks = sum of installed augment tiers
+ * Full clocks = floor(total ticks / 4) = BC owed at downtime
  */
-const calculateAugmentCapacity = () => {
+const calculateAugmentMaintenance = () => {
     getSectionIDs('repeating_augments', ids => {
         const installedAttrs = ids.map(id => `repeating_augments_${id}_augment_installed`);
+        const tierAttrs = ids.map(id => `repeating_augments_${id}_augment_tier`);
 
-        getAttrs([...installedAttrs, 'augment_used', 'augment_max'], v => {
-            // Count only installed augments
-            const totalUsed = ids.filter(id =>
-                v[`repeating_augments_${id}_augment_installed`] === '1'
-            ).length;
+        getAttrs([...installedAttrs, ...tierAttrs, 'maintenance_ticks', 'maintenance_clocks'], v => {
+            // Sum tiers of installed augments
+            let totalTicks = 0;
+            ids.forEach(id => {
+                if (v[`repeating_augments_${id}_augment_installed`] === '1') {
+                    totalTicks += int(v[`repeating_augments_${id}_augment_tier`], 2);
+                }
+            });
 
-            mySetAttrs({ augment_used: totalUsed }, v);
+            // Full clocks = BC owed
+            const fullClocks = Math.floor(totalTicks / MAINTENANCE.CLOCK_SIZE);
+
+            mySetAttrs({
+                maintenance_ticks: totalTicks,
+                maintenance_clocks: fullClocks
+            }, v);
         });
     });
 };
@@ -558,6 +569,6 @@ const handleCrewTypeChange = (newCrewType: string) => {
 const initializeSheet = () => {
     calculateAllAttributeRatings();
     calculateLoad();
-    calculateAugmentCapacity();
+    calculateAugmentMaintenance();
     calculateHeatDice();
 };

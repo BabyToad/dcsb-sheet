@@ -430,17 +430,38 @@
     // AUGMENTS
     // =========================================================================
 
-    .augment-capacity {
+    .augment-maintenance {
         font-size: 11px;
         margin-bottom: $spacing-sm;
         padding: $spacing-xs $spacing-sm;
         background: rgba(0,0,0,0.03);
         border-left: 3px solid $zine-accent;
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        flex-wrap: wrap;
 
-        .augment-used,
-        .augment-max {
-            width: 30px;
+        .maintenance-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .maintenance-ticks,
+        .maintenance-clocks,
+        .bc-value {
+            font-weight: bold;
+            min-width: 20px;
             text-align: center;
+        }
+
+        .maintenance-sep {
+            color: $zine-grey;
+            font-size: 10px;
+        }
+
+        .maintenance-bc-owed {
+            color: $terminal-amber;
             font-weight: bold;
         }
     }

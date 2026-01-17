@@ -203,12 +203,15 @@
         .section.augments
             +section-header-editable("augment", "AUGMENTATION RECORD", "04")
 
-            .augment-capacity
-                span.capacity-label(data-i18n="CAPACITY") Capacity:
-                input(type="number", name="attr_augment_used", value="0", readonly).augment-used
-                span /
-                input(type="number", name="attr_augment_max", value="4").augment-max
-                span.capacity-hint.edit (expand via Playbook XP)
+            .augment-maintenance
+                span.maintenance-label MAINTENANCE:
+                span.maintenance-ticks(name="attr_maintenance_ticks") 0
+                span.maintenance-sep ticks →
+                span.maintenance-clocks(name="attr_maintenance_clocks") 0
+                span.maintenance-sep clocks =
+                span.maintenance-bc-owed
+                    span.bc-value(name="attr_maintenance_clocks") 0
+                    span  BC owed
 
             +repeating("augments")
                 .augment-entry

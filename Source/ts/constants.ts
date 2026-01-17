@@ -45,9 +45,9 @@ const TRAUMA = {
     MAX: 4,
 } as const;
 
-// Augments (formerly Cybernetics) - capacity will be replaced by maintenance system
-const AUGMENTS = {
-    DEFAULT_MAX: 4,  // Legacy: will be removed when maintenance clocks are implemented
+// Augments (formerly Cybernetics) - use maintenance clocks instead of capacity
+const MAINTENANCE = {
+    CLOCK_SIZE: 4,  // 4 ticks per maintenance clock
 } as const;
 
 // =============================================================================
