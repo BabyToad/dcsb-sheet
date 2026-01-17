@@ -14,12 +14,18 @@ interface Augment {
     description: string;
 }
 
+interface Friend {
+    name: string;
+    description: string;  // e.g. "a Vice Dealer"
+}
+
 interface PlaybookData {
     title: string;
     xpTrigger: string;
     actions: { [action: string]: number };  // action name -> starting dots
     items: PlaybookItem[];
     augments: Augment[];
+    friends: Friend[];
 }
 
 const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
@@ -44,6 +50,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 3, name: "Hypnotic Gaze", description: "When you Sway someone, you may cause them to forget that it's happened until they next interact with you." },
             { tier: 4, name: "FoRK Rewire", description: "Take 2 stress to roll your best action rating while performing a different action. Say how you adapt your skill to this use." },
             { tier: 5, name: "Faceless", description: "If just using it for yourself, your disguise kit becomes zero load. You have a synthetic skin mask that can be changed between scores. You get +1d to rolls attempting to remain disguised or deflect suspicion. Throwing off your disguise surprises people, giving you initiative in the situation." }
+        ],
+        friends: [
+            { name: "Kala", description: "a Vice Dealer" },
+            { name: "Yuda", description: "a Gang Leader" },
+            { name: "Notah", description: "a Corp Recruiter" },
+            { name: "Velle", description: "a Prostitute" },
+            { name: "Vanuza", description: "a Slab Regular" }
         ]
     },
 
@@ -65,6 +78,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 2, name: "Future Projections", description: "You may expend your special armor to protect a teammate, or to push yourself when you gather information or work on a long-term project." },
             { tier: 3, name: "Mentat Cerebrum Implant", description: "Due to your careful planning, during downtime, you may give yourself or another crew member +1 downtime action." },
             { tier: 4, name: "Programmed Receptors", description: "When you indulge your vice, you may adjust the dice outcome by 1 or 2 (up or down). An ally who joins in your vice may do the same." }
+        ],
+        friends: [
+            { name: "Yandi", description: "a White Hat" },
+            { name: "Arsene", description: "a Bounty Hunter" },
+            { name: "Starlight", description: "a Pop Star" },
+            { name: "Antosha", description: "a Slab Boss" },
+            { name: "Siza", description: "a City Planner" }
         ]
     },
 
@@ -90,6 +110,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 3, name: "Recurring ICE", description: "Done it once, done it a thousand times. Once you have hacked into a system, you get +1d on subsequent rolls on that score to dig deeper into it or change it." },
             { tier: 4, name: "Maim-frame", description: "When you hack into a system, you can overclock equipment to make actions normally outside their operational ability. I.e. A normal camera can now detect specific people, a killer robot can now be used to project a voice, or a stun barrier can be set to kill." },
             { tier: 5, name: "Grok 2.0", description: "You have an AI assistant stored in your brain. Increases potency for all Hacking and most investigative rolls. Not always right." }
+        ],
+        friends: [
+            { name: "Kapik", description: "a Deck Designer" },
+            { name: "Rabbit Foot", description: "a Stim-Head" },
+            { name: "Wonderland", description: "a Hacker" },
+            { name: "Pi", description: "an AI" },
+            { name: "Sua", description: "an Anarchist" }
         ]
     },
 
@@ -112,6 +139,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 4, name: "Adaptive Camo Skin", description: "Blend into your environment seamlessly. People not looking can't see you, take +1d when hiding against characters who are looking for you." },
             { tier: 5, name: "Mental Link", description: "Choose one of your action ratings. When you lead a group action using that action, you can suffer only 1 stress at most regardless of the number of failed rolls." },
             { tier: 5, name: "Frayed Receptors", description: "When you roll a desperate action, you get +1d to your roll if you also take -1d to any resistance rolls against consequences from your action." }
+        ],
+        friends: [
+            { name: "Tabby", description: "a Young Looter" },
+            { name: "Desta", description: "a Private Enforcer" },
+            { name: "Alexei", description: "a Key-Jammer" },
+            { name: "Camilla", description: "a rising Corp Exec" },
+            { name: "Lyric", description: "an Info-Fence" }
         ]
     },
 
@@ -133,6 +167,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 3, name: "AI-Link", description: "You can direct your drone with your unconscious mind. Your AI Drone has had some extra attachments added to it. Gain one of the following Edges: swift-flyer, armed, armored, tooled." },
             { tier: 4, name: "Encrypted Lower-Networks", description: "You know what it's like in the deepest recesses of the city. Roll your stash and Acquire Asset rolls get +1d when you are in an impoverished district of the city. You get +1 stress box." },
             { tier: 5, name: "Pain Inhibitors", description: "Penalties from harm are one level less severe (though level 4 harm is still fatal)." }
+        ],
+        friends: [
+            { name: "Mongoose", description: "a CorpWar Veteran" },
+            { name: "Jag", description: "a Bouncer" },
+            { name: "Subi", description: "an Aug Doc" },
+            { name: "Zdeno", description: "a Corporate Spy" },
+            { name: "Aziza", description: "a Corp Tracker" }
         ]
     },
 
@@ -155,6 +196,13 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { tier: 4, name: "Replaceable Parts", description: "Permanently fill 1 tick of your healing clock. Get +1d when making the Recovery downtime action." },
             { tier: 4, name: "Kodama Pacification Programming", description: "You can push yourself to do one of the following: perform a feat of physical force that verges on the superhuman - engage a small gang on equal footing in close combat." },
             { tier: 4, name: "Covert Morningstar Compartments", description: "You have a weapon hidden inside one of your limbs. It costs 0 load." }
+        ],
+        friends: [
+            { name: "Ounce", description: "a Runner" },
+            { name: "Merde", description: "a Killer For Hire" },
+            { name: "Winston", description: "a Corpo Merc" },
+            { name: "XOXO", description: "a Black-Mailer" },
+            { name: "Swivel", description: "a Pusher" }
         ]
     }
 };
