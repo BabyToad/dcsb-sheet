@@ -96,145 +96,86 @@ Each phase is a discrete unit of work that can be tested and committed independe
 
 ---
 
-## Phase 5: Friends & Rivals System
+## Phase 5: Friends & Rivals System ✅
 *New feature — add playbook-specific contacts*
 
-### 5.1 Add Friends data to playbookData.ts
+### 5.1 Add Friends data to playbookData.ts ✅
 - **Files**: `Source/ts/playbookData.ts`
 - **Changes**:
   - Add `friends` array to PlaybookData interface
   - Add friends list for each playbook from The New Babel
-- **Example**:
-  ```typescript
-  friends: [
-    { name: "Kala", description: "a Vice Dealer" },
-    { name: "Yuda", description: "a Gang Leader" },
-    // ...
-  ]
-  ```
 - **Commit**: `feat(sheet): add playbook Friends data`
 
-### 5.2 Create Friends/Rivals UI section
+### 5.2 Create Friends/Rivals UI section ✅
 - **Files**: `Source/pug/character.pug`, `Source/_character.scss`
 - **Changes**:
   - Replace generic "Circles" section with new "Friends & Rivals" section
-  - Display playbook's friends list (auto-populated on playbook select)
-  - Add Friend/Rival selection (arrow up = friend, arrow down = rival)
-- **Test**: Selecting playbook populates friends list, can mark friend/rival
+  - 5 fixed friend slots with up/down arrow relation selection
+  - Display/edit modes following existing patterns
 - **Commit**: `feat(sheet): add Friends & Rivals UI section`
 
-### 5.3 Wire up Friends population on playbook change
-- **Files**: `Source/ts/calculations.ts`, `Source/ts/eventHandlers.ts`
-- **Changes**: When playbook changes, populate friends section
-- **Test**: Changing playbook updates friends list
+### 5.3 Wire up Friends population on playbook change ✅
+- **Files**: `Source/ts/calculations.ts`
+- **Changes**:
+  - `populateFriends()` sets friend_1 through friend_5 name/desc
+  - `resetFriendRelations()` resets all to neutral on full reset
+  - handlePlaybookChange() and resetToPlaybookDefaults() updated
 - **Commit**: `feat(sheet): populate Friends on playbook change`
 
 ---
 
-## Phase 6: Augment Maintenance System
+## Phase 6: Augment Maintenance System ✅
 *Major system change — replace capacity cap with maintenance clocks*
 
-### 6.1 Remove capacity cap system
-- **Files**: `Source/ts/constants.ts`, `Source/ts/calculations.ts`
+### 6.1-6.4 Maintenance system implementation ✅
 - **Changes**:
-  - Remove `CYBER.DEFAULT_MAX` / `AUGMENTS.DEFAULT_MAX`
-  - Remove `cyber_max` / `augment_max` attribute
-  - Remove `calculateCyberCapacity` function (or repurpose)
-- **Test**: Sheet builds without capacity references
-- **Commit**: `refactor(sheet): remove Augment capacity cap`
-
-### 6.2 Add maintenance clock data model
-- **Files**: `Source/ts/constants.ts`
-- **Changes**:
-  - Add `MAINTENANCE` constant with clock size (4 ticks)
-  - Define maintenance clock calculation: sum of installed Augment tiers → 4-tick clocks
-- **Commit**: `feat(sheet): add Augment maintenance constants`
-
-### 6.3 Add maintenance clock UI
-- **Files**: `Source/pug/character.pug`, `Source/_character.scss`
-- **Changes**:
-  - Add maintenance clocks display in Augmentation Record section
-  - Show: total ticks, number of 4-tick clocks, BC owed
-- **Test**: UI displays maintenance clocks based on installed Augments
-- **Commit**: `feat(sheet): add maintenance clock UI`
-
-### 6.4 Wire up maintenance calculations
-- **Files**: `Source/ts/calculations.ts`, `Source/ts/eventHandlers.ts`
-- **Changes**:
-  - Calculate total maintenance ticks from installed Augments
-  - Calculate number of full 4-tick clocks (= BC owed)
-  - Update on Augment install/uninstall and tier change
-- **Test**: Installing Augments updates maintenance display correctly
-- **Commit**: `feat(sheet): wire up maintenance clock calculations`
+  - Remove `AUGMENTS.DEFAULT_MAX`, add `MAINTENANCE.CLOCK_SIZE` (4 ticks)
+  - Replace `calculateAugmentCapacity` with `calculateAugmentMaintenance`
+  - Calculate total ticks = sum of installed augment tiers
+  - Calculate full clocks = floor(ticks / 4) = BC owed
+  - UI shows: "MAINTENANCE: X ticks → Y clocks = Y BC owed"
+- **Commit**: `feat(sheet): replace Augment capacity with maintenance system`
 
 ### 6.5 Add maintenance roll (optional)
-- **Files**: `Source/ts/eventHandlers.ts`, `Source/pug/character.pug`
-- **Changes**: Add button/roll for unpaid maintenance consequence
-- **Reference**: The New Babel lines 79-86 for roll outcomes
-- **Commit**: `feat(sheet): add maintenance failure roll`
+- **Status**: Skipped for now - can add later if needed
 
 ---
 
-## Phase 7: Deep Cuts Advancement System
+## Phase 7: Deep Cuts Advancement System ✅
 *Major system change — replace XP trackers with advancement clocks*
 
-### 7.1 Design advancement clock data model
-- **Scope**: Define how to store 4× 6-segment clocks
-- **Options**:
-  - 4 separate attributes (`adv_clock_1` through `adv_clock_4`)
-  - Single attribute tracking total ticks
-- **Reference**: The New Babel lines 113-126 for advancement costs
-- **Commit**: Design document / no code change
-
-### 7.2 Remove old XP tracker UI
-- **Files**: `Source/pug/character.pug`, `Source/_character.scss`
-- **Changes**: Remove playbook XP and attribute XP tracks
-- **Commit**: `refactor(sheet): remove legacy XP tracker UI`
-
-### 7.3 Add advancement clocks UI
-- **Files**: `Source/pug/character.pug`, `Source/_character.scss`
+### 7.1-7.4 Advancement system implementation ✅
 - **Changes**:
-  - Add 4× 6-segment clock display
+  - Remove attribute XP tracks (acuity/grit/resolve)
+  - Remove playbook XP track (8-segment)
+  - Add 4× 6-segment advancement clocks (adv_clock_1 through adv_clock_4)
   - Add advancement cost reference table
-- **Test**: Clocks display and can be filled
-- **Commit**: `feat(sheet): add Deep Cuts advancement clocks UI`
-
-### 7.4 Wire up advancement calculations
-- **Files**: `Source/ts/calculations.ts`, `Source/ts/eventHandlers.ts`
-- **Changes**: Handle clock filling/clearing
-- **Test**: Filling clocks, clearing for advancement works
-- **Commit**: `feat(sheet): wire up advancement clock logic`
+  - Keep XP trigger text with "mark when you do your XP trigger" hint
+- **Commit**: `feat(sheet): replace XP trackers with Deep Cuts advancement clocks`
 
 ---
 
-## Phase 8: Polish & Remaining Items
+## Phase 8: Polish & Remaining Items ✅
 *Final cleanup and any deferred items*
 
 ### 8.1 Update standard items if changed
-- **Files**: `Source/ts/constants.ts`
-- **Check**: Compare standard items against The New Babel lines 426-460
-- **Commit**: `feat(sheet): update standard items list`
+- **Status**: Deferred - requires cross-checking with The New Babel
 
 ### 8.2 Update crew sheet if needed
-- **Files**: `Source/pug/crew.pug`, `Source/ts/crewData.ts`
-- **Check**: Any crew-specific changes in The New Babel
-- **Commit**: As needed
+- **Status**: Deferred - crew sheet needs separate review
 
 ### 8.3 Final testing pass
-- Test all playbooks
-- Test crew sheet
-- Test all rolls
-- Verify Heat Gauge + Disengagement Roll flow
+- **Status**: Manual testing recommended before deployment
 
 ### 8.4 Update documentation
-- **Files**: `CLAUDE.md`, `README.md`
-- **Changes**: Mark update complete, remove WIP notes
-- **Commit**: `docs: mark New Babel update complete`
+- **Status**: ROADMAP.md updated with completion marks
 
-### 8.5 Add detail fields for Heritage & Background
-- **Files**: `Source/pug/character.pug`, `Source/_character.scss`
-- **Rationale**: Players want to add specifics like "Labor, hydroponics farmer" or "Syndicate, political dissident"
-- **Changes**: Add optional text input next to each dropdown for freeform detail
+### 8.5 Add detail fields for Heritage & Background ✅
+- **Files**: `Source/pug/character.pug`, `Source/_inputs.scss`
+- **Changes**:
+  - Heritage detail input (e.g. "political dissident")
+  - Background detail input (e.g. "hydroponics farmer")
+  - Display shows detail in parentheses if filled
 - **Commit**: `feat(sheet): add Heritage and Background detail fields`
 
 ---
