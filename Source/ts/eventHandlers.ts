@@ -95,13 +95,13 @@ ATTRIBUTE_NAMES.forEach(attr => {
 // Load selection changes max
 on("change:load", calculateLoad);
 
-// Standard item checkboxes
-Object.keys(STANDARD_ITEMS).forEach(item => {
-    on(`change:${item}`, calculateLoad);
+// Standard item load checkboxes (item_knife_1, item_large_weapon_1, item_large_weapon_2, etc.)
+STANDARD_ITEM_LOAD_ATTRS.forEach(attr => {
+    on(`change:${attr}`, calculateLoad);
 });
 
-// Playbook items (repeating section)
-on("change:repeating_items remove:repeating_items", calculateLoad);
+// Playbook items (repeating section) - load boxes: item_load_1, item_load_2
+on("change:repeating_items:item_load_1 change:repeating_items:item_load_2 remove:repeating_items", calculateLoad);
 
 // =============================================================================
 // AUGMENT MAINTENANCE

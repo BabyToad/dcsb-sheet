@@ -733,14 +733,15 @@
   top: 0;
   transform: translateX(-50%);
 }
-.charsheet .heat-gauge .gauge-header {
+.charsheet .arc-heat-gauge .gauge-header {
   display: flex;
   align-items: stretch;
   gap: 8px;
   align-items: center;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  justify-content: center;
 }
-.charsheet .heat-gauge .gauge-label {
+.charsheet .arc-heat-gauge .gauge-label {
   font-size: 10px;
   font-weight: bold;
   text-transform: uppercase;
@@ -748,38 +749,71 @@
   color: #888888;
   margin-bottom: 4px;
 }
-.charsheet .heat-gauge .gauge-dice {
+.charsheet .arc-heat-gauge .gauge-dice {
   font-size: 10px;
   color: #888888;
-  margin-left: auto;
+  margin-left: 8px;
 }
-.charsheet .heat-gauge .gauge-dice .dice-count {
+.charsheet .arc-heat-gauge .gauge-dice .dice-count {
   font-weight: bold;
   color: #ffb000;
 }
-.charsheet .heat-gauge .gauge-track {
-  display: flex;
-  align-items: stretch;
-  gap: 2px;
+.charsheet .arc-heat-gauge .arc-track {
+  position: relative;
+  width: 180px;
+  height: 95px;
+  margin: 0 auto;
 }
-.charsheet .heat-gauge .gauge-track .fakeradio.zero,
-.charsheet .heat-gauge .gauge-track .fakeradio {
+.charsheet .arc-heat-gauge .arc-track .fakeradio.zero,
+.charsheet .arc-heat-gauge .arc-track .fakeradio {
   display: none;
 }
-.charsheet .heat-gauge .gauge-track .gauge-box {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  min-height: 24px;
-  flex-shrink: 0;
+.charsheet .arc-heat-gauge .arc-track .arc-segment {
+  position: absolute;
+  width: 30px;
+  height: 16px;
   border: 2px solid #1a1a1a;
+  border-radius: 2px;
   cursor: pointer;
-  background: #8b0000;
-  border-color: #8b0000;
+  transform-origin: center bottom;
+  bottom: 0;
+  left: calc(50% - 15px);
+  transition: all 0.1s ease;
 }
-.charsheet .heat-gauge .gauge-track .fakeradio:checked ~ .fakeradio + .gauge-box {
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="1"] {
+  transform: rotate(-78.75deg) translateY(-55px);
+  background: #2d5a27;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="2"] {
+  transform: rotate(-56.25deg) translateY(-55px);
+  background: #2d5a27;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="3"] {
+  transform: rotate(-33.75deg) translateY(-55px);
+  background: #cc7700;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="4"] {
+  transform: rotate(-11.25deg) translateY(-55px);
+  background: #cc7700;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="5"] {
+  transform: rotate(11.25deg) translateY(-55px);
+  background: #cc7700;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="6"] {
+  transform: rotate(33.75deg) translateY(-55px);
+  background: #8b0000;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="7"] {
+  transform: rotate(56.25deg) translateY(-55px);
+  background: #8b0000;
+}
+.charsheet .arc-heat-gauge .arc-track .arc-segment[data-segment="8"] {
+  transform: rotate(78.75deg) translateY(-55px);
+  background: #8b0000;
+}
+.charsheet .arc-heat-gauge .arc-track .fakeradio:checked ~ .fakeradio + .arc-segment {
   background: transparent;
-  border-color: #1a1a1a;
 }
 
 .charsheet .attribute-block {
@@ -1221,6 +1255,64 @@
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
+.charsheet .item-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  padding: 2px 0;
+}
+.charsheet .item-row .item-load-boxes {
+  display: flex;
+  gap: 2px;
+}
+.charsheet .item-row .item-load-boxes > input[type=checkbox] {
+  display: none;
+}
+.charsheet .item-row .item-load-boxes > input[type=checkbox]:checked + .load-box {
+  background: #ffb000;
+}
+.charsheet .item-row .item-load-boxes > .load-box {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #1a1a1a;
+  cursor: pointer;
+}
+.charsheet .item-row .item-load-boxes .load-box-label {
+  cursor: pointer;
+}
+.charsheet .item-row .item-load-boxes .load-box-label input[type=checkbox] {
+  display: none;
+}
+.charsheet .item-row .item-load-boxes .load-box-label input[type=checkbox]:checked + .load-box {
+  background: #ffb000;
+}
+.charsheet .item-row .item-load-boxes .load-box-label .load-box {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #1a1a1a;
+}
+.charsheet .item-row .item-name {
+  flex: 1;
+}
+.charsheet .item-row.playbook-item .item-show-load2,
+.charsheet .item-row.playbook-item .item-special-flag {
+  display: none;
+}
+.charsheet .item-row.playbook-item .load-2 {
+  display: none;
+}
+.charsheet .item-row.playbook-item .item-show-load2:checked ~ .item-load-boxes .load-2 {
+  display: block;
+}
+.charsheet .item-row.playbook-item .item-special-flag:checked ~ .item-name {
+  font-style: italic;
+}
+.charsheet .item-row.playbook-item .item-special-flag:checked ~ .item-edit input {
+  font-style: italic;
+}
 .charsheet .item-checkbox {
   display: flex;
   align-items: center;
@@ -1229,15 +1321,6 @@
   font-size: 10px;
   padding: 2px 0;
   color: #1a1a1a;
-}
-.charsheet .item-checkbox .item-box {
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
-  min-height: 12px;
-  flex-shrink: 0;
-  border: 1px solid #1a1a1a;
-  flex-shrink: 0;
 }
 .charsheet .item-checkbox input[type=checkbox] {
   display: none;
@@ -1248,9 +1331,27 @@
 .charsheet .item-checkbox input[type=checkbox]:checked ~ .item-name {
   font-weight: bold;
 }
-.charsheet .item-checkbox .item-load {
-  color: #888888;
+.charsheet .item-checkbox .item-box {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  flex-shrink: 0;
+}
+.charsheet .item-checkbox .item-name {
+  flex: 1;
+  white-space: nowrap;
+}
+.charsheet .item-checkbox .item-load-indicator {
   margin-left: auto;
+  font-size: 9px;
+  color: #888888;
+  min-width: 16px;
+  text-align: center;
+  border: 1px solid #888888;
+  padding: 1px 3px;
 }
 .charsheet .augment-maintenance {
   margin-bottom: 4px;
@@ -1983,6 +2084,149 @@
 .charsheet .faction-row .status-track input:checked + .status-pip {
   background: #1a1a1a;
   color: #e5e5e0;
+}
+.charsheet .upgrade-entry {
+  display: flex;
+  gap: 4px;
+  padding: 2px 0;
+  border-bottom: 1px dashed rgba(136, 136, 136, 0.3);
+  align-items: flex-start;
+}
+.charsheet .upgrade-entry:last-child {
+  border-bottom: none;
+}
+.charsheet .upgrade-entry input.upgrade-show-lvl2,
+.charsheet .upgrade-entry input.upgrade-show-lvl3 {
+  display: none;
+}
+.charsheet .upgrade-entry .upgrade-track .level-2 {
+  display: none;
+}
+.charsheet .upgrade-entry input.upgrade-show-lvl2:checked ~ .upgrade-track .level-2 {
+  display: block;
+}
+.charsheet .upgrade-entry .upgrade-track .level-3 {
+  display: none;
+}
+.charsheet .upgrade-entry input.upgrade-show-lvl3:checked ~ .upgrade-track .level-3 {
+  display: block;
+}
+.charsheet .upgrade-track {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  width: 50px;
+  min-width: 50px;
+}
+.charsheet .upgrade-track .upgrade-box-label {
+  cursor: pointer;
+}
+.charsheet .upgrade-track .upgrade-box-label input[type=checkbox] {
+  display: none;
+}
+.charsheet .upgrade-track .upgrade-box-label .upgrade-box {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  display: block;
+}
+.charsheet .upgrade-track .upgrade-box-label input:checked + .upgrade-box {
+  background: #ffb000;
+  border-color: #ffb000;
+}
+.charsheet .upgrade-content {
+  flex: 1;
+  min-width: 0;
+}
+.charsheet .upgrade-display .upgrade-name-display {
+  font-weight: bold;
+  font-size: 10px;
+  display: block;
+}
+.charsheet .upgrade-display .upgrade-desc-display {
+  font-size: 9px;
+  color: #888888;
+  display: block;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.charsheet .upgrade-display .upgrade-desc-display:empty {
+  display: none;
+}
+.charsheet .upgrade-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.charsheet .upgrade-edit .upgrade-name-input {
+  font-weight: bold;
+}
+.charsheet .upgrade-edit .upgrade-desc-input {
+  font-size: 10px;
+}
+.charsheet .upgrade-edit .upgrade-levels-input {
+  width: 50px;
+}
+.charsheet .crew-advancement-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.charsheet .crew-advancement-clocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.charsheet .crew-advancement-clocks .adv-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+.charsheet .crew-advancement-clocks .adv-clock {
+  display: flex;
+  gap: 1px;
+  flex: 1;
+}
+.charsheet .crew-advancement-clocks .adv-clock .fakeradio.zero,
+.charsheet .crew-advancement-clocks .adv-clock .fakeradio {
+  display: none;
+}
+.charsheet .crew-advancement-clocks .adv-clock .crew-adv-segment {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  display: block;
+  cursor: pointer;
+  background: #ffb000;
+  transition: background 0.1s ease;
+}
+.charsheet .crew-advancement-clocks .adv-clock .fakeradio:checked ~ .fakeradio + .crew-adv-segment {
+  background: transparent;
+}
+.charsheet .crew-advancement-costs {
+  font-size: 9px;
+  color: #888888;
+  border-top: 1px dashed #bbbbbb;
+  padding-top: 2px;
+  margin-top: 2px;
+}
+.charsheet .crew-advancement-costs .cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 0;
+}
+.charsheet .crew-advancement-costs .cost-label {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.charsheet .crew-advancement-costs .cost-value {
+  font-weight: bold;
 }
 .charsheet .claim-entry {
   display: grid;

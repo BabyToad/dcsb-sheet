@@ -101,6 +101,29 @@
                         .vault-track
                             +fakeradio-track("vault", 16, "vault-box")
 
+                //- Row 5: Crew Advancement (Deep Cuts)
+                .stats-row.advancement-row
+                    .crew-advancement-block
+                        .stat-label ADVANCEMENT
+                        .crew-advancement-clocks
+                            .adv-row
+                                .adv-clock
+                                    +fakeradio-track("crew_adv_clock_1", 6, "crew-adv-segment")
+                                .adv-clock
+                                    +fakeradio-track("crew_adv_clock_2", 6, "crew-adv-segment")
+                            .adv-row
+                                .adv-clock
+                                    +fakeradio-track("crew_adv_clock_3", 6, "crew-adv-segment")
+                                .adv-clock
+                                    +fakeradio-track("crew_adv_clock_4", 6, "crew-adv-segment")
+                        .crew-advancement-costs
+                            .cost-row
+                                span.cost-label Crew Upgrade
+                                span.cost-value 1
+                            .cost-row
+                                span.cost-label Crew Ability
+                                span.cost-value 2
+
         //- ───────────────────────────────────────────────────────────
         //- SECTION 3: SCORE TRACKER (Heat Gauge)
         //- Framing: Mission control / tactical display
@@ -148,42 +171,85 @@
                 .upgrade-category.lair
                     h4(data-i18n="LAIR") Lair
                     .upgrade-list
-                        +upgrade-multi("lair_rides", "Rides", 2, 2)
-                        +upgrade-multi("lair_specialty", "Specialty Transport", 2, 2)
-                        +upgrade-checkbox("lair_hidden", "Hidden", 1)
-                        +upgrade-checkbox("lair_quarters", "Quarters", 1)
-                        +upgrade-multi("lair_secure", "Secure", 2, 2)
-                        +upgrade-multi("lair_encryption", "BC Encryption", 2, 2)
-                        +upgrade-checkbox("lair_workshop", "Workshop", 1)
+                        +upgrade-multi("lair_rides", "Rides", 2)
+                        +upgrade-multi("lair_specialty", "Specialty Transport", 2)
+                        +upgrade-checkbox("lair_hidden", "Hidden")
+                        +upgrade-checkbox("lair_quarters", "Quarters")
+                        +upgrade-multi("lair_secure", "Secure", 2)
+                        +upgrade-multi("lair_encryption", "BC Encryption", 2)
+                        +upgrade-checkbox("lair_workshop", "Workshop")
 
                 //- Training Upgrades
                 .upgrade-category.training
                     h4(data-i18n="TRAINING") Training
                     .upgrade-list
-                        +upgrade-checkbox("train_acuity", "Acuity", 1)
-                        +upgrade-checkbox("train_grit", "Grit", 1)
-                        +upgrade-checkbox("train_resolve", "Resolve", 1)
-                        +upgrade-checkbox("train_personal", "Personal", 1)
-                        +upgrade-multi("train_mastery", "Mastery", 4, 4)
+                        +upgrade-checkbox("train_acuity", "Acuity")
+                        +upgrade-checkbox("train_grit", "Grit")
+                        +upgrade-checkbox("train_resolve", "Resolve")
+                        +upgrade-checkbox("train_personal", "Personal")
+                        +upgrade-multi("train_mastery", "Mastery", 4)
 
                 //- Quality Upgrades
                 .upgrade-category.quality
                     h4(data-i18n="QUALITY") Quality
                     .upgrade-list
-                        +upgrade-checkbox("qual_documents", "Documents", 1)
-                        +upgrade-checkbox("qual_gear", "Gear", 1)
-                        +upgrade-checkbox("qual_implements", "Implements", 1)
-                        +upgrade-checkbox("qual_supplies", "Supplies", 1)
-                        +upgrade-checkbox("qual_tools", "Tools", 1)
-                        +upgrade-checkbox("qual_weapons", "Weapons", 1)
+                        +upgrade-checkbox("qual_documents", "Documents")
+                        +upgrade-checkbox("qual_gear", "Gear")
+                        +upgrade-checkbox("qual_implements", "Implements")
+                        +upgrade-checkbox("qual_supplies", "Supplies")
+                        +upgrade-checkbox("qual_tools", "Tools")
+                        +upgrade-checkbox("qual_weapons", "Weapons")
+
+                //- Cohort Upgrades
+                .upgrade-category.cohorts
+                    h4 Cohorts
+                    .upgrade-list
+                        +upgrade-multi("cohort_new", "New Cohort", 4)
+                        +upgrade-multi("cohort_type", "Add Type", 4)
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: CREW ABILITIES
+        //- SECTION 6: CREW TYPE UPGRADES
+        //- Framing: Crew-specific special upgrades
+        //- Populated dynamically based on crew type
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-type-upgrades
+            +section-header-editable("crewtypeupgrades", "CREW TYPE UPGRADES", "06")
+
+            +repeating("crewtypeupgrades")
+                .upgrade-entry
+                    //- Hidden checkboxes to control box visibility (set by sheet worker)
+                    //- Using checkboxes because Roll20 properly updates :checked state
+                    input.upgrade-show-lvl2(type="checkbox", name="attr_upgrade_show_2", value="1")
+                    input.upgrade-show-lvl3(type="checkbox", name="attr_upgrade_show_3", value="1")
+
+                    //- Level track (up to 3 checkboxes for multi-level upgrades)
+                    .upgrade-track
+                        label.upgrade-box-label.level-1
+                            input(type="checkbox", name="attr_upgrade_level_1", value="1")
+                            span.upgrade-box
+                        label.upgrade-box-label.level-2
+                            input(type="checkbox", name="attr_upgrade_level_2", value="1")
+                            span.upgrade-box
+                        label.upgrade-box-label.level-3
+                            input(type="checkbox", name="attr_upgrade_level_3", value="1")
+                            span.upgrade-box
+
+                    //- Content
+                    .upgrade-content
+                        .display.upgrade-display
+                            span.upgrade-name-display(name="attr_upgrade_name")
+                            span.upgrade-desc-display(name="attr_upgrade_desc")
+                        .edit.upgrade-edit
+                            input(type="text", name="attr_upgrade_name", placeholder="Upgrade name").upgrade-name-input
+                            input(type="text", name="attr_upgrade_desc", placeholder="Description").upgrade-desc-input
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 7: CREW ABILITIES
         //- Framing: Special operations / classified capabilities
         //- Pattern: Matches augments section
         //- ───────────────────────────────────────────────────────────
         .section.crew-abilities
-            +section-header-editable("crewabilities", "CREW ABILITIES", "06")
+            +section-header-editable("crewabilities", "CREW ABILITIES", "07")
 
             +repeating("crewabilities")
                 .ability-entry
@@ -206,23 +272,23 @@
                             textarea(name="attr_crew_ability_desc", placeholder="Description & effects").ability-desc-input
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: COHORTS
+        //- SECTION 8: COHORTS
         //- Framing: Personnel files / asset registry
         //- ───────────────────────────────────────────────────────────
         .section.cohorts
-            +section-header-editable("cohorts", "COHORTS", "07")
+            +section-header-editable("cohorts", "COHORTS", "08")
 
             +repeating("cohorts")
                 +cohort-block()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: CLAIMS / TERRITORY
+        //- SECTION 9: CLAIMS / TERRITORY
         //- Framing: Territory map / sphere of influence
         //- ───────────────────────────────────────────────────────────
         .section.claims
             .section-header
                 .section-stamp CLAIMS
-                .section-number 08
+                .section-number 09
 
             +repeating("claims")
                 .claim-entry

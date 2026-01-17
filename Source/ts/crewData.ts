@@ -12,7 +12,7 @@ interface CrewAbility {
 
 interface CrewCohort {
     name: string;
-    type: "gang" | "expert";
+    type: "talent" | "suits" | "couriers" | "catches" | "clubs" | "expert";
     tags?: string;
     edges?: string;
     flaws?: string;
@@ -25,11 +25,18 @@ interface CrewUpgrades {
     multi: { [baseName: string]: number };
 }
 
+interface CrewTypeUpgrade {
+    name: string;
+    description: string;
+    levels?: number;  // For multi-level upgrades like (3) or (2), omit for single checkbox
+}
+
 interface CrewData {
     title: string;
     abilities: CrewAbility[];
     cohorts: CrewCohort[];
     upgrades: CrewUpgrades;
+    typeUpgrades: CrewTypeUpgrade[];  // Crew-type specific upgrades
 }
 
 // =============================================================================
@@ -76,7 +83,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
         cohorts: [
             {
                 name: "Rooks",
-                type: "gang",
+                type: "clubs",
                 tags: "Thugs",
                 edges: "",
                 flaws: ""
@@ -85,7 +92,15 @@ const CREW_DATA: { [key: string]: CrewData } = {
         upgrades: {
             checkboxes: ["lair_hidden"],
             multi: {}
-        }
+        },
+        typeUpgrades: [
+            { name: "Beat Down but Unbroken", description: "+1 Trauma Box", levels: 3 },
+            { name: "Revolutionary Rigging", description: "2 free load of documents and implements" },
+            { name: "Prohibited Library", description: "Acts as a workshop for documents and provides +1d for Gathering Info rolls" },
+            { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
+            { name: "Elite Rooks", description: "Your Rooks cohort gains +1 quality" },
+            { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" }
+        ]
     },
 
     // =========================================================================
@@ -128,7 +143,15 @@ const CREW_DATA: { [key: string]: CrewData } = {
         upgrades: {
             checkboxes: ["train_resolve"],
             multi: { "lair_secure": 1 }
-        }
+        },
+        typeUpgrades: [
+            { name: "Composed", description: "+1 Stress Box", levels: 3 },
+            { name: "Leech's Rigging", description: "1 Item has no load and is concealed" },
+            { name: "Friends on the Inside", description: "+1 Tier in The Slab" },
+            { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
+            { name: "Elite Rooks", description: "Your Rooks cohort gains +1 quality" },
+            { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" }
+        ]
     },
 
     // =========================================================================
@@ -171,7 +194,15 @@ const CREW_DATA: { [key: string]: CrewData } = {
         upgrades: {
             checkboxes: ["qual_weapons", "train_grit"],
             multi: {}
-        }
+        },
+        typeUpgrades: [
+            { name: "Resilient", description: "+1 Trauma Box", levels: 3 },
+            { name: "Runner Rigging", description: "2 free load of weapons and gear" },
+            { name: "AI Backup", description: "The 1st time a PC would die or permanently trauma out, instead load their backup into a cybernetic shell. Lose 2 actions or 1 augment.", levels: 3 },
+            { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
+            { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" },
+            { name: "Corporate Contacts", description: "+1 Tier in Prison" }
+        ]
     },
 
     // =========================================================================
@@ -213,8 +244,8 @@ const CREW_DATA: { [key: string]: CrewData } = {
         cohorts: [
             {
                 name: "Rovers",
-                type: "gang",
-                tags: "Thugs, Vehicles",
+                type: "couriers",
+                tags: "Drivers, Vehicles",
                 edges: "",
                 flaws: ""
             }
@@ -222,6 +253,15 @@ const CREW_DATA: { [key: string]: CrewData } = {
         upgrades: {
             checkboxes: [],
             multi: { "lair_rides": 1 }
-        }
+        },
+        typeUpgrades: [
+            { name: "Zokus Rigging", description: "2 free load of tools or weapons" },
+            { name: "Contacts in The Slab", description: "Your tier counts as 1 higher when surviving The Slab" },
+            { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
+            { name: "Elite Rovers", description: "Your Rovers cohort gains +1 quality" },
+            { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" },
+            { name: "Special Ride", description: "A special vehicle with unique capabilities", levels: 2 },
+            { name: "Roaring", description: "+1 Stress Box", levels: 3 }
+        ]
     }
 };

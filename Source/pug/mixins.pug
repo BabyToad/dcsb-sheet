@@ -99,30 +99,36 @@ mixin clock(name, segments, label)
                 input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_seg_${i}`)
                 label.segment(for=`${name}_seg_${i}`)
 
-//- Heat Gauge (8-segment with forward fill pattern)
+//- Arc Heat Gauge (8-segment semicircle with forward fill pattern)
 //- Uses fakeradio pattern - stores single value 0-8
+//- CSS-rotated segments forming an arc
 mixin heat-gauge(name)
-    .heat-gauge
+    .arc-heat-gauge
         .gauge-header
             .gauge-label(data-i18n="HEAT_GAUGE") HEAT GAUGE
             .gauge-dice
                 span.dice-label Disengage:
                 span.dice-count(name=`attr_${name}_dice`) 8
                 span d6
-        .gauge-track
-            +fakeradio-track(name, 8, "gauge-box")
+        .arc-track
+            //- Fakeradio inputs with labels rotated into arc position
+            input.fakeradio.zero(type="checkbox", name=`attr_${name}`, value="0", checked)
+            - for (var i = 1; i <= 8; i++)
+                input.fakeradio(type="checkbox", name=`attr_${name}`, value=i, id=`${name}_${i}`)
+                label.arc-segment(for=`${name}_${i}`, data-segment=i)
 
 //- ═══════════════════════════════════════════════════════════════
 //- EQUIPMENT COMPONENTS
 //- ═══════════════════════════════════════════════════════════════
 
-//- Item checkbox with load value
+//- Item with load checkboxes (each box = 1 load when checked)
 mixin item-checkbox(name, label, load)
-    label.item-checkbox
-        input(type="checkbox", name=`attr_${name}`, value="1")
-        span.item-box
+    .item-row
+        .item-load-boxes
+            - for (var i = 1; i <= load; i++)
+                input(type="checkbox", name=`attr_${name}_${i}`, value="1", id=`${name}_${i}`)
+                label.load-box(for=`${name}_${i}`)
         span.item-name= label
-        span.item-load= load
 
 //- ═══════════════════════════════════════════════════════════════
 //- STRUCTURAL COMPONENTS
@@ -170,8 +176,15 @@ mixin cohort-block()
             .edit.cohort-header-edit
                 input(type="text", name="attr_cohort_name", placeholder="Cohort name").cohort-name-input
                 select(name="attr_cohort_type").cohort-type-select
-                    option(value="gang") Gang
-                    option(value="expert") Expert
+                    option(value="") --
+                    optgroup(label="Gangs")
+                        option(value="talent") Talent (Techies, Chemists, Hackers)
+                        option(value="suits") Suits (Con Artists, Spies)
+                        option(value="couriers") Couriers (Drivers, Deliverers)
+                        option(value="catches") Catches (Scouts, Infiltrators, Thieves)
+                        option(value="clubs") Clubs (Killers, Brawlers)
+                    optgroup(label="Expert")
+                        option(value="expert") Expert (specify below)
             //- Elite toggle (always visible)
             label.cohort-elite-label
                 input(type="checkbox", name="attr_cohort_elite", value="1").cohort-elite-check

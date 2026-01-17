@@ -117,17 +117,38 @@ const VICES = [
 // Augment tiers
 const AUGMENT_TIERS = [2, 3, 4, 5] as const;
 
-// Standard item loads (fixed values)
+// Standard item loads (fixed values) - matches The New Babel
+// Maps base item name to its total load value (for reference)
 const STANDARD_ITEMS: {[key: string]: number} = {
-    item_blade: 1,
-    item_pistol: 1,
-    item_ammo: 1,
+    item_knife: 1,
+    item_large_weapon: 2,
+    item_reload: 1,
+    item_unusual_weapon: 1,
+    item_datapad: 1,
     item_armor: 2,
-    item_heavy: 3,
-    item_tools: 1,
+    item_heavy: 1,
+    item_infiltration: 1,
+    item_hacking: 2,
     item_climbing: 2,
-    item_documents: 1
+    item_demolition: 2,
+    item_tampering: 1,
+    item_subterfuge: 1,
+    item_documents: 1,
+    item_flashlight: 1,
+    item_modification: 1
 };
+
+// Standard item load checkbox attributes (each checked box = 1 load)
+// Generated from STANDARD_ITEMS: item_X with load N gets item_X_1 through item_X_N
+const STANDARD_ITEM_LOAD_ATTRS: string[] = (() => {
+    const attrs: string[] = [];
+    for (const [item, load] of Object.entries(STANDARD_ITEMS)) {
+        for (let i = 1; i <= load; i++) {
+            attrs.push(`${item}_${i}`);
+        }
+    }
+    return attrs;
+})();
 
 // All attribute names
 const ATTRIBUTE_NAMES = ['acuity', 'grit', 'resolve'] as const;

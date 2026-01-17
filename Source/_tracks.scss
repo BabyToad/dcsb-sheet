@@ -236,14 +236,15 @@
     }
 
     // =========================================================================
-    // HEAT GAUGE - Forward fill pattern matching crew tracks
+    // ARC HEAT GAUGE - Semicircle with forward fill pattern
     // =========================================================================
 
-    .heat-gauge {
+    .arc-heat-gauge {
         .gauge-header {
             @include flex-row($spacing-md, stretch);
             align-items: center;
-            margin-bottom: $spacing-xs;
+            margin-bottom: $spacing-sm;
+            justify-content: center;
         }
 
         .gauge-label {
@@ -253,7 +254,7 @@
         .gauge-dice {
             font-size: $type-sm;
             color: $zine-grey;
-            margin-left: auto;
+            margin-left: $spacing-md;
 
             .dice-count {
                 font-weight: bold;
@@ -261,22 +262,48 @@
             }
         }
 
-        .gauge-track {
-            @include flex-row(2px, stretch);
+        .arc-track {
+            position: relative;
+            width: 180px;
+            height: 95px;
+            margin: 0 auto;
             @include fakeradio-hidden();
 
-            .gauge-box {
-                @include square-box(24px);
+            .arc-segment {
+                position: absolute;
+                width: 30px;
+                height: 16px;
                 border: 2px solid $zine-ink;
+                border-radius: 2px;
                 cursor: pointer;
-                // Start filled (danger red)
-                @include checkbox-checked-fill($status-danger, $status-danger);
+                transform-origin: center bottom;
+                // Position at bottom center, then rotate out
+                bottom: 0;
+                left: calc(50% - 15px);
+                @include transition();
+
+                // Position and color each segment (green → yellow → red)
+                // Segments go from -78.75° to +78.75° (180° spread over 8 segments)
+                @for $i from 1 through 8 {
+                    &[data-segment="#{$i}"] {
+                        $angle: -78.75 + (($i - 1) * 22.5);
+                        transform: rotate(#{$angle}deg) translateY(-55px);
+
+                        // Color gradient: 1-2 green, 3-5 yellow/warning, 6-8 red/danger
+                        @if $i <= 2 {
+                            background: $status-good;
+                        } @else if $i <= 5 {
+                            background: $status-warning;
+                        } @else {
+                            background: $status-danger;
+                        }
+                    }
+                }
             }
 
-            // Empty boxes after checked value
-            .fakeradio:checked ~ .fakeradio + .gauge-box {
+            // Empty segments after checked value (forward fill)
+            .fakeradio:checked ~ .fakeradio + .arc-segment {
                 background: transparent;
-                border-color: $zine-ink;
             }
         }
     }

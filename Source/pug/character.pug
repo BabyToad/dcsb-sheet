@@ -392,33 +392,47 @@
             .equipment-columns
                 .equipment-column.standard
                     h4(data-i18n="STANDARD_ITEMS") Standard Items
-                    +item-checkbox("item_blade", "Blade or club", 1)
-                    +item-checkbox("item_pistol", "Pistol", 1)
-                    +item-checkbox("item_ammo", "Extra ammo", 1)
+                    +item-checkbox("item_knife", "A knife or two", 1)
+                    +item-checkbox("item_large_weapon", "A large weapon", 2)
+                    +item-checkbox("item_reload", "Reload", 1)
+                    +item-checkbox("item_unusual_weapon", "An unusual weapon", 1)
+                    +item-checkbox("item_datapad", "Data Pad", 1)
                     +item-checkbox("item_armor", "Armor", 2)
-                    +item-checkbox("item_heavy", "+Heavy", 3)
-                    +item-checkbox("item_tools", "Burglary tools", 1)
-                    +item-checkbox("item_climbing", "Climbing gear", 2)
+                    +item-checkbox("item_heavy", "+Heavy", 1)
+                    +item-checkbox("item_infiltration", "Infiltration Gear", 1)
+                    +item-checkbox("item_hacking", "Hacking Gear", 2)
+                    +item-checkbox("item_climbing", "Climbing Gear", 2)
+                    +item-checkbox("item_demolition", "Demolition Tools", 2)
+                    +item-checkbox("item_tampering", "Tampering Tools", 1)
+                    +item-checkbox("item_subterfuge", "Subterfuge Supplies", 1)
                     +item-checkbox("item_documents", "Documents", 1)
+                    +item-checkbox("item_flashlight", "A flashlight", 1)
+                    +item-checkbox("item_modification", "Modification Tools", 1)
 
                 .equipment-column.playbook
                     h4(data-i18n="PLAYBOOK_ITEMS") Playbook Items
                     +repeating("items")
-                        label.item-checkbox
-                            //- Checkbox (hidden, controls visual box)
-                            input(type="checkbox", name="attr_item_carried", value="1")
-                            span.item-box
+                        .item-row.playbook-item
+                            //- Hidden checkbox to control load box 2 visibility (set by sheet worker)
+                            input.item-show-load2(type="checkbox", name="attr_item_show_load_2", value="1")
+                            //- Hidden checkbox to mark special items (free load, displayed in italics)
+                            input.item-special-flag(type="checkbox", name="attr_item_special", value="1")
 
-                            //- Display mode - name and load as text
+                            //- Load checkboxes (1-2 based on item load)
+                            .item-load-boxes
+                                label.load-box-label.load-1
+                                    input(type="checkbox", name="attr_item_load_1", value="1")
+                                    span.load-box
+                                label.load-box-label.load-2
+                                    input(type="checkbox", name="attr_item_load_2", value="1")
+                                    span.load-box
+
+                            //- Display mode - item name
                             span.display.item-name(name="attr_item_name")
-                            span.display.item-load (
-                                span(name="attr_item_load")
-                                | )
 
-                            //- Edit mode - editable inputs
+                            //- Edit mode - editable name
                             .edit.item-edit
                                 input(type="text", name="attr_item_name", placeholder="Item name")
-                                input(type="number", name="attr_item_load", value="1", min="0", max="6")
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 7: NOTES

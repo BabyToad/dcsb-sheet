@@ -471,19 +471,98 @@
         @include grid(1fr 1fr, $spacing-md);
     }
 
-    // Standard item checkbox (fixed items like Blade, Pistol, etc.)
+    // Item row with load checkboxes
+    .item-row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        font-size: $type-sm;
+        padding: 2px 0;
+
+        .item-load-boxes {
+            display: flex;
+            gap: 2px;
+
+            // For standard items (input + label siblings)
+            > input[type="checkbox"] {
+                @include hidden-checkbox-base();
+
+                &:checked + .load-box {
+                    @include checkbox-checked-fill($terminal-amber);
+                }
+            }
+
+            > .load-box {
+                display: block;
+                width: 12px;
+                height: 12px;
+                border: 1px solid $zine-ink;
+                cursor: pointer;
+            }
+
+            // For playbook items (label wrapping input)
+            .load-box-label {
+                cursor: pointer;
+
+                input[type="checkbox"] {
+                    @include hidden-checkbox-base();
+
+                    &:checked + .load-box {
+                        @include checkbox-checked-fill($terminal-amber);
+                    }
+                }
+
+                .load-box {
+                    display: block;
+                    width: 12px;
+                    height: 12px;
+                    border: 1px solid $zine-ink;
+                }
+            }
+        }
+
+        .item-name {
+            flex: 1;
+        }
+
+        // Playbook item visibility control for load box 2
+        &.playbook-item {
+            // Hide the visibility control checkboxes
+            .item-show-load2,
+            .item-special-flag {
+                @include hidden-checkbox-base();
+            }
+
+            // Hide load-2 box by default
+            .load-2 {
+                display: none;
+            }
+
+            // Show load-2 box when visibility checkbox is checked
+            .item-show-load2:checked ~ .item-load-boxes .load-2 {
+                display: block;
+            }
+
+            // Special items (free load) display in italics
+            .item-special-flag:checked ~ .item-name {
+                font-style: italic;
+            }
+
+            .item-special-flag:checked ~ .item-edit input {
+                font-style: italic;
+            }
+        }
+    }
+
+    // Playbook items (repeating section)
     .item-checkbox {
-        @include flex-row($spacing-xs);
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
         cursor: pointer;
         font-size: $type-sm;
-        padding: $spacing-xs 0;
+        padding: 2px 0;
         color: $form-ink;
-
-        .item-box {
-            @include square-box(12px);
-            border: 1px solid $zine-ink;
-            flex-shrink: 0;
-        }
 
         input[type="checkbox"] {
             @include hidden-checkbox-base();
@@ -492,15 +571,30 @@
                 @include checkbox-checked-fill($terminal-amber);
             }
 
-            // Bold when carried, not strikethrough
             &:checked ~ .item-name {
                 font-weight: bold;
             }
         }
 
-        .item-load {
-            color: $zine-grey;
+        .item-box {
+            @include square-box(12px);
+            border: 1px solid $zine-ink;
+            flex-shrink: 0;
+        }
+
+        .item-name {
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .item-load-indicator {
             margin-left: auto;
+            font-size: $type-xs;
+            color: $zine-grey;
+            min-width: 16px;
+            text-align: center;
+            border: 1px solid $zine-grey;
+            padding: 1px 3px;
         }
     }
 

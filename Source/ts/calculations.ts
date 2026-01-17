@@ -202,16 +202,21 @@ const clearAndPopulateRepeatingSection = <T>(
 
 /**
  * Format a playbook item for the repeating_items section
+ * Sets visibility for load box 2 based on item load value
+ * Special items (italicized in rulebook) are free - don't count toward load
  */
 const formatPlaybookItem = (
     item: { name: string; load: number; special?: boolean },
     rowId: string
 ): { [key: string]: AttributeContent } => {
-    const name = item.special ? `*${item.name}*` : item.name;
     return {
-        [`repeating_items_${rowId}_item_name`]: name,
-        [`repeating_items_${rowId}_item_load`]: item.load,
-        [`repeating_items_${rowId}_item_carried`]: "0"
+        [`repeating_items_${rowId}_item_name`]: item.name,
+        [`repeating_items_${rowId}_item_load_1`]: "0",
+        [`repeating_items_${rowId}_item_load_2`]: "0",
+        // Show load box 2 only for items with load >= 2
+        [`repeating_items_${rowId}_item_show_load_2`]: item.load >= 2 ? "1" : "0",
+        // Special items are free (don't count toward load) - marked for CSS styling
+        [`repeating_items_${rowId}_item_special`]: item.special ? "1" : "0"
     };
 };
 
@@ -391,25 +396,32 @@ const calculateAllAttributeRatings = () => {
 
 /**
  * Calculate current load from checked items
+ * Each checked load box = 1 load
+ * Standard items: item_knife_1, item_large_weapon_1, item_large_weapon_2, etc.
+ * Playbook items: item_load_1, item_load_2 per repeating row
+ * Special items (italicized) are FREE - don't count toward load
  */
 const calculateLoad = () => {
-    const standardAttrs = Object.keys(STANDARD_ITEMS);
-
     getSectionIDs('repeating_items', ids => {
+        // Playbook items have item_load_1, item_load_2, and item_special per row
         const repeatAttrs = ids.flatMap(id => [
-            `repeating_items_${id}_item_carried`,
-            `repeating_items_${id}_item_load`
+            `repeating_items_${id}_item_load_1`,
+            `repeating_items_${id}_item_load_2`,
+            `repeating_items_${id}_item_special`
         ]);
 
-        getAttrs([...standardAttrs, ...repeatAttrs, 'load', 'load_current', 'load_max'], v => {
-            // Sum standard items
-            let total = standardAttrs.reduce((sum, attr) =>
-                sum + (v[attr] === '1' ? STANDARD_ITEMS[attr] : 0), 0);
+        getAttrs([...STANDARD_ITEM_LOAD_ATTRS, ...repeatAttrs, 'load', 'load_current', 'load_max'], v => {
+            // Sum standard items - each checked checkbox = 1 load
+            let total = STANDARD_ITEM_LOAD_ATTRS.reduce((sum, attr) =>
+                sum + (v[attr] === '1' ? 1 : 0), 0);
 
-            // Sum repeating items
+            // Sum playbook items - each checked load box = 1 load
+            // BUT skip special items (they're free)
             ids.forEach(id => {
-                if (v[`repeating_items_${id}_item_carried`] === '1') {
-                    total += int(v[`repeating_items_${id}_item_load`], 1);
+                const isSpecial = v[`repeating_items_${id}_item_special`] === '1';
+                if (!isSpecial) {
+                    if (v[`repeating_items_${id}_item_load_1`] === '1') total += 1;
+                    if (v[`repeating_items_${id}_item_load_2`] === '1') total += 1;
                 }
             });
 
@@ -510,6 +522,27 @@ const formatCrewCohort = (
 };
 
 /**
+ * Format a crew type upgrade for the repeating_crewtypeupgrades section
+ */
+const formatCrewTypeUpgrade = (
+    upgrade: { name: string; description: string; levels?: number },
+    rowId: string
+): { [key: string]: AttributeContent } => {
+    const levels = upgrade.levels || 1;
+    return {
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_name`]: upgrade.name,
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_desc`]: upgrade.description,
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_levels`]: String(levels),
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_level_1`]: "0",
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_level_2`]: "0",
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_level_3`]: "0",
+        // Control visibility of level 2 and 3 boxes
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_show_2`]: levels >= 2 ? "1" : "0",
+        [`repeating_crewtypeupgrades_${rowId}_upgrade_show_3`]: levels >= 3 ? "1" : "0"
+    };
+};
+
+/**
  * Clear all crew upgrade checkboxes
  */
 const clearCrewUpgrades = (callback?: () => void) => {
@@ -554,7 +587,7 @@ const setCrewUpgrades = (upgrades: { checkboxes: string[]; multi: { [baseName: s
 };
 
 /**
- * Handle crew type change - populate abilities, cohorts, and upgrades
+ * Handle crew type change - populate abilities, cohorts, upgrades, and type-specific upgrades
  */
 const handleCrewTypeChange = (newCrewType: string) => {
     if (!newCrewType || !CREW_DATA[newCrewType]) return;
@@ -567,7 +600,10 @@ const handleCrewTypeChange = (newCrewType: string) => {
     // 2. Clear and populate cohorts
     clearAndPopulateRepeatingSection("cohorts", data.cohorts, formatCrewCohort);
 
-    // 3. Clear all upgrades, then set the starting ones
+    // 3. Clear and populate crew type-specific upgrades
+    clearAndPopulateRepeatingSection("crewtypeupgrades", data.typeUpgrades, formatCrewTypeUpgrade);
+
+    // 4. Clear all general upgrades, then set the starting ones
     clearCrewUpgrades(() => {
         setCrewUpgrades(data.upgrades);
     });

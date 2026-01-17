@@ -515,6 +515,179 @@
     }
 
     // =========================================================================
+    // CREW TYPE UPGRADES (repeating section with level boxes)
+    // =========================================================================
+
+    .upgrade-entry {
+        display: flex;
+        gap: $spacing-sm;
+        padding: $spacing-xs 0;
+        border-bottom: 1px dashed rgba($zine-grey, 0.3);
+        align-items: flex-start;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        // Hide the visibility control checkboxes
+        input.upgrade-show-lvl2,
+        input.upgrade-show-lvl3 {
+            @include hidden-checkbox-base();
+        }
+
+        // Show level 2 box only when show-lvl2 is checked
+        .upgrade-track .level-2 {
+            display: none;
+        }
+        input.upgrade-show-lvl2:checked ~ .upgrade-track .level-2 {
+            display: block;
+        }
+
+        // Show level 3 box only when show-lvl3 is checked
+        .upgrade-track .level-3 {
+            display: none;
+        }
+        input.upgrade-show-lvl3:checked ~ .upgrade-track .level-3 {
+            display: block;
+        }
+    }
+
+    .upgrade-track {
+        display: flex;
+        gap: 2px;
+        flex-shrink: 0;
+        width: 50px;  // Fixed width for alignment
+        min-width: 50px;
+
+        .upgrade-box-label {
+            cursor: pointer;
+
+            input[type="checkbox"] {
+                @include hidden-checkbox-base();
+            }
+
+            .upgrade-box {
+                @include square-box(14px);
+                border: 1px solid $zine-ink;
+                display: block;
+            }
+
+            input:checked + .upgrade-box {
+                @include checkbox-checked-fill($terminal-amber, $terminal-amber);
+            }
+        }
+    }
+
+    .upgrade-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .upgrade-display {
+        .upgrade-name-display {
+            font-weight: bold;
+            font-size: $type-sm;
+            display: block;
+        }
+
+        .upgrade-desc-display {
+            font-size: $type-xs;
+            color: $zine-grey;
+            display: block;
+            margin-top: 2px;
+            line-height: 1.3;
+
+            &:empty {
+                display: none;
+            }
+        }
+    }
+
+    .upgrade-edit {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .upgrade-name-input {
+            font-weight: bold;
+        }
+
+        .upgrade-desc-input {
+            font-size: $type-sm;
+        }
+
+        .upgrade-levels-input {
+            width: 50px;
+        }
+    }
+
+    // =========================================================================
+    // CREW ADVANCEMENT (Deep Cuts - 4× 6-segment clocks)
+    // =========================================================================
+
+    .crew-advancement-block {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+    }
+
+    .crew-advancement-clocks {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+
+        .adv-row {
+            display: flex;
+            gap: $spacing-md;
+            justify-content: space-between;
+        }
+
+        .adv-clock {
+            display: flex;
+            gap: 1px;
+            flex: 1;
+            @include fakeradio-hidden();
+
+            .crew-adv-segment {
+                @include square-box(14px);
+                border: 1px solid $zine-ink;
+                display: block;
+                cursor: pointer;
+                background: $terminal-amber;
+                @include transition(background);
+            }
+
+            // Empty segments after checked value (forward fill pattern)
+            .fakeradio:checked ~ .fakeradio + .crew-adv-segment {
+                background: transparent;
+            }
+        }
+    }
+
+    .crew-advancement-costs {
+        font-size: 9px;
+        color: $zine-grey;
+        border-top: 1px dashed $zine-light-grey;
+        padding-top: $spacing-xs;
+        margin-top: $spacing-xs;
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1px 0;
+        }
+
+        .cost-label {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cost-value {
+            font-weight: bold;
+        }
+    }
+
+    // =========================================================================
     // CLAIMS
     // =========================================================================
 
