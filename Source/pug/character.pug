@@ -197,48 +197,48 @@
         //- ───────────────────────────────────────────────────────────
         //- SECTION 4: AUGMENTATION RECORD
         //- Framing: Tech spec sheet / warranty documentation
-        //- In DC,SB, Cybernetics replace Special Abilities from BitD
+        //- In DC,SB, Augments replace Special Abilities from BitD
         //- Description always visible (you need to know what your augs do)
         //- ───────────────────────────────────────────────────────────
-        .section.cybernetics
-            +section-header-editable("cyber", "AUGMENTATION RECORD", "04")
+        .section.augments
+            +section-header-editable("augment", "AUGMENTATION RECORD", "04")
 
-            .cyber-capacity
+            .augment-capacity
                 span.capacity-label(data-i18n="CAPACITY") Capacity:
-                input(type="number", name="attr_cyber_used", value="0", readonly).cyber-used
+                input(type="number", name="attr_augment_used", value="0", readonly).augment-used
                 span /
-                input(type="number", name="attr_cyber_max", value="4").cyber-max
+                input(type="number", name="attr_augment_max", value="4").augment-max
                 span.capacity-hint.edit (expand via Playbook XP)
 
-            +repeating("cybernetics")
-                .cyber-entry
+            +repeating("augments")
+                .augment-entry
                     //- Installed checkbox - standard Roll20 pattern: input inside label
-                    label.cyber-installed
-                        input.cyber-check(type="checkbox", name="attr_cyber_installed", value="1")
+                    label.augment-installed
+                        input.augment-check(type="checkbox", name="attr_augment_installed", value="1")
                         span.installed-box
 
                     //- Content wrapper
-                    .cyber-content
+                    .augment-content
                             //- Display mode - full card with description visible
-                            .display.cyber-display
-                                .cyber-header-display
-                                    span.cyber-tier-badge
+                            .display.augment-display
+                                .augment-header-display
+                                    span.augment-tier-badge
                                         span T
-                                        span.cyber-tier-value(name="attr_cyber_tier")
-                                    span.cyber-name-display(name="attr_cyber_name")
-                                span.cyber-desc-display(name="attr_cyber_desc")
+                                        span.augment-tier-value(name="attr_augment_tier")
+                                    span.augment-name-display(name="attr_augment_name")
+                                span.augment-desc-display(name="attr_augment_desc")
 
                             //- Edit mode - full editable form
-                            .edit.cyber-edit
-                                .cyber-header-edit
-                                    .cyber-tier-select
-                                        select(name="attr_cyber_tier")
+                            .edit.augment-edit
+                                .augment-header-edit
+                                    .augment-tier-select
+                                        select(name="attr_augment_tier")
                                             option(value="2") T2
                                             option(value="3") T3
                                             option(value="4") T4
                                             option(value="5") T5
-                                    input(type="text", name="attr_cyber_name", placeholder="Augment Name").cyber-name
-                                textarea(name="attr_cyber_desc", placeholder="Description & effects - what does this augment let you do?").cyber-desc
+                                    input(type="text", name="attr_augment_name", placeholder="Augment Name").augment-name
+                                textarea(name="attr_augment_desc", placeholder="Description & effects - what does this augment let you do?").augment-desc
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 6: CIRCLES
