@@ -23,10 +23,10 @@ Each phase is a discrete unit of work that can be tested and committed independe
 
 ---
 
-## Phase 2: Terminology — Cybernetics → Augments
+## Phase 2: Terminology — Cybernetics → Augments ✅
 *Search/replace across all files, no logic changes*
 
-### 2.1 Update TypeScript types and constants
+### 2.1 Update TypeScript types and constants ✅
 - **Files**: `Source/ts/constants.ts`, `Source/ts/playbookData.ts`, `Source/ts/calculations.ts`
 - **Changes**:
   - Rename `Cybernetic` interface → `Augment`
@@ -37,7 +37,7 @@ Each phase is a discrete unit of work that can be tested and committed independe
 - **Test**: Build succeeds, no TypeScript errors
 - **Commit**: `refactor(sheet): rename Cybernetics to Augments in TypeScript`
 
-### 2.2 Update Pug templates
+### 2.2 Update Pug templates ✅
 - **Files**: `Source/pug/character.pug`, `Source/pug/mixins.pug`
 - **Changes**:
   - Rename section header "AUGMENTATION RECORD" (keep this, it still works)
@@ -46,17 +46,16 @@ Each phase is a discrete unit of work that can be tested and committed independe
 - **Test**: Sheet renders, augments section works
 - **Commit**: `refactor(sheet): rename Cybernetics to Augments in templates`
 
-### 2.3 Update SCSS styles
+### 2.3 Update SCSS styles ✅
 - **Files**: `Source/_character.scss`, any other SCSS with `cyber` references
 - **Changes**: Rename CSS classes/selectors from `cyber` → `augment`
 - **Test**: Styles still apply correctly
 - **Commit**: `refactor(sheet): rename Cybernetics to Augments in styles`
 
-### 2.4 Update translation.json
+### 2.4 Update translation.json ✅
 - **Files**: `translation.json`
-- **Changes**: Update any i18n keys referencing cybernetics
-- **Test**: Labels display correctly
-- **Commit**: `refactor(sheet): rename Cybernetics to Augments in translations`
+- **Changes**: No changes needed - no cybernetics keys existed
+- **Note**: CAPACITY key is generic, kept as-is
 
 ---
 
