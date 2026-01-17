@@ -136,24 +136,4 @@
             }
         }
     }
-
-    // Detail value display (in identity classification)
-    .detail-value {
-        font-size: inherit;
-        font-style: italic;
-        color: $zine-grey;
-        margin-left: 4px;
-
-        &:empty {
-            display: none;
-        }
-
-        &::before {
-            content: '(';
-        }
-
-        &::after {
-            content: ')';
-        }
-    }
 }

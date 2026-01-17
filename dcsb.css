@@ -169,21 +169,6 @@
   outline: none;
   border-bottom-color: #ffb000;
 }
-.charsheet .detail-value {
-  font-size: inherit;
-  font-style: italic;
-  color: #888888;
-  margin-left: 4px;
-}
-.charsheet .detail-value:empty {
-  display: none;
-}
-.charsheet .detail-value::before {
-  content: "(";
-}
-.charsheet .detail-value::after {
-  content: ")";
-}
 
 .charsheet .sheet-columns {
   display: grid;
@@ -2127,6 +2112,8 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #888888;
+  display: flex;
+  align-items: flex-start;
 }
 .charsheet .identity-display .identity-classification .sep {
   margin: 0 0.5em;
@@ -2134,6 +2121,22 @@
 .charsheet .identity-display .identity-classification .playbook-value {
   color: #ffb000;
   font-weight: bold;
+}
+.charsheet .identity-display .identity-classification .classification-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.charsheet .identity-display .identity-classification .classification-item .item-detail {
+  font-size: 0.9em;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: normal;
+  color: #bbbbbb;
+  margin-top: 1px;
+}
+.charsheet .identity-display .identity-classification .classification-item .item-detail:empty {
+  display: none;
 }
 .charsheet .identity-display .identity-vice {
   margin-top: 0.5rem;

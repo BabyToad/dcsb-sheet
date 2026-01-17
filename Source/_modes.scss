@@ -214,6 +214,8 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: $zine-grey;
+            display: flex;
+            align-items: flex-start;
 
             .sep {
                 margin: 0 0.5em;
@@ -222,6 +224,25 @@
             .playbook-value {
                 color: $zine-accent;
                 font-weight: bold;
+            }
+
+            .classification-item {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .item-detail {
+                    font-size: 0.9em;
+                    font-style: italic;
+                    text-transform: none;
+                    letter-spacing: normal;
+                    color: $zine-light-grey;
+                    margin-top: 1px;
+
+                    &:empty {
+                        display: none;
+                    }
+                }
             }
         }
 
