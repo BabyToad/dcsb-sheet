@@ -961,26 +961,31 @@
 }
 .charsheet .advancement-block .advancement-clocks {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 2px;
   margin-bottom: 4px;
+}
+.charsheet .advancement-block .adv-row {
+  display: flex;
+  gap: 8px;
   justify-content: space-between;
 }
 .charsheet .advancement-block .adv-clock {
   display: flex;
-  gap: 2px;
+  gap: 1px;
+  flex: 1;
 }
 .charsheet .advancement-block .adv-clock .fakeradio.zero,
 .charsheet .advancement-block .adv-clock .fakeradio {
   display: none;
 }
 .charsheet .advancement-block .adv-clock .adv-segment {
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  min-height: 14px;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
   flex-shrink: 0;
-  border: 2px solid #1a1a1a;
-  border-radius: 1px;
+  border: 1px solid #1a1a1a;
   display: block;
   cursor: pointer;
   transition: all 0.1s ease;

@@ -178,23 +178,29 @@
             }
         }
 
-        // 4× 6-segment advancement clocks
+        // 4× 6-segment advancement clocks in 2×2 grid
         .advancement-clocks {
             display: flex;
-            gap: $spacing-md;
+            flex-direction: column;
+            gap: $spacing-xs;
             margin-bottom: $spacing-sm;
+        }
+
+        .adv-row {
+            display: flex;
+            gap: $spacing-md;
             justify-content: space-between;
         }
 
         .adv-clock {
             display: flex;
-            gap: 2px;
+            gap: 1px;
+            flex: 1;
             @include fakeradio-hidden();
 
             .adv-segment {
-                @include square-box(14px);
-                border: 2px solid $zine-ink;
-                border-radius: 1px;
+                @include square-box(12px);
+                border: 1px solid $zine-ink;
                 display: block;
                 cursor: pointer;
                 @include transition();

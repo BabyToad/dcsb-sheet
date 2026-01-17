@@ -335,26 +335,33 @@
             .advancement-block
                 .advancement-header
                     span.advancement-label ADVANCEMENT
-                    span.advancement-hint (mark when you do your XP trigger)
+                    span.advancement-hint (mark XP trigger)
                 .xp-trigger-row
                     span.xp-trigger-text(name="attr_xp_trigger")
                 .advancement-clocks
-                    - for (var c = 1; c <= 4; c++)
+                    .adv-row
                         .adv-clock
-                            +fakeradio-track(`adv_clock_${c}`, 6, "adv-segment")
+                            +fakeradio-track("adv_clock_1", 6, "adv-segment")
+                        .adv-clock
+                            +fakeradio-track("adv_clock_2", 6, "adv-segment")
+                    .adv-row
+                        .adv-clock
+                            +fakeradio-track("adv_clock_3", 6, "adv-segment")
+                        .adv-clock
+                            +fakeradio-track("adv_clock_4", 6, "adv-segment")
                 .advancement-costs
                     .cost-row
-                        span.cost-label New Augment/Ability
-                        span.cost-value 2 clocks
+                        span.cost-label Augment/Ability
+                        span.cost-value 2
                     .cost-row
-                        span.cost-label Veteran Augment
-                        span.cost-value 3 clocks
+                        span.cost-label Veteran
+                        span.cost-value 3
                     .cost-row
                         span.cost-label Crew Upgrade
-                        span.cost-value 1 clock
+                        span.cost-value 1
                     .cost-row
-                        span.cost-label Action/Attribute Dot
-                        span.cost-value = new rating
+                        span.cost-label Action Dot
+                        span.cost-value =rating
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 5: EQUIPMENT MANIFEST
