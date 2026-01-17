@@ -1788,6 +1788,9 @@
   background: #ffb000;
   border-color: #ffb000;
 }
+.charsheet .upgrade-checkbox .upgrade-name {
+  color: #1a1a1a;
+}
 .charsheet .upgrade-checkbox .upgrade-cost {
   color: #888888;
   margin-left: auto;

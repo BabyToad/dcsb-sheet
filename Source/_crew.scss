@@ -186,6 +186,10 @@
             @include checkbox-checked-fill($terminal-amber, $terminal-amber);
         }
 
+        .upgrade-name {
+            color: $zine-ink;
+        }
+
         .upgrade-cost {
             color: $zine-grey;
             margin-left: auto;
