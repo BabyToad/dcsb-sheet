@@ -101,7 +101,7 @@ const CREW_TYPES = [
 
 // Heritage options
 const HERITAGES = [
-    'sub_cities', 'the_well', 'the_jungle', 'the_syndicate', 'labor_colonies'
+    'babel', 'sub_cities', 'the_well', 'the_jungle', 'the_syndicate', 'labor_colonies'
 ] as const;
 
 // Background options
