@@ -187,7 +187,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
             },
             {
                 name: "The Hook Up",
-                description: "When acquiring new cybernetics, take +1d to the roll and increase your result level by 1 tier."
+                description: "When acquiring new augments, take +1d to the roll and increase your result level by 1 tier."
             },
             {
                 name: "All Hands",

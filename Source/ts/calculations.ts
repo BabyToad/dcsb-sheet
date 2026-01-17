@@ -203,16 +203,15 @@ const formatPlaybookItem = (
 
 /**
  * Format an augment for the repeating section
- * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
 const formatAugment = (
     augment: { tier: number; name: string; description: string },
     rowId: string
 ): { [key: string]: AttributeContent } => {
     return {
-        [`repeating_cybernetics_${rowId}_cyber_tier`]: augment.tier.toString(),
-        [`repeating_cybernetics_${rowId}_cyber_name`]: augment.name,
-        [`repeating_cybernetics_${rowId}_cyber_desc`]: augment.description
+        [`repeating_augments_${rowId}_augment_tier`]: augment.tier.toString(),
+        [`repeating_augments_${rowId}_augment_name`]: augment.name,
+        [`repeating_augments_${rowId}_augment_desc`]: augment.description
     };
 };
 
@@ -232,7 +231,7 @@ const handlePlaybookChange = (newPlaybook: string) => {
     clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
     // 3. Clear old autogen augments, populate new ones
-    clearAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
+    clearAndPopulateRepeatingSection("augments", data.augments, formatAugment);
 
     // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
 };
@@ -272,7 +271,7 @@ const resetToPlaybookDefaults = () => {
         clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
         // 5. Clear ALL augments (autogen and user-created) and repopulate
-        clearAllAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
+        clearAllAndPopulateRepeatingSection("augments", data.augments, formatAugment);
 
         // 6. Notify success via chat
         startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`,
@@ -377,19 +376,18 @@ const calculateLoad = () => {
 /**
  * Calculate augment capacity used (legacy - will be replaced by maintenance clocks)
  * Only counts installed (checked) augments
- * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
 const calculateAugmentCapacity = () => {
-    getSectionIDs('repeating_cybernetics', ids => {
-        const installedAttrs = ids.map(id => `repeating_cybernetics_${id}_cyber_installed`);
+    getSectionIDs('repeating_augments', ids => {
+        const installedAttrs = ids.map(id => `repeating_augments_${id}_augment_installed`);
 
-        getAttrs([...installedAttrs, 'cyber_used', 'cyber_max'], v => {
+        getAttrs([...installedAttrs, 'augment_used', 'augment_max'], v => {
             // Count only installed augments
             const totalUsed = ids.filter(id =>
-                v[`repeating_cybernetics_${id}_cyber_installed`] === '1'
+                v[`repeating_augments_${id}_augment_installed`] === '1'
             ).length;
 
-            mySetAttrs({ cyber_used: totalUsed }, v);
+            mySetAttrs({ augment_used: totalUsed }, v);
         });
     });
 };

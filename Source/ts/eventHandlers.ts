@@ -107,7 +107,7 @@ on("change:repeating_items remove:repeating_items", calculateLoad);
 // AUGMENT CAPACITY (legacy - will be replaced by maintenance clocks)
 // =============================================================================
 
-on("change:repeating_cybernetics remove:repeating_cybernetics", calculateAugmentCapacity);
+on("change:repeating_augments remove:repeating_augments", calculateAugmentCapacity);
 
 // =============================================================================
 // HEAT GAUGE (Crew Sheet)
