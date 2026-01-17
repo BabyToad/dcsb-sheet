@@ -252,36 +252,42 @@
         border-bottom: 1px solid $zine-light-grey;
     }
 
-    .healing-clock-group {
+    .healing-gauge-group {
         display: flex;
         align-items: center;
         gap: $spacing-sm;
 
-        .healing-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-
-            .clock-label {
-                @include uppercase-label(8px, $zine-grey, 0.5px);
-                font-weight: normal;
-            }
-        }
-
-        .healing-roll-btn {
-            font-size: 14px;
-            padding: 2px 6px;
-            cursor: pointer;
+        .healing-label {
+            @include uppercase-label(9px, $zine-grey, 0.5px);
+            font-family: $font-mono;
+            font-weight: normal;
             background: transparent;
-            border: 1px solid $zine-grey;
-            color: $zine-grey;
+            border: none;
+            padding: 0;
+            cursor: pointer;
             @include transition();
 
             &:hover {
-                border-color: $terminal-amber;
                 color: $terminal-amber;
-                background: rgba($terminal-amber, 0.1);
+            }
+        }
+
+        .healing-gauge {
+            @include flex-row(1px, stretch);
+            @include fakeradio-hidden();
+
+            .healing-segment {
+                @include square-box(12px);
+                border: 1px solid $zine-ink;
+                cursor: pointer;
+                @include transition(background);
+                // Forward fill: start filled
+                background: $terminal-amber;
+            }
+
+            // Empty segments after checked value
+            .fakeradio:checked ~ .fakeradio + .healing-segment {
+                background: transparent;
             }
         }
     }

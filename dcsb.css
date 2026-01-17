@@ -1024,38 +1024,50 @@
   padding-bottom: 4px;
   border-bottom: 1px solid #bbbbbb;
 }
-.charsheet .healing-clock-group {
+.charsheet .healing-gauge-group {
   display: flex;
   align-items: center;
   gap: 4px;
 }
-.charsheet .healing-clock-group .healing-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.charsheet .healing-clock-group .healing-controls .clock-label {
-  font-size: 8px;
+.charsheet .healing-gauge-group .healing-label {
+  font-size: 9px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #888888;
+  font-family: "Courier New", Courier, monospace;
   font-weight: normal;
-}
-.charsheet .healing-clock-group .healing-roll-btn {
-  font-size: 14px;
-  padding: 2px 6px;
-  cursor: pointer;
   background: transparent;
-  border: 1px solid #888888;
-  color: #888888;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   transition: all 0.1s ease;
 }
-.charsheet .healing-clock-group .healing-roll-btn:hover {
-  border-color: #ffb000;
+.charsheet .healing-gauge-group .healing-label:hover {
   color: #ffb000;
-  background: rgba(255, 176, 0, 0.1);
+}
+.charsheet .healing-gauge-group .healing-gauge {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+}
+.charsheet .healing-gauge-group .healing-gauge .fakeradio.zero,
+.charsheet .healing-gauge-group .healing-gauge .fakeradio {
+  display: none;
+}
+.charsheet .healing-gauge-group .healing-gauge .healing-segment {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  background: #ffb000;
+}
+.charsheet .healing-gauge-group .healing-gauge .fakeradio:checked ~ .fakeradio + .healing-segment {
+  background: transparent;
 }
 .charsheet .harm-track .harm-level {
   display: flex;

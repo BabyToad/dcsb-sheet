@@ -148,18 +148,14 @@
             .trauma-conditions-row
                 input.trauma-conditions-input(type="text", name="attr_trauma_conditions", placeholder="Trauma conditions...")
 
-            //- Harm Section with healing clock
+            //- Harm Section with healing gauge
             .harm-section
                 .harm-header
                     .track-label(data-i18n="HARM") HARM
-                    .healing-clock-group
-                        .clock-circle(data-segments="4")
-                            - for (var i = 1; i <= 4; i++)
-                                input(type="checkbox", name=`attr_healing_${i}`, value="1", id=`healing_seg_${i}`)
-                                label.clock-wedge(for=`healing_seg_${i}`, data-segment=i)
-                        .healing-controls
-                            span.clock-label Healing
-                            button.healing-roll-btn(type="action", name="act_roll_healing") ⚄
+                    .healing-gauge-group
+                        button.healing-label(type="action", name="act_roll_healing", title="Roll healing") RECOVERY
+                        .healing-gauge
+                            +fakeradio-track("healing", 4, "healing-segment")
 
                 //- Harm track with larger fields
                 .harm-track
