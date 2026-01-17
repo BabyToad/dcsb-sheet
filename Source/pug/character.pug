@@ -241,38 +241,40 @@
                                 textarea(name="attr_augment_desc", placeholder="Description & effects - what does this augment let you do?").augment-desc
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: CIRCLES
-        //- Framing: Rolodex cards / contact file
+        //- SECTION 6: FRIENDS & RIVALS
+        //- Framing: Contact cards from playbook
+        //- Each playbook has 5 friends; player marks one as Friend, one as Rival
         //- ───────────────────────────────────────────────────────────
-        .section.circles
-            +section-header-editable("circles", "CIRCLES", "06")
+        .section.friends
+            +section-header-editable("friends", "FRIENDS & RIVALS", "06")
 
-            .circles-intro(data-i18n="CIRCLES_DESC") "I know a guy..."
+            .friends-intro Mark one ↑ as your Friend, one ↓ as your Rival
 
-            .contacts-grid
-                +repeating("contacts")
-                    .contact-card
-                        //- Status badge - colored indicator at top
-                        .contact-status
-                            label.status-option.status-friend(title="Friend")
-                                input(type="radio", name="attr_contact_relation", value="friend")
-                                span.status-badge ✓
-                            label.status-option.status-neutral(title="Neutral")
-                                input(type="radio", name="attr_contact_relation", value="neutral", checked)
-                                span.status-badge ○
-                            label.status-option.status-rival(title="Rival")
-                                input(type="radio", name="attr_contact_relation", value="rival")
-                                span.status-badge ✗
+            .friends-list
+                //- 5 fixed friend slots (populated from playbook data)
+                - for (var i = 1; i <= 5; i++)
+                    .friend-card
+                        //- Relation selector: up arrow (friend), circle (neutral), down arrow (rival)
+                        .friend-relation
+                            label.relation-option.relation-friend(title="Friend")
+                                input(type="radio", name=`attr_friend_${i}_relation`, value="friend")
+                                span.relation-badge ↑
+                            label.relation-option.relation-neutral(title="Neutral")
+                                input(type="radio", name=`attr_friend_${i}_relation`, value="neutral", checked)
+                                span.relation-badge ○
+                            label.relation-option.relation-rival(title="Rival")
+                                input(type="radio", name=`attr_friend_${i}_relation`, value="rival")
+                                span.relation-badge ↓
 
-                        //- Display mode - name and description as text
-                        .contact-display.display
-                            span.contact-name(name="attr_contact_name")
-                            span.contact-desc(name="attr_contact_desc")
+                        //- Display mode - name and description from playbook
+                        .friend-display.display
+                            span.friend-name(name=`attr_friend_${i}_name`)
+                            span.friend-desc(name=`attr_friend_${i}_desc`)
 
-                        //- Edit mode - editable inputs
-                        .contact-edit.edit
-                            input.contact-name-input(type="text", name="attr_contact_name", placeholder="Contact name")
-                            input.contact-desc-input(type="text", name="attr_contact_desc", placeholder="Role / usefulness")
+                        //- Edit mode - allow customization
+                        .friend-edit.edit
+                            input.friend-name-input(type="text", name=`attr_friend_${i}_name`, placeholder="Contact name")
+                            input.friend-desc-input(type="text", name=`attr_friend_${i}_desc`, placeholder="Role / description")
 
     //- ═══════════════════════════════════════════════════════════════
     //- RIGHT COLUMN

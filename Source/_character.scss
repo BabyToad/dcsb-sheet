@@ -477,10 +477,10 @@
     }
 
     // =========================================================================
-    // CIRCLES (Contacts) - Rolodex card aesthetic
+    // FRIENDS & RIVALS - Playbook contact cards
     // =========================================================================
 
-    .circles-intro {
+    .friends-intro {
         font-family: $font-mono;
         font-style: italic;
         color: $zine-grey;
@@ -488,13 +488,13 @@
         font-size: 11px;
     }
 
-    .contacts-grid {
+    .friends-list {
         display: flex;
         flex-direction: column;
         gap: $spacing-sm;
     }
 
-    .contact-card {
+    .friend-card {
         position: relative;
         background: $form-paper;
         border: 1px solid $form-ink;
@@ -510,53 +510,53 @@
             transform: rotate(0.2deg);
         }
 
-        // Status controls at top right
-        .contact-status {
+        // Relation controls at top right
+        .friend-relation {
             position: absolute;
             top: $spacing-xs;
             right: $spacing-xs;
             display: flex;
             gap: 2px;
 
-            .status-option {
+            .relation-option {
                 cursor: pointer;
 
                 input[type="radio"] {
                     @include hidden-checkbox-base();
                 }
 
-                .status-badge {
+                .relation-badge {
                     @include square-box(18px);
                     border: 1px solid $zine-grey;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 10px;
+                    font-size: 12px;
                     background: $form-paper;
                     @include transition();
                 }
 
-                &:hover .status-badge {
+                &:hover .relation-badge {
                     border-color: $form-ink;
                 }
             }
 
-            // Friend - amber accent (flagged as useful)
-            .status-friend input:checked + .status-badge {
+            // Friend - amber accent with up arrow
+            .relation-friend input:checked + .relation-badge {
                 background: $terminal-amber;
                 border-color: $terminal-amber;
                 color: $form-ink;
             }
 
-            // Neutral - grey (standard contact)
-            .status-neutral input:checked + .status-badge {
+            // Neutral - grey (standard)
+            .relation-neutral input:checked + .relation-badge {
                 background: $zine-grey;
                 border-color: $zine-grey;
                 color: white;
             }
 
-            // Rival - dark/ink (marked as hostile)
-            .status-rival input:checked + .status-badge {
+            // Rival - dark/ink with down arrow
+            .relation-rival input:checked + .relation-badge {
                 background: $form-ink;
                 border-color: $form-ink;
                 color: white;
@@ -564,32 +564,32 @@
         }
 
         // Update left border color based on selection
-        &:has(.status-friend input:checked) {
+        &:has(.relation-friend input:checked) {
             border-left-color: $terminal-amber;
         }
-        &:has(.status-rival input:checked) {
+        &:has(.relation-rival input:checked) {
             border-left-color: $form-ink;
         }
 
         // Display mode content
-        .contact-display {
-            padding-right: 60px; // Space for status badges
+        .friend-display {
+            padding-right: 60px; // Space for relation badges
 
-            .contact-name {
+            .friend-name {
                 display: block;
                 font-weight: bold;
                 font-size: $type-md;
                 margin-bottom: 2px;
 
                 &:empty::after {
-                    content: 'Contact name...';
+                    content: 'Select a playbook...';
                     color: $form-grey-light;
                     font-weight: normal;
                     font-style: italic;
                 }
             }
 
-            .contact-desc {
+            .friend-desc {
                 display: block;
                 font-size: $type-sm;
                 color: $zine-grey;
@@ -600,18 +600,18 @@
             }
         }
 
-        // Edit mode content - NO display property here (let mode toggle handle it)
-        .contact-edit {
+        // Edit mode content
+        .friend-edit {
             padding-right: 60px;
 
-            .contact-name-input {
+            .friend-name-input {
                 width: 100%;
                 font-weight: bold;
                 font-size: $type-md;
                 margin-bottom: $spacing-xs;
             }
 
-            .contact-desc-input {
+            .friend-desc-input {
                 width: 100%;
                 font-size: $type-sm;
             }
