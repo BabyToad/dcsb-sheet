@@ -45,9 +45,9 @@ const TRAUMA = {
     MAX: 4,
 } as const;
 
-// Cybernetics capacity
-const CYBER = {
-    DEFAULT_MAX: 4,
+// Augments (formerly Cybernetics) - capacity will be replaced by maintenance system
+const AUGMENTS = {
+    DEFAULT_MAX: 4,  // Legacy: will be removed when maintenance clocks are implemented
 } as const;
 
 // =============================================================================
@@ -114,8 +114,8 @@ const VICES = [
     'faith', 'gambling', 'luxury', 'obligation', 'pleasure', 'stupor', 'weird'
 ] as const;
 
-// Cybernetic tiers
-const CYBERNETIC_TIERS = [2, 3, 4, 5] as const;
+// Augment tiers
+const AUGMENT_TIERS = [2, 3, 4, 5] as const;
 
 // Standard item loads (fixed values)
 const STANDARD_ITEMS: {[key: string]: number} = {

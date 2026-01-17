@@ -104,10 +104,10 @@ Object.keys(STANDARD_ITEMS).forEach(item => {
 on("change:repeating_items remove:repeating_items", calculateLoad);
 
 // =============================================================================
-// CYBERNETICS CAPACITY
+// AUGMENT CAPACITY (legacy - will be replaced by maintenance clocks)
 // =============================================================================
 
-on("change:repeating_cybernetics remove:repeating_cybernetics", calculateCyberCapacity);
+on("change:repeating_cybernetics remove:repeating_cybernetics", calculateAugmentCapacity);
 
 // =============================================================================
 // HEAT GAUGE (Crew Sheet)

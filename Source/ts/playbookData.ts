@@ -8,7 +8,7 @@ interface PlaybookItem {
     special?: boolean;  // Starred items (*)
 }
 
-interface Cybernetic {
+interface Augment {
     tier: number;
     name: string;
     description: string;
@@ -19,7 +19,7 @@ interface PlaybookData {
     xpTrigger: string;
     actions: { [action: string]: number };  // action name -> starting dots
     items: PlaybookItem[];
-    cybernetics: Cybernetic[];
+    augments: Augment[];
 }
 
 const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
@@ -35,7 +35,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "A luxury weapon", load: 1 },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Augmented Projection", description: "You gain effect when speaking to a crowd." },
             { tier: 3, name: "Kodama Command Link", description: "When you Command a cohort in combat, they continue to fight when they would otherwise break (they're not taken out when they suffer level 3 harm). They gain +1 effect and 1 armor." },
             { tier: 3, name: "Cerebral BC Farming", description: "At the end of each downtime phase, you earn +2 stash." },
@@ -60,7 +60,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Foldable Pistol", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Future Projections", description: "You may expend your special armor to protect a teammate, or to push yourself when you gather information or work on a long-term project." },
             { tier: 3, name: "Tapped Lines", description: "During downtime, you get +1 result level when you acquire an asset or reduce heat." },
             { tier: 3, name: "Camera Feed", description: "You have a tight hold on someone's life. When rolling to influence someone you have blackmail on, take +1d and +effect. When you take this ability, gain blackmail on one NPC." },
@@ -82,7 +82,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Old Encryption Data", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Electrochemistry", description: "You can use an internal battery to briefly emit a local current of power." },
             { tier: 2, name: "Overflow Blockage", description: "You may expend your special armor to resist a wired-in consequence or push yourself when Hacking." },
             { tier: 3, name: "Corporate Comm Codes", description: "You won't let a goon tell you what to do or when to do it. Take +1d to resistance rolls when opposing Corporate authority." },
@@ -105,7 +105,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Night Vision Goggles", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Loaded Targeting", description: "When you attack from hiding or spring a trap, you get +1d." },
             { tier: 3, name: "Accelerated Nerves", description: "When there's a question about who acts first, the answer is you (two characters with Accelerated Nerves act simultaneously)." },
             { tier: 4, name: "Split Fingers", description: "You are not affected by quality or Tier when you bypass security measures." },
@@ -128,7 +128,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Drone-Marked Binoculars", load: 1 },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Projected Maps", description: "When you gather info to locate a target, you get +1 effect. When you hide in a prepared position or use camouflage, you get +1d to rolls to avoid detection." },
             { tier: 3, name: "Ruiner Programming", description: "You gain an additional xp trigger: You destroyed someone the voice in your head told you to. If your crew helped you follow directions, also mark crew xp." },
             { tier: 3, name: "Tele-scoped Eyes", description: "You can push yourself to do one of the following: make a ranged attack at extreme distance beyond what's normal for the weapon - unleash a barrage of rapid fire to suppress the enemy." },
@@ -149,7 +149,7 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Binds and Cables", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Dulled Receptors", description: "When you trade a worse position for increased effect, take +1d." },
             { tier: 2, name: "Androstenone Emitters", description: "When you unleash physical violence, it's especially frightening. When you Dominate a frightened target, take +1d." },
             { tier: 2, name: "Bladed", description: "You have a melee weapon permanently affixed to one of your limbs, it cannot be lost unless the limb is too." },

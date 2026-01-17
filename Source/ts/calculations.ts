@@ -202,21 +202,22 @@ const formatPlaybookItem = (
 };
 
 /**
- * Format a cybernetic for the repeating_cybernetics section
+ * Format an augment for the repeating section
+ * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
-const formatCybernetic = (
-    cyber: { tier: number; name: string; description: string },
+const formatAugment = (
+    augment: { tier: number; name: string; description: string },
     rowId: string
 ): { [key: string]: AttributeContent } => {
     return {
-        [`repeating_cybernetics_${rowId}_cyber_tier`]: cyber.tier.toString(),
-        [`repeating_cybernetics_${rowId}_cyber_name`]: cyber.name,
-        [`repeating_cybernetics_${rowId}_cyber_desc`]: cyber.description
+        [`repeating_cybernetics_${rowId}_cyber_tier`]: augment.tier.toString(),
+        [`repeating_cybernetics_${rowId}_cyber_name`]: augment.name,
+        [`repeating_cybernetics_${rowId}_cyber_desc`]: augment.description
     };
 };
 
 /**
- * Handle playbook change - populate XP trigger, items, cybernetics (NOT actions)
+ * Handle playbook change - populate XP trigger, items, augments (NOT actions)
  * Actions are only set via explicit reset to preserve advanced characters
  */
 const handlePlaybookChange = (newPlaybook: string) => {
@@ -230,8 +231,8 @@ const handlePlaybookChange = (newPlaybook: string) => {
     // 2. Clear old autogen items, populate new ones
     clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
-    // 3. Clear old autogen cybernetics, populate new ones
-    clearAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
+    // 3. Clear old autogen augments, populate new ones
+    clearAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
 
     // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
 };
@@ -270,8 +271,8 @@ const resetToPlaybookDefaults = () => {
         // 4. Clear ALL items (autogen and user-created) and repopulate
         clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
 
-        // 5. Clear ALL cybernetics (autogen and user-created) and repopulate
-        clearAllAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
+        // 5. Clear ALL augments (autogen and user-created) and repopulate
+        clearAllAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
 
         // 6. Notify success via chat
         startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`,
@@ -370,19 +371,20 @@ const calculateLoad = () => {
 };
 
 // =============================================================================
-// CYBERNETICS CALCULATIONS
+// AUGMENT CALCULATIONS
 // =============================================================================
 
 /**
- * Calculate cybernetics capacity used
- * Only counts installed (checked) cybernetics
+ * Calculate augment capacity used (legacy - will be replaced by maintenance clocks)
+ * Only counts installed (checked) augments
+ * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
-const calculateCyberCapacity = () => {
+const calculateAugmentCapacity = () => {
     getSectionIDs('repeating_cybernetics', ids => {
         const installedAttrs = ids.map(id => `repeating_cybernetics_${id}_cyber_installed`);
 
         getAttrs([...installedAttrs, 'cyber_used', 'cyber_max'], v => {
-            // Count only installed cybernetics
+            // Count only installed augments
             const totalUsed = ids.filter(id =>
                 v[`repeating_cybernetics_${id}_cyber_installed`] === '1'
             ).length;
@@ -517,6 +519,6 @@ const handleCrewTypeChange = (newCrewType: string) => {
 const initializeSheet = () => {
     calculateAllAttributeRatings();
     calculateLoad();
-    calculateCyberCapacity();
+    calculateAugmentCapacity();
     calculateHeatDice();
 };

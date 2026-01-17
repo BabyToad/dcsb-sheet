@@ -22,7 +22,7 @@ const PLAYBOOK_DATA = {
             { name: "A luxury weapon", load: 1 },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Augmented Projection", description: "You gain effect when speaking to a crowd." },
             { tier: 3, name: "Kodama Command Link", description: "When you Command a cohort in combat, they continue to fight when they would otherwise break (they're not taken out when they suffer level 3 harm). They gain +1 effect and 1 armor." },
             { tier: 3, name: "Cerebral BC Farming", description: "At the end of each downtime phase, you earn +2 stash." },
@@ -46,7 +46,7 @@ const PLAYBOOK_DATA = {
             { name: "Foldable Pistol", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Future Projections", description: "You may expend your special armor to protect a teammate, or to push yourself when you gather information or work on a long-term project." },
             { tier: 3, name: "Tapped Lines", description: "During downtime, you get +1 result level when you acquire an asset or reduce heat." },
             { tier: 3, name: "Camera Feed", description: "You have a tight hold on someone's life. When rolling to influence someone you have blackmail on, take +1d and +effect. When you take this ability, gain blackmail on one NPC." },
@@ -67,7 +67,7 @@ const PLAYBOOK_DATA = {
             { name: "Old Encryption Data", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Electrochemistry", description: "You can use an internal battery to briefly emit a local current of power." },
             { tier: 2, name: "Overflow Blockage", description: "You may expend your special armor to resist a wired-in consequence or push yourself when Hacking." },
             { tier: 3, name: "Corporate Comm Codes", description: "You won't let a goon tell you what to do or when to do it. Take +1d to resistance rolls when opposing Corporate authority." },
@@ -89,7 +89,7 @@ const PLAYBOOK_DATA = {
             { name: "Night Vision Goggles", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Loaded Targeting", description: "When you attack from hiding or spring a trap, you get +1d." },
             { tier: 3, name: "Accelerated Nerves", description: "When there's a question about who acts first, the answer is you (two characters with Accelerated Nerves act simultaneously)." },
             { tier: 4, name: "Split Fingers", description: "You are not affected by quality or Tier when you bypass security measures." },
@@ -111,7 +111,7 @@ const PLAYBOOK_DATA = {
             { name: "Drone-Marked Binoculars", load: 1 },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Projected Maps", description: "When you gather info to locate a target, you get +1 effect. When you hide in a prepared position or use camouflage, you get +1d to rolls to avoid detection." },
             { tier: 3, name: "Ruiner Programming", description: "You gain an additional xp trigger: You destroyed someone the voice in your head told you to. If your crew helped you follow directions, also mark crew xp." },
             { tier: 3, name: "Tele-scoped Eyes", description: "You can push yourself to do one of the following: make a ranged attack at extreme distance beyond what's normal for the weapon - unleash a barrage of rapid fire to suppress the enemy." },
@@ -131,7 +131,7 @@ const PLAYBOOK_DATA = {
             { name: "Binds and Cables", load: 1, special: true },
             { name: "Your Old CCID", load: 1, special: true }
         ],
-        cybernetics: [
+        augments: [
             { tier: 2, name: "Dulled Receptors", description: "When you trade a worse position for increased effect, take +1d." },
             { tier: 2, name: "Androstenone Emitters", description: "When you unleash physical violence, it's especially frightening. When you Dominate a frightened target, take +1d." },
             { tier: 2, name: "Bladed", description: "You have a melee weapon permanently affixed to one of your limbs, it cannot be lost unless the limb is too." },
@@ -373,9 +373,9 @@ const STRESS = {
 const TRAUMA = {
     MAX: 4,
 };
-// Cybernetics capacity
-const CYBER = {
-    DEFAULT_MAX: 4,
+// Augments (formerly Cybernetics) - capacity will be replaced by maintenance system
+const AUGMENTS = {
+    DEFAULT_MAX: 4, // Legacy: will be removed when maintenance clocks are implemented
 };
 // =============================================================================
 // UTILITY FUNCTIONS
@@ -430,8 +430,8 @@ const BACKGROUNDS = [
 const VICES = [
     'faith', 'gambling', 'luxury', 'obligation', 'pleasure', 'stupor', 'weird'
 ];
-// Cybernetic tiers
-const CYBERNETIC_TIERS = [2, 3, 4, 5];
+// Augment tiers
+const AUGMENT_TIERS = [2, 3, 4, 5];
 // Standard item loads (fixed values)
 const STANDARD_ITEMS = {
     item_blade: 1,
@@ -651,17 +651,18 @@ const formatPlaybookItem = (item, rowId) => {
     };
 };
 /**
- * Format a cybernetic for the repeating_cybernetics section
+ * Format an augment for the repeating section
+ * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
-const formatCybernetic = (cyber, rowId) => {
+const formatAugment = (augment, rowId) => {
     return {
-        [`repeating_cybernetics_${rowId}_cyber_tier`]: cyber.tier.toString(),
-        [`repeating_cybernetics_${rowId}_cyber_name`]: cyber.name,
-        [`repeating_cybernetics_${rowId}_cyber_desc`]: cyber.description
+        [`repeating_cybernetics_${rowId}_cyber_tier`]: augment.tier.toString(),
+        [`repeating_cybernetics_${rowId}_cyber_name`]: augment.name,
+        [`repeating_cybernetics_${rowId}_cyber_desc`]: augment.description
     };
 };
 /**
- * Handle playbook change - populate XP trigger, items, cybernetics (NOT actions)
+ * Handle playbook change - populate XP trigger, items, augments (NOT actions)
  * Actions are only set via explicit reset to preserve advanced characters
  */
 const handlePlaybookChange = (newPlaybook) => {
@@ -672,8 +673,8 @@ const handlePlaybookChange = (newPlaybook) => {
     setAttrs({ xp_trigger: data.xpTrigger });
     // 2. Clear old autogen items, populate new ones
     clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
-    // 3. Clear old autogen cybernetics, populate new ones
-    clearAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
+    // 3. Clear old autogen augments, populate new ones
+    clearAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
     // Note: Actions are NOT set here - use Reset to Playbook Defaults for that
 };
 /**
@@ -702,8 +703,8 @@ const resetToPlaybookDefaults = () => {
         setAttrs({ xp_trigger: data.xpTrigger });
         // 4. Clear ALL items (autogen and user-created) and repopulate
         clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
-        // 5. Clear ALL cybernetics (autogen and user-created) and repopulate
-        clearAllAndPopulateRepeatingSection("cybernetics", data.cybernetics, formatCybernetic);
+        // 5. Clear ALL augments (autogen and user-created) and repopulate
+        clearAllAndPopulateRepeatingSection("cybernetics", data.augments, formatAugment);
         // 6. Notify success via chat
         startRoll(`&{template:dcsb-fortune} {{charname=${charName}}} {{roll=[[0d6]]}} {{notes=Reset to ${data.title} defaults complete.}}`, results => finishRoll(results.rollId, {}));
     });
@@ -782,17 +783,18 @@ const calculateLoad = () => {
     });
 };
 // =============================================================================
-// CYBERNETICS CALCULATIONS
+// AUGMENT CALCULATIONS
 // =============================================================================
 /**
- * Calculate cybernetics capacity used
- * Only counts installed (checked) cybernetics
+ * Calculate augment capacity used (legacy - will be replaced by maintenance clocks)
+ * Only counts installed (checked) augments
+ * NOTE: Attribute names still use 'cyber' prefix until Pug templates are updated (Phase 2.2)
  */
-const calculateCyberCapacity = () => {
+const calculateAugmentCapacity = () => {
     getSectionIDs('repeating_cybernetics', ids => {
         const installedAttrs = ids.map(id => `repeating_cybernetics_${id}_cyber_installed`);
         getAttrs([...installedAttrs, 'cyber_used', 'cyber_max'], v => {
-            // Count only installed cybernetics
+            // Count only installed augments
             const totalUsed = ids.filter(id => v[`repeating_cybernetics_${id}_cyber_installed`] === '1').length;
             mySetAttrs({ cyber_used: totalUsed }, v);
         });
@@ -899,7 +901,7 @@ const handleCrewTypeChange = (newCrewType) => {
 const initializeSheet = () => {
     calculateAllAttributeRatings();
     calculateLoad();
-    calculateCyberCapacity();
+    calculateAugmentCapacity();
     calculateHeatDice();
 };
 // Dark City, Shining Babel - Sheet Worker Event Handlers
@@ -977,9 +979,9 @@ Object.keys(STANDARD_ITEMS).forEach(item => {
 // Playbook items (repeating section)
 on("change:repeating_items remove:repeating_items", calculateLoad);
 // =============================================================================
-// CYBERNETICS CAPACITY
+// AUGMENT CAPACITY (legacy - will be replaced by maintenance clocks)
 // =============================================================================
-on("change:repeating_cybernetics remove:repeating_cybernetics", calculateCyberCapacity);
+on("change:repeating_cybernetics remove:repeating_cybernetics", calculateAugmentCapacity);
 // =============================================================================
 // HEAT GAUGE (Crew Sheet)
 // =============================================================================
