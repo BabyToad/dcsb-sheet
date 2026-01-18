@@ -435,10 +435,10 @@
   border-color: #1a1a1a;
   color: #1a1a1a;
 }
-.charsheet .roll-modifier-row {
+.charsheet .roll-context-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   justify-content: center;
   padding: 4px 8px;
   margin-bottom: 8px;
@@ -446,56 +446,103 @@
   border: 1px dashed #888888;
   border-left: 3px solid #ffb000;
 }
-.charsheet .roll-modifier-row .modifier-label {
+.charsheet .roll-context-row .fakeradio {
+  display: none;
+}
+.charsheet .roll-context-row .context-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.charsheet .roll-context-row .context-label {
   font-size: 9px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #888888;
-  margin-right: 4px;
+  margin-right: 2px;
+  min-width: 28px;
 }
-.charsheet .roll-modifier-row .modifier-options {
+.charsheet .roll-context-row .context-options {
   display: flex;
   align-items: stretch;
   gap: 2px;
 }
-.charsheet .roll-modifier-row .fakeradio {
-  display: none;
-}
-.charsheet .roll-modifier-row .modifier-btn {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
+.charsheet .roll-context-row .context-btn {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: bold;
   background: #e5e5e0;
-  border: 2px solid #1a1a1a;
+  border: 2px solid #888888;
   cursor: pointer;
   transition: all 0.1s ease;
 }
-.charsheet .roll-modifier-row .modifier-btn:hover {
-  border-color: #ffb000;
-  background: rgba(255, 176, 0, 0.1);
+.charsheet .roll-context-row .context-btn:hover {
+  border-color: #1a1a1a;
+  background: rgba(26, 26, 26, 0.05);
 }
-.charsheet .roll-modifier-row .mod-zero {
+.charsheet .roll-context-row .mod-btn {
+  width: 28px;
+}
+.charsheet .roll-context-row .mod-zero {
   border-color: #888888;
   color: #888888;
 }
-.charsheet .roll-modifier-row .fakeradio:checked + .modifier-btn {
+.charsheet .roll-context-row .fakeradio[value=controlled]:checked + .pos-controlled {
+  background: #2d5a27;
+  border-color: #2d5a27;
+  color: white;
+}
+.charsheet .roll-context-row .fakeradio[value=risky]:checked + .pos-risky {
   background: #ffb000;
   border-color: #ffb000;
   color: #1a1a1a;
   box-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
 }
-.charsheet .roll-modifier-row .fakeradio[value="-1"]:checked + .modifier-btn {
+.charsheet .roll-context-row .fakeradio[value=desperate]:checked + .pos-desperate {
+  background: #8b0000;
+  border-color: #8b0000;
+  color: white;
+}
+.charsheet .roll-context-row .fakeradio[value=limited]:checked + .eff-limited {
+  background: #888888;
+  border-color: #888888;
+  color: white;
+}
+.charsheet .roll-context-row .fakeradio[value=standard]:checked + .eff-standard {
+  background: #ffb000;
+  border-color: #ffb000;
+  color: #1a1a1a;
+  box-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
+}
+.charsheet .roll-context-row .fakeradio[value=great]:checked + .eff-great {
+  background: #2d5a27;
+  border-color: #2d5a27;
+  color: white;
+}
+.charsheet .roll-context-row .fakeradio:checked + .mod-btn {
+  background: #ffb000;
+  border-color: #ffb000;
+  color: #1a1a1a;
+  box-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
+}
+.charsheet .roll-context-row .fakeradio[value="-1"]:checked + .mod-btn {
   background: #cc7700;
   border-color: #cc7700;
+}
+.charsheet .roll-context-row .fakeradio[value="0"]:checked + .mod-zero {
+  background: #888888;
+  border-color: #888888;
+  color: white;
+  box-shadow: none;
 }
 
 .charsheet .track-label {

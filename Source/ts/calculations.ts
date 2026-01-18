@@ -97,30 +97,51 @@ const getMaintenanceLabel = (result: number, crit: boolean): string => {
 };
 
 /**
- * Execute a roll with the current position dice modifier applied, then reset modifier to 0
- * @param baseAttrNames - Attributes needed for the roll (excluding roll_modifier)
+ * Roll context returned by rollWithModifier
+ * Contains position, effect, dice modifier, and formatted notes
+ */
+interface RollContext {
+    position: string;      // controlled, risky, desperate
+    effect: string;        // limited, standard, great
+    diceMod: number;       // -1 to +5
+    modNotes: string;      // Formatted modifier note (e.g., "+2d")
+}
+
+/**
+ * Execute a roll with position, effect, and dice modifier applied
+ * Resets all roll context to defaults after rolling
+ * @param baseAttrNames - Attributes needed for the roll (excluding roll context)
  * @param getDiceCount - Function to calculate base dice from attributes
- * @param rollFn - Function that performs the roll given (finalDice, attrs, modNotes)
+ * @param rollFn - Function that performs the roll given (finalDice, attrs, context)
  */
 const rollWithModifier = (
     baseAttrNames: string[],
     getDiceCount: (v: Record<string, string>) => number,
-    rollFn: (dice: number, v: Record<string, string>, modNotes: string) => void
+    rollFn: (dice: number, v: Record<string, string>, context: RollContext) => void
 ): void => {
-    getAttrs([...baseAttrNames, 'roll_modifier'], v => {
+    getAttrs([...baseAttrNames, 'roll_modifier', 'roll_position', 'roll_effect'], v => {
         const baseDice = getDiceCount(v);
         const mod = int(v.roll_modifier);
         const finalDice = baseDice + mod;
 
+        // Get position and effect
+        const position = v.roll_position || 'risky';
+        const effect = v.roll_effect || 'standard';
+
         // Build modifier note for display
         let modNotes = '';
-        if (mod > 0) modNotes = `+${mod}d Position`;
-        else if (mod < 0) modNotes = `${mod}d Position`;
+        if (mod > 0) modNotes = `+${mod}d`;
+        else if (mod < 0) modNotes = `${mod}d`;
 
-        // Reset modifier to 0 for next roll
-        setAttrs({ roll_modifier: '0' }, { silent: true });
+        // Reset all roll context to defaults for next roll
+        setAttrs({
+            roll_modifier: '0',
+            roll_position: 'risky',
+            roll_effect: 'standard'
+        }, { silent: true });
 
-        rollFn(finalDice, v, modNotes);
+        const context: RollContext = { position, effect, diceMod: mod, modNotes };
+        rollFn(finalDice, v, context);
     });
 };
 

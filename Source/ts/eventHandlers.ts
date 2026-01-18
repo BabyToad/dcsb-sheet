@@ -37,14 +37,20 @@ ACTIONS.forEach(action => {
         rollWithModifier(
             [action, 'character_name'],
             v => int(v[action]),
-            (dice, v, modNotes) => {
+            (dice, v, context) => {
                 const charName = v.character_name || 'Unknown';
                 const actionName = capitalize(action);
                 const rollFormula = buildRollFormula(dice);
-                const notesSection = modNotes ? ` {{notes=${modNotes}}}` : '';
+
+                // Build position and effect display (capitalize first letter)
+                const posDisplay = context.position.charAt(0).toUpperCase() + context.position.slice(1);
+                const effDisplay = context.effect.charAt(0).toUpperCase() + context.effect.slice(1);
+
+                // Build notes section with modifier if present
+                const notesSection = context.modNotes ? ` {{notes=${context.modNotes}}}` : '';
 
                 startRoll(
-                    `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}}${notesSection}`,
+                    `&{template:${ROLL_TEMPLATES.ACTION}} {{charname=${charName}}} {{title=${actionName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{position=${posDisplay}}} {{effect=${effDisplay}}}${notesSection}`,
                     results => {
                         const diceArray = results.results.roll.dice;
                         const rollResult = results.results.roll.result;
@@ -67,11 +73,11 @@ ATTRIBUTE_NAMES.forEach(attr => {
         rollWithModifier(
             [`${attr}_rating`, 'character_name'],
             v => int(v[`${attr}_rating`]),
-            (dice, v, modNotes) => {
+            (dice, v, context) => {
                 const charName = v.character_name || 'Unknown';
                 const attrName = capitalize(attr);
                 const rollFormula = buildRollFormula(dice);
-                const notesSection = modNotes ? ` {{notes=${modNotes}}}` : '';
+                const notesSection = context.modNotes ? ` {{notes=${context.modNotes}}}` : '';
 
                 startRoll(
                     `&{template:${ROLL_TEMPLATES.RESISTANCE}} {{charname=${charName}}} {{attribute=${attrName}}} {{roll=[[${rollFormula}]]}} {{stressmsg=[[0]]}}${notesSection}`,
@@ -155,13 +161,13 @@ on("clicked:disengage_roll", () => {
     rollWithModifier(
         ['score_heat', 'crew_name'],
         v => HEAT_GAUGE.SEGMENTS - int(v.score_heat),
-        (dice, v, modNotes) => {
+        (dice, v, context) => {
             const crewName = v.crew_name || 'Crew';
             const rollFormula = buildRollFormula(dice);
 
-            // Combine position modifier with existing notes
+            // Combine dice modifier with existing notes
             let notes = '1-3: 2 entanglements AND -2 coin. 4-5: -2 coin OR 2 entanglements. 6+: Clean getaway.';
-            if (modNotes) notes = `${modNotes} | ${notes}`;
+            if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
 
             startRoll(
                 `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=Disengagement}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
@@ -214,13 +220,13 @@ on("clicked:indulge_vice", () => {
             // Roll lowest attribute (BitD rules)
             return Math.min(acuity, grit, resolve);
         },
-        (dice, v, modNotes) => {
+        (dice, v, context) => {
             const charName = v.character_name || 'Unknown';
             const rollFormula = buildRollFormula(dice);
 
-            // Combine position modifier with existing notes
+            // Combine dice modifier with existing notes
             let notes = 'Clear stress equal to highest die. 6+ may overindulge.';
-            if (modNotes) notes = `${modNotes} | ${notes}`;
+            if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
 
             startRoll(
                 `&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
@@ -353,13 +359,13 @@ on("clicked:roll_healing", () => {
     rollWithModifier(
         ['character_name'],
         () => 1,  // Base healing roll is 1d
-        (dice, v, modNotes) => {
+        (dice, v, context) => {
             const charName = v.character_name || 'Unknown';
             const rollFormula = buildRollFormula(dice);
 
-            // Combine position modifier with existing notes
+            // Combine dice modifier with existing notes
             let notes = '1-3: 1 tick, 4-5: 2 ticks, 6: 3 ticks, Crit: 5 ticks. Fill clock to heal 1 harm level.';
-            if (modNotes) notes = `${modNotes} | ${notes}`;
+            if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
 
             startRoll(
                 `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${charName}}} {{title=Recovery}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,

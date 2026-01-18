@@ -163,19 +163,52 @@
             +repeating("crewclocks")
                 +clock-entry()
 
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 6: CREW CONTACTS
+        //- Framing: Network contacts based on crew type
+        //- Pattern: Mirrors Friends & Rivals from character sheet
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-contacts
+            +section-header-editable("crewcontacts", "CREW CONTACTS", "06")
+
+            .contacts-intro Select a Favored Contact
+
+            .contacts-list
+                //- 6 fixed contact slots (populated from crew type data)
+                - for (var i = 1; i <= 6; i++)
+                    .contact-card
+                        //- Relation selector: star (favored), circle (neutral)
+                        .contact-relation
+                            label.relation-option.relation-favored(title="Favored")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="favored")
+                                span.relation-badge ★
+                            label.relation-option.relation-neutral(title="Neutral")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="neutral", checked)
+                                span.relation-badge ○
+
+                        //- Display mode
+                        .contact-display.display
+                            span.contact-name(name=`attr_crew_contact_${i}_name`)
+                            span.contact-desc(name=`attr_crew_contact_${i}_desc`)
+
+                        //- Edit mode
+                        .contact-edit.edit
+                            input.contact-name-input(type="text", name=`attr_crew_contact_${i}_name`, placeholder="Contact name")
+                            input.contact-desc-input(type="text", name=`attr_crew_contact_${i}_desc`, placeholder="Role / description")
+
     //- ═══════════════════════════════════════════════════════════════
     //- RIGHT COLUMN - Upgrades, Abilities, Cohorts, Claims
     //- ═══════════════════════════════════════════════════════════════
     .right-column
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: CREW UPGRADES
+        //- SECTION 7: CREW UPGRADES
         //- Framing: Asset manifest / resource allocation
         //- ───────────────────────────────────────────────────────────
         .section.crew-upgrades
             .section-header
                 .section-stamp CREW UPGRADES
-                .section-number 06
+                .section-number 07
 
             .upgrades-grid
                 //- Lair Upgrades
@@ -219,12 +252,12 @@
                         +upgrade-multi("cohort_type", "Add Type", 4)
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 7: CREW TYPE UPGRADES
+        //- SECTION 8: CREW TYPE UPGRADES
         //- Framing: Crew-specific special upgrades
         //- Populated dynamically based on crew type
         //- ───────────────────────────────────────────────────────────
         .section.crew-type-upgrades
-            +section-header-editable("crewtypeupgrades", "CREW TYPE UPGRADES", "07")
+            +section-header-editable("crewtypeupgrades", "CREW TYPE UPGRADES", "08")
 
             +repeating("crewtypeupgrades")
                 .upgrade-entry
@@ -255,12 +288,12 @@
                             input(type="text", name="attr_upgrade_desc", placeholder="Description").upgrade-desc-input
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 8: CREW ABILITIES
+        //- SECTION 9: CREW ABILITIES
         //- Framing: Special operations / classified capabilities
         //- Pattern: Matches augments section
         //- ───────────────────────────────────────────────────────────
         .section.crew-abilities
-            +section-header-editable("crewabilities", "CREW ABILITIES", "08")
+            +section-header-editable("crewabilities", "CREW ABILITIES", "09")
 
             +repeating("crewabilities")
                 .ability-entry
@@ -283,59 +316,26 @@
                             textarea(name="attr_crew_ability_desc", placeholder="Description & effects").ability-desc-input
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 9: COHORTS
+        //- SECTION 10: COHORTS
         //- Framing: Personnel files / asset registry
         //- ───────────────────────────────────────────────────────────
         .section.cohorts
-            +section-header-editable("cohorts", "COHORTS", "09")
+            +section-header-editable("cohorts", "COHORTS", "10")
 
             +repeating("cohorts")
                 +cohort-block()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 10: CLAIMS / TERRITORY
+        //- SECTION 11: CLAIMS / TERRITORY
         //- Framing: Territory map / sphere of influence
         //- ───────────────────────────────────────────────────────────
         .section.claims
             .section-header
                 .section-stamp CLAIMS
-                .section-number 10
+                .section-number 11
 
             +repeating("claims")
                 .claim-entry
                     input(type="checkbox", name="attr_claim_held", value="1").claim-check
                     input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
                     input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
-
-        //- ───────────────────────────────────────────────────────────
-        //- SECTION 11: CREW CONTACTS
-        //- Framing: Network contacts based on crew type
-        //- Pattern: Mirrors Friends & Rivals from character sheet
-        //- ───────────────────────────────────────────────────────────
-        .section.crew-contacts
-            +section-header-editable("crewcontacts", "CREW CONTACTS", "11")
-
-            .contacts-intro Select a Favored Contact
-
-            .contacts-list
-                //- 6 fixed contact slots (populated from crew type data)
-                - for (var i = 1; i <= 6; i++)
-                    .contact-card
-                        //- Relation selector: star (favored), circle (neutral)
-                        .contact-relation
-                            label.relation-option.relation-favored(title="Favored")
-                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="favored")
-                                span.relation-badge ★
-                            label.relation-option.relation-neutral(title="Neutral")
-                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="neutral", checked)
-                                span.relation-badge ○
-
-                        //- Display mode
-                        .contact-display.display
-                            span.contact-name(name=`attr_crew_contact_${i}_name`)
-                            span.contact-desc(name=`attr_crew_contact_${i}_desc`)
-
-                        //- Edit mode
-                        .contact-edit.edit
-                            input.contact-name-input(type="text", name=`attr_crew_contact_${i}_name`, placeholder="Contact name")
-                            input.contact-desc-input(type="text", name=`attr_crew_contact_${i}_desc`, placeholder="Role / description")

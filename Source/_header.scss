@@ -165,11 +165,11 @@
     }
 
     // =========================================================================
-    // ROLL MODIFIER ROW - Dice position modifier toggle buttons
+    // ROLL CONTEXT ROW - Position, Effect, and Dice modifier toggles
     // =========================================================================
 
-    .roll-modifier-row {
-        @include flex-row($spacing-md, center);
+    .roll-context-row {
+        @include flex-row($spacing-lg, center);
         justify-content: center;
         padding: $spacing-sm $spacing-md;
         margin-bottom: $spacing-md;
@@ -177,48 +177,114 @@
         border: 1px dashed $form-grey;
         border-left: 3px solid $terminal-amber;
 
-        .modifier-label {
-            @include uppercase-label($type-xs, $form-grey, 0.5px);
-            margin-right: $spacing-sm;
-        }
-
-        .modifier-options {
-            @include flex-row($spacing-xs, stretch);
-        }
-
         // Hide the radio inputs
         .fakeradio {
             display: none;
         }
 
-        // Base button styling
-        .modifier-btn {
-            @include square-box(28px);
+        .context-group {
+            @include flex-row($spacing-xs, center);
+        }
+
+        .context-label {
+            @include uppercase-label($type-xs, $form-grey, 0.5px);
+            margin-right: $spacing-xs;
+            min-width: 28px;
+        }
+
+        .context-options {
+            @include flex-row(2px, stretch);
+        }
+
+        // Base button styling for all context buttons
+        .context-btn {
+            @include square-box(24px);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: $font-mono;
-            font-size: $type-sm;
+            font-size: $type-xs;
             font-weight: bold;
             background: $form-paper;
-            border: 2px solid $form-ink;
+            border: 2px solid $form-grey;
             cursor: pointer;
             @include transition();
 
             &:hover {
-                border-color: $terminal-amber;
-                background: rgba($terminal-amber, 0.1);
+                border-color: $form-ink;
+                background: rgba($form-ink, 0.05);
             }
         }
 
-        // Zero button gets muted styling (default state)
+        // Dice modifier buttons are slightly wider
+        .mod-btn {
+            width: 28px;
+        }
+
+        // Zero/default buttons get muted styling
         .mod-zero {
             border-color: $form-grey;
             color: $form-grey;
         }
 
+        // ─────────────────────────────────────────────────────────────
+        // POSITION STATES - Controlled (green), Risky (amber), Desperate (red)
+        // ─────────────────────────────────────────────────────────────
+
+        // Controlled - green (safe)
+        .fakeradio[value="controlled"]:checked + .pos-controlled {
+            background: $status-good;
+            border-color: $status-good;
+            color: white;
+        }
+
+        // Risky - amber (default, standard)
+        .fakeradio[value="risky"]:checked + .pos-risky {
+            background: $terminal-amber;
+            border-color: $terminal-amber;
+            color: $form-ink;
+            box-shadow: 0 0 4px rgba($terminal-amber, 0.5);
+        }
+
+        // Desperate - red (dangerous)
+        .fakeradio[value="desperate"]:checked + .pos-desperate {
+            background: $status-danger;
+            border-color: $status-danger;
+            color: white;
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // EFFECT STATES - Limited (grey), Standard (amber), Great (green)
+        // ─────────────────────────────────────────────────────────────
+
+        // Limited - grey (reduced effect)
+        .fakeradio[value="limited"]:checked + .eff-limited {
+            background: $form-grey;
+            border-color: $form-grey;
+            color: white;
+        }
+
+        // Standard - amber (normal)
+        .fakeradio[value="standard"]:checked + .eff-standard {
+            background: $terminal-amber;
+            border-color: $terminal-amber;
+            color: $form-ink;
+            box-shadow: 0 0 4px rgba($terminal-amber, 0.5);
+        }
+
+        // Great - green (increased effect)
+        .fakeradio[value="great"]:checked + .eff-great {
+            background: $status-good;
+            border-color: $status-good;
+            color: white;
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // DICE MODIFIER STATES
+        // ─────────────────────────────────────────────────────────────
+
         // Active/selected state - amber highlight
-        .fakeradio:checked + .modifier-btn {
+        .fakeradio:checked + .mod-btn {
             background: $terminal-amber;
             border-color: $terminal-amber;
             color: $form-ink;
@@ -226,9 +292,17 @@
         }
 
         // Negative modifier gets warning treatment
-        .fakeradio[value="-1"]:checked + .modifier-btn {
+        .fakeradio[value="-1"]:checked + .mod-btn {
             background: $status-warning;
             border-color: $status-warning;
+        }
+
+        // Zero stays muted when selected
+        .fakeradio[value="0"]:checked + .mod-zero {
+            background: $form-grey;
+            border-color: $form-grey;
+            color: white;
+            box-shadow: none;
         }
     }
 }

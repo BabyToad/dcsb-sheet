@@ -30,23 +30,47 @@
         label.tab-button(for="tab_crew")
             span.tab-text(data-i18n="CREW") CREW
 
-    //- Roll modifier selector - adds/subtracts dice from all rolls
-    .roll-modifier-row
-        span.modifier-label DICE MOD
-        .modifier-options
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="-1", id="mod_neg1")
-            label.modifier-btn(for="mod_neg1") -1
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="0", checked, id="mod_0")
-            label.modifier-btn.mod-zero(for="mod_0") 0
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="1", id="mod_1")
-            label.modifier-btn(for="mod_1") +1
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="2", id="mod_2")
-            label.modifier-btn(for="mod_2") +2
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="3", id="mod_3")
-            label.modifier-btn(for="mod_3") +3
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="4", id="mod_4")
-            label.modifier-btn(for="mod_4") +4
-            input.fakeradio(type="radio", name="attr_roll_modifier", value="5", id="mod_5")
-            label.modifier-btn(for="mod_5") +5
+    //- Roll context row - Position, Effect, and Dice Modifier
+    .roll-context-row
+        //- Position selector (Controlled / Risky / Desperate)
+        .context-group.position-group
+            span.context-label POS
+            .context-options
+                input.fakeradio(type="radio", name="attr_roll_position", value="controlled", id="pos_controlled")
+                label.context-btn.pos-controlled(for="pos_controlled") C
+                input.fakeradio(type="radio", name="attr_roll_position", value="risky", checked, id="pos_risky")
+                label.context-btn.pos-risky(for="pos_risky") R
+                input.fakeradio(type="radio", name="attr_roll_position", value="desperate", id="pos_desperate")
+                label.context-btn.pos-desperate(for="pos_desperate") D
+
+        //- Effect selector (Limited / Standard / Great)
+        .context-group.effect-group
+            span.context-label EFF
+            .context-options
+                input.fakeradio(type="radio", name="attr_roll_effect", value="limited", id="eff_limited")
+                label.context-btn.eff-limited(for="eff_limited") L
+                input.fakeradio(type="radio", name="attr_roll_effect", value="standard", checked, id="eff_standard")
+                label.context-btn.eff-standard(for="eff_standard") S
+                input.fakeradio(type="radio", name="attr_roll_effect", value="great", id="eff_great")
+                label.context-btn.eff-great(for="eff_great") G
+
+        //- Dice modifier selector
+        .context-group.modifier-group
+            span.context-label DICE
+            .context-options
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="-1", id="mod_neg1")
+                label.context-btn.mod-btn(for="mod_neg1") -1
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="0", checked, id="mod_0")
+                label.context-btn.mod-btn.mod-zero(for="mod_0") 0
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="1", id="mod_1")
+                label.context-btn.mod-btn(for="mod_1") +1
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="2", id="mod_2")
+                label.context-btn.mod-btn(for="mod_2") +2
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="3", id="mod_3")
+                label.context-btn.mod-btn(for="mod_3") +3
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="4", id="mod_4")
+                label.context-btn.mod-btn(for="mod_4") +4
+                input.fakeradio(type="radio", name="attr_roll_modifier", value="5", id="mod_5")
+                label.context-btn.mod-btn(for="mod_5") +5
 
     //- Edit mode is now per-section (click ✎ on each section header)
