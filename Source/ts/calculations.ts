@@ -543,6 +543,31 @@ const formatCrewTypeUpgrade = (
 };
 
 /**
+ * Populate crew contact slots from crew type data
+ * Contacts are fixed attributes (crew_contact_1_name, etc.) not a repeating section
+ */
+const populateCrewContacts = (contacts: { name: string; description: string }[]) => {
+    const updates: { [key: string]: string } = {};
+
+    // Populate up to 6 contact slots
+    for (let i = 0; i < 6; i++) {
+        const contactNum = i + 1;
+        if (contacts[i]) {
+            updates[`crew_contact_${contactNum}_name`] = contacts[i].name;
+            updates[`crew_contact_${contactNum}_desc`] = contacts[i].description;
+        } else {
+            // Clear slot if no contact data
+            updates[`crew_contact_${contactNum}_name`] = '';
+            updates[`crew_contact_${contactNum}_desc`] = '';
+        }
+        // Reset relation to neutral when populating
+        updates[`crew_contact_${contactNum}_relation`] = 'neutral';
+    }
+
+    setAttrs(updates);
+};
+
+/**
  * Clear all crew upgrade checkboxes
  */
 const clearCrewUpgrades = (callback?: () => void) => {
@@ -587,7 +612,7 @@ const setCrewUpgrades = (upgrades: { checkboxes: string[]; multi: { [baseName: s
 };
 
 /**
- * Handle crew type change - populate abilities, cohorts, upgrades, and type-specific upgrades
+ * Handle crew type change - populate abilities, cohorts, upgrades, type-specific upgrades, and contacts
  */
 const handleCrewTypeChange = (newCrewType: string) => {
     if (!newCrewType || !CREW_DATA[newCrewType]) return;
@@ -607,6 +632,9 @@ const handleCrewTypeChange = (newCrewType: string) => {
     clearCrewUpgrades(() => {
         setCrewUpgrades(data.upgrades);
     });
+
+    // 5. Populate crew contacts from crew type data
+    populateCrewContacts(data.contacts);
 };
 
 // =============================================================================

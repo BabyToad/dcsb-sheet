@@ -196,6 +196,24 @@
                         span.armor-box
                         span Special
 
+            //- Finances row (Coin & Stash)
+            .finances-row
+                .coin-block
+                    .track-label COIN
+                    .coin-track
+                        +fakeradio-track("coin", 4, "coin-box")
+                    span.coin-warning(title=">4 coin = +1 heat at end of downtime") ⚠
+
+                .stash-block
+                    .track-label STASH
+                    .stash-track
+                        +fakeradio-track("stash", 40, "stash-box")
+                    .lifestyle-markers
+                        span.marker(data-tier="0") Gutter
+                        span.marker(data-tier="1") Meager
+                        span.marker(data-tier="2") Modest
+                        span.marker(data-tier="3") Fine
+
         //- ───────────────────────────────────────────────────────────
         //- SECTION 4: AUGMENTATION RECORD
         //- Framing: Tech spec sheet / warranty documentation

@@ -306,3 +306,36 @@
                     input(type="checkbox", name="attr_claim_held", value="1").claim-check
                     input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
                     input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
+
+        //- ───────────────────────────────────────────────────────────
+        //- SECTION 11: CREW CONTACTS
+        //- Framing: Network contacts based on crew type
+        //- Pattern: Mirrors Friends & Rivals from character sheet
+        //- ───────────────────────────────────────────────────────────
+        .section.crew-contacts
+            +section-header-editable("crewcontacts", "CREW CONTACTS", "11")
+
+            .contacts-intro Select a Favored Contact
+
+            .contacts-list
+                //- 6 fixed contact slots (populated from crew type data)
+                - for (var i = 1; i <= 6; i++)
+                    .contact-card
+                        //- Relation selector: star (favored), circle (neutral)
+                        .contact-relation
+                            label.relation-option.relation-favored(title="Favored")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="favored")
+                                span.relation-badge ★
+                            label.relation-option.relation-neutral(title="Neutral")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="neutral", checked)
+                                span.relation-badge ○
+
+                        //- Display mode
+                        .contact-display.display
+                            span.contact-name(name=`attr_crew_contact_${i}_name`)
+                            span.contact-desc(name=`attr_crew_contact_${i}_desc`)
+
+                        //- Edit mode
+                        .contact-edit.edit
+                            input.contact-name-input(type="text", name=`attr_crew_contact_${i}_name`, placeholder="Contact name")
+                            input.contact-desc-input(type="text", name=`attr_crew_contact_${i}_desc`, placeholder="Role / description")

@@ -424,6 +424,104 @@
     }
 
     // =========================================================================
+    // FINANCES - Coin & Stash
+    // =========================================================================
+
+    .finances-row {
+        display: flex;
+        gap: $spacing-md;
+        padding-top: $spacing-sm;
+        border-top: 1px dashed $zine-grey;
+        margin-top: $spacing-sm;
+        align-items: flex-start;
+    }
+
+    .coin-block {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+
+        .coin-warning {
+            font-size: 12px;
+            color: $status-warning;
+            cursor: help;
+        }
+    }
+
+    .coin-track {
+        @include flex-row(1px, stretch);
+        @include fakeradio-hidden();
+
+        .coin-box {
+            @include square-box(12px);
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+            @include transition();
+            // Forward fill: start FILLED
+            @include checkbox-checked-fill($terminal-amber);
+        }
+
+        // Empty boxes after checked value (forward fill pattern)
+        .fakeradio:checked ~ .fakeradio + .coin-box {
+            background: transparent;
+        }
+    }
+
+    .stash-block {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-xs;
+
+        .track-label {
+            margin-bottom: 0;
+        }
+    }
+
+    .stash-track {
+        display: grid;
+        grid-template-columns: repeat(10, 12px);
+        grid-template-rows: repeat(4, 12px);
+        gap: 1px;
+        @include fakeradio-hidden();
+
+        .stash-box {
+            width: 12px;
+            height: 12px;
+            border: 1px solid $zine-ink;
+            cursor: pointer;
+            @include transition();
+            // Forward fill: start FILLED
+            @include checkbox-checked-fill($terminal-amber);
+        }
+
+        // Empty boxes after checked value (forward fill pattern)
+        .fakeradio:checked ~ .fakeradio + .stash-box {
+            background: transparent;
+        }
+    }
+
+    .lifestyle-markers {
+        display: grid;
+        grid-template-rows: repeat(4, 12px);
+        gap: 1px;
+        align-items: center;
+        font-size: 7px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+
+        .marker {
+            padding-left: $spacing-xs;
+            line-height: 12px;
+
+            &[data-tier="0"] { color: $status-danger; }
+            &[data-tier="1"] { color: $status-warning; }
+            &[data-tier="2"] { color: $zine-grey; }
+            &[data-tier="3"] { color: $status-good; }
+        }
+    }
+
+    // =========================================================================
     // EQUIPMENT
     // =========================================================================
 

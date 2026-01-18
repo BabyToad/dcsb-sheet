@@ -1349,6 +1349,102 @@
 .charsheet .armor-checkbox input[type=checkbox]:checked + .armor-box {
   background: #ffb000;
 }
+.charsheet .finances-row {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px dashed #888888;
+  margin-top: 4px;
+  align-items: flex-start;
+}
+.charsheet .coin-block {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.charsheet .coin-block .coin-warning {
+  font-size: 12px;
+  color: #cc7700;
+  cursor: help;
+}
+.charsheet .coin-track {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+}
+.charsheet .coin-track .fakeradio.zero,
+.charsheet .coin-track .fakeradio {
+  display: none;
+}
+.charsheet .coin-track .coin-box {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  background: #ffb000;
+}
+.charsheet .coin-track .fakeradio:checked ~ .fakeradio + .coin-box {
+  background: transparent;
+}
+.charsheet .stash-block {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+.charsheet .stash-block .track-label {
+  margin-bottom: 0;
+}
+.charsheet .stash-track {
+  display: grid;
+  grid-template-columns: repeat(10, 12px);
+  grid-template-rows: repeat(4, 12px);
+  gap: 1px;
+}
+.charsheet .stash-track .fakeradio.zero,
+.charsheet .stash-track .fakeradio {
+  display: none;
+}
+.charsheet .stash-track .stash-box {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #1a1a1a;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  background: #ffb000;
+}
+.charsheet .stash-track .fakeradio:checked ~ .fakeradio + .stash-box {
+  background: transparent;
+}
+.charsheet .lifestyle-markers {
+  display: grid;
+  grid-template-rows: repeat(4, 12px);
+  gap: 1px;
+  align-items: center;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.charsheet .lifestyle-markers .marker {
+  padding-left: 2px;
+  line-height: 12px;
+}
+.charsheet .lifestyle-markers .marker[data-tier="0"] {
+  color: #8b0000;
+}
+.charsheet .lifestyle-markers .marker[data-tier="1"] {
+  color: #cc7700;
+}
+.charsheet .lifestyle-markers .marker[data-tier="2"] {
+  color: #888888;
+}
+.charsheet .lifestyle-markers .marker[data-tier="3"] {
+  color: #2d5a27;
+}
 .charsheet .load-selector {
   margin-bottom: 4px;
 }
@@ -2393,6 +2489,111 @@
 .charsheet .claim-entry .claim-check:checked {
   background: #ffb000;
   border-color: #ffb000;
+}
+.charsheet .crew-contacts .contacts-intro {
+  font-family: "Courier New", Courier, monospace;
+  font-style: italic;
+  color: #888888;
+  margin-bottom: 8px;
+  font-size: 11px;
+}
+.charsheet .crew-contacts .contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.charsheet .crew-contacts .contact-card {
+  position: relative;
+  background: #e5e5e0;
+  border: 1px solid #1a1a1a;
+  border-left: 3px solid #888888;
+  padding: 4px 8px;
+  font-family: "Courier New", Courier, monospace;
+}
+.charsheet .crew-contacts .contact-card:nth-child(odd) {
+  transform: rotate(-0.3deg);
+}
+.charsheet .crew-contacts .contact-card:nth-child(even) {
+  transform: rotate(0.2deg);
+}
+.charsheet .crew-contacts .contact-card .contact-relation {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: flex;
+  gap: 2px;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-option {
+  cursor: pointer;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-option input[type=radio] {
+  display: none;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-option .relation-badge {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  flex-shrink: 0;
+  border: 1px solid #888888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: #e5e5e0;
+  transition: all 0.1s ease;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-option:hover .relation-badge {
+  border-color: #1a1a1a;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-favored input:checked + .relation-badge {
+  background: #ffb000;
+  border-color: #ffb000;
+  color: #1a1a1a;
+}
+.charsheet .crew-contacts .contact-card .contact-relation .relation-neutral input:checked + .relation-badge {
+  background: #888888;
+  border-color: #888888;
+  color: white;
+}
+.charsheet .crew-contacts .contact-card:has(.relation-favored input:checked) {
+  border-left-color: #ffb000;
+}
+.charsheet .crew-contacts .contact-card .contact-display {
+  padding-right: 50px;
+}
+.charsheet .crew-contacts .contact-card .contact-display .contact-name {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.charsheet .crew-contacts .contact-card .contact-display .contact-name:empty::after {
+  content: "Select a crew type...";
+  color: #bbbbbb;
+  font-weight: normal;
+  font-style: italic;
+}
+.charsheet .crew-contacts .contact-card .contact-display .contact-desc {
+  display: block;
+  font-size: 10px;
+  color: #888888;
+}
+.charsheet .crew-contacts .contact-card .contact-display .contact-desc:empty {
+  display: none;
+}
+.charsheet .crew-contacts .contact-card .contact-edit {
+  padding-right: 50px;
+}
+.charsheet .crew-contacts .contact-card .contact-edit .contact-name-input {
+  width: 100%;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+.charsheet .crew-contacts .contact-card .contact-edit .contact-desc-input {
+  width: 100%;
+  font-size: 10px;
 }
 
 .tab-radio {

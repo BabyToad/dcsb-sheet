@@ -713,4 +713,139 @@
             }
         }
     }
+
+    // =========================================================================
+    // CREW CONTACTS - Crew-type specific contacts
+    // Mirrors Friends & Rivals pattern from character sheet
+    // =========================================================================
+
+    .crew-contacts {
+        .contacts-intro {
+            font-family: $font-mono;
+            font-style: italic;
+            color: $zine-grey;
+            margin-bottom: $spacing-md;
+            font-size: 11px;
+        }
+
+        .contacts-list {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+        }
+
+        .contact-card {
+            position: relative;
+            background: $form-paper;
+            border: 1px solid $form-ink;
+            border-left: 3px solid $zine-grey;
+            padding: $spacing-sm $spacing-md;
+            font-family: $font-mono;
+
+            // Slight alternating rotation for rolodex feel
+            &:nth-child(odd) {
+                transform: rotate(-0.3deg);
+            }
+            &:nth-child(even) {
+                transform: rotate(0.2deg);
+            }
+
+            // Relation controls at top right
+            .contact-relation {
+                position: absolute;
+                top: $spacing-xs;
+                right: $spacing-xs;
+                display: flex;
+                gap: 2px;
+
+                .relation-option {
+                    cursor: pointer;
+
+                    input[type="radio"] {
+                        @include hidden-checkbox-base();
+                    }
+
+                    .relation-badge {
+                        @include square-box(18px);
+                        border: 1px solid $zine-grey;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 12px;
+                        background: $form-paper;
+                        @include transition();
+                    }
+
+                    &:hover .relation-badge {
+                        border-color: $form-ink;
+                    }
+                }
+
+                // Favored - amber accent with star
+                .relation-favored input:checked + .relation-badge {
+                    background: $terminal-amber;
+                    border-color: $terminal-amber;
+                    color: $form-ink;
+                }
+
+                // Neutral - grey (standard)
+                .relation-neutral input:checked + .relation-badge {
+                    background: $zine-grey;
+                    border-color: $zine-grey;
+                    color: white;
+                }
+            }
+
+            // Update left border color based on selection
+            &:has(.relation-favored input:checked) {
+                border-left-color: $terminal-amber;
+            }
+
+            // Display mode content
+            .contact-display {
+                padding-right: 50px; // Space for relation badges
+
+                .contact-name {
+                    display: block;
+                    font-weight: bold;
+                    font-size: $type-md;
+                    margin-bottom: 2px;
+
+                    &:empty::after {
+                        content: 'Select a crew type...';
+                        color: $form-grey-light;
+                        font-weight: normal;
+                        font-style: italic;
+                    }
+                }
+
+                .contact-desc {
+                    display: block;
+                    font-size: $type-sm;
+                    color: $zine-grey;
+
+                    &:empty {
+                        display: none;
+                    }
+                }
+            }
+
+            // Edit mode content
+            .contact-edit {
+                padding-right: 50px;
+
+                .contact-name-input {
+                    width: 100%;
+                    font-weight: bold;
+                    font-size: $type-md;
+                    margin-bottom: $spacing-xs;
+                }
+
+                .contact-desc-input {
+                    width: 100%;
+                    font-size: $type-sm;
+                }
+            }
+        }
+    }
 }

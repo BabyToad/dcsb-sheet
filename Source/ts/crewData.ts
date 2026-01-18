@@ -10,6 +10,11 @@ interface CrewAbility {
     description: string;
 }
 
+interface CrewContact {
+    name: string;
+    description: string;
+}
+
 interface CrewCohort {
     name: string;
     type: "talent" | "suits" | "couriers" | "catches" | "clubs" | "expert";
@@ -37,6 +42,7 @@ interface CrewData {
     cohorts: CrewCohort[];
     upgrades: CrewUpgrades;
     typeUpgrades: CrewTypeUpgrade[];  // Crew-type specific upgrades
+    contacts: CrewContact[];           // Crew-type specific contacts
 }
 
 // =============================================================================
@@ -100,6 +106,14 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
             { name: "Elite Rooks", description: "Your Rooks cohort gains +1 quality" },
             { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" }
+        ],
+        contacts: [
+            { name: "Bad Faith", description: "violent accelerationist" },
+            { name: "Lantier", description: "corporate Saboteur" },
+            { name: "Heintz", description: "info runner" },
+            { name: "X", description: "controversial musician" },
+            { name: "Virgil", description: "Well academic" },
+            { name: "Narrow", description: "escaped Ruiner" }
         ]
     },
 
@@ -151,6 +165,14 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
             { name: "Elite Rooks", description: "Your Rooks cohort gains +1 quality" },
             { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" }
+        ],
+        contacts: [
+            { name: "Silk", description: "wandering vendor" },
+            { name: "Astko", description: "Slab Agent" },
+            { name: "Khalil", description: "Corporate Courier" },
+            { name: "Rayya", description: "Flotilla Smuggler" },
+            { name: "Grif", description: "Mercenary Captain" },
+            { name: "Noble", description: "sleazy Marketer" }
         ]
     },
 
@@ -202,6 +224,14 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "System Adaptation", description: "Filling Personal XP now expands a crew member's augment capacity by 2 instead of 1", levels: 2 },
             { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" },
             { name: "Corporate Contacts", description: "+1 Tier in Prison" }
+        ],
+        contacts: [
+            { name: "Mr. Johnson", description: "go-between" },
+            { name: "Faridah", description: "Weapon Researcher" },
+            { name: "Nasiff", description: "Uploaded Consciousness" },
+            { name: "Gunther", description: "cybernetic veteran" },
+            { name: "Kayabuki", description: "Lawyer" },
+            { name: "Zhue", description: "prosthetic radical" }
         ]
     },
 
@@ -262,6 +292,14 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "Elite Thugs", description: "Your Thugs cohorts gain +1 quality" },
             { name: "Special Ride", description: "A special vehicle with unique capabilities", levels: 2 },
             { name: "Roaring", description: "+1 Stress Box", levels: 3 }
+        ],
+        contacts: [
+            { name: "Davi", description: "Junker" },
+            { name: "Zhuan", description: "club owner" },
+            { name: "Balli", description: "'doctor'" },
+            { name: "Hen", description: "middle manager" },
+            { name: "Kai", description: "transient" },
+            { name: "Bells", description: "razer-girl" }
         ]
     }
 };
