@@ -184,6 +184,70 @@ on("clicked:disengage_roll", () => {
 });
 
 // =============================================================================
+// ENGAGEMENT ROLL (Crew Sheet)
+// =============================================================================
+
+on("clicked:engagement_roll", () => {
+    rollWithModifier(
+        ['crew_name'],
+        () => 0,  // Base dice = 0, relies on modifier
+        (dice, v, context) => {
+            const crewName = v.crew_name || 'Crew';
+            const rollFormula = buildRollFormula(dice);
+
+            // Combine dice modifier with existing notes
+            let notes = '1-3: Bad start. 4-5: Risky start. 6: Controlled start. Crit: Controlled + edge.';
+            if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
+
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${crewName}}} {{title=Engagement}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
+                results => {
+                    const diceArray = results.results.roll.dice;
+                    const rollResult = results.results.roll.result;
+                    const crit = isCrit(diceArray);
+                    const label = getEngagementLabel(rollResult, crit);
+                    finishRoll(results.rollId, { label });
+                }
+            );
+        }
+    );
+});
+
+// =============================================================================
+// FORTUNE ROLL (Header - generic fortune roll with position/effect)
+// =============================================================================
+
+on("clicked:fortune_roll", () => {
+    rollWithModifier(
+        ['character_name', 'crew_name'],
+        () => 0,  // Base dice = 0, relies on modifier
+        (dice, v, context) => {
+            const name = v.character_name || v.crew_name || 'Unknown';
+            const rollFormula = buildRollFormula(dice);
+
+            // Build position and effect display
+            const posDisplay = context.position.charAt(0).toUpperCase() + context.position.slice(1);
+            const effDisplay = context.effect.charAt(0).toUpperCase() + context.effect.slice(1);
+
+            // Build notes section
+            let notes = '1-3: Bad outcome. 4-5: Mixed outcome. 6: Good outcome. Crit: Exceptional.';
+            if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
+
+            startRoll(
+                `&{template:${ROLL_TEMPLATES.FORTUNE}} {{charname=${name}}} {{title=Fortune}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{position=${posDisplay}}} {{effect=${effDisplay}}} {{notes=${notes}}}`,
+                results => {
+                    const diceArray = results.results.roll.dice;
+                    const rollResult = results.results.roll.result;
+                    const crit = isCrit(diceArray);
+                    const label = getFortuneLabel(rollResult, crit);
+                    finishRoll(results.rollId, { label });
+                }
+            );
+        }
+    );
+});
+
+// =============================================================================
 // PLAYBOOK SELECTION
 // =============================================================================
 

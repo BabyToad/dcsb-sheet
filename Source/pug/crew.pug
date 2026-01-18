@@ -137,9 +137,12 @@
                 //- Heat Gauge (6 segments - for active scores)
                 +heat-gauge("score_heat")
 
-                //- Disengagement Roll button
-                button(type="action", name="act_disengage_roll").disengage-btn
-                    span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
+                //- Score roll buttons
+                .score-buttons
+                    button(type="action", name="act_engagement_roll").score-btn
+                        span(data-i18n="ROLL_ENGAGEMENT") Roll Engagement
+                    button(type="action", name="act_disengage_roll").score-btn
+                        span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 4: CREW NOTES

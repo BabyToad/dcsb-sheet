@@ -59,6 +59,18 @@ rolltemplate.sheet-rolltemplate-dcsb-fortune
                 .rt-result-label {{computed::label}}
                 .rt-result-value {{roll}}
 
+            //- Position and Effect (if provided)
+            | {{#position}}
+            .rt-context
+                span.rt-context-label POSITION:
+                span.rt-context-value {{position}}
+            | {{/position}}
+            | {{#effect}}
+            .rt-context
+                span.rt-context-label EFFECT:
+                span.rt-context-value {{effect}}
+            | {{/effect}}
+
         | {{#notes}}
         .rt-footer
             span.rt-notes {{notes}}

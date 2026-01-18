@@ -83,6 +83,20 @@ const getDisengageLabel = (result: number, crit: boolean): string => {
 };
 
 /**
+ * Get engagement roll label
+ * 1-3: Bad start (disadvantage)
+ * 4-5: Risky start (standard)
+ * 6: Controlled start (advantage)
+ * Crit: Controlled + edge
+ */
+const getEngagementLabel = (result: number, crit: boolean): string => {
+    if (crit) return '!! CRITICAL !! Controlled + Edge';
+    if (result >= 6) return 'CONTROLLED START';
+    if (result >= 4) return 'RISKY START';
+    return 'BAD START';
+};
+
+/**
  * Get maintenance failure roll label (takes LOWEST die)
  * Crit: Next downtime maintenance costs 0 BC
  * 6: Everything still working

@@ -304,5 +304,32 @@
             color: white;
             box-shadow: none;
         }
+
+        // ─────────────────────────────────────────────────────────────
+        // FORTUNE ROLL BUTTON
+        // ─────────────────────────────────────────────────────────────
+
+        .fortune-group {
+            margin-left: auto;  // Push to right side
+
+            .fortune-btn {
+                font-family: $font-mono;
+                font-size: $type-xs;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                background: $form-paper;
+                border: 2px solid $terminal-amber;
+                color: $terminal-amber;
+                padding: $spacing-xs $spacing-md;
+                cursor: pointer;
+                @include transition();
+
+                &:hover {
+                    background: $terminal-amber;
+                    color: $form-ink;
+                }
+            }
+        }
     }
 }

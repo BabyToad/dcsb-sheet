@@ -544,6 +544,26 @@
   color: white;
   box-shadow: none;
 }
+.charsheet .roll-context-row .fortune-group {
+  margin-left: auto;
+}
+.charsheet .roll-context-row .fortune-group .fortune-btn {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #e5e5e0;
+  border: 2px solid #ffb000;
+  color: #ffb000;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+.charsheet .roll-context-row .fortune-group .fortune-btn:hover {
+  background: #ffb000;
+  color: #1a1a1a;
+}
 
 .charsheet .track-label {
   font-size: 10px;
@@ -2536,6 +2556,29 @@
 .charsheet .claim-entry .claim-check:checked {
   background: #ffb000;
   border-color: #ffb000;
+}
+.charsheet .score-buttons {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  margin-top: 4px;
+}
+.charsheet .score-buttons .score-btn {
+  flex: 1;
+  padding: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #e5e5e0;
+  border: 2px solid #1a1a1a;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+.charsheet .score-buttons .score-btn:hover {
+  background: #1a1a1a;
+  color: #e5e5e0;
 }
 .charsheet .crew-contacts .contacts-intro {
   font-family: "Courier New", Courier, monospace;

@@ -73,4 +73,9 @@
                 input.fakeradio(type="radio", name="attr_roll_modifier", value="5", id="mod_5")
                 label.context-btn.mod-btn(for="mod_5") +5
 
+        //- Fortune Roll button (uses current position/effect/dice settings)
+        .context-group.fortune-group
+            button(type="action", name="act_fortune_roll").fortune-btn
+                span FORTUNE
+
     //- Edit mode is now per-section (click ✎ on each section header)
