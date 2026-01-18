@@ -452,6 +452,38 @@
                             .edit.item-edit
                                 input(type="text", name="attr_item_name", placeholder="Item name")
 
+                    //- Hacker-only: Specialty Chipsets (visible when playbook is hacker)
+                    input.chipsets-toggle(type="checkbox", name="attr_show_chipsets", value="1")
+                    .chipsets-section
+                        h5.chipsets-header Specialty Chipsets
+                        span.chipsets-hint Choose 3 (or 5 with Extra Chipsets)
+                        .chipsets-list
+                            label.chipset-item
+                                input(type="checkbox", name="attr_chipset_possession", value="1")
+                                span.chipset-box
+                                span.chipset-name Remote Possession
+                                span.chipset-desc Take control of a machine
+                            label.chipset-item
+                                input(type="checkbox", name="attr_chipset_eyes", value="1")
+                                span.chipset-box
+                                span.chipset-name Eye Tap
+                                span.chipset-desc See through someone else's eyes
+                            label.chipset-item
+                                input(type="checkbox", name="attr_chipset_augkill", value="1")
+                                span.chipset-box
+                                span.chipset-name Aug Killer
+                                span.chipset-desc Disable all augments (limited range)
+                            label.chipset-item
+                                input(type="checkbox", name="attr_chipset_comms", value="1")
+                                span.chipset-box
+                                span.chipset-name Comm Tap
+                                span.chipset-desc Monitor network communications
+                            label.chipset-item
+                                input(type="checkbox", name="attr_chipset_overload", value="1")
+                                span.chipset-box
+                                span.chipset-name Overload
+                                span.chipset-desc Overheat or short circuit tech
+
         //- ───────────────────────────────────────────────────────────
         //- SECTION 7: NOTES
         //- Framing: Margin scrawl / personal annotations

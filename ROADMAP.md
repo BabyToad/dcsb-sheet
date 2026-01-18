@@ -208,6 +208,44 @@ All phases complete. Sheet is now fully aligned with The New Babel rulebook.
 
 ---
 
+## Phase 9: Post-Release Enhancements
+*Additional features and polish discovered during play*
+
+### 9.1 Add Engagement Roll and Fortune Roll buttons ✅
+- **Files**: `Source/pug/crew.pug`, `Source/pug/header.pug`, `Source/ts/eventHandlers.ts`, `Source/ts/calculations.ts`, `Source/_crew.scss`, `Source/_header.scss`, `Source/pug/rolltemplate.pug`
+- **Changes**:
+  - Engagement Roll button in Score Tracker (crew sheet)
+  - Fortune Roll button in header (both tabs) with position/effect display
+  - Updated FORTUNE template to support position/effect fields
+- **Commit**: `feat(sheet): add Engagement Roll and Fortune Roll buttons`
+
+### 9.2 Add Hacker Specialty Chipsets section ✅
+- **Files**: `Source/pug/character.pug`, `Source/ts/calculations.ts`, `Source/ts/playbookData.ts`, `Source/_character.scss`
+- **Changes**:
+  - Dedicated chipsets section with 5 checkboxes (visible only for Hacker)
+  - Sheet worker toggles visibility on playbook change
+  - Removed placeholder chipset items from playbook data
+- **Commit**: Pending
+
+### 9.3 Display XP triggers on sheet
+- **Status**: TODO
+- **Files**: `Source/pug/character.pug`, `Source/pug/crew.pug`, `Source/_character.scss`, `Source/_crew.scss`
+- **Changes**:
+  - Character sheet: Display playbook XP trigger text near advancement clocks
+  - Crew sheet: Display crew XP trigger text near advancement clocks
+  - Reference The New Babel for trigger text:
+    - Character triggers are playbook-specific (already in playbookData.ts)
+    - Crew trigger: "At the end of the session, mark Crew XP if the crew: executed a successful Score, contended with challenges beyond their station, or bolstered their crew's reputation or influence"
+- **Design**: XP trigger text styled as hint/reminder near advancement section
+
+### 9.4 Investigate/fix duplicate crew advancement display
+- **Status**: TODO
+- **Issue**: User reports seeing double advancement on crew sheet
+- **Investigation**: Source shows only one section in crew.pug (lines 104-125)
+- **Possible causes**: Cached Roll20 content, CSS duplication, or old attribute data
+
+---
+
 ## Working Agreement
 
 1. **One phase at a time** — Complete and commit before moving on

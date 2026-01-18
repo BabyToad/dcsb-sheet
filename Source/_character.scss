@@ -652,6 +652,91 @@
         }
     }
 
+    // =========================================================================
+    // HACKER SPECIALTY CHIPSETS
+    // Conditionally visible section for Hacker playbook only
+    // =========================================================================
+
+    .chipsets-toggle {
+        @include hidden-checkbox-base();
+    }
+
+    // Hide chipsets section by default, show when toggle is checked
+    .chipsets-section {
+        display: none;
+        margin-top: $spacing-md;
+        padding-top: $spacing-sm;
+        border-top: 1px dashed $zine-grey;
+    }
+
+    .chipsets-toggle:checked + .chipsets-section {
+        display: block;
+    }
+
+    .chipsets-header {
+        font-family: $font-mono;
+        font-size: $type-sm;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 0 2px 0;
+        color: $terminal-amber;
+    }
+
+    .chipsets-hint {
+        display: block;
+        font-size: $type-xs;
+        font-style: italic;
+        color: $zine-grey;
+        margin-bottom: $spacing-sm;
+    }
+
+    .chipsets-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .chipset-item {
+        display: flex;
+        align-items: flex-start;
+        gap: $spacing-xs;
+        cursor: pointer;
+        font-size: $type-sm;
+        padding: 2px 0;
+        font-style: italic;  // 0-load items are italicized
+
+        input[type="checkbox"] {
+            @include hidden-checkbox-base();
+
+            &:checked + .chipset-box {
+                @include checkbox-checked-fill($terminal-amber);
+            }
+
+            &:checked ~ .chipset-name {
+                font-weight: bold;
+            }
+        }
+
+        .chipset-box {
+            @include square-box(12px);
+            border: 1px solid $zine-ink;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .chipset-name {
+            font-weight: normal;
+            min-width: 110px;
+        }
+
+        .chipset-desc {
+            color: $zine-grey;
+            font-size: $type-xs;
+            margin-top: 1px;
+        }
+    }
+
     // Playbook items (repeating section)
     .item-checkbox {
         display: flex;

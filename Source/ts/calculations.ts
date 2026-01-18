@@ -312,8 +312,12 @@ const handlePlaybookChange = (newPlaybook: string) => {
 
     const data = PLAYBOOK_DATA[newPlaybook];
 
-    // 1. Set XP trigger
-    setAttrs({ xp_trigger: data.xpTrigger });
+    // 1. Set XP trigger and playbook-specific visibility flags
+    setAttrs({
+        xp_trigger: data.xpTrigger,
+        // Show chipsets section only for Hacker playbook
+        show_chipsets: newPlaybook === 'hacker' ? '1' : '0'
+    });
 
     // 2. Clear old autogen items, populate new ones
     clearAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);
@@ -355,8 +359,11 @@ const resetToPlaybookDefaults = () => {
         // 2. Set starting actions for this playbook
         setAttrs(data.actions);
 
-        // 3. Set XP trigger
-        setAttrs({ xp_trigger: data.xpTrigger });
+        // 3. Set XP trigger and playbook-specific visibility flags
+        setAttrs({
+            xp_trigger: data.xpTrigger,
+            show_chipsets: playbook === 'hacker' ? '1' : '0'
+        });
 
         // 4. Clear ALL items (autogen and user-created) and repopulate
         clearAllAndPopulateRepeatingSection("items", data.items, formatPlaybookItem);

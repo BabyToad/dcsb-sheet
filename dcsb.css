@@ -1616,6 +1616,76 @@
 .charsheet .item-row.playbook-item .item-special-flag:checked ~ .item-edit input {
   font-style: italic;
 }
+.charsheet .chipsets-toggle {
+  display: none;
+}
+.charsheet .chipsets-section {
+  display: none;
+  margin-top: 8px;
+  padding-top: 4px;
+  border-top: 1px dashed #888888;
+}
+.charsheet .chipsets-toggle:checked + .chipsets-section {
+  display: block;
+}
+.charsheet .chipsets-header {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 2px 0;
+  color: #ffb000;
+}
+.charsheet .chipsets-hint {
+  display: block;
+  font-size: 9px;
+  font-style: italic;
+  color: #888888;
+  margin-bottom: 4px;
+}
+.charsheet .chipsets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.charsheet .chipset-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 2px 0;
+  font-style: italic;
+}
+.charsheet .chipset-item input[type=checkbox] {
+  display: none;
+}
+.charsheet .chipset-item input[type=checkbox]:checked + .chipset-box {
+  background: #ffb000;
+}
+.charsheet .chipset-item input[type=checkbox]:checked ~ .chipset-name {
+  font-weight: bold;
+}
+.charsheet .chipset-item .chipset-box {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+  border: 1px solid #1a1a1a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.charsheet .chipset-item .chipset-name {
+  font-weight: normal;
+  min-width: 110px;
+}
+.charsheet .chipset-item .chipset-desc {
+  color: #888888;
+  font-size: 9px;
+  margin-top: 1px;
+}
 .charsheet .item-checkbox {
   display: flex;
   align-items: center;

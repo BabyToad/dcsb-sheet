@@ -96,8 +96,8 @@ const PLAYBOOK_DATA: { [key: string]: PlaybookData } = {
             { name: "Fine Hacking Deck", load: 2 },
             { name: "Electro-Goggles", load: 1 },
             { name: "Stimulants", load: 1, special: true },
-            { name: "Specialty Chipsets (Choose 3)", load: 1 },
-            { name: "Extra Chipsets (Choose 2 more)", load: 1 },
+            { name: "Specialty Chipsets", load: 1 },  // Which chipsets chosen tracked in dedicated section
+            { name: "Extra Chipsets", load: 1 },
             { name: "Subtle Surveillance Equipment", load: 1 }
         ],
         augments: [
