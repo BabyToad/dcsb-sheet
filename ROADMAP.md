@@ -225,18 +225,16 @@ All phases complete. Sheet is now fully aligned with The New Babel rulebook.
   - Dedicated chipsets section with 5 checkboxes (visible only for Hacker)
   - Sheet worker toggles visibility on playbook change
   - Removed placeholder chipset items from playbook data
-- **Commit**: Pending
+- **Commit**: `feat(sheet): add Hacker Specialty Chipsets section`
 
 ### 9.3 Display XP triggers on sheet
-- **Status**: TODO
-- **Files**: `Source/pug/character.pug`, `Source/pug/crew.pug`, `Source/_character.scss`, `Source/_crew.scss`
+- **Status**: ✅ COMPLETE
+- **Files**: `Source/pug/crew.pug`, `Source/_crew.scss`
 - **Changes**:
-  - Character sheet: Display playbook XP trigger text near advancement clocks
-  - Crew sheet: Display crew XP trigger text near advancement clocks
-  - Reference The New Babel for trigger text:
-    - Character triggers are playbook-specific (already in playbookData.ts)
-    - Crew trigger: "At the end of the session, mark Crew XP if the crew: executed a successful Score, contended with challenges beyond their station, or bolstered their crew's reputation or influence"
-- **Design**: XP trigger text styled as hint/reminder near advancement section
+  - Character sheet: Already implemented (xp_trigger attribute populated from playbookData.ts)
+  - Crew sheet: Added static crew XP trigger text above advancement clocks
+  - Crew trigger: "Mark Crew XP if the crew executed a successful Score, contended with challenges beyond their station, or bolstered their reputation/influence."
+- **Design**: XP trigger text styled with amber left border, italic typewriter font (matches character sheet)
 
 ### 9.4 Investigate/fix duplicate crew advancement display
 - **Status**: TODO

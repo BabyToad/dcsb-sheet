@@ -635,6 +635,18 @@
         gap: $spacing-sm;
     }
 
+    .crew-xp-trigger {
+        font-size: $type-sm;
+        font-style: italic;
+        color: $zine-grey;
+        font-family: $font-typewriter;
+        line-height: 1.4;
+        padding: $spacing-xs 0;
+        border-left: 2px solid $terminal-amber;
+        padding-left: $spacing-sm;
+        margin-bottom: $spacing-xs;
+    }
+
     .crew-advancement-clocks {
         display: flex;
         flex-direction: column;

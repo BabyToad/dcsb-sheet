@@ -2551,6 +2551,17 @@
   flex-direction: column;
   gap: 4px;
 }
+.charsheet .crew-xp-trigger {
+  font-size: 10px;
+  font-style: italic;
+  color: #888888;
+  font-family: "Courier New", Courier, monospace;
+  line-height: 1.4;
+  padding: 2px 0;
+  border-left: 2px solid #ffb000;
+  padding-left: 4px;
+  margin-bottom: 2px;
+}
 .charsheet .crew-advancement-clocks {
   display: flex;
   flex-direction: column;
