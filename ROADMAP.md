@@ -250,10 +250,8 @@ All phases complete. Sheet is now fully aligned with The New Babel rulebook.
 - **Design**: Bulleted list with amber left border, "(1 XP each, or 2 if a lot/major)" hint
 
 ### 9.4 Investigate/fix duplicate crew advancement display
-- **Status**: TODO
-- **Issue**: User reports seeing double advancement on crew sheet
-- **Investigation**: Source shows only one section in crew.pug (lines 104-125)
-- **Possible causes**: Cached Roll20 content, CSS duplication, or old attribute data
+- **Status**: ✅ RESOLVED (not a bug)
+- **Resolution**: User confusion between different trackers; no actual duplication in sheet
 
 ---
 
