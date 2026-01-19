@@ -635,16 +635,50 @@
         gap: $spacing-sm;
     }
 
-    .crew-xp-trigger {
+    .crew-adv-label {
+        display: flex;
+        align-items: baseline;
+        gap: $spacing-sm;
+    }
+
+    .crew-adv-hint {
+        font-size: 9px;
+        color: $zine-grey;
+        font-style: italic;
+        font-weight: normal;
+    }
+
+    .crew-xp-triggers-list {
+        border-left: 2px solid $terminal-amber;
+        padding-left: $spacing-sm;
+        margin-bottom: $spacing-xs;
+    }
+
+    .crew-xp-trigger-item {
+        display: flex;
+        gap: $spacing-xs;
+        align-items: flex-start;
+        margin-bottom: 2px;
+    }
+
+    .crew-xp-bullet {
+        color: $terminal-amber;
+        font-size: $type-sm;
+        line-height: 1.4;
+    }
+
+    .crew-xp-trigger-text,
+    .crew-xp-static {
         font-size: $type-sm;
         font-style: italic;
         color: $zine-grey;
         font-family: $font-typewriter;
         line-height: 1.4;
-        padding: $spacing-xs 0;
-        border-left: 2px solid $terminal-amber;
-        padding-left: $spacing-sm;
-        margin-bottom: $spacing-xs;
+    }
+
+    .crew-xp-trigger-text:empty::after {
+        content: 'Select a crew type...';
+        color: $form-grey-light;
     }
 
     .crew-advancement-clocks {

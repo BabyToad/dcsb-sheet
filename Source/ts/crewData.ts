@@ -38,6 +38,7 @@ interface CrewTypeUpgrade {
 
 interface CrewData {
     title: string;
+    xpTrigger: string;                 // Crew-specific XP trigger
     abilities: CrewAbility[];
     cohorts: CrewCohort[];
     upgrades: CrewUpgrades;
@@ -56,6 +57,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
     // =========================================================================
     firebrands: {
         title: "Firebrands",
+        xpTrigger: "You struck a blow against the Oppressors or advanced your ideology",
         abilities: [
             {
                 name: "Cracks in the Tower",
@@ -123,6 +125,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
     // =========================================================================
     leeches: {
         title: "Leeches",
+        xpTrigger: "You executed a deal or expanded your clientele or supply chain",
         abilities: [
             {
                 name: "Silver Tongues",
@@ -182,6 +185,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
     // =========================================================================
     runners: {
         title: "Runners",
+        xpTrigger: "You completed a contract or acquired new clients or resources",
         abilities: [
             {
                 name: "Precision",
@@ -241,6 +245,7 @@ const CREW_DATA: { [key: string]: CrewData } = {
     // =========================================================================
     zokus: {
         title: "Zokus",
+        xpTrigger: "You won a race or battle, or seized territory through force",
         abilities: [
             {
                 name: "Born Behind the Wheel",

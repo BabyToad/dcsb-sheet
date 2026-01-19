@@ -677,6 +677,11 @@ const handleCrewTypeChange = (newCrewType: string) => {
 
     // 5. Populate crew contacts from crew type data
     populateCrewContacts(data.contacts);
+
+    // 6. Set crew-specific XP trigger
+    setAttrs({
+        crew_xp_trigger: data.xpTrigger
+    });
 };
 
 // =============================================================================

@@ -227,14 +227,27 @@ All phases complete. Sheet is now fully aligned with The New Babel rulebook.
   - Removed placeholder chipset items from playbook data
 - **Commit**: `feat(sheet): add Hacker Specialty Chipsets section`
 
-### 9.3 Display XP triggers on sheet
+### 9.3 Display XP triggers on sheet (Blades-style)
 - **Status**: ✅ COMPLETE
-- **Files**: `Source/pug/crew.pug`, `Source/_crew.scss`
+- **Files**: `Source/pug/character.pug`, `Source/pug/crew.pug`, `Source/_character.scss`, `Source/_crew.scss`, `Source/ts/crewData.ts`, `Source/ts/calculations.ts`
 - **Changes**:
-  - Character sheet: Already implemented (xp_trigger attribute populated from playbookData.ts)
-  - Crew sheet: Added static crew XP trigger text above advancement clocks
-  - Crew trigger: "Mark Crew XP if the crew executed a successful Score, contended with challenges beyond their station, or bolstered their reputation/influence."
-- **Design**: XP trigger text styled with amber left border, italic typewriter font (matches character sheet)
+  - Character sheet: Full 3-trigger list with amber bullets
+    - ▸ [Playbook-specific trigger] (dynamic from playbookData.ts)
+    - ▸ You expressed your beliefs, drives, heritage, or background
+    - ▸ You struggled with issues from your vice or traumas
+  - Crew sheet: Full 4-trigger list with amber bullets
+    - ▸ [Crew-specific trigger] (dynamic from crewData.ts)
+    - ▸ You contended with challenges above your station
+    - ▸ You bolstered your crew's reputation
+    - ▸ You expressed the goals, drives, or nature of the crew
+  - Added `xpTrigger` field to crewData.ts for all 4 crew types
+  - Sheet worker sets `crew_xp_trigger` on crew type change
+- **Crew XP Triggers**:
+  - Firebrands: "You struck a blow against the Oppressors or advanced your ideology"
+  - Leeches: "You executed a deal or expanded your clientele or supply chain"
+  - Runners: "You completed a contract or acquired new clients or resources"
+  - Zokus: "You won a race or battle, or seized territory through force"
+- **Design**: Bulleted list with amber left border, "(1 XP each, or 2 if a lot/major)" hint
 
 ### 9.4 Investigate/fix duplicate crew advancement display
 - **Status**: TODO

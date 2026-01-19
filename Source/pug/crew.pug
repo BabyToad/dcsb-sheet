@@ -104,9 +104,22 @@
                 //- Row 5: Crew Advancement (Deep Cuts)
                 .stats-row.advancement-row
                     .crew-advancement-block
-                        .stat-label ADVANCEMENT
-                        .crew-xp-trigger
-                            | Mark Crew XP if the crew executed a successful Score, contended with challenges beyond their station, or bolstered their reputation/influence.
+                        .stat-label.crew-adv-label
+                            | ADVANCEMENT
+                            span.crew-adv-hint (1 XP each, or 2 if major)
+                        .crew-xp-triggers-list
+                            .crew-xp-trigger-item
+                                span.crew-xp-bullet ▸
+                                span.crew-xp-trigger-text(name="attr_crew_xp_trigger")
+                            .crew-xp-trigger-item
+                                span.crew-xp-bullet ▸
+                                span.crew-xp-static You contended with challenges above your station
+                            .crew-xp-trigger-item
+                                span.crew-xp-bullet ▸
+                                span.crew-xp-static You bolstered your crew's reputation
+                            .crew-xp-trigger-item
+                                span.crew-xp-bullet ▸
+                                span.crew-xp-static You expressed the goals, drives, or nature of the crew
                         .crew-advancement-clocks
                             .adv-row
                                 .adv-clock

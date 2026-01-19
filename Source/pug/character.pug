@@ -353,9 +353,17 @@
             .advancement-block
                 .advancement-header
                     span.advancement-label ADVANCEMENT
-                    span.advancement-hint (mark XP trigger)
-                .xp-trigger-row
-                    span.xp-trigger-text(name="attr_xp_trigger")
+                    span.advancement-hint (1 XP each, or 2 if a lot)
+                .xp-triggers-list
+                    .xp-trigger-item
+                        span.xp-trigger-bullet ▸
+                        span.xp-trigger-text(name="attr_xp_trigger")
+                    .xp-trigger-item
+                        span.xp-trigger-bullet ▸
+                        span.xp-trigger-static You expressed your beliefs, drives, heritage, or background
+                    .xp-trigger-item
+                        span.xp-trigger-bullet ▸
+                        span.xp-trigger-static You struggled with issues from your vice or traumas
                 .advancement-clocks
                     .adv-row
                         .adv-clock

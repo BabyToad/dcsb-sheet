@@ -1182,22 +1182,32 @@
   color: #888888;
   font-style: italic;
 }
-.charsheet .advancement-block .xp-trigger-row {
+.charsheet .advancement-block .xp-triggers-list {
   margin-bottom: 4px;
+  border-left: 2px solid #ffb000;
+  padding-left: 4px;
 }
-.charsheet .advancement-block .xp-trigger-text {
-  display: block;
+.charsheet .advancement-block .xp-trigger-item {
+  display: flex;
+  gap: 2px;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+.charsheet .advancement-block .xp-trigger-bullet {
+  color: #ffb000;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.charsheet .advancement-block .xp-trigger-text,
+.charsheet .advancement-block .xp-trigger-static {
   font-size: 10px;
   font-style: italic;
   color: #888888;
   font-family: "Courier New", Courier, monospace;
   line-height: 1.4;
-  padding: 2px 0;
-  border-left: 2px solid #ffb000;
-  padding-left: 4px;
 }
 .charsheet .advancement-block .xp-trigger-text:empty::after {
-  content: "XP trigger not set...";
+  content: "Select a playbook...";
   color: #bbbbbb;
 }
 .charsheet .advancement-block .advancement-clocks {
@@ -2551,16 +2561,44 @@
   flex-direction: column;
   gap: 4px;
 }
-.charsheet .crew-xp-trigger {
+.charsheet .crew-adv-label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.charsheet .crew-adv-hint {
+  font-size: 9px;
+  color: #888888;
+  font-style: italic;
+  font-weight: normal;
+}
+.charsheet .crew-xp-triggers-list {
+  border-left: 2px solid #ffb000;
+  padding-left: 4px;
+  margin-bottom: 2px;
+}
+.charsheet .crew-xp-trigger-item {
+  display: flex;
+  gap: 2px;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+.charsheet .crew-xp-bullet {
+  color: #ffb000;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.charsheet .crew-xp-trigger-text,
+.charsheet .crew-xp-static {
   font-size: 10px;
   font-style: italic;
   color: #888888;
   font-family: "Courier New", Courier, monospace;
   line-height: 1.4;
-  padding: 2px 0;
-  border-left: 2px solid #ffb000;
-  padding-left: 4px;
-  margin-bottom: 2px;
+}
+.charsheet .crew-xp-trigger-text:empty::after {
+  content: "Select a crew type...";
+  color: #bbbbbb;
 }
 .charsheet .crew-advancement-clocks {
   display: flex;

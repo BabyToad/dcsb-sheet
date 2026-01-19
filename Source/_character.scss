@@ -157,25 +157,37 @@
             }
         }
 
-        .xp-trigger-row {
+        .xp-triggers-list {
             margin-bottom: $spacing-sm;
+            border-left: 2px solid $terminal-amber;
+            padding-left: $spacing-sm;
         }
 
-        .xp-trigger-text {
-            display: block;
+        .xp-trigger-item {
+            display: flex;
+            gap: $spacing-xs;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+
+        .xp-trigger-bullet {
+            color: $terminal-amber;
+            font-size: $type-sm;
+            line-height: 1.4;
+        }
+
+        .xp-trigger-text,
+        .xp-trigger-static {
             font-size: $type-sm;
             font-style: italic;
             color: $zine-grey;
             font-family: $font-typewriter;
             line-height: 1.4;
-            padding: $spacing-xs 0;
-            border-left: 2px solid $terminal-amber;
-            padding-left: $spacing-sm;
+        }
 
-            &:empty::after {
-                content: 'XP trigger not set...';
-                color: $form-grey-light;
-            }
+        .xp-trigger-text:empty::after {
+            content: 'Select a playbook...';
+            color: $form-grey-light;
         }
 
         // 4× 6-segment advancement clocks in 2×2 grid
