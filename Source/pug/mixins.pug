@@ -351,3 +351,48 @@ mixin clock-entry()
         span.display.clock-notes-display(name="attr_clock_notes")
         .edit
             textarea.clock-notes-input(name="attr_clock_notes", placeholder="Notes...")
+
+//- ═══════════════════════════════════════════════════════════════
+//- FACTION ENTRY (repeating section)
+//- Track relationships with Babel's factions
+//- Status: -3 (War) to +3 (Allies)
+//- ═══════════════════════════════════════════════════════════════
+
+mixin faction-entry()
+    .faction-entry
+        //- Header row: [Tier] Name
+        .faction-header-row
+            //- Tier badge (display mode)
+            .display.faction-tier-badge
+                span(name="attr_faction_tier_display")
+            //- Tier select (edit mode)
+            .edit.faction-tier-edit
+                select(name="attr_faction_tier")
+                    option(value="1") I
+                    option(value="2") II
+                    option(value="3") III
+                    option(value="4") IV
+                    option(value="5") V
+                    option(value="6") VI
+            //- Faction name (display)
+            span.display.faction-name-display(name="attr_faction_name")
+            //- Faction name (edit)
+            input.edit.faction-name-input(type="text", name="attr_faction_name", placeholder="Faction name")
+
+        //- Description row (always visible)
+        span.faction-desc-display(name="attr_faction_desc")
+        //- Description edit
+        textarea.edit.faction-desc-input(name="attr_faction_desc", placeholder="Notes...")
+
+        //- Status track row (-3 to +3)
+        .faction-status-track
+            - var statusLabels = {'-3': '⚔', '-2': '-2', '-1': '-1', '0': '0', '1': '+1', '2': '+2', '3': '★'}
+            - for (var i = -3; i <= 3; i++)
+                label.status-pip(data-value=i)
+                    input(type="radio", name="attr_faction_status", value=i, checked=(i === 0))
+                    span= statusLabels[i.toString()]
+
+        //- Hidden fields for data management
+        input(type="hidden", name="attr_faction_tier_display")
+        input(type="hidden", name="attr_faction_category")
+        input(type="hidden", name="attr_autogen")

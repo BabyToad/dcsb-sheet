@@ -1,5 +1,6 @@
 /// <reference path="playbookData.ts" />
 /// <reference path="crewData.ts" />
+/// <reference path="factionData.ts" />
 /// <reference path="constants.ts" />
 // Dark City, Shining Babel - Sheet Worker Calculations
 // Auto-calculation functions for derived values
@@ -682,6 +683,64 @@ const handleCrewTypeChange = (newCrewType: string) => {
     setAttrs({
         crew_xp_trigger: data.xpTrigger
     });
+};
+
+// =============================================================================
+// FACTION POPULATION FUNCTIONS
+// =============================================================================
+
+/**
+ * Map faction category keys to repeating section names
+ */
+const FACTION_SECTION_MAP: { [key: string]: string } = {
+    'corpsmajor': 'factionscorpsmajor',
+    'corpsminor': 'factionscorpsminor',
+    'underworld': 'factionsunderworld',
+    'fringe': 'factionsfringe',
+    'citizens': 'factionscitizens'
+};
+
+/**
+ * Clear all factions from all faction sections
+ */
+const clearAllFactions = () => {
+    const sectionNames = Object.values(FACTION_SECTION_MAP);
+
+    sectionNames.forEach(sectionName => {
+        getSectionIDs(sectionName, ids => {
+            ids.forEach(id => {
+                removeRepeatingRow(`repeating_${sectionName}_${id}`);
+            });
+        });
+    });
+};
+
+/**
+ * Populate all faction sections in a single batched setAttrs call
+ * This avoids issues with multiple rapid setAttrs calls
+ */
+const populateDefaultFactions = () => {
+    // Build a single attrs object with all factions
+    const attrs: Record<string, string> = {};
+
+    FACTION_DATA.forEach(category => {
+        const sectionName = FACTION_SECTION_MAP[category.key];
+        if (sectionName && category.factions) {
+            category.factions.forEach(faction => {
+                const rowId = generateRowID();
+                attrs[`repeating_${sectionName}_${rowId}_faction_name`] = faction.name;
+                attrs[`repeating_${sectionName}_${rowId}_faction_tier`] = faction.tier.toString();
+                attrs[`repeating_${sectionName}_${rowId}_faction_tier_display`] = faction.tierDisplay;
+                attrs[`repeating_${sectionName}_${rowId}_faction_category`] = faction.category;
+                attrs[`repeating_${sectionName}_${rowId}_faction_status`] = "0";
+                attrs[`repeating_${sectionName}_${rowId}_faction_desc`] = faction.description;
+                attrs[`repeating_${sectionName}_${rowId}_autogen`] = "1";
+            });
+        }
+    });
+
+    // Single setAttrs call with all faction data
+    setAttrs(attrs);
 };
 
 // =============================================================================

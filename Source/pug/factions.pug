@@ -1,0 +1,54 @@
+//- Dark City, Shining Babel - Factions Tab
+//- Track crew relationships with Babel's 42 factions
+//- Organized by category in columns
+
+//- Section 01: FACTION RELATIONS
++section-header-editable("factions", "FACTION RELATIONS", "01")
+
+.factions-section
+    //- Faction control buttons
+    .factions-controls
+        button.populate-btn(type="action", name="act_populate_factions") Populate Default Factions
+        button.populate-btn(type="action", name="act_clear_factions", style="margin-left: 8px;") Clear All Factions
+
+    //- Status legend (compact)
+    .status-legend
+        span.legend-item.war ⚔ WAR
+        span.legend-item.hostile -2
+        span.legend-item.interfering -1
+        span.legend-item.neutral 0
+        span.legend-item.helpful +1
+        span.legend-item.friendly +2
+        span.legend-item.allied ★ ALLY
+
+    //- Category columns grid (balanced: 7, 7, 10, 10, 8)
+    .faction-columns
+        //- Column 1: Major Corps (7 factions)
+        .faction-column
+            .faction-category-header CORPS (MAJOR)
+            fieldset.repeating_factionscorpsmajor
+                +faction-entry()
+
+        //- Column 2: Minor Corps (7 factions)
+        .faction-column
+            .faction-category-header CORPS (MINOR)
+            fieldset.repeating_factionscorpsminor
+                +faction-entry()
+
+        //- Column 3: The Underworld (10 factions)
+        .faction-column
+            .faction-category-header THE UNDERWORLD
+            fieldset.repeating_factionsunderworld
+                +faction-entry()
+
+        //- Column 4: Fringe & Labor (10 factions)
+        .faction-column
+            .faction-category-header FRINGE & LABOR
+            fieldset.repeating_factionsfringe
+                +faction-entry()
+
+        //- Column 5: Citizens (8 factions)
+        .faction-column
+            .faction-category-header CITIZENS
+            fieldset.repeating_factionscitizens
+                +faction-entry()

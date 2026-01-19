@@ -23,9 +23,14 @@
     display: block;
 }
 
+.tab-radio[value="factions"]:checked ~ .charsheet .factions-content {
+    display: block;
+}
+
 // Active tab styling with accent underline
 .tab-radio[value="character"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_character"],
-.tab-radio[value="crew"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_crew"] {
+.tab-radio[value="crew"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_crew"],
+.tab-radio[value="factions"]:checked ~ .charsheet .tab-nav .tab-button[for="tab_factions"] {
     background: $form-ink;
     color: $form-paper;
 

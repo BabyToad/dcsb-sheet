@@ -1,0 +1,368 @@
+// =============================================================================
+// FACTIONS TAB - Styling for faction relations tracking
+// =============================================================================
+
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+// =============================================================================
+// FACTIONS SECTION
+// =============================================================================
+
+.factions-section {
+    padding: $spacing-md;
+
+    .factions-controls {
+        margin-bottom: $spacing-md;
+    }
+
+    // Populate button styling (matches existing button patterns)
+    .populate-btn {
+        font-family: $font-mono;
+        font-size: $type-sm;
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        background: rgba($terminal-amber, 0.1);
+        border: 1px dashed $terminal-amber;
+        color: $form-ink;
+        @include transition();
+
+        &:hover {
+            background: $terminal-amber;
+            color: $form-ink;
+        }
+    }
+}
+
+// =============================================================================
+// FACTION COLUMNS GRID
+// =============================================================================
+
+.faction-columns {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: $spacing-md;
+}
+
+.faction-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; // Prevent grid blowout
+}
+
+// =============================================================================
+// STATUS LEGEND
+// =============================================================================
+
+.status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm;
+    background: rgba($form-grey, 0.1);
+    border: 1px dashed rgba($form-grey, 0.3);
+    font-family: $font-mono;
+    font-size: $type-xs;
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+
+        .status-icon {
+            font-size: $type-sm;
+        }
+
+        &.war {
+            color: $status-danger;
+        }
+
+        &.hostile {
+            color: darken($status-danger, 5%);
+        }
+
+        &.interfering {
+            color: $status-warning;
+        }
+
+        &.neutral {
+            color: $form-grey;
+        }
+
+        &.helpful {
+            color: lighten($status-good, 10%);
+        }
+
+        &.friendly {
+            color: $status-good;
+        }
+
+        &.allied {
+            color: darken($status-good, 5%);
+        }
+    }
+}
+
+// =============================================================================
+// FACTION ENTRY (repeating section row) - Detailed vertical layout
+// =============================================================================
+
+.faction-entry {
+    padding: $spacing-sm;
+    margin-bottom: $spacing-xs;
+    border: 1px solid rgba($form-grey, 0.2);
+    background: transparent;
+    @include transition();
+
+    // War state visual indicator
+    &:has(.faction-status-track input[value="-3"]:checked) {
+        background: rgba($status-danger, 0.08);
+        border-color: rgba($status-danger, 0.3);
+
+        .faction-name-display,
+        .faction-name-input {
+            color: $status-danger;
+        }
+    }
+
+    // Ally state visual indicator
+    &:has(.faction-status-track input[value="3"]:checked) {
+        background: rgba($status-good, 0.08);
+        border-color: rgba($status-good, 0.3);
+
+        .faction-name-display,
+        .faction-name-input {
+            color: $status-good;
+        }
+    }
+}
+
+// Header row: [Tier] Name
+.faction-header-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-bottom: 2px;
+}
+
+// Tier badge styling - compact
+.faction-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    padding: 1px 4px;
+    background: $terminal-amber;
+    color: $form-ink;
+    font-family: $font-mono;
+    font-size: $type-xs;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.faction-name-display {
+    font-family: $font-mono;
+    font-size: $type-sm;
+    font-weight: bold;
+}
+
+.faction-desc-display {
+    display: block;
+    font-family: $font-mono;
+    font-size: $type-xs;
+    color: $form-grey;
+    margin-bottom: $spacing-xs;
+    line-height: 1.3;
+}
+
+.faction-name-input {
+    flex: 1;
+    min-width: 80px;
+    font-family: $font-mono;
+    font-size: $type-sm;
+    border: none;
+    border-bottom: 1px dashed $form-grey;
+    background: transparent;
+    padding: 1px 4px;
+
+    &:focus {
+        outline: none;
+        border-bottom-color: $terminal-amber;
+    }
+}
+
+.faction-tier-edit {
+    flex-shrink: 0;
+
+    select {
+        font-family: $font-mono;
+        font-size: $type-xs;
+        padding: 1px 2px;
+    }
+}
+
+// Description - edit mode only, compact
+.faction-desc-input {
+    width: 100%;
+    min-height: 24px;
+    font-family: $font-mono;
+    font-size: $type-xs;
+    padding: 2px 4px;
+    margin-top: 2px;
+    border: 1px dashed rgba($form-grey, 0.3);
+    background: transparent;
+    resize: vertical;
+
+    &:focus {
+        outline: none;
+        border-color: $terminal-amber;
+    }
+}
+
+// =============================================================================
+// STATUS TRACK (radio buttons -3 to +3)
+// Uses label-wrapped inputs for repeating section compatibility
+// =============================================================================
+
+.faction-status-track {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    flex-shrink: 0;
+
+    // Status pip styling (label wrapping the input) - compact
+    .status-pip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 16px;
+        padding: 0 2px;
+        font-family: $font-mono;
+        font-size: 9px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid rgba($form-grey, 0.5);
+        background: transparent;
+        color: $form-grey;
+        @include transition();
+
+        // Hide the radio input inside label
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        &:hover {
+            border-color: $terminal-amber;
+        }
+
+        // Value-specific colors (unchecked state)
+        &[data-value="-3"] {
+            border-color: rgba($status-danger, 0.5);
+            color: rgba($status-danger, 0.7);
+        }
+
+        &[data-value="-2"] {
+            border-color: rgba($status-danger, 0.4);
+            color: rgba($status-danger, 0.6);
+        }
+
+        &[data-value="-1"] {
+            border-color: rgba($status-warning, 0.5);
+            color: rgba($status-warning, 0.7);
+        }
+
+        &[data-value="0"] {
+            border-color: rgba($form-grey, 0.5);
+            color: $form-grey;
+        }
+
+        &[data-value="1"] {
+            border-color: rgba($status-good, 0.4);
+            color: rgba($status-good, 0.7);
+        }
+
+        &[data-value="2"] {
+            border-color: rgba($status-good, 0.5);
+            color: rgba($status-good, 0.8);
+        }
+
+        &[data-value="3"] {
+            border-color: rgba($status-good, 0.6);
+            color: $status-good;
+        }
+
+        // Checked state styling - input:checked inside label
+        &:has(input:checked) {
+            font-weight: bold;
+        }
+
+        &[data-value="-3"]:has(input:checked) {
+            background: $status-danger;
+            color: $form-paper;
+            border-color: $status-danger;
+        }
+
+        &[data-value="-2"]:has(input:checked) {
+            background: mix($status-danger, $form-paper, 70%);
+            color: $form-paper;
+            border-color: mix($status-danger, $form-paper, 70%);
+        }
+
+        &[data-value="-1"]:has(input:checked) {
+            background: $status-warning;
+            color: $form-ink;
+            border-color: $status-warning;
+        }
+
+        &[data-value="0"]:has(input:checked) {
+            background: $form-grey;
+            color: $form-paper;
+            border-color: $form-grey;
+        }
+
+        &[data-value="1"]:has(input:checked) {
+            background: mix($status-good, $form-paper, 50%);
+            color: $form-ink;
+            border-color: mix($status-good, $form-paper, 50%);
+        }
+
+        &[data-value="2"]:has(input:checked) {
+            background: mix($status-good, $form-paper, 70%);
+            color: $form-paper;
+            border-color: mix($status-good, $form-paper, 70%);
+        }
+
+        &[data-value="3"]:has(input:checked) {
+            background: $status-good;
+            color: $form-paper;
+            border-color: $status-good;
+        }
+    }
+}
+
+
+// =============================================================================
+// CATEGORY HEADERS (optional - if we group by category)
+// =============================================================================
+
+.faction-category-header {
+    font-family: $font-mono;
+    font-size: $type-sm;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $terminal-amber;
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid $terminal-amber;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-sm;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}

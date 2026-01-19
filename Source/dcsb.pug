@@ -7,6 +7,7 @@ include pug/mixins.pug
 //- Tab radio buttons MUST be at root level for CSS sibling selectors to work
 input(type="radio", name="attr_sheet_tab", value="character", checked, id="tab_character").tab-radio
 input(type="radio", name="attr_sheet_tab", value="crew", id="tab_crew").tab-radio
+input(type="radio", name="attr_sheet_tab", value="factions", id="tab_factions").tab-radio
 
 //- Edit mode is now per-section (checkbox inside each editable section)
 
@@ -21,6 +22,10 @@ input(type="radio", name="attr_sheet_tab", value="crew", id="tab_crew").tab-radi
     //- Crew tab content
     .tab-content.crew-content
         include pug/crew.pug
+
+    //- Factions tab content
+    .tab-content.factions-content
+        include pug/factions.pug
 
     //- Roll templates
     include pug/rolltemplate.pug
