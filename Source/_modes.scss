@@ -73,20 +73,36 @@
 
 // When section toggle is checked, show edit elements within that section
 // Need to cover both direct siblings and nested elements
+// Using multiple selectors for specificity and to handle Roll20's generated HTML
 .section-edit-toggle:checked ~ .edit,
-.section-edit-toggle:checked ~ * .edit {
+.section-edit-toggle:checked ~ * .edit,
+.section-edit-toggle:checked ~ * fieldset .edit,
+.section-edit-toggle:checked ~ * .repitem .edit {
     display: block;
 }
 
+// For inputs and selects in edit mode, use inline-block to work in flex containers
+.section-edit-toggle:checked ~ * input.edit,
+.section-edit-toggle:checked ~ * select.edit,
+.section-edit-toggle:checked ~ * fieldset input.edit,
+.section-edit-toggle:checked ~ * fieldset select.edit,
+.section-edit-toggle:checked ~ * .repitem input.edit,
+.section-edit-toggle:checked ~ * .repitem select.edit {
+    display: inline-block;
+}
+
 .section-edit-toggle:checked ~ .display,
-.section-edit-toggle:checked ~ * .display {
+.section-edit-toggle:checked ~ * .display,
+.section-edit-toggle:checked ~ * fieldset .display,
+.section-edit-toggle:checked ~ * .repitem .display {
     display: none;
 }
 
 // Show repeating section controls when in edit mode
 // Note: itemcontrol visibility is also controlled by Roll20's Modify button
 .section-edit-toggle:checked ~ .repcontrol,
-.section-edit-toggle:checked ~ * .repcontrol {
+.section-edit-toggle:checked ~ * .repcontrol,
+.section-edit-toggle:checked ~ * fieldset .repcontrol {
     display: block;
 }
 

@@ -41,13 +41,17 @@
 .faction-columns {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: $spacing-md;
+    gap: $spacing-sm;
+    align-items: start; // Don't stretch columns to equal height - allows independent content
+    width: 100%;
+    overflow: hidden; // Prevent blowout
 }
 
 .faction-column {
     display: flex;
     flex-direction: column;
     min-width: 0; // Prevent grid blowout
+    overflow: hidden; // Contain content within column
 }
 
 // =============================================================================
@@ -113,6 +117,8 @@
     margin-bottom: $spacing-xs;
     border: 1px solid rgba($form-grey, 0.2);
     background: transparent;
+    min-width: 0; // Allow shrinking within grid
+    overflow: hidden;
     @include transition();
 
     // War state visual indicator
@@ -144,6 +150,7 @@
     align-items: center;
     gap: $spacing-xs;
     margin-bottom: 2px;
+    flex-wrap: wrap; // Allow wrapping if needed
 }
 
 // Tier badge styling - compact
@@ -162,6 +169,7 @@
 }
 
 .faction-name-display {
+    flex: 1;
     font-family: $font-mono;
     font-size: $type-sm;
     font-weight: bold;
@@ -177,8 +185,8 @@
 }
 
 .faction-name-input {
-    flex: 1;
-    min-width: 80px;
+    flex: 1 1 auto;
+    min-width: 60px; // Minimum readable width
     font-family: $font-mono;
     font-size: $type-sm;
     border: none;
@@ -194,11 +202,14 @@
 
 .faction-tier-edit {
     flex-shrink: 0;
+    width: auto;
 
     select {
         font-family: $font-mono;
         font-size: $type-xs;
         padding: 1px 2px;
+        width: auto;
+        min-width: 0;
     }
 }
 
@@ -228,17 +239,17 @@
 .faction-status-track {
     display: flex;
     align-items: center;
-    gap: 1px;
+    gap: 2px; // Slightly more breathing room
     flex-shrink: 0;
 
-    // Status pip styling (label wrapping the input) - compact
+    // Status pip styling (label wrapping the input) - improved touch targets
     .status-pip {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 18px;
-        height: 16px;
-        padding: 0 2px;
+        min-width: 20px;  // Was 18px - better touch target
+        height: 18px;     // Was 16px - better touch target
+        padding: 0 3px;   // Was 0 2px - more breathing room
         font-family: $font-mono;
         font-size: 9px;
         font-weight: bold;
@@ -364,5 +375,44 @@
 
     &:first-child {
         margin-top: 0;
+    }
+}
+
+// =============================================================================
+// FACTION COLUMN REPCONTROLS
+// Style Roll20's repeating section controls to fit the layout
+// =============================================================================
+
+.faction-column {
+    // Style repcontrol to match terminal aesthetic and stay within column
+    .repcontrol {
+        margin-top: $spacing-sm;
+        padding: $spacing-xs;
+        background: rgba($terminal-amber, 0.05);
+        border: 1px dashed rgba($terminal-amber, 0.3);
+
+        button {
+            font-family: $font-mono;
+            font-size: $type-xs;
+            padding: $spacing-xs $spacing-sm;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid rgba($terminal-amber, 0.5);
+            color: $terminal-amber;
+            @include transition();
+
+            &:hover {
+                background: $terminal-amber;
+                color: $form-ink;
+            }
+        }
+    }
+
+    // Ensure fieldset doesn't cause layout issues
+    fieldset {
+        min-width: 0; // Prevent fieldset from expanding beyond column
+        border: none;
+        padding: 0;
+        margin: 0;
     }
 }

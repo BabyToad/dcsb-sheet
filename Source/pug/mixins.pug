@@ -379,9 +379,9 @@ mixin faction-entry()
             //- Faction name (edit)
             input.edit.faction-name-input(type="text", name="attr_faction_name", placeholder="Faction name")
 
-        //- Description row (always visible)
-        span.faction-desc-display(name="attr_faction_desc")
-        //- Description edit
+        //- Description (display mode)
+        span.display.faction-desc-display(name="attr_faction_desc")
+        //- Description (edit mode)
         textarea.edit.faction-desc-input(name="attr_faction_desc", placeholder="Notes...")
 
         //- Status track row (-3 to +3)
