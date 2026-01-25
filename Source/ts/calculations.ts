@@ -64,9 +64,17 @@ const getStressMessage = (result: number, crit: boolean): string => {
 
 /**
  * Get vice roll label
+ * Overindulgence occurs when roll > current stress (would reduce below 0)
+ * @param highestDie - The highest die result
+ * @param stress - Current stress level
+ * @param crit - Whether it was a critical (double 6s)
  */
-const getViceLabel = (crit: boolean): string => {
-    return crit ? '!! CRITICAL !!' : 'CLEAR STRESS';
+const getViceLabel = (highestDie: number, stress: number, crit: boolean): string => {
+    const overindulge = highestDie > stress;
+    if (crit && overindulge) return '!! OVERINDULGENCE (CRIT) !!';
+    if (crit) return '!! CRITICAL !!';
+    if (overindulge) return '!! OVERINDULGENCE !!';
+    return 'CLEAR STRESS';
 };
 
 /**

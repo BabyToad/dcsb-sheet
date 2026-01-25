@@ -288,7 +288,7 @@ on("clicked:clear_factions", () => {
 
 on("clicked:indulge_vice", () => {
     rollWithModifier(
-        ['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type'],
+        ['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type', 'stress'],
         v => {
             const acuity = int(v.acuity_rating);
             const grit = int(v.grit_rating);
@@ -298,18 +298,20 @@ on("clicked:indulge_vice", () => {
         },
         (dice, v, context) => {
             const charName = v.character_name || 'Unknown';
+            const currentStress = int(v.stress);
             const rollFormula = buildRollFormula(dice);
 
             // Combine dice modifier with existing notes
-            let notes = 'Clear stress equal to highest die. 6+ may overindulge.';
+            let notes = `Clear stress equal to highest die (current: ${currentStress}). Overindulge if roll > stress.`;
             if (context.modNotes) notes = `${context.modNotes} | ${notes}`;
 
             startRoll(
                 `&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`,
                 results => {
                     const diceArray = results.results.roll.dice;
+                    const highestDie = Math.max(...diceArray);
                     const crit = isCrit(diceArray);
-                    const label = getViceLabel(crit);
+                    const label = getViceLabel(highestDie, currentStress, crit);
                     finishRoll(results.rollId, { label });
                 }
             );

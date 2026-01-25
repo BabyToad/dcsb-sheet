@@ -1163,9 +1163,20 @@ const getStressMessage = (result, crit) => {
 };
 /**
  * Get vice roll label
+ * Overindulgence occurs when roll > current stress (would reduce below 0)
+ * @param highestDie - The highest die result
+ * @param stress - Current stress level
+ * @param crit - Whether it was a critical (double 6s)
  */
-const getViceLabel = (crit) => {
-    return crit ? '!! CRITICAL !!' : 'CLEAR STRESS';
+const getViceLabel = (highestDie, stress, crit) => {
+    const overindulge = highestDie > stress;
+    if (crit && overindulge)
+        return '!! OVERINDULGENCE (CRIT) !!';
+    if (crit)
+        return '!! CRITICAL !!';
+    if (overindulge)
+        return '!! OVERINDULGENCE !!';
+    return 'CLEAR STRESS';
 };
 /**
  * Get disengagement roll label
@@ -2010,7 +2021,7 @@ on("clicked:clear_factions", () => {
 // INDULGE VICE ROLL
 // =============================================================================
 on("clicked:indulge_vice", () => {
-    rollWithModifier(['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type'], v => {
+    rollWithModifier(['acuity_rating', 'grit_rating', 'resolve_rating', 'character_name', 'vice_type', 'stress'], v => {
         const acuity = int(v.acuity_rating);
         const grit = int(v.grit_rating);
         const resolve = int(v.resolve_rating);
@@ -2018,15 +2029,17 @@ on("clicked:indulge_vice", () => {
         return Math.min(acuity, grit, resolve);
     }, (dice, v, context) => {
         const charName = v.character_name || 'Unknown';
+        const currentStress = int(v.stress);
         const rollFormula = buildRollFormula(dice);
         // Combine dice modifier with existing notes
-        let notes = 'Clear stress equal to highest die. 6+ may overindulge.';
+        let notes = `Clear stress equal to highest die (current: ${currentStress}). Overindulge if roll > stress.`;
         if (context.modNotes)
             notes = `${context.modNotes} | ${notes}`;
         startRoll(`&{template:${ROLL_TEMPLATES.VICE}} {{charname=${charName}}} {{roll=[[${rollFormula}]]}} {{label=[[0]]}} {{notes=${notes}}}`, results => {
             const diceArray = results.results.roll.dice;
+            const highestDie = Math.max(...diceArray);
             const crit = isCrit(diceArray);
-            const label = getViceLabel(crit);
+            const label = getViceLabel(highestDie, currentStress, crit);
             finishRoll(results.rollId, { label });
         });
     });
