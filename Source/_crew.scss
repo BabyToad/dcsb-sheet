@@ -738,25 +738,254 @@
     }
 
     // =========================================================================
-    // CLAIMS
+    // CLAIMS - Corporate Zoning Schematic / Territory Control Map
+    // 5×3 grid with Lair at center, styled as liberated corporate document
     // =========================================================================
 
-    .claim-entry {
-        @include grid(auto 1fr 1fr, $spacing-sm);
-        padding: $spacing-xs 0;
-        border-bottom: 1px dotted $zine-light-grey;
-        align-items: center;
+    .claims-manifest {
+        border: 2px solid $zine-ink;
+        background: $form-paper;
+    }
 
-        .claim-check {
-            @include square-box(14px);
-            appearance: none;
-            -webkit-appearance: none;
-            border: 1px solid $zine-ink;
+    .manifest-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-xs $spacing-sm;
+        border-bottom: 2px solid $zine-ink;
+        background: rgba($zine-ink, 0.05);
+
+        .manifest-title {
+            font-family: $font-typewriter;
+            font-size: $type-sm;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .manifest-classification {
+            font-family: $font-typewriter;
+            font-size: $type-xs;
+            color: $zine-grey;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .claims-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0;
+    }
+
+    .claim-cell {
+        position: relative;
+        min-height: 70px;
+        padding: $spacing-xs;
+        border: 1px solid $zine-grey;
+        display: flex;
+        flex-direction: column;
+        background: $form-paper;
+        @include transition(border-color, background);
+
+        // Checkbox in bottom-left corner
+        .claim-held-label {
+            position: absolute;
+            bottom: $spacing-xs;
+            left: $spacing-xs;
             cursor: pointer;
 
-            &:checked {
+            .claim-held-check {
+                @include hidden-checkbox-base();
+            }
+
+            .claim-held-box {
+                @include square-box(12px);
+                display: block;
+                border: 1px solid $zine-ink;
+                background: transparent;
+            }
+
+            .claim-held-check:checked + .claim-held-box {
                 @include checkbox-checked-fill($terminal-amber, $terminal-amber);
             }
+        }
+
+        // Content area
+        // Note: .display/.edit visibility controlled by global toggle rules in _modes.scss
+        .claim-content {
+            flex: 1;
+            padding-bottom: 18px; // Space for checkbox
+        }
+
+        .claim-name-display span,
+        .claim-name-input {
+            display: block;
+            font-family: $font-typewriter;
+            font-size: $type-xs;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            color: $zine-ink;
+        }
+
+        .claim-name-display span:empty::after {
+            content: '—';
+            color: $zine-light-grey;
+        }
+
+        .claim-benefit-display span,
+        .claim-benefit-input {
+            display: block;
+            font-family: $font-typewriter;
+            font-size: 8px;
+            color: $zine-grey;
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+
+        .claim-benefit-display span:empty {
+            display: none;
+        }
+
+        .claim-name-input,
+        .claim-benefit-input {
+            width: 100%;
+            padding: 1px 2px;
+            border: none;
+            border-bottom: 1px dashed $zine-grey;
+            background: transparent;
+
+            &:focus {
+                border-bottom-color: $terminal-amber;
+                outline: none;
+            }
+        }
+
+        .claim-benefit-input {
+            font-size: 8px;
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // CONTROLLED STATE - when checkbox is checked
+        // ─────────────────────────────────────────────────────────────
+        &:has(.claim-held-check:checked) {
+            border-color: $terminal-amber;
+            background: rgba($terminal-amber, 0.08);
+
+            .claim-name-display span {
+                color: $terminal-amber;
+            }
+
+            .claim-benefit-display span {
+                color: $zine-ink;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // CONNECTORS - Lines between adjacent claims
+        // ─────────────────────────────────────────────────────────────
+        .conn-check {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .claim-conn {
+            display: none;
+            position: absolute;
+            background: $zine-grey;
+            z-index: 5;
+        }
+
+        // Right connector (horizontal line extending right)
+        .conn-right {
+            width: 12px;
+            height: 2px;
+            right: -7px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        // Bottom connector (vertical line extending down)
+        .conn-bottom {
+            width: 2px;
+            height: 12px;
+            bottom: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        // Show connectors when checkbox is checked
+        .conn-right-check:checked + .conn-right {
+            display: block;
+        }
+
+        .conn-bottom-check:checked + .conn-bottom {
+            display: block;
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // LAIR CELL - Special center cell, always "controlled"
+    // ─────────────────────────────────────────────────────────────────
+    .lair-cell {
+        background: $zine-ink;
+        border-color: $zine-ink;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .lair-marker {
+            color: $terminal-amber;
+            font-size: $type-lg;
+            line-height: 1;
+        }
+
+        .lair-label {
+            font-family: $font-typewriter;
+            font-size: $type-sm;
+            font-weight: bold;
+            color: $form-paper;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // LEGEND - Status indicators below the grid
+    // ─────────────────────────────────────────────────────────────────
+    .claims-legend {
+        display: flex;
+        justify-content: center;
+        gap: $spacing-md;
+        padding: $spacing-xs $spacing-sm;
+        border-top: 1px solid $zine-grey;
+        background: rgba($zine-ink, 0.03);
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            font-family: $font-typewriter;
+            font-size: $type-xs;
+            color: $zine-grey;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-box {
+            font-size: 10px;
+            line-height: 1;
+
+            &.legend-held {
+                color: $terminal-amber;
+            }
+        }
+
+        .legend-marker {
+            color: $terminal-amber;
+            font-size: 10px;
         }
     }
 

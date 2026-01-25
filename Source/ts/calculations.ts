@@ -611,6 +611,75 @@ const populateCrewContacts = (contacts: { name: string; description: string }[])
 };
 
 /**
+ * Populate crew claims from crew type data
+ * Claims are fixed attributes (claim_1_name, etc.) in a 5×3 grid
+ * Positions 1-7 and 9-15 (position 8 is the Lair, not an attribute)
+ */
+const populateCrewClaims = (claims: { name: string; benefit: string }[]) => {
+    const updates: { [key: string]: string } = {};
+
+    // Map claims array indices to attribute position numbers
+    // Array indices 0-6 → positions 1-7
+    // Array indices 7-13 → positions 9-15
+    const positionMap = [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15];
+
+    positionMap.forEach((position, index) => {
+        if (claims[index]) {
+            updates[`claim_${position}_name`] = claims[index].name;
+            updates[`claim_${position}_benefit`] = claims[index].benefit;
+        } else {
+            // Clear slot if no claim data
+            updates[`claim_${position}_name`] = '';
+            updates[`claim_${position}_benefit`] = '';
+        }
+        // Reset held checkbox when populating
+        updates[`claim_${position}_held`] = '0';
+    });
+
+    setAttrs(updates);
+};
+
+/**
+ * Populate claim connection checkboxes based on crew type data
+ * Connections are pairs [from, to] where:
+ * - |diff| === 1 → horizontal (lower position gets conn_right)
+ * - |diff| === 5 → vertical (lower position gets conn_bottom)
+ * Position layout:
+ *   [1]  [2]  [3]  [4]  [5]
+ *   [6]  [7]  [8]  [9]  [10]   (8 = Lair)
+ *   [11] [12] [13] [14] [15]
+ */
+const populateCrewClaimConnections = (connections: [number, number][]) => {
+    const updates: { [key: string]: string } = {};
+
+    // All positions that could have connectors
+    const allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+    // Clear all connectors first
+    allPositions.forEach(pos => {
+        updates[`claim_${pos}_conn_right`] = '0';
+        updates[`claim_${pos}_conn_bottom`] = '0';
+    });
+
+    // Set connectors based on connection pairs
+    connections.forEach(([a, b]) => {
+        const lower = Math.min(a, b);
+        const diff = Math.abs(b - a);
+
+        if (diff === 1) {
+            // Horizontal connection - lower position gets right connector
+            updates[`claim_${lower}_conn_right`] = '1';
+        } else if (diff === 5) {
+            // Vertical connection - lower position gets bottom connector
+            updates[`claim_${lower}_conn_bottom`] = '1';
+        }
+        // Note: diff of other values would be diagonal or non-adjacent
+    });
+
+    setAttrs(updates);
+};
+
+/**
  * Clear all crew upgrade checkboxes
  */
 const clearCrewUpgrades = (callback?: () => void) => {
@@ -679,7 +748,13 @@ const handleCrewTypeChange = (newCrewType: string) => {
     // 5. Populate crew contacts from crew type data
     populateCrewContacts(data.contacts);
 
-    // 6. Set crew-specific XP trigger
+    // 6. Populate crew claims from crew type data
+    populateCrewClaims(data.claims);
+
+    // 7. Populate claim connections from crew type data
+    populateCrewClaimConnections(data.claimConnections);
+
+    // 8. Set crew-specific XP trigger
     setAttrs({
         crew_xp_trigger: data.xpTrigger
     });

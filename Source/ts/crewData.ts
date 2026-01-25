@@ -15,6 +15,11 @@ interface CrewContact {
     description: string;
 }
 
+interface CrewClaim {
+    name: string;
+    benefit: string;
+}
+
 interface CrewCohort {
     name: string;
     type: "talent" | "suits" | "couriers" | "catches" | "clubs" | "expert";
@@ -42,8 +47,10 @@ interface CrewData {
     abilities: CrewAbility[];
     cohorts: CrewCohort[];
     upgrades: CrewUpgrades;
-    typeUpgrades: CrewTypeUpgrade[];  // Crew-type specific upgrades
+    typeUpgrades: CrewTypeUpgrade[];   // Crew-type specific upgrades
     contacts: CrewContact[];           // Crew-type specific contacts
+    claims: CrewClaim[];               // 14 claims for 5×3 grid (positions 1-7, 9-15; 8 is Lair)
+    claimConnections: [number, number][];  // Pairs of connected positions (8 = Lair)
 }
 
 // =============================================================================
@@ -116,6 +123,35 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "X", description: "controversial musician" },
             { name: "Virgil", description: "Well academic" },
             { name: "Narrow", description: "escaped Ruiner" }
+        ],
+        claims: [
+            // Row 1: positions 1-5
+            { name: "Allyship", benefit: "Your Rooks get +1 Scale" },
+            { name: "Inflamatory Bar", benefit: "Roll = Tier (Highest Roll - Heat = Coin)" },
+            { name: "Looting", benefit: "+2 Coin from Direct Action Scores" },
+            { name: "Turf", benefit: "" },
+            { name: "Believer on the Inside", benefit: "+1d to Infiltration Engagement Plans" },
+            // Row 2: positions 6-7 (8 is Lair)
+            { name: "Expansion", benefit: "Add Another Area of Change to your Belief" },
+            { name: "Turf", benefit: "" },
+            // Row 2: positions 9-10
+            { name: "Turf", benefit: "" },
+            { name: "Expansion", benefit: "Add Another Area of Change to your Belief" },
+            // Row 3: positions 11-15
+            { name: "In Every Feed", benefit: "+1 Rep on Every Score Targeting your Oppressor" },
+            { name: "Static", benefit: "+1d on Reduce Heat Rolls" },
+            { name: "Gathering Hall", benefit: "+1d to Dominate & Sway on site" },
+            { name: "Operation Studio", benefit: "Your Cohorts get 1 free downtime action" },
+            { name: "Multiple Fronts", benefit: "Add Another Area of Change to your Belief" }
+        ],
+        // Claim connections: [from, to] pairs (8 = Lair)
+        // Firebrands: Full grid - all adjacent cells connected
+        claimConnections: [
+            [1, 2], [2, 3], [3, 4], [4, 5],
+            [6, 7], [7, 8], [8, 9], [9, 10],
+            [11, 12], [12, 13], [13, 14], [14, 15],
+            [1, 6], [6, 11], [2, 7], [7, 12],
+            [3, 8], [8, 13], [4, 9], [9, 14], [5, 10], [10, 15]
         ]
     },
 
@@ -176,6 +212,35 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "Rayya", description: "Flotilla Smuggler" },
             { name: "Grif", description: "Mercenary Captain" },
             { name: "Noble", description: "sleazy Marketer" }
+        ],
+        claims: [
+            // Row 1: positions 1-5
+            { name: "Turf", benefit: "" },
+            { name: "Cheap Labor", benefit: "Treat Upkeep as 1 Tier Lower" },
+            { name: "Local Graft", benefit: "+2 coin for show of force or socialize" },
+            { name: "Turf", benefit: "" },
+            { name: "Sell in the Circle", benefit: "(Tier roll) - Heat = coin in downtime" },
+            // Row 2: positions 6-7 (8 is Lair)
+            { name: "Lookouts", benefit: "+1d to Survey or Hunt on your turf" },
+            { name: "Turf", benefit: "" },
+            // Row 2: positions 9-10
+            { name: "Turf", benefit: "" },
+            { name: "Luxury Venue", benefit: "+1d to Consort and Sway on site" },
+            // Row 3: positions 11-15
+            { name: "Informants", benefit: "+1d gather info for scores" },
+            { name: "Vice Den", benefit: "(Tier roll) - Heat = coin in downtime" },
+            { name: "Surplus Caches", benefit: "+2 coin for product sale or supply" },
+            { name: "Cover Operation", benefit: "-2 heat per score" },
+            { name: "Cover Identities", benefit: "+1d engagement for deception and transport plans" }
+        ],
+        // Claim connections: [from, to] pairs (8 = Lair)
+        // Leeches: Full grid - all adjacent cells connected
+        claimConnections: [
+            [1, 2], [2, 3], [3, 4], [4, 5],
+            [6, 7], [7, 8], [8, 9], [9, 10],
+            [11, 12], [12, 13], [13, 14], [14, 15],
+            [1, 6], [6, 11], [2, 7], [7, 12],
+            [3, 8], [8, 13], [4, 9], [9, 14], [5, 10], [10, 15]
         ]
     },
 
@@ -236,6 +301,37 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "Gunther", description: "cybernetic veteran" },
             { name: "Kayabuki", description: "Lawyer" },
             { name: "Zhue", description: "prosthetic radical" }
+        ],
+        claims: [
+            // Row 1: positions 1-5
+            { name: "No Teams", benefit: "When doing a Gig against an Ally, gain +1d" },
+            { name: "Trusting Employer", benefit: "Take the lowest result for entanglement rolls" },
+            { name: "Bargaining Table", benefit: "When taking a job with a recurring client, +1d" },
+            { name: "Payoff", benefit: "(Tier roll) - Heat = Coin in downtime" },
+            { name: "People Disappear", benefit: "'Killing' Payout Heat is reduced by 1" },
+            // Row 2: positions 6-7 (8 is Lair)
+            { name: "Turf", benefit: "" },
+            { name: "Turf", benefit: "" },
+            // Row 2: positions 9-10
+            { name: "Turf", benefit: "" },
+            { name: "Media Cover Up", benefit: "-2 Heat Per Score" },
+            // Row 3: positions 11-15
+            { name: "Mil-Tech Plate", benefit: "Both Armor & Heavy Armor cost 1 Less Load" },
+            { name: "Neuropozyne", benefit: "+1d to Healing Rolls" },
+            { name: "New Gear", benefit: "+1d when designing and building cybernetics" },
+            { name: "Turf", benefit: "" },
+            { name: "Sensationalism", benefit: "+1 Rep per score" }
+        ],
+        // Claim connections: [from, to] pairs (8 = Lair)
+        // Runners has gaps: no 1↔6, no 5↔10, no 6↔11
+        claimConnections: [
+            [1, 2], [2, 3], [3, 4], [4, 5],
+            [6, 7], [7, 8], [8, 9], [9, 10],
+            [11, 12], [12, 13], [13, 14], [14, 15],
+            [2, 7], [7, 12],
+            [3, 8], [8, 13],
+            [4, 9], [9, 14],
+            [10, 15]
         ]
     },
 
@@ -305,6 +401,35 @@ const CREW_DATA: { [key: string]: CrewData } = {
             { name: "Hen", description: "middle manager" },
             { name: "Kai", description: "transient" },
             { name: "Bells", description: "razer-girl" }
+        ],
+        claims: [
+            // Row 1: positions 1-5
+            { name: "Barracks", benefit: "+1 Scale for your cohorts" },
+            { name: "Med Room", benefit: "+1d to healing rolls" },
+            { name: "Informants", benefit: "+1d Gather Info on Scores" },
+            { name: "Turf", benefit: "" },
+            { name: "Scrapper Team", benefit: "+2 coin for lower class targets" },
+            // Row 2: positions 6-7 (8 is Lair)
+            { name: "Turf", benefit: "" },
+            { name: "Turf", benefit: "" },
+            // Row 2: positions 9-10
+            { name: "Turf", benefit: "" },
+            { name: "Gear to Go Around", benefit: "Your cohorts have their own rides" },
+            // Row 3: positions 11-15
+            { name: "Protection Racket", benefit: "(Tier Roll) - heat = Coin in Downtime" },
+            { name: "Intimidation", benefit: "-2 Heat Per Score" },
+            { name: "Clout", benefit: "+2 Coin for battle and extortion operations" },
+            { name: "All Eyes", benefit: "Gain Rep in Payout = Wanted Level" },
+            { name: "On Me", benefit: "Gain Crew Downtime Actions = Wanted Level" }
+        ],
+        // Claim connections: [from, to] pairs (8 = Lair)
+        // Zokus: Full grid - all adjacent cells connected
+        claimConnections: [
+            [1, 2], [2, 3], [3, 4], [4, 5],
+            [6, 7], [7, 8], [8, 9], [9, 10],
+            [11, 12], [12, 13], [13, 14], [14, 15],
+            [1, 6], [6, 11], [2, 7], [7, 12],
+            [3, 8], [8, 13], [4, 9], [9, 14], [5, 10], [10, 15]
         ]
     }
 };

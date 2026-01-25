@@ -2653,28 +2653,205 @@
 .charsheet .crew-advancement-costs .cost-value {
   font-weight: bold;
 }
-.charsheet .claim-entry {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  gap: 4px;
-  padding: 2px 0;
-  border-bottom: 1px dotted #bbbbbb;
-  align-items: center;
+.charsheet .claims-manifest {
+  border: 2px solid #1a1a1a;
+  background: #e5e5e0;
 }
-.charsheet .claim-entry .claim-check {
-  width: 14px;
-  height: 14px;
-  min-width: 14px;
-  min-height: 14px;
-  flex-shrink: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  border: 1px solid #1a1a1a;
+.charsheet .manifest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px;
+  border-bottom: 2px solid #1a1a1a;
+  background: rgba(26, 26, 26, 0.05);
+}
+.charsheet .manifest-header .manifest-title {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.charsheet .manifest-header .manifest-classification {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  color: #888888;
+  letter-spacing: 0.5px;
+}
+.charsheet .claims-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+.charsheet .claim-cell {
+  position: relative;
+  min-height: 70px;
+  padding: 2px;
+  border: 1px solid #888888;
+  display: flex;
+  flex-direction: column;
+  background: #e5e5e0;
+  transition: border-color background;
+}
+.charsheet .claim-cell .claim-held-label {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
   cursor: pointer;
 }
-.charsheet .claim-entry .claim-check:checked {
+.charsheet .claim-cell .claim-held-label .claim-held-check {
+  display: none;
+}
+.charsheet .claim-cell .claim-held-label .claim-held-box {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  min-height: 12px;
+  flex-shrink: 0;
+  display: block;
+  border: 1px solid #1a1a1a;
+  background: transparent;
+}
+.charsheet .claim-cell .claim-held-label .claim-held-check:checked + .claim-held-box {
   background: #ffb000;
   border-color: #ffb000;
+}
+.charsheet .claim-cell .claim-content {
+  flex: 1;
+  padding-bottom: 18px;
+}
+.charsheet .claim-cell .claim-name-display span,
+.charsheet .claim-cell .claim-name-input {
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+.charsheet .claim-cell .claim-name-display span:empty::after {
+  content: "—";
+  color: #bbbbbb;
+}
+.charsheet .claim-cell .claim-benefit-display span,
+.charsheet .claim-cell .claim-benefit-input {
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 8px;
+  color: #888888;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+.charsheet .claim-cell .claim-benefit-display span:empty {
+  display: none;
+}
+.charsheet .claim-cell .claim-name-input,
+.charsheet .claim-cell .claim-benefit-input {
+  width: 100%;
+  padding: 1px 2px;
+  border: none;
+  border-bottom: 1px dashed #888888;
+  background: transparent;
+}
+.charsheet .claim-cell .claim-name-input:focus,
+.charsheet .claim-cell .claim-benefit-input:focus {
+  border-bottom-color: #ffb000;
+  outline: none;
+}
+.charsheet .claim-cell .claim-benefit-input {
+  font-size: 8px;
+}
+.charsheet .claim-cell:has(.claim-held-check:checked) {
+  border-color: #ffb000;
+  background: rgba(255, 176, 0, 0.08);
+}
+.charsheet .claim-cell:has(.claim-held-check:checked) .claim-name-display span {
+  color: #ffb000;
+}
+.charsheet .claim-cell:has(.claim-held-check:checked) .claim-benefit-display span {
+  color: #1a1a1a;
+}
+.charsheet .claim-cell .conn-check {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.charsheet .claim-cell .claim-conn {
+  display: none;
+  position: absolute;
+  background: #888888;
+  z-index: 5;
+}
+.charsheet .claim-cell .conn-right {
+  width: 12px;
+  height: 2px;
+  right: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.charsheet .claim-cell .conn-bottom {
+  width: 2px;
+  height: 12px;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.charsheet .claim-cell .conn-right-check:checked + .conn-right {
+  display: block;
+}
+.charsheet .claim-cell .conn-bottom-check:checked + .conn-bottom {
+  display: block;
+}
+.charsheet .lair-cell {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.charsheet .lair-cell .lair-marker {
+  color: #ffb000;
+  font-size: 16px;
+  line-height: 1;
+}
+.charsheet .lair-cell .lair-label {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: bold;
+  color: #e5e5e0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.charsheet .claims-legend {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 2px 4px;
+  border-top: 1px solid #888888;
+  background: rgba(26, 26, 26, 0.03);
+}
+.charsheet .claims-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  color: #888888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.charsheet .claims-legend .legend-box {
+  font-size: 10px;
+  line-height: 1;
+}
+.charsheet .claims-legend .legend-box.legend-held {
+  color: #ffb000;
+}
+.charsheet .claims-legend .legend-marker {
+  color: #ffb000;
+  font-size: 10px;
 }
 .charsheet .score-buttons {
   display: flex;

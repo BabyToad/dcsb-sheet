@@ -1,10 +1,10 @@
 //- Dark City, Shining Babel - Crew Sheet Content
-//- Layout: Two-column with Identity/Stats/Operations/Notes on left, Upgrades/Abilities/Cohorts/Claims on right
+//- Layout: Two-column with Identity/Stats/Operations/Claims/Notes on left, Upgrades/Abilities/Cohorts/Contacts on right
 //- Information Architecture: Gang Dossier framing
 
 .sheet-columns
     //- ═══════════════════════════════════════════════════════════════
-    //- LEFT COLUMN - Identity, Stats, Score Tracker, Notes
+    //- LEFT COLUMN - Identity, Stats, Score Tracker, Claims, Clocks, Notes
     //- ═══════════════════════════════════════════════════════════════
     .left-column
 
@@ -160,15 +160,120 @@
                         span(data-i18n="ROLL_DISENGAGEMENT") Roll Disengagement
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 4: CREW NOTES
-        //- Framing: Mission logs / operational notes
+        //- SECTION 4: CLAIMS / TERRITORY
+        //- Framing: Corporate zoning schematic - liberated territory map
+        //- Layout: 5×3 grid with Lair at center (position 8)
         //- ───────────────────────────────────────────────────────────
-        .section.crew-notes
-            .section-header
-                .section-stamp CREW NOTES
-                .section-number 04
+        .section.claims
+            +section-header-editable("claims", "TERRITORY CONTROL", "04")
 
-            textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
+            .claims-manifest
+                .manifest-header
+                    span.manifest-title SECTOR MAP
+                    span.manifest-classification [CLASSIFIED]
+
+                .claims-grid
+                    //- Row 1: Positions 1-5
+                    - for (var i = 1; i <= 5; i++)
+                        .claim-cell(data-position=i)
+                            //- Connectors (hidden checkboxes control visibility)
+                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                            .claim-conn.conn-right
+                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
+                            .claim-conn.conn-bottom
+                            //- Held checkbox
+                            label.claim-held-label
+                                input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
+                                span.claim-held-box
+                            .claim-content.display
+                                .claim-name-display
+                                    span(name=`attr_claim_${i}_name`)
+                                .claim-benefit-display
+                                    span(name=`attr_claim_${i}_benefit`)
+                            .claim-content.edit
+                                input(type="text", name=`attr_claim_${i}_name`, placeholder="Claim").claim-name-input
+                                input(type="text", name=`attr_claim_${i}_benefit`, placeholder="Benefit").claim-benefit-input
+
+                    //- Row 2: Positions 6-7, LAIR, 9-10
+                    - for (var i = 6; i <= 7; i++)
+                        .claim-cell(data-position=i)
+                            //- Connectors
+                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                            .claim-conn.conn-right
+                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
+                            .claim-conn.conn-bottom
+                            //- Held checkbox
+                            label.claim-held-label
+                                input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
+                                span.claim-held-box
+                            .claim-content.display
+                                .claim-name-display
+                                    span(name=`attr_claim_${i}_name`)
+                                .claim-benefit-display
+                                    span(name=`attr_claim_${i}_benefit`)
+                            .claim-content.edit
+                                input(type="text", name=`attr_claim_${i}_name`, placeholder="Claim").claim-name-input
+                                input(type="text", name=`attr_claim_${i}_benefit`, placeholder="Benefit").claim-benefit-input
+
+                    //- LAIR - Center cell (position 8)
+                    .claim-cell.lair-cell(data-position="8")
+                        //- Lair connectors (right and bottom)
+                        input.conn-check.conn-right-check(type="checkbox", name="attr_claim_8_conn_right", value="1")
+                        .claim-conn.conn-right
+                        input.conn-check.conn-bottom-check(type="checkbox", name="attr_claim_8_conn_bottom", value="1")
+                        .claim-conn.conn-bottom
+                        .lair-marker ◆
+                        .lair-label LAIR
+
+                    - for (var i = 8; i <= 9; i++)
+                        .claim-cell(data-position=(i + 1))
+                            //- Connectors
+                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i + 1}_conn_right`, value="1")
+                            .claim-conn.conn-right
+                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i + 1}_conn_bottom`, value="1")
+                            .claim-conn.conn-bottom
+                            //- Held checkbox
+                            label.claim-held-label
+                                input(type="checkbox", name=`attr_claim_${i + 1}_held`, value="1").claim-held-check
+                                span.claim-held-box
+                            .claim-content.display
+                                .claim-name-display
+                                    span(name=`attr_claim_${i + 1}_name`)
+                                .claim-benefit-display
+                                    span(name=`attr_claim_${i + 1}_benefit`)
+                            .claim-content.edit
+                                input(type="text", name=`attr_claim_${i + 1}_name`, placeholder="Claim").claim-name-input
+                                input(type="text", name=`attr_claim_${i + 1}_benefit`, placeholder="Benefit").claim-benefit-input
+
+                    //- Row 3: Positions 11-15
+                    - for (var i = 11; i <= 15; i++)
+                        .claim-cell(data-position=i)
+                            //- Connectors (row 3 only has right connectors, no bottom)
+                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                            .claim-conn.conn-right
+                            //- Held checkbox
+                            label.claim-held-label
+                                input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
+                                span.claim-held-box
+                            .claim-content.display
+                                .claim-name-display
+                                    span(name=`attr_claim_${i}_name`)
+                                .claim-benefit-display
+                                    span(name=`attr_claim_${i}_benefit`)
+                            .claim-content.edit
+                                input(type="text", name=`attr_claim_${i}_name`, placeholder="Claim").claim-name-input
+                                input(type="text", name=`attr_claim_${i}_benefit`, placeholder="Benefit").claim-benefit-input
+
+                .claims-legend
+                    span.legend-item
+                        span.legend-box.legend-held ■
+                        | CONTROLLED
+                    span.legend-item
+                        span.legend-box □
+                        | AVAILABLE
+                    span.legend-item
+                        span.legend-marker ◆
+                        | PRIMARY OPS
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 5: CLOCKS
@@ -182,40 +287,18 @@
                 +clock-entry()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 6: CREW CONTACTS
-        //- Framing: Network contacts based on crew type
-        //- Pattern: Mirrors Friends & Rivals from character sheet
+        //- SECTION 6: CREW NOTES
+        //- Framing: Mission logs / operational notes
         //- ───────────────────────────────────────────────────────────
-        .section.crew-contacts
-            +section-header-editable("crewcontacts", "CREW CONTACTS", "06")
+        .section.crew-notes
+            .section-header
+                .section-stamp CREW NOTES
+                .section-number 06
 
-            .contacts-intro Select a Favored Contact
-
-            .contacts-list
-                //- 6 fixed contact slots (populated from crew type data)
-                - for (var i = 1; i <= 6; i++)
-                    .contact-card
-                        //- Relation selector: star (favored), circle (neutral)
-                        .contact-relation
-                            label.relation-option.relation-favored(title="Favored")
-                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="favored")
-                                span.relation-badge ★
-                            label.relation-option.relation-neutral(title="Neutral")
-                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="neutral", checked)
-                                span.relation-badge ○
-
-                        //- Display mode
-                        .contact-display.display
-                            span.contact-name(name=`attr_crew_contact_${i}_name`)
-                            span.contact-desc(name=`attr_crew_contact_${i}_desc`)
-
-                        //- Edit mode
-                        .contact-edit.edit
-                            input.contact-name-input(type="text", name=`attr_crew_contact_${i}_name`, placeholder="Contact name")
-                            input.contact-desc-input(type="text", name=`attr_crew_contact_${i}_desc`, placeholder="Role / description")
+            textarea(name="attr_crew_notes", placeholder="Mission logs, ongoing operations, crew history...").notes-area
 
     //- ═══════════════════════════════════════════════════════════════
-    //- RIGHT COLUMN - Upgrades, Abilities, Cohorts, Claims
+    //- RIGHT COLUMN - Upgrades, Abilities, Cohorts, Contacts
     //- ═══════════════════════════════════════════════════════════════
     .right-column
 
@@ -344,16 +427,34 @@
                 +cohort-block()
 
         //- ───────────────────────────────────────────────────────────
-        //- SECTION 11: CLAIMS / TERRITORY
-        //- Framing: Territory map / sphere of influence
+        //- SECTION 11: CREW CONTACTS
+        //- Framing: Network contacts based on crew type
+        //- Pattern: Mirrors Friends & Rivals from character sheet
         //- ───────────────────────────────────────────────────────────
-        .section.claims
-            .section-header
-                .section-stamp CLAIMS
-                .section-number 11
+        .section.crew-contacts
+            +section-header-editable("crewcontacts", "CREW CONTACTS", "11")
 
-            +repeating("claims")
-                .claim-entry
-                    input(type="checkbox", name="attr_claim_held", value="1").claim-check
-                    input(type="text", name="attr_claim_name", placeholder="Claim name").claim-name
-                    input(type="text", name="attr_claim_benefit", placeholder="Benefit").claim-benefit
+            .contacts-intro Select a Favored Contact
+
+            .contacts-list
+                //- 6 fixed contact slots (populated from crew type data)
+                - for (var i = 1; i <= 6; i++)
+                    .contact-card
+                        //- Relation selector: star (favored), circle (neutral)
+                        .contact-relation
+                            label.relation-option.relation-favored(title="Favored")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="favored")
+                                span.relation-badge ★
+                            label.relation-option.relation-neutral(title="Neutral")
+                                input(type="radio", name=`attr_crew_contact_${i}_relation`, value="neutral", checked)
+                                span.relation-badge ○
+
+                        //- Display mode
+                        .contact-display.display
+                            span.contact-name(name=`attr_crew_contact_${i}_name`)
+                            span.contact-desc(name=`attr_crew_contact_${i}_desc`)
+
+                        //- Edit mode
+                        .contact-edit.edit
+                            input.contact-name-input(type="text", name=`attr_crew_contact_${i}_name`, placeholder="Contact name")
+                            input.contact-desc-input(type="text", name=`attr_crew_contact_${i}_desc`, placeholder="Role / description")
