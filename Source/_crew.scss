@@ -252,7 +252,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                font-size: 12px;
+                font-size: $type-base;
                 font-weight: bold;
             }
         }
@@ -497,7 +497,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                font-size: 8px;
+                font-size: $type-xxs;
 
                 &[data-value="-3"],
                 &[data-value="-2"],
@@ -642,7 +642,7 @@
     }
 
     .crew-adv-hint {
-        font-size: 9px;
+        font-size: $type-xs;
         color: $zine-grey;
         font-style: italic;
         font-weight: normal;
@@ -715,7 +715,7 @@
     }
 
     .crew-advancement-costs {
-        font-size: 9px;
+        font-size: $type-xs;
         color: $zine-grey;
         border-top: 1px dashed $zine-light-grey;
         padding-top: $spacing-xs;
@@ -838,7 +838,7 @@
         .claim-benefit-input {
             display: block;
             font-family: $font-typewriter;
-            font-size: 8px;
+            font-size: $type-xxs;
             color: $zine-grey;
             line-height: 1.3;
             margin-top: 2px;
@@ -863,7 +863,7 @@
         }
 
         .claim-benefit-input {
-            font-size: 8px;
+            font-size: $type-xxs;
         }
 
         // ─────────────────────────────────────────────────────────────
@@ -975,7 +975,7 @@
         }
 
         .legend-box {
-            font-size: 10px;
+            font-size: $type-sm;
             line-height: 1;
 
             &.legend-held {
@@ -985,7 +985,7 @@
 
         .legend-marker {
             color: $terminal-amber;
-            font-size: 10px;
+            font-size: $type-sm;
         }
     }
 
@@ -1001,7 +1001,7 @@
             flex: 1;
             padding: $spacing-sm;
             font-family: $font-typewriter;
-            font-size: 11px;
+            font-size: $type-sm-plus;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1028,7 +1028,7 @@
             font-style: italic;
             color: $zine-grey;
             margin-bottom: $spacing-md;
-            font-size: 11px;
+            font-size: $type-sm-plus;
         }
 
         .contacts-list {
@@ -1074,7 +1074,7 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 12px;
+                        font-size: $type-base;
                         background: $form-paper;
                         @include transition();
                     }

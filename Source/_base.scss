@@ -6,7 +6,7 @@
 
 .charsheet {
     font-family: $font-typewriter;
-    font-size: 12px;
+    font-size: $type-base;
     color: $zine-ink;
     background: $zine-paper;
     padding: $spacing-lg;
@@ -69,7 +69,7 @@
 
     h4 {
         font-family: $font-typewriter;
-        font-size: 11px;
+        font-size: $type-sm-plus;
         font-weight: bold;
         text-transform: uppercase;
         color: $zine-grey;

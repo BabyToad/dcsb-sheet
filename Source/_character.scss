@@ -23,7 +23,7 @@
 
             .attr-name {
                 margin: 0;
-                font-size: 11px;
+                font-size: $type-sm-plus;
                 font-weight: bold;
                 font-family: $font-typewriter;
                 text-transform: uppercase;
@@ -89,7 +89,7 @@
         .action-name {
             width: 75px;
             font-family: $font-typewriter;
-            font-size: 10px;
+            font-size: $type-sm;
             font-weight: normal;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -151,7 +151,7 @@
             }
 
             .advancement-hint {
-                font-size: 9px;
+                font-size: $type-xs;
                 color: $zine-grey;
                 font-style: italic;
             }
@@ -228,7 +228,7 @@
 
         // Advancement cost reference table
         .advancement-costs {
-            font-size: 9px;
+            font-size: $type-xs;
             color: $zine-grey;
             border-top: 1px dashed $zine-light-grey;
             padding-top: $spacing-xs;
@@ -380,7 +380,7 @@
                 &::placeholder {
                     color: $form-grey-light;
                     font-style: italic;
-                    font-size: 9px;
+                    font-size: $type-xs;
                 }
 
                 &:focus {
@@ -417,7 +417,7 @@
     .armor-checkbox {
         @include flex-row($spacing-xs);
         cursor: pointer;
-        font-size: 10px;
+        font-size: $type-sm;
         text-transform: uppercase;
 
         .armor-box {
@@ -454,7 +454,7 @@
         gap: $spacing-xs;
 
         .coin-warning {
-            font-size: 12px;
+            font-size: $type-base;
             color: $status-warning;
             cursor: help;
         }
@@ -547,7 +547,7 @@
         .load-option {
             @include flex-row($spacing-xs);
             cursor: pointer;
-            font-size: 10px;
+            font-size: $type-sm;
 
             .load-box {
                 @include square-box(12px);
@@ -566,7 +566,7 @@
     }
 
     .load-tracker {
-        font-size: 10px;
+        font-size: $type-sm;
         margin-bottom: $spacing-sm;
         color: $zine-grey;
 
@@ -812,7 +812,7 @@
 
         .maintenance-label {
             font-family: $font-mono;
-            font-size: 11px;
+            font-size: $type-sm-plus;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -828,12 +828,12 @@
         }
 
         .bc-owed {
-            font-size: 12px;
+            font-size: $type-base;
             font-weight: bold;
             color: $terminal-amber;
 
             .bc-value {
-                font-size: 14px;
+                font-size: $type-md;
             }
         }
 
@@ -918,7 +918,7 @@
         font-style: italic;
         color: $zine-grey;
         margin-bottom: $spacing-md;
-        font-size: 11px;
+        font-size: $type-sm-plus;
     }
 
     .friends-list {
@@ -964,7 +964,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 12px;
+                    font-size: $type-base;
                     background: $form-paper;
                     @include transition();
                 }
@@ -1059,7 +1059,7 @@
         width: 100%;
         min-height: 100px;
         font-family: $font-typewriter;
-        font-size: 11px;
+        font-size: $type-sm-plus;
         line-height: 1.5;
         padding: $spacing-sm;
         border: 1px dashed $zine-grey;
@@ -1078,7 +1078,7 @@
     .reset-btn {
         padding: $spacing-xs $spacing-md;
         font-family: $font-typewriter;
-        font-size: 10px;
+        font-size: $type-sm;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -1095,7 +1095,7 @@
     }
 
     .reset-hint {
-        font-size: 9px;
+        font-size: $type-xs;
         font-style: italic;
         color: $zine-grey;
     }
@@ -1105,7 +1105,7 @@
         padding: $spacing-sm;
         margin-top: $spacing-sm;
         font-family: $font-typewriter;
-        font-size: 11px;
+        font-size: $type-sm-plus;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 1px;

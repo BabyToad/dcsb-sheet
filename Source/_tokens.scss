@@ -44,13 +44,15 @@ $font-mono: 'Courier New', Courier, monospace;  // Primary - everything
 // Legacy alias (used throughout)
 $font-typewriter: $font-mono;
 
-// Type Scale (based on 12px base)
-$type-xs: 9px;      // Fine print, load values
-$type-sm: 10px;     // Labels, secondary info
-$type-base: 12px;   // Body text, inputs
-$type-md: 14px;     // Section content headers
-$type-lg: 16px;     // Character name, major headers
-$type-xl: 20px;     // Sheet title only
+// Type Scale (+2px aggressive increase for readability)
+$type-xxs: 10px;    // Ultra-compact (claim benefits, status pips)
+$type-xs: 11px;     // Fine print, load values
+$type-sm: 12px;     // Labels, secondary info
+$type-sm-plus: 13px; // Emphasized small text (h4, tab buttons)
+$type-base: 14px;   // Body text, inputs
+$type-md: 16px;     // Section content headers
+$type-lg: 18px;     // Character name, major headers
+$type-xl: 22px;     // Sheet title only
 
 // =============================================================================
 // SPACING

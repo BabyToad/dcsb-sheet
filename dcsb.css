@@ -1,6 +1,6 @@
 .charsheet {
   font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
+  font-size: 14px;
   color: #1a1a1a;
   background: #e5e5e0;
   padding: 16px;
@@ -19,7 +19,7 @@
 }
 .charsheet h1 {
   font-family: "Courier New", Courier, monospace;
-  font-size: 20px;
+  font-size: 22px;
   text-transform: uppercase;
   letter-spacing: 3px;
   margin: 0;
@@ -27,7 +27,7 @@
 }
 .charsheet h2 {
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -35,14 +35,14 @@
 }
 .charsheet h3 {
   font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
   margin: 4px 0;
 }
 .charsheet h4 {
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   color: #888888;
@@ -54,7 +54,7 @@
 .charsheet textarea,
 .charsheet select {
   font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
+  font-size: 14px;
   background: transparent;
   border: none;
   border-bottom: 1px dashed #888888;
@@ -155,7 +155,7 @@
 .charsheet .select-field.with-detail .detail-input {
   width: 100%;
   margin-top: 2px;
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   padding: 2px 4px;
   border: none;
@@ -211,7 +211,7 @@
   left: 0;
   right: 0;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   color: #888888;
   letter-spacing: -1px;
   overflow: hidden;
@@ -224,14 +224,14 @@
   left: 0;
   right: 0;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   color: #888888;
   letter-spacing: -1px;
   overflow: hidden;
   white-space: nowrap;
 }
 .charsheet .section-stamp {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -241,7 +241,7 @@
 }
 .charsheet .section-number {
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: #ffb000;
   width: 28px;
@@ -340,7 +340,7 @@
 }
 .charsheet .block-letters {
   font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.1;
   margin: 0 0 8px 0;
   padding: 0;
@@ -358,7 +358,7 @@
 }
 .charsheet .title-text {
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 3px;
   margin-top: 4px;
 }
@@ -382,7 +382,7 @@
   padding: 4px 8px;
   background: rgba(26, 26, 26, 0.03);
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
 }
 .charsheet .status-bar .system-text {
   color: #888888;
@@ -398,7 +398,7 @@
 }
 .charsheet .tab-button {
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -422,7 +422,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   cursor: pointer;
   color: #888888;
@@ -455,7 +455,7 @@
   gap: 2px;
 }
 .charsheet .roll-context-row .context-label {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -478,7 +478,7 @@
   align-items: center;
   justify-content: center;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   background: #e5e5e0;
   border: 2px solid #888888;
@@ -549,7 +549,7 @@
 }
 .charsheet .roll-context-row .fortune-group .fortune-btn {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -566,7 +566,7 @@
 }
 
 .charsheet .track-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -587,7 +587,7 @@
 }
 .charsheet .trauma-conditions-row .trauma-conditions-input {
   width: 100%;
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   color: #888888;
   background: transparent;
@@ -809,7 +809,7 @@
   justify-content: center;
 }
 .charsheet .arc-heat-gauge .gauge-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -817,7 +817,7 @@
   margin-bottom: 4px;
 }
 .charsheet .arc-heat-gauge .gauge-dice {
-  font-size: 10px;
+  font-size: 12px;
   color: #888888;
   margin-left: 8px;
 }
@@ -904,11 +904,11 @@
 }
 .charsheet .clock-name-display {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
 }
 .charsheet .clock-name-input {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   font-family: "Courier New", Courier, monospace;
   background: transparent;
   border: none;
@@ -921,7 +921,7 @@
   border-bottom-color: #ffb000;
 }
 .charsheet .clock-size-badge {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   margin-left: 4px;
 }
@@ -930,7 +930,7 @@
 }
 .charsheet .clock-size-select select {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   background: transparent;
   border: 1px solid #888888;
   padding: 2px 4px;
@@ -994,7 +994,7 @@
   display: block;
 }
 .charsheet .clock-notes-display {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   display: block;
   padding-left: 4px;
@@ -1008,7 +1008,7 @@
 .charsheet .clock-notes-input {
   width: 100%;
   min-height: 2rem;
-  font-size: 9px;
+  font-size: 11px;
   font-family: "Courier New", Courier, monospace;
   background: transparent;
   border: 1px dashed #888888;
@@ -1037,7 +1037,7 @@
 }
 .charsheet .attribute-block .attribute-header-row .attr-name {
   margin: 0;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;
   text-transform: uppercase;
@@ -1111,7 +1111,7 @@
 .charsheet .action-row .action-name {
   width: 75px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1178,7 +1178,7 @@
   font-weight: bold;
 }
 .charsheet .advancement-block .advancement-header .advancement-hint {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   font-style: italic;
 }
@@ -1195,12 +1195,12 @@
 }
 .charsheet .advancement-block .xp-trigger-bullet {
   color: #ffb000;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 .charsheet .advancement-block .xp-trigger-text,
 .charsheet .advancement-block .xp-trigger-static {
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   color: #888888;
   font-family: "Courier New", Courier, monospace;
@@ -1246,7 +1246,7 @@
   background: transparent;
 }
 .charsheet .advancement-block .advancement-costs {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   border-top: 1px dashed #bbbbbb;
   padding-top: 2px;
@@ -1373,7 +1373,7 @@
 .charsheet .harm-track .harm-level .harm-input {
   flex: 1;
   min-width: 0;
-  font-size: 10px;
+  font-size: 12px;
   font-family: "Courier New", Courier, monospace;
   padding: 2px 4px;
   background: #e5e5e0;
@@ -1383,7 +1383,7 @@
 .charsheet .harm-track .harm-level .harm-input::placeholder {
   color: #bbbbbb;
   font-style: italic;
-  font-size: 9px;
+  font-size: 11px;
 }
 .charsheet .harm-track .harm-level .harm-input:focus {
   outline: none;
@@ -1408,7 +1408,7 @@
   align-items: center;
   gap: 2px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 .charsheet .armor-checkbox .armor-box {
@@ -1440,7 +1440,7 @@
   gap: 2px;
 }
 .charsheet .coin-block .coin-warning {
-  font-size: 12px;
+  font-size: 14px;
   color: #cc7700;
   cursor: help;
 }
@@ -1535,7 +1535,7 @@
   align-items: center;
   gap: 2px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .load-selector .load-option .load-box {
   width: 12px;
@@ -1554,7 +1554,7 @@
   border-color: #ffb000;
 }
 .charsheet .load-tracker {
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 4px;
   color: #888888;
 }
@@ -1572,7 +1572,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  font-size: 10px;
+  font-size: 12px;
   padding: 2px 0;
 }
 .charsheet .item-row .item-load-boxes {
@@ -1640,7 +1640,7 @@
 }
 .charsheet .chipsets-header {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1649,7 +1649,7 @@
 }
 .charsheet .chipsets-hint {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   font-style: italic;
   color: #888888;
   margin-bottom: 4px;
@@ -1664,7 +1664,7 @@
   align-items: flex-start;
   gap: 2px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   padding: 2px 0;
   font-style: italic;
 }
@@ -1693,7 +1693,7 @@
 }
 .charsheet .chipset-item .chipset-desc {
   color: #888888;
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 1px;
 }
 .charsheet .item-checkbox {
@@ -1701,7 +1701,7 @@
   align-items: center;
   gap: 2px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   padding: 2px 0;
   color: #1a1a1a;
 }
@@ -1729,7 +1729,7 @@
 }
 .charsheet .item-checkbox .item-load-indicator {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   min-width: 16px;
   text-align: center;
@@ -1750,7 +1750,7 @@
 }
 .charsheet .augment-maintenance .maintenance-label {
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1764,12 +1764,12 @@
   color: #ffb000;
 }
 .charsheet .augment-maintenance .bc-owed {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: #ffb000;
 }
 .charsheet .augment-maintenance .bc-owed .bc-value {
-  font-size: 14px;
+  font-size: 16px;
 }
 .charsheet .augment-maintenance .maintenance-gauge {
   display: flex;
@@ -1807,7 +1807,7 @@
 }
 .charsheet .vice-roll-btn {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1824,7 +1824,7 @@
 }
 .charsheet .vice-hint {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1834,7 +1834,7 @@
   font-style: italic;
   color: #888888;
   margin-bottom: 8px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .charsheet .friends-list {
   display: flex;
@@ -1878,7 +1878,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   background: #e5e5e0;
   transition: all 0.1s ease;
 }
@@ -1912,7 +1912,7 @@
 .charsheet .friend-card .friend-display .friend-name {
   display: block;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .charsheet .friend-card .friend-display .friend-name:empty::after {
@@ -1923,7 +1923,7 @@
 }
 .charsheet .friend-card .friend-display .friend-desc {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: #888888;
 }
 .charsheet .friend-card .friend-display .friend-desc:empty {
@@ -1935,18 +1935,18 @@
 .charsheet .friend-card .friend-edit .friend-name-input {
   width: 100%;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .charsheet .friend-card .friend-edit .friend-desc-input {
   width: 100%;
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .notes-area {
   width: 100%;
   min-height: 100px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
   padding: 4px;
   border: 1px dashed #888888;
@@ -1955,7 +1955,7 @@
 .charsheet .reset-btn {
   padding: 2px 8px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1970,7 +1970,7 @@
   color: #e5e5e0;
 }
 .charsheet .reset-hint {
-  font-size: 9px;
+  font-size: 11px;
   font-style: italic;
   color: #888888;
 }
@@ -1979,7 +1979,7 @@
   padding: 4px;
   margin-top: 4px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2005,7 +2005,7 @@
   align-items: flex-end;
 }
 .charsheet .stat-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2049,7 +2049,7 @@
   padding: 2px 4px;
   border: 1px solid #1a1a1a;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 .charsheet .hold-selector input:checked + .hold-option {
@@ -2152,7 +2152,7 @@
   align-items: center;
   gap: 2px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   padding: 2px 0;
 }
 .charsheet .upgrade-checkbox input[type=checkbox] {
@@ -2226,7 +2226,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
 }
 .charsheet .ability-content {
@@ -2290,11 +2290,11 @@
 }
 .charsheet .cohort-type-display {
   color: #888888;
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .cohort-type-value {
   color: #888888;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: capitalize;
 }
 .charsheet .cohort-header-edit {
@@ -2317,14 +2317,14 @@
   gap: 2px;
 }
 .charsheet .cohort-info-display .info-label {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0;
   color: #888888;
 }
 .charsheet .cohort-info-display .info-value {
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .cohort-info-display .info-value:empty::after {
   content: "—";
@@ -2360,7 +2360,7 @@
   border-color: #ffb000;
 }
 .charsheet .cohort-elite-label .elite-label {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -2378,7 +2378,7 @@
   margin: 2px 0;
 }
 .charsheet .cohort-harm .harm-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0;
@@ -2401,7 +2401,7 @@
   display: none;
 }
 .charsheet .cohort-harm .harm-option .harm-text {
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 4px;
   border: 1px solid transparent;
 }
@@ -2416,7 +2416,7 @@
 }
 .charsheet .cohort-roll-btn {
   padding: 2px 4px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   background: transparent;
   border: 1px solid #1a1a1a;
@@ -2428,7 +2428,7 @@
   color: #1a1a1a;
 }
 .charsheet .faction-legend {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   margin-bottom: 4px;
   display: flex;
@@ -2459,7 +2459,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 8px;
+  font-size: 10px;
 }
 .charsheet .faction-row .status-track .status-pip[data-value="-3"], .charsheet .faction-row .status-track .status-pip[data-value="-2"], .charsheet .faction-row .status-track .status-pip[data-value="-1"] {
   border-color: #8b0000;
@@ -2529,11 +2529,11 @@
 }
 .charsheet .upgrade-display .upgrade-name-display {
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
   display: block;
 }
 .charsheet .upgrade-display .upgrade-desc-display {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   display: block;
   margin-top: 2px;
@@ -2551,7 +2551,7 @@
   font-weight: bold;
 }
 .charsheet .upgrade-edit .upgrade-desc-input {
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .upgrade-edit .upgrade-levels-input {
   width: 50px;
@@ -2567,7 +2567,7 @@
   gap: 4px;
 }
 .charsheet .crew-adv-hint {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   font-style: italic;
   font-weight: normal;
@@ -2585,12 +2585,12 @@
 }
 .charsheet .crew-xp-bullet {
   color: #ffb000;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 .charsheet .crew-xp-trigger-text,
 .charsheet .crew-xp-static {
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
   color: #888888;
   font-family: "Courier New", Courier, monospace;
@@ -2635,7 +2635,7 @@
   background: transparent;
 }
 .charsheet .crew-advancement-costs {
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   border-top: 1px dashed #bbbbbb;
   padding-top: 2px;
@@ -2667,14 +2667,14 @@
 }
 .charsheet .manifest-header .manifest-title {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 .charsheet .manifest-header .manifest-classification {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   letter-spacing: 0.5px;
 }
@@ -2724,7 +2724,7 @@
 .charsheet .claim-cell .claim-name-input {
   display: block;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -2739,7 +2739,7 @@
 .charsheet .claim-cell .claim-benefit-input {
   display: block;
   font-family: "Courier New", Courier, monospace;
-  font-size: 8px;
+  font-size: 10px;
   color: #888888;
   line-height: 1.3;
   margin-top: 2px;
@@ -2761,7 +2761,7 @@
   outline: none;
 }
 .charsheet .claim-cell .claim-benefit-input {
-  font-size: 8px;
+  font-size: 10px;
 }
 .charsheet .claim-cell:has(.claim-held-check:checked) {
   border-color: #ffb000;
@@ -2813,12 +2813,12 @@
 }
 .charsheet .lair-cell .lair-marker {
   color: #ffb000;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
 }
 .charsheet .lair-cell .lair-label {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   color: #e5e5e0;
   text-transform: uppercase;
@@ -2837,13 +2837,13 @@
   align-items: center;
   gap: 2px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 .charsheet .claims-legend .legend-box {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
 }
 .charsheet .claims-legend .legend-box.legend-held {
@@ -2851,7 +2851,7 @@
 }
 .charsheet .claims-legend .legend-marker {
   color: #ffb000;
-  font-size: 10px;
+  font-size: 12px;
 }
 .charsheet .score-buttons {
   display: flex;
@@ -2863,7 +2863,7 @@
   flex: 1;
   padding: 4px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2881,7 +2881,7 @@
   font-style: italic;
   color: #888888;
   margin-bottom: 8px;
-  font-size: 11px;
+  font-size: 13px;
 }
 .charsheet .crew-contacts .contacts-list {
   display: flex;
@@ -2925,7 +2925,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   background: #e5e5e0;
   transition: all 0.1s ease;
 }
@@ -2951,7 +2951,7 @@
 .charsheet .crew-contacts .contact-card .contact-display .contact-name {
   display: block;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .charsheet .crew-contacts .contact-card .contact-display .contact-name:empty::after {
@@ -2962,7 +2962,7 @@
 }
 .charsheet .crew-contacts .contact-card .contact-display .contact-desc {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: #888888;
 }
 .charsheet .crew-contacts .contact-card .contact-display .contact-desc:empty {
@@ -2974,12 +2974,12 @@
 .charsheet .crew-contacts .contact-card .contact-edit .contact-name-input {
   width: 100%;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .charsheet .crew-contacts .contact-card .contact-edit .contact-desc-input {
   width: 100%;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .factions-section {
@@ -2990,7 +2990,7 @@
 }
 .factions-section .populate-btn {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   padding: 4px 8px;
   cursor: pointer;
   background: rgba(255, 176, 0, 0.1);
@@ -3028,7 +3028,7 @@
   background: rgba(136, 136, 136, 0.1);
   border: 1px dashed rgba(136, 136, 136, 0.3);
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
 }
 .status-legend .legend-item {
   display: flex;
@@ -3036,7 +3036,7 @@
   gap: 2px;
 }
 .status-legend .legend-item .status-icon {
-  font-size: 10px;
+  font-size: 12px;
 }
 .status-legend .legend-item.war {
   color: #8b0000;
@@ -3103,7 +3103,7 @@
   background: #ffb000;
   color: #1a1a1a;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: bold;
   flex-shrink: 0;
 }
@@ -3111,14 +3111,14 @@
 .faction-name-display {
   flex: 1;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
 }
 
 .faction-desc-display {
   display: block;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   color: #888888;
   margin-bottom: 2px;
   line-height: 1.3;
@@ -3128,7 +3128,7 @@
   flex: 1 1 auto;
   min-width: 60px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   border: none;
   border-bottom: 1px dashed #888888;
   background: transparent;
@@ -3145,7 +3145,7 @@
 }
 .faction-tier-edit select {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   padding: 1px 2px;
   width: auto;
   min-width: 0;
@@ -3155,7 +3155,7 @@
   width: 100%;
   min-height: 24px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 4px;
   margin-top: 2px;
   border: 1px dashed rgba(136, 136, 136, 0.3);
@@ -3267,7 +3267,7 @@
 
 .faction-category-header {
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -3289,7 +3289,7 @@
 }
 .faction-column .repcontrol button {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 4px;
   cursor: pointer;
   background: transparent;
@@ -3391,7 +3391,7 @@
 }
 .repcontrol button {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 4px;
   cursor: pointer;
   margin-right: 2px;
@@ -3407,7 +3407,7 @@
 }
 .itemcontrol button {
   font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 4px;
   cursor: pointer;
   margin-right: 2px;
@@ -4062,7 +4062,7 @@
   background: #cc7700;
   color: #e5e5e0;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
 }
 .sheet-rolltemplate-dcsb-action .sheet-rt-warning-text,
 .sheet-rolltemplate-dcsb-fortune .sheet-rt-warning-text,

@@ -47,7 +47,7 @@
 
     .block-letters {
         font-family: $font-mono;
-        font-size: 12px;
+        font-size: $type-base;
         line-height: 1.1;
         margin: 0 0 $spacing-md 0;
         padding: 0;
@@ -120,7 +120,7 @@
 
     .tab-button {
         font-family: $font-typewriter;
-        font-size: 11px;
+        font-size: $type-sm-plus;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -148,7 +148,7 @@
     .header-controls {
         .edit-toggle {
             @include flex-row($spacing-xs);
-            font-size: 10px;
+            font-size: $type-sm;
             text-transform: uppercase;
             cursor: pointer;
             color: $zine-grey;

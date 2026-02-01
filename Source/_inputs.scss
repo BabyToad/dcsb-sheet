@@ -15,7 +15,7 @@
     textarea,
     select {
         font-family: $font-typewriter;
-        font-size: 12px;
+        font-size: $type-base;
         background: transparent;
         border: none;
         border-bottom: 1px dashed $zine-grey;
@@ -118,7 +118,7 @@
             .detail-input {
                 width: 100%;
                 margin-top: 2px;
-                font-size: 10px;
+                font-size: $type-sm;
                 font-style: italic;
                 padding: 2px 4px;
                 border: none;
