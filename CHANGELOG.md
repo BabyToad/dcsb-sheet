@@ -2,6 +2,24 @@
 
 All notable changes to the DC,SB Roll20 Character Sheet.
 
+## [0.3.0] - 2025-02-01
+
+### Typography Improvements
+
+Significant readability improvements through systematic font size increases.
+
+#### Changed
+- **Type Scale +2px** - All font sizes increased by 2px for better readability
+  - New scale: 10px / 11px / 12px / 13px / 14px / 16px / 18px / 22px
+- **Typography Variables** - Added `$type-xxs` (10px) and `$type-sm-plus` (13px) to type system
+- **Hardcoded Replacements** - Replaced 36 hardcoded font-size declarations with variables for maintainability
+
+#### Technical
+- Layout-locked sizes preserved: level-num (18px), level-label (7px), lifestyle-markers (7px)
+- Roll template font sizes unchanged (already optimized for chat readability)
+
+---
+
 ## [0.2.0] - 2025-01-17
 
 ### The New Babel Update
