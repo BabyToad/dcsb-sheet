@@ -2,6 +2,7 @@
 // FACTIONS TAB - Styling for faction relations tracking
 // =============================================================================
 
+@use 'sass:color';
 @use 'tokens' as *;
 @use 'mixins' as *;
 
@@ -83,7 +84,7 @@
         }
 
         &.hostile {
-            color: darken($status-danger, 5%);
+            color: color.adjust($status-danger, $lightness: -5%);
         }
 
         &.interfering {
@@ -95,7 +96,7 @@
         }
 
         &.helpful {
-            color: lighten($status-good, 10%);
+            color: color.adjust($status-good, $lightness: 10%);
         }
 
         &.friendly {
@@ -103,7 +104,7 @@
         }
 
         &.allied {
-            color: darken($status-good, 5%);
+            color: color.adjust($status-good, $lightness: -5%);
         }
     }
 }
@@ -319,9 +320,9 @@
         }
 
         &[data-value="-2"]:has(input:checked) {
-            background: mix($status-danger, $form-paper, 70%);
+            background: color.mix($status-danger, $form-paper, 70%);
             color: $form-paper;
-            border-color: mix($status-danger, $form-paper, 70%);
+            border-color: color.mix($status-danger, $form-paper, 70%);
         }
 
         &[data-value="-1"]:has(input:checked) {
@@ -337,15 +338,15 @@
         }
 
         &[data-value="1"]:has(input:checked) {
-            background: mix($status-good, $form-paper, 50%);
+            background: color.mix($status-good, $form-paper, 50%);
             color: $form-ink;
-            border-color: mix($status-good, $form-paper, 50%);
+            border-color: color.mix($status-good, $form-paper, 50%);
         }
 
         &[data-value="2"]:has(input:checked) {
-            background: mix($status-good, $form-paper, 70%);
+            background: color.mix($status-good, $form-paper, 70%);
             color: $form-paper;
-            border-color: mix($status-good, $form-paper, 70%);
+            border-color: color.mix($status-good, $form-paper, 70%);
         }
 
         &[data-value="3"]:has(input:checked) {

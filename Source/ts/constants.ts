@@ -1,5 +1,5 @@
 // Dark City, Shining Babel - Game Data Constants
-// Static data for actions, playbooks, cybernetics, etc.
+// Static data for actions, playbooks, augments, etc.
 
 // =============================================================================
 // GAME RULES CONSTANTS
