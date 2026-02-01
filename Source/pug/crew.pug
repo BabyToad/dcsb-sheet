@@ -176,15 +176,19 @@
                     //- Row 1: Positions 1-5
                     - for (var i = 1; i <= 5; i++)
                         .claim-cell(data-position=i)
-                            //- Connectors (hidden checkboxes control visibility)
-                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
-                            .claim-conn.conn-right
-                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
-                            .claim-conn.conn-bottom
+                            //- Connectors (labels wrap checkboxes for click-to-toggle)
+                            label.conn-label.conn-right-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                                span.claim-conn.conn-right
+                            label.conn-label.conn-bottom-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
+                                span.claim-conn.conn-bottom
                             //- Held checkbox
                             label.claim-held-label
                                 input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
                                 span.claim-held-box
+                            //- Accessible hidden checkbox (calculated by sheet worker)
+                            input.claim-accessible-check(type="checkbox", name=`attr_claim_${i}_accessible`, value="1")
                             .claim-content.display
                                 .claim-name-display
                                     span(name=`attr_claim_${i}_name`)
@@ -198,14 +202,18 @@
                     - for (var i = 6; i <= 7; i++)
                         .claim-cell(data-position=i)
                             //- Connectors
-                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
-                            .claim-conn.conn-right
-                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
-                            .claim-conn.conn-bottom
+                            label.conn-label.conn-right-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                                span.claim-conn.conn-right
+                            label.conn-label.conn-bottom-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i}_conn_bottom`, value="1")
+                                span.claim-conn.conn-bottom
                             //- Held checkbox
                             label.claim-held-label
                                 input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
                                 span.claim-held-box
+                            //- Accessible hidden checkbox
+                            input.claim-accessible-check(type="checkbox", name=`attr_claim_${i}_accessible`, value="1")
                             .claim-content.display
                                 .claim-name-display
                                     span(name=`attr_claim_${i}_name`)
@@ -218,24 +226,30 @@
                     //- LAIR - Center cell (position 8)
                     .claim-cell.lair-cell(data-position="8")
                         //- Lair connectors (right and bottom)
-                        input.conn-check.conn-right-check(type="checkbox", name="attr_claim_8_conn_right", value="1")
-                        .claim-conn.conn-right
-                        input.conn-check.conn-bottom-check(type="checkbox", name="attr_claim_8_conn_bottom", value="1")
-                        .claim-conn.conn-bottom
+                        label.conn-label.conn-right-label
+                            input.conn-check(type="checkbox", name="attr_claim_8_conn_right", value="1")
+                            span.claim-conn.conn-right
+                        label.conn-label.conn-bottom-label
+                            input.conn-check(type="checkbox", name="attr_claim_8_conn_bottom", value="1")
+                            span.claim-conn.conn-bottom
                         .lair-marker ◆
                         .lair-label LAIR
 
                     - for (var i = 8; i <= 9; i++)
                         .claim-cell(data-position=(i + 1))
                             //- Connectors
-                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i + 1}_conn_right`, value="1")
-                            .claim-conn.conn-right
-                            input.conn-check.conn-bottom-check(type="checkbox", name=`attr_claim_${i + 1}_conn_bottom`, value="1")
-                            .claim-conn.conn-bottom
+                            label.conn-label.conn-right-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i + 1}_conn_right`, value="1")
+                                span.claim-conn.conn-right
+                            label.conn-label.conn-bottom-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i + 1}_conn_bottom`, value="1")
+                                span.claim-conn.conn-bottom
                             //- Held checkbox
                             label.claim-held-label
                                 input(type="checkbox", name=`attr_claim_${i + 1}_held`, value="1").claim-held-check
                                 span.claim-held-box
+                            //- Accessible hidden checkbox
+                            input.claim-accessible-check(type="checkbox", name=`attr_claim_${i + 1}_accessible`, value="1")
                             .claim-content.display
                                 .claim-name-display
                                     span(name=`attr_claim_${i + 1}_name`)
@@ -249,12 +263,15 @@
                     - for (var i = 11; i <= 15; i++)
                         .claim-cell(data-position=i)
                             //- Connectors (row 3 only has right connectors, no bottom)
-                            input.conn-check.conn-right-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
-                            .claim-conn.conn-right
+                            label.conn-label.conn-right-label
+                                input.conn-check(type="checkbox", name=`attr_claim_${i}_conn_right`, value="1")
+                                span.claim-conn.conn-right
                             //- Held checkbox
                             label.claim-held-label
                                 input(type="checkbox", name=`attr_claim_${i}_held`, value="1").claim-held-check
                                 span.claim-held-box
+                            //- Accessible hidden checkbox
+                            input.claim-accessible-check(type="checkbox", name=`attr_claim_${i}_accessible`, value="1")
                             .claim-content.display
                                 .claim-name-display
                                     span(name=`attr_claim_${i}_name`)
@@ -267,13 +284,16 @@
                 .claims-legend
                     span.legend-item
                         span.legend-box.legend-held ■
-                        | CONTROLLED
+                        | HELD
                     span.legend-item
-                        span.legend-box □
-                        | AVAILABLE
+                        span.legend-box.legend-accessible □
+                        | ACCESSIBLE
+                    span.legend-item
+                        span.legend-box.legend-locked ░
+                        | LOCKED
                     span.legend-item
                         span.legend-marker ◆
-                        | PRIMARY OPS
+                        | LAIR
 
         //- ───────────────────────────────────────────────────────────
         //- SECTION 5: CLOCKS

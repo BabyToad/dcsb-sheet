@@ -2681,7 +2681,7 @@
 .charsheet .claims-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0;
+  gap: 6px;
 }
 .charsheet .claim-cell {
   position: relative;
@@ -2763,46 +2763,110 @@
 .charsheet .claim-cell .claim-benefit-input {
   font-size: 10px;
 }
+.charsheet .claim-cell .claim-accessible-check {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.charsheet .claim-cell {
+  border-color: #888888;
+  background: rgba(136, 136, 136, 0.6);
+}
+.charsheet .claim-cell .claim-name-display span {
+  color: #888888;
+}
+.charsheet .claim-cell .claim-benefit-display span {
+  color: #888888;
+}
+.charsheet .claim-cell .claim-held-label {
+  opacity: 0.15;
+}
+.charsheet .claim-cell:has(.claim-accessible-check:checked) {
+  border-color: #888888;
+  background: #e5e5e0;
+  opacity: 1;
+}
+.charsheet .claim-cell:has(.claim-accessible-check:checked) .claim-name-display span {
+  color: #1a1a1a;
+}
+.charsheet .claim-cell:has(.claim-accessible-check:checked) .claim-benefit-display span {
+  color: #888888;
+}
+.charsheet .claim-cell:has(.claim-accessible-check:checked) .claim-held-label {
+  opacity: 1;
+}
 .charsheet .claim-cell:has(.claim-held-check:checked) {
-  border-color: #ffb000;
-  background: rgba(255, 176, 0, 0.08);
+  border: 2px solid #ffb000;
+  background: rgba(255, 176, 0, 0.15);
+  opacity: 1;
 }
 .charsheet .claim-cell:has(.claim-held-check:checked) .claim-name-display span {
-  color: #ffb000;
+  color: #1a1a1a;
+  font-weight: bold;
 }
 .charsheet .claim-cell:has(.claim-held-check:checked) .claim-benefit-display span {
   color: #1a1a1a;
 }
-.charsheet .claim-cell .conn-check {
+.charsheet .claim-cell:has(.claim-held-check:checked) .claim-held-label {
+  opacity: 1;
+}
+.charsheet .claim-cell .conn-label {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.charsheet .claim-cell .conn-label .conn-check {
   position: absolute;
   opacity: 0;
-  pointer-events: none;
+  width: 0;
+  height: 0;
 }
-.charsheet .claim-cell .claim-conn {
+.charsheet .claim-cell .conn-label .claim-conn {
   display: none;
-  position: absolute;
   background: #888888;
-  z-index: 5;
 }
-.charsheet .claim-cell .conn-right {
-  width: 12px;
-  height: 2px;
-  right: -7px;
+.charsheet .claim-cell .conn-label .conn-check:checked + .claim-conn {
+  display: block;
+}
+.charsheet .claim-cell .conn-right-label {
+  width: 6px;
+  height: 20px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%);
 }
-.charsheet .claim-cell .conn-bottom {
-  width: 2px;
-  height: 12px;
-  bottom: -7px;
+.charsheet .claim-cell .conn-right-label .conn-right {
+  width: 6px;
+  height: 2px;
+}
+.charsheet .claim-cell .conn-bottom-label {
+  width: 20px;
+  height: 6px;
+  bottom: -6px;
   left: 50%;
   transform: translateX(-50%);
 }
-.charsheet .claim-cell .conn-right-check:checked + .conn-right {
-  display: block;
+.charsheet .claim-cell .conn-bottom-label .conn-bottom {
+  width: 2px;
+  height: 6px;
 }
-.charsheet .claim-cell .conn-bottom-check:checked + .conn-bottom {
+.charsheet .claims .section-edit-toggle:checked ~ .claims-manifest .conn-label {
+  cursor: pointer;
+}
+.charsheet .claims .section-edit-toggle:checked ~ .claims-manifest .conn-label:hover {
+  background: rgba(255, 176, 0, 0.3);
+}
+.charsheet .claims .section-edit-toggle:checked ~ .claims-manifest .conn-label:hover .claim-conn {
+  background: #ffb000;
+}
+.charsheet .claims .section-edit-toggle:checked ~ .claims-manifest .conn-label .conn-check:not(:checked) + .claim-conn {
   display: block;
+  background: #bbbbbb;
+  opacity: 0.3;
 }
 .charsheet .lair-cell {
   background: #1a1a1a;
@@ -2848,6 +2912,12 @@
 }
 .charsheet .claims-legend .legend-box.legend-held {
   color: #ffb000;
+}
+.charsheet .claims-legend .legend-box.legend-accessible {
+  color: #888888;
+}
+.charsheet .claims-legend .legend-box.legend-locked {
+  color: #bbbbbb;
 }
 .charsheet .claims-legend .legend-marker {
   color: #ffb000;

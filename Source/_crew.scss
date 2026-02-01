@@ -774,7 +774,7 @@
     .claims-grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 0;
+        gap: 6px;
     }
 
     .claim-cell {
@@ -866,63 +866,157 @@
             font-size: $type-xxs;
         }
 
+        // Hidden accessible checkbox (calculated by sheet worker)
+        .claim-accessible-check {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+
         // ─────────────────────────────────────────────────────────────
-        // CONTROLLED STATE - when checkbox is checked
+        // CLAIM STATES - Locked (default), Accessible, Held
         // ─────────────────────────────────────────────────────────────
-        &:has(.claim-held-check:checked) {
-            border-color: $terminal-amber;
-            background: rgba($terminal-amber, 0.08);
+
+        // LOCKED STATE (default) - not reachable yet, noticeably darker/greyed
+        border-color: $form-grey;
+        background: rgba($form-grey, 0.60);
+
+        .claim-name-display span {
+            color: $form-grey;
+        }
+
+        .claim-benefit-display span {
+            color: $form-grey;
+        }
+
+        .claim-held-label {
+            opacity: 0.15;
+        }
+
+        // ACCESSIBLE STATE - connected to held, can claim next
+        &:has(.claim-accessible-check:checked) {
+            border-color: $form-grey;
+            background: $form-paper;
+            opacity: 1;
 
             .claim-name-display span {
-                color: $terminal-amber;
+                color: $zine-ink;
+            }
+
+            .claim-benefit-display span {
+                color: $zine-grey;
+            }
+
+            .claim-held-label {
+                opacity: 1;
+            }
+        }
+
+        // HELD STATE - controlled (overrides accessible)
+        // Dark text on amber background for readability
+        &:has(.claim-held-check:checked) {
+            border: 2px solid $terminal-amber;
+            background: rgba($terminal-amber, 0.15);
+            opacity: 1;
+
+            .claim-name-display span {
+                color: $zine-ink;
+                font-weight: bold;
             }
 
             .claim-benefit-display span {
                 color: $zine-ink;
             }
+
+            .claim-held-label {
+                opacity: 1;
+            }
         }
 
         // ─────────────────────────────────────────────────────────────
-        // CONNECTORS - Lines between adjacent claims
+        // CONNECTORS - Bridges spanning gaps between claims
+        // Labels wrap checkboxes for click-to-toggle in edit mode
         // ─────────────────────────────────────────────────────────────
-        .conn-check {
+        .conn-label {
             position: absolute;
-            opacity: 0;
-            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            // Hidden checkbox inside label
+            .conn-check {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            // Visual connector line (hidden by default)
+            .claim-conn {
+                display: none;
+                background: $form-grey;
+            }
+
+            // Show connector when checkbox is checked
+            .conn-check:checked + .claim-conn {
+                display: block;
+            }
         }
 
-        .claim-conn {
-            display: none;
-            position: absolute;
-            background: $zine-grey;
-            z-index: 5;
-        }
-
-        // Right connector (horizontal line extending right)
-        .conn-right {
-            width: 12px;
-            height: 2px;
-            right: -7px;
+        // Right connector label (horizontal, spans gap to the right)
+        .conn-right-label {
+            width: 6px;
+            height: 20px;
+            right: -6px;
             top: 50%;
             transform: translateY(-50%);
+
+            .conn-right {
+                width: 6px;
+                height: 2px;
+            }
         }
 
-        // Bottom connector (vertical line extending down)
-        .conn-bottom {
-            width: 2px;
-            height: 12px;
-            bottom: -7px;
+        // Bottom connector label (vertical, spans gap below)
+        .conn-bottom-label {
+            width: 20px;
+            height: 6px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
+
+            .conn-bottom {
+                width: 2px;
+                height: 6px;
+            }
         }
 
-        // Show connectors when checkbox is checked
-        .conn-right-check:checked + .conn-right {
-            display: block;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // CONNECTOR EDIT MODE - Clickable when claims section is in edit mode
+    // ─────────────────────────────────────────────────────────────────
+    // Uses section-edit-toggle pattern from _modes.scss
+    .claims .section-edit-toggle:checked ~ .claims-manifest .conn-label {
+        cursor: pointer;
+
+        // Show a subtle hitbox background on hover
+        &:hover {
+            background: rgba($terminal-amber, 0.3);
+
+            .claim-conn {
+                background: $terminal-amber;
+            }
         }
 
-        .conn-bottom-check:checked + .conn-bottom {
+        // Show unchecked connectors as subtle dashed placeholder in edit mode
+        .conn-check:not(:checked) + .claim-conn {
             display: block;
+            background: $form-grey-light;
+            opacity: 0.3;
         }
     }
 
@@ -980,6 +1074,14 @@
 
             &.legend-held {
                 color: $terminal-amber;
+            }
+
+            &.legend-accessible {
+                color: $form-grey;
+            }
+
+            &.legend-locked {
+                color: $form-grey-light;
             }
         }
 

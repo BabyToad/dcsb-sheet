@@ -688,6 +688,97 @@ const populateCrewClaimConnections = (connections: [number, number][]) => {
 };
 
 /**
+ * Calculate which claims are accessible based on connections and held claims
+ * Uses BFS from all held positions (including Lair at position 8)
+ * A claim is "accessible" if it's connected to a held claim but not held itself
+ *
+ * Grid layout:
+ *   [1]  [2]  [3]  [4]  [5]
+ *   [6]  [7]  [8]  [9]  [10]   (8 = Lair, always "held")
+ *   [11] [12] [13] [14] [15]
+ */
+const calculateClaimAccessibility = () => {
+    // All claim positions (including Lair at 8)
+    const allPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    // Positions that can be held (not Lair)
+    const claimPositions = [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15];
+
+    // Build list of attributes to fetch
+    const attrsToFetch: string[] = [];
+
+    // Held checkboxes (not for position 8 - Lair is always held)
+    claimPositions.forEach(pos => {
+        attrsToFetch.push(`claim_${pos}_held`);
+    });
+
+    // Connection checkboxes (right and bottom for each position)
+    allPositions.forEach(pos => {
+        // Right connector (not for rightmost column: 5, 10, 15)
+        if (pos % 5 !== 0) {
+            attrsToFetch.push(`claim_${pos}_conn_right`);
+        }
+        // Bottom connector (not for bottom row: 11-15)
+        if (pos <= 10) {
+            attrsToFetch.push(`claim_${pos}_conn_bottom`);
+        }
+    });
+
+    getAttrs(attrsToFetch, (v) => {
+        // Build adjacency list from connections
+        const adjacent: { [key: number]: number[] } = {};
+        allPositions.forEach(pos => {
+            adjacent[pos] = [];
+        });
+
+        // Check right connections (horizontal, diff = 1)
+        allPositions.forEach(pos => {
+            if (pos % 5 !== 0) { // Not rightmost column
+                const rightPos = pos + 1;
+                if (v[`claim_${pos}_conn_right`] === '1') {
+                    adjacent[pos].push(rightPos);
+                    adjacent[rightPos].push(pos);
+                }
+            }
+        });
+
+        // Check bottom connections (vertical, diff = 5)
+        allPositions.forEach(pos => {
+            if (pos <= 10) { // Not bottom row
+                const bottomPos = pos + 5;
+                if (v[`claim_${pos}_conn_bottom`] === '1') {
+                    adjacent[pos].push(bottomPos);
+                    adjacent[bottomPos].push(pos);
+                }
+            }
+        });
+
+        // Identify held positions (Lair at 8 is always held)
+        const heldPositions = new Set<number>([8]); // Lair always held
+        claimPositions.forEach(pos => {
+            if (v[`claim_${pos}_held`] === '1') {
+                heldPositions.add(pos);
+            }
+        });
+
+        // A claim is "accessible" ONLY if directly connected to a held position
+        // (not just reachable through multiple hops - you must hold claims to extend)
+        const updates: { [key: string]: string } = {};
+        claimPositions.forEach(pos => {
+            const isHeld = heldPositions.has(pos);
+
+            // Check if any neighbor is held
+            const hasHeldNeighbor = adjacent[pos].some(neighbor => heldPositions.has(neighbor));
+
+            // Accessible = not held, but directly connected to something held
+            const isAccessible = !isHeld && hasHeldNeighbor;
+            updates[`claim_${pos}_accessible`] = isAccessible ? '1' : '0';
+        });
+
+        setAttrs(updates, { silent: true });
+    });
+};
+
+/**
  * Clear all crew upgrade checkboxes
  */
 const clearCrewUpgrades = (callback?: () => void) => {
@@ -838,4 +929,5 @@ const initializeSheet = () => {
     calculateLoad();
     calculateAugmentMaintenance();
     calculateHeatDice();
+    calculateClaimAccessibility();
 };

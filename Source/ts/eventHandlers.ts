@@ -268,6 +268,37 @@ on("clicked:reset_to_playbook", () => {
 on("change:crew_type", eventInfo => {
     const newCrewType = eventInfo.newValue as string;
     handleCrewTypeChange(newCrewType);
+    // Note: calculateClaimAccessibility will also be triggered by connection change events
+    // when populateCrewClaimConnections sets the connection checkboxes
+});
+
+// =============================================================================
+// CLAIM ACCESSIBILITY CALCULATION
+// =============================================================================
+
+// Recalculate when any claim is held/unheld
+on("change:claim_1_held change:claim_2_held change:claim_3_held change:claim_4_held change:claim_5_held " +
+   "change:claim_6_held change:claim_7_held change:claim_9_held change:claim_10_held " +
+   "change:claim_11_held change:claim_12_held change:claim_13_held change:claim_14_held change:claim_15_held", () => {
+    calculateClaimAccessibility();
+});
+
+// Recalculate when any connection changes
+on("change:claim_1_conn_right change:claim_1_conn_bottom " +
+   "change:claim_2_conn_right change:claim_2_conn_bottom " +
+   "change:claim_3_conn_right change:claim_3_conn_bottom " +
+   "change:claim_4_conn_right change:claim_4_conn_bottom " +
+   "change:claim_5_conn_bottom " +
+   "change:claim_6_conn_right change:claim_6_conn_bottom " +
+   "change:claim_7_conn_right change:claim_7_conn_bottom " +
+   "change:claim_8_conn_right change:claim_8_conn_bottom " +
+   "change:claim_9_conn_right change:claim_9_conn_bottom " +
+   "change:claim_10_conn_bottom " +
+   "change:claim_11_conn_right " +
+   "change:claim_12_conn_right " +
+   "change:claim_13_conn_right " +
+   "change:claim_14_conn_right", () => {
+    calculateClaimAccessibility();
 });
 
 // =============================================================================
