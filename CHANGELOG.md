@@ -2,6 +2,32 @@
 
 All notable changes to the DC,SB Roll20 Character Sheet.
 
+## [0.3.1] - 2026-02-01
+
+### Territory Claims System Overhaul
+
+Complete rebuild of the crew sheet claims system with proper accessibility states.
+
+#### Added
+- **Accessibility States** - Three visual states for claim cells:
+  - **Held** (amber) - Territory you control
+  - **Accessible** (normal) - Directly connected to held territory, can be claimed
+  - **Locked** (grey) - Not adjacent to held territory, cannot be claimed yet
+- **Click-to-Toggle Connections** - Connections between claims can now be toggled on/off
+- **Accessibility Calculation** - Sheet worker calculates which claims are accessible based on direct adjacency to held claims
+
+#### Changed
+- **Grid Layout** - Added 6px gaps between claim cells for cleaner visual separation
+- **Connection Display** - Connections now span the gaps between cells
+- **Legend Updated** - Shows HELD / ACCESSIBLE / LOCKED / LAIR states
+
+#### Technical
+- Claims only accessible if directly connected to a held position (not through multiple hops)
+- Lair always counts as held for accessibility calculations
+- Event handlers trigger recalculation when claims or connections change
+
+---
+
 ## [0.3.0] - 2025-02-01
 
 ### Typography Improvements
