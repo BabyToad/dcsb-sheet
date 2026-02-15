@@ -360,7 +360,7 @@ mixin clock-entry()
 
 mixin faction-entry()
     .faction-entry
-        //- Header row: [Tier] Name
+        //- Header row: [Tier] Name [Hold]
         .faction-header-row
             //- Tier badge (display mode)
             .display.faction-tier-badge
@@ -378,6 +378,14 @@ mixin faction-entry()
             span.display.faction-name-display(name="attr_faction_name")
             //- Faction name (edit)
             input.edit.faction-name-input(type="text", name="attr_faction_name", placeholder="Faction name")
+            //- Hold selector (Weak/Strong)
+            .faction-hold-selector
+                label.hold-pip(data-value="weak")
+                    input(type="radio", name="attr_faction_hold", value="weak")
+                    span W
+                label.hold-pip(data-value="strong")
+                    input(type="radio", name="attr_faction_hold", value="strong", checked)
+                    span S
 
         //- Description (display mode)
         span.display.faction-desc-display(name="attr_faction_desc")

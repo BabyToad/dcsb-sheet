@@ -907,6 +907,7 @@ const populateDefaultFactions = () => {
                 attrs[`repeating_${sectionName}_${rowId}_faction_tier_display`] = faction.tierDisplay;
                 attrs[`repeating_${sectionName}_${rowId}_faction_category`] = faction.category;
                 attrs[`repeating_${sectionName}_${rowId}_faction_status`] = "0";
+                attrs[`repeating_${sectionName}_${rowId}_faction_hold`] = "strong";
                 attrs[`repeating_${sectionName}_${rowId}_faction_desc`] = faction.description;
                 attrs[`repeating_${sectionName}_${rowId}_autogen`] = "1";
             });

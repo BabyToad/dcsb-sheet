@@ -145,13 +145,63 @@
     }
 }
 
-// Header row: [Tier] Name
+// Header row: [Tier] Name [Hold]
 .faction-header-row {
     display: flex;
     align-items: center;
     gap: $spacing-xs;
     margin-bottom: 2px;
     flex-wrap: wrap; // Allow wrapping if needed
+}
+
+// Hold selector (Weak/Strong) - compact inline toggle
+.faction-hold-selector {
+    display: flex;
+    gap: 1px;
+    margin-left: auto;
+    flex-shrink: 0;
+
+    .hold-pip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 16px;
+        height: 16px;
+        padding: 0 2px;
+        font-family: $font-mono;
+        font-size: 9px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid rgba($form-grey, 0.5);
+        background: transparent;
+        color: $form-grey;
+        @include transition();
+
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        &:hover {
+            border-color: $terminal-amber;
+        }
+
+        // Weak hold - warning tint when selected
+        &[data-value="weak"]:has(input:checked) {
+            background: $status-warning;
+            color: $form-ink;
+            border-color: $status-warning;
+        }
+
+        // Strong hold - amber when selected
+        &[data-value="strong"]:has(input:checked) {
+            background: $terminal-amber;
+            color: $form-ink;
+            border-color: $terminal-amber;
+        }
+    }
 }
 
 // Tier badge styling - compact

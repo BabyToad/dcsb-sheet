@@ -3164,6 +3164,48 @@
   flex-wrap: wrap;
 }
 
+.faction-hold-selector {
+  display: flex;
+  gap: 1px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.faction-hold-selector .hold-pip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 2px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid rgba(136, 136, 136, 0.5);
+  background: transparent;
+  color: #888888;
+  transition: all 0.1s ease;
+}
+.faction-hold-selector .hold-pip input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.faction-hold-selector .hold-pip:hover {
+  border-color: #ffb000;
+}
+.faction-hold-selector .hold-pip[data-value=weak]:has(input:checked) {
+  background: #cc7700;
+  color: #1a1a1a;
+  border-color: #cc7700;
+}
+.faction-hold-selector .hold-pip[data-value=strong]:has(input:checked) {
+  background: #ffb000;
+  color: #1a1a1a;
+  border-color: #ffb000;
+}
+
 .faction-tier-badge {
   display: inline-flex;
   align-items: center;
