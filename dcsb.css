@@ -3075,7 +3075,7 @@
 
 .faction-columns {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 4px;
   align-items: start;
   width: 100%;
@@ -3100,13 +3100,17 @@
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
 }
+.status-legend .legend-label {
+  font-weight: bold;
+  color: #1a1a1a;
+}
+.status-legend .legend-sep {
+  color: rgba(136, 136, 136, 0.4);
+}
 .status-legend .legend-item {
   display: flex;
   align-items: center;
   gap: 2px;
-}
-.status-legend .legend-item .status-icon {
-  font-size: 12px;
 }
 .status-legend .legend-item.war {
   color: #8b0000;
@@ -3128,6 +3132,98 @@
 }
 .status-legend .legend-item.allied {
   color: rgb(36.1046511628, 72.2093023256, 31.2906976744);
+}
+.status-legend .legend-item.notice-neg {
+  color: #8b0000;
+}
+.status-legend .legend-item.notice-pos {
+  color: #2d5a27;
+}
+
+.conglomerate-notice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 4px;
+  border: 1px solid rgba(255, 176, 0, 0.3);
+  background: rgba(255, 176, 0, 0.03);
+}
+
+.notice-label {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 8px;
+  font-weight: bold;
+  color: #888888;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+.notice-boxes {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+
+.notice-box {
+  display: flex;
+  gap: 1px;
+  border: 1px solid rgba(136, 136, 136, 0.3);
+  padding: 1px;
+  background: rgba(26, 26, 26, 0.02);
+}
+.notice-box .notice-pip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 2px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid rgba(136, 136, 136, 0.3);
+  background: transparent;
+  color: #888888;
+  transition: all 0.1s ease;
+}
+.notice-box .notice-pip input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.notice-box .notice-pip:hover {
+  border-color: #ffb000;
+}
+.notice-box .notice-pip[data-value="-1"] {
+  border-color: rgba(139, 0, 0, 0.3);
+  color: rgba(139, 0, 0, 0.5);
+}
+.notice-box .notice-pip[data-value="-1"]:has(input:checked) {
+  background: #8b0000;
+  color: #e5e5e0;
+  border-color: #8b0000;
+}
+.notice-box .notice-pip[data-value="0"] {
+  border-color: rgba(136, 136, 136, 0.3);
+  color: rgba(136, 136, 136, 0.5);
+}
+.notice-box .notice-pip[data-value="0"]:has(input:checked) {
+  background: rgba(136, 136, 136, 0.3);
+  color: #888888;
+  border-color: rgba(136, 136, 136, 0.5);
+}
+.notice-box .notice-pip[data-value="1"] {
+  border-color: rgba(45, 90, 39, 0.3);
+  color: rgba(45, 90, 39, 0.5);
+}
+.notice-box .notice-pip[data-value="1"]:has(input:checked) {
+  background: #2d5a27;
+  color: #e5e5e0;
+  border-color: #2d5a27;
 }
 
 .faction-entry {
@@ -3377,13 +3473,61 @@
   border-color: #2d5a27;
 }
 
+.subsidiary-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.faction-column > .subsidiary-toggle ~ * {
+  display: none;
+}
+
+.faction-column > .subsidiary-toggle ~ .subsidiary-toggle-btn {
+  display: block;
+}
+
+.faction-column > .subsidiary-toggle:checked ~ * {
+  display: block;
+}
+
+.subsidiary-toggle-btn {
+  display: block;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #888888;
+  border: 1px dashed rgba(136, 136, 136, 0.3);
+  padding: 2px 4px;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 4px;
+  transition: all 0.1s ease;
+}
+.subsidiary-toggle-btn::before {
+  content: "> ";
+}
+.subsidiary-toggle-btn:hover {
+  color: #ffb000;
+  border-color: rgba(255, 176, 0, 0.5);
+}
+
+.subsidiary-toggle:checked ~ .subsidiary-toggle-btn {
+  color: #ffb000;
+  border-color: rgba(255, 176, 0, 0.5);
+  border-style: solid;
+}
+.subsidiary-toggle:checked ~ .subsidiary-toggle-btn::before {
+  content: "v ";
+}
+
 .faction-category-header {
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #ffb000;
+  color: #1a1a1a;
   padding: 2px 0;
   border-bottom: 1px solid #ffb000;
   margin-top: 8px;
@@ -3418,6 +3562,54 @@
   border: none;
   padding: 0;
   margin: 0;
+}
+
+.faction-group {
+  margin-top: 16px;
+}
+.faction-group .faction-group-header {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #1a1a1a;
+  padding: 2px 0;
+  border-bottom: 2px solid #ffb000;
+  margin-bottom: 4px;
+}
+.faction-group .repcontainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  align-items: start;
+}
+.faction-group fieldset {
+  min-width: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.faction-group .repcontrol {
+  grid-column: 1/-1;
+  margin-top: 4px;
+  padding: 2px;
+  background: rgba(255, 176, 0, 0.05);
+  border: 1px dashed rgba(255, 176, 0, 0.3);
+}
+.faction-group .repcontrol button {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  padding: 2px 4px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgba(255, 176, 0, 0.5);
+  color: #ffb000;
+  transition: all 0.1s ease;
+}
+.faction-group .repcontrol button:hover {
+  background: #ffb000;
+  color: #1a1a1a;
 }
 
 .tab-radio {

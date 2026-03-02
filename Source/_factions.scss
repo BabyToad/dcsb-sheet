@@ -1,5 +1,6 @@
 // =============================================================================
-// FACTIONS TAB - Styling for faction relations tracking
+// FACTIONS TAB - Conglomerate notice and company relationship tracking
+// 6 conglomerates with Agon-style dual positive/negative notice boxes
 // =============================================================================
 
 @use 'sass:color';
@@ -36,23 +37,23 @@
 }
 
 // =============================================================================
-// FACTION COLUMNS GRID
+// FACTION COLUMNS GRID (6 conglomerate columns)
 // =============================================================================
 
 .faction-columns {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: $spacing-sm;
-    align-items: start; // Don't stretch columns to equal height - allows independent content
+    align-items: start;
     width: 100%;
-    overflow: hidden; // Prevent blowout
+    overflow: hidden;
 }
 
 .faction-column {
     display: flex;
     flex-direction: column;
-    min-width: 0; // Prevent grid blowout
-    overflow: hidden; // Contain content within column
+    min-width: 0;
+    overflow: hidden;
 }
 
 // =============================================================================
@@ -70,14 +71,19 @@
     font-family: $font-mono;
     font-size: $type-xs;
 
+    .legend-label {
+        font-weight: bold;
+        color: $form-ink;
+    }
+
+    .legend-sep {
+        color: rgba($form-grey, 0.4);
+    }
+
     .legend-item {
         display: flex;
         align-items: center;
         gap: 2px;
-
-        .status-icon {
-            font-size: $type-sm;
-        }
 
         &.war {
             color: $status-danger;
@@ -106,11 +112,122 @@
         &.allied {
             color: color.adjust($status-good, $lightness: -5%);
         }
+
+        &.notice-neg {
+            color: $status-danger;
+        }
+
+        &.notice-pos {
+            color: $status-good;
+        }
     }
 }
 
 // =============================================================================
-// FACTION ENTRY (repeating section row) - Detailed vertical layout
+// CONGLOMERATE NOTICE (Agon-style dual tracking)
+// 3 tri-state boxes per conglomerate: positive (+), negative (-), neutral (·)
+// =============================================================================
+
+.conglomerate-notice {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    border: 1px solid rgba($terminal-amber, 0.3);
+    background: rgba($terminal-amber, 0.03);
+}
+
+.notice-label {
+    font-family: $font-mono;
+    font-size: 8px;
+    font-weight: bold;
+    color: $form-grey;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+}
+
+.notice-boxes {
+    display: flex;
+    gap: $spacing-xs;
+    flex: 1;
+    justify-content: center;
+}
+
+.notice-box {
+    display: flex;
+    gap: 1px;
+    border: 1px solid rgba($form-grey, 0.3);
+    padding: 1px;
+    background: rgba($form-ink, 0.02);
+
+    .notice-pip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 2px;
+        font-family: $font-mono;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid rgba($form-grey, 0.3);
+        background: transparent;
+        color: $form-grey;
+        @include transition();
+
+        input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        &:hover {
+            border-color: $terminal-amber;
+        }
+
+        // Negative pip colors
+        &[data-value="-1"] {
+            border-color: rgba($status-danger, 0.3);
+            color: rgba($status-danger, 0.5);
+
+            &:has(input:checked) {
+                background: $status-danger;
+                color: $form-paper;
+                border-color: $status-danger;
+            }
+        }
+
+        // Neutral pip colors
+        &[data-value="0"] {
+            border-color: rgba($form-grey, 0.3);
+            color: rgba($form-grey, 0.5);
+
+            &:has(input:checked) {
+                background: rgba($form-grey, 0.3);
+                color: $form-grey;
+                border-color: rgba($form-grey, 0.5);
+            }
+        }
+
+        // Positive pip colors
+        &[data-value="1"] {
+            border-color: rgba($status-good, 0.3);
+            color: rgba($status-good, 0.5);
+
+            &:has(input:checked) {
+                background: $status-good;
+                color: $form-paper;
+                border-color: $status-good;
+            }
+        }
+    }
+}
+
+// =============================================================================
+// FACTION ENTRY (repeating section row) - Company within conglomerate
 // =============================================================================
 
 .faction-entry {
@@ -118,7 +235,7 @@
     margin-bottom: $spacing-xs;
     border: 1px solid rgba($form-grey, 0.2);
     background: transparent;
-    min-width: 0; // Allow shrinking within grid
+    min-width: 0;
     overflow: hidden;
     @include transition();
 
@@ -151,7 +268,7 @@
     align-items: center;
     gap: $spacing-xs;
     margin-bottom: 2px;
-    flex-wrap: wrap; // Allow wrapping if needed
+    flex-wrap: wrap;
 }
 
 // Hold selector (Weak/Strong) - compact inline toggle
@@ -237,7 +354,7 @@
 
 .faction-name-input {
     flex: 1 1 auto;
-    min-width: 60px; // Minimum readable width
+    min-width: 60px;
     font-family: $font-mono;
     font-size: $type-sm;
     border: none;
@@ -290,17 +407,17 @@
 .faction-status-track {
     display: flex;
     align-items: center;
-    gap: 2px; // Slightly more breathing room
+    gap: 2px;
     flex-shrink: 0;
 
-    // Status pip styling (label wrapping the input) - improved touch targets
+    // Status pip styling (label wrapping the input)
     .status-pip {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 20px;  // Was 18px - better touch target
-        height: 18px;     // Was 16px - better touch target
-        padding: 0 3px;   // Was 0 2px - more breathing room
+        min-width: 20px;
+        height: 18px;
+        padding: 0 3px;
         font-family: $font-mono;
         font-size: 9px;
         font-weight: bold;
@@ -358,7 +475,7 @@
             color: $status-good;
         }
 
-        // Checked state styling - input:checked inside label
+        // Checked state styling
         &:has(input:checked) {
             font-weight: bold;
         }
@@ -409,7 +526,69 @@
 
 
 // =============================================================================
-// CATEGORY HEADERS (optional - if we group by category)
+// SUBSIDIARY COLLAPSE TOGGLE (CSS-only, collapsed by default)
+// Reuses the hidden-checkbox + :checked ~ sibling pattern from _modes.scss
+// =============================================================================
+
+.subsidiary-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+// Default: hide repeating section after toggle (collapsed)
+// Uses ~ * to target the repcontainer (converted from fieldset by Roll20)
+.faction-column > .subsidiary-toggle ~ * {
+    display: none;
+}
+
+// Always show the toggle button label
+.faction-column > .subsidiary-toggle ~ .subsidiary-toggle-btn {
+    display: block;
+}
+
+// Expanded when toggle checked — show everything after toggle
+.faction-column > .subsidiary-toggle:checked ~ * {
+    display: block;
+}
+
+// Toggle button: small terminal-style expand control
+.subsidiary-toggle-btn {
+    display: block;
+    font-family: $font-mono;
+    font-size: $type-xs;
+    letter-spacing: 0.1em;
+    color: $form-grey;
+    border: 1px dashed rgba($form-grey, 0.3);
+    padding: $spacing-xs $spacing-sm;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: $spacing-sm;
+    @include transition();
+
+    &::before {
+        content: "> ";
+    }
+
+    &:hover {
+        color: $terminal-amber;
+        border-color: rgba($terminal-amber, 0.5);
+    }
+}
+
+// Active state when expanded
+.subsidiary-toggle:checked ~ .subsidiary-toggle-btn {
+    color: $terminal-amber;
+    border-color: rgba($terminal-amber, 0.5);
+    border-style: solid;
+
+    &::before {
+        content: "v ";
+    }
+}
+
+// =============================================================================
+// CATEGORY HEADERS
 // =============================================================================
 
 .faction-category-header {
@@ -418,7 +597,7 @@
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: $terminal-amber;
+    color: $form-ink;
     padding: $spacing-xs 0;
     border-bottom: 1px solid $terminal-amber;
     margin-top: $spacing-md;
@@ -461,9 +640,69 @@
 
     // Ensure fieldset doesn't cause layout issues
     fieldset {
-        min-width: 0; // Prevent fieldset from expanding beyond column
+        min-width: 0;
         border: none;
         padding: 0;
         margin: 0;
+    }
+}
+
+// =============================================================================
+// UNDERWORLD & FRINGE SECTIONS
+// =============================================================================
+
+.faction-group {
+    margin-top: $spacing-lg;
+
+    .faction-group-header {
+        font-family: $font-mono;
+        font-size: $type-sm;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $form-ink;
+        padding: $spacing-xs 0;
+        border-bottom: 2px solid $terminal-amber;
+        margin-bottom: $spacing-sm;
+    }
+
+    // Lay out faction entries in a 3-column grid
+    .repcontainer {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-sm;
+        align-items: start;
+    }
+
+    fieldset {
+        min-width: 0;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    // Style repcontrol to match
+    .repcontrol {
+        grid-column: 1 / -1;
+        margin-top: $spacing-sm;
+        padding: $spacing-xs;
+        background: rgba($terminal-amber, 0.05);
+        border: 1px dashed rgba($terminal-amber, 0.3);
+
+        button {
+            font-family: $font-mono;
+            font-size: $type-xs;
+            padding: $spacing-xs $spacing-sm;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid rgba($terminal-amber, 0.5);
+            color: $terminal-amber;
+            @include transition();
+
+            &:hover {
+                background: $terminal-amber;
+                color: $form-ink;
+            }
+        }
     }
 }

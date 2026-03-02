@@ -864,18 +864,21 @@ const handleCrewTypeChange = (newCrewType: string) => {
 // =============================================================================
 
 /**
- * Map faction category keys to repeating section names
+ * Map conglomerate keys to repeating section names
  */
 const FACTION_SECTION_MAP: { [key: string]: string } = {
-    'corpsmajor': 'factionscorpsmajor',
-    'corpsminor': 'factionscorpsminor',
+    'chaebol': 'factionschaebol',
+    'worldvalley': 'factionsworldvalley',
+    'kernkeiwit': 'factionskernkeiwit',
+    'wyndcom': 'factionswyndcom',
+    'palantir': 'factionspalantir',
+    'globalextraction': 'factionsglobalextraction',
     'underworld': 'factionsunderworld',
-    'fringe': 'factionsfringe',
-    'citizens': 'factionscitizens'
+    'fringe': 'factionsfringe'
 };
 
 /**
- * Clear all factions from all faction sections
+ * Clear all factions from all conglomerate sections and reset notice boxes
  */
 const clearAllFactions = () => {
     const sectionNames = Object.values(FACTION_SECTION_MAP);
@@ -887,25 +890,33 @@ const clearAllFactions = () => {
             });
         });
     });
+
+    // Reset all conglomerate notice boxes to neutral
+    const noticeAttrs: Record<string, string> = {};
+    CONGLOMERATE_SLUGS.forEach(slug => {
+        for (let i = 1; i <= 3; i++) {
+            noticeAttrs[`${slug}_notice_${i}`] = "0";
+        }
+    });
+    setAttrs(noticeAttrs);
 };
 
 /**
- * Populate all faction sections in a single batched setAttrs call
- * This avoids issues with multiple rapid setAttrs calls
+ * Populate all conglomerate sections in a single batched setAttrs call
  */
 const populateDefaultFactions = () => {
-    // Build a single attrs object with all factions
     const attrs: Record<string, string> = {};
 
-    FACTION_DATA.forEach(category => {
-        const sectionName = FACTION_SECTION_MAP[category.key];
-        if (sectionName && category.factions) {
-            category.factions.forEach(faction => {
+    // Populate conglomerate subsidiaries
+    FACTION_DATA.forEach(conglomerate => {
+        const sectionName = FACTION_SECTION_MAP[conglomerate.key];
+        if (sectionName && conglomerate.factions) {
+            [...conglomerate.factions].sort((a, b) => b.tier - a.tier).forEach(faction => {
                 const rowId = generateRowID();
                 attrs[`repeating_${sectionName}_${rowId}_faction_name`] = faction.name;
                 attrs[`repeating_${sectionName}_${rowId}_faction_tier`] = faction.tier.toString();
                 attrs[`repeating_${sectionName}_${rowId}_faction_tier_display`] = faction.tierDisplay;
-                attrs[`repeating_${sectionName}_${rowId}_faction_category`] = faction.category;
+                attrs[`repeating_${sectionName}_${rowId}_faction_category`] = faction.conglomerate;
                 attrs[`repeating_${sectionName}_${rowId}_faction_status`] = "0";
                 attrs[`repeating_${sectionName}_${rowId}_faction_hold`] = "strong";
                 attrs[`repeating_${sectionName}_${rowId}_faction_desc`] = faction.description;
@@ -914,7 +925,32 @@ const populateDefaultFactions = () => {
         }
     });
 
-    // Single setAttrs call with all faction data
+    // Populate underworld factions
+    const uwSection = FACTION_SECTION_MAP['underworld'];
+    [...UNDERWORLD_DATA].sort((a, b) => b.tier - a.tier).forEach(faction => {
+        const rowId = generateRowID();
+        attrs[`repeating_${uwSection}_${rowId}_faction_name`] = faction.name;
+        attrs[`repeating_${uwSection}_${rowId}_faction_tier`] = faction.tier.toString();
+        attrs[`repeating_${uwSection}_${rowId}_faction_tier_display`] = faction.tierDisplay;
+        attrs[`repeating_${uwSection}_${rowId}_faction_status`] = "0";
+        attrs[`repeating_${uwSection}_${rowId}_faction_hold`] = "strong";
+        attrs[`repeating_${uwSection}_${rowId}_faction_desc`] = faction.description;
+        attrs[`repeating_${uwSection}_${rowId}_autogen`] = "1";
+    });
+
+    // Populate fringe factions
+    const frSection = FACTION_SECTION_MAP['fringe'];
+    [...FRINGE_DATA].sort((a, b) => b.tier - a.tier).forEach(faction => {
+        const rowId = generateRowID();
+        attrs[`repeating_${frSection}_${rowId}_faction_name`] = faction.name;
+        attrs[`repeating_${frSection}_${rowId}_faction_tier`] = faction.tier.toString();
+        attrs[`repeating_${frSection}_${rowId}_faction_tier_display`] = faction.tierDisplay;
+        attrs[`repeating_${frSection}_${rowId}_faction_status`] = "0";
+        attrs[`repeating_${frSection}_${rowId}_faction_hold`] = "strong";
+        attrs[`repeating_${frSection}_${rowId}_faction_desc`] = faction.description;
+        attrs[`repeating_${frSection}_${rowId}_autogen`] = "1";
+    });
+
     setAttrs(attrs);
 };
 

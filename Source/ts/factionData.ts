@@ -1,5 +1,11 @@
 // Dark City, Shining Babel - Faction Data
-// Data structure for the Factions tab - relationships with Babel's power players
+// Conglomerate notice and company relationships
+// Source: The New Babel rulebook (Dylan's Google Doc, March 2026)
+//
+// Conglomerates are beyond Tier. They can only be targeted through subsidiaries.
+// Pillar (+/-2 Rep) = 2 conglomerate ticks
+// Major (+/-2 Rep) = 1 conglomerate tick
+// Minor = no conglomerate ticks (but may affect larger companies)
 
 // =============================================================================
 // TYPE DEFINITIONS
@@ -10,12 +16,14 @@ interface Faction {
     tier: number;           // 1-6
     tierDisplay: string;    // "I" to "VI" (Roman numerals)
     description: string;
-    category: 'corps' | 'underworld' | 'fringe' | 'labor' | 'citizens';
+    conglomerate: string;   // Which conglomerate this company belongs to
+    rank: 'pillar' | 'major' | 'minor';
 }
 
-interface FactionCategory {
+interface Conglomerate {
     name: string;
     key: string;
+    label: string;          // Display label with BSX ticker and specialization
     factions: Faction[];
 }
 
@@ -23,387 +31,276 @@ interface FactionCategory {
 // UTILITY FUNCTIONS
 // =============================================================================
 
-/**
- * Convert numeric tier to Roman numeral display
- */
 const tierToRoman = (tier: number): string => {
     const romanNumerals: { [key: number]: string } = {
-        1: 'I',
-        2: 'II',
-        3: 'III',
-        4: 'IV',
-        5: 'V',
-        6: 'VI'
+        1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI'
     };
     return romanNumerals[tier] || tier.toString();
 };
 
 // =============================================================================
-// FACTION DATA
+// CONGLOMERATE SLUGS (for attribute names)
 // =============================================================================
 
-const FACTION_DATA: FactionCategory[] = [
+const CONGLOMERATE_SLUGS = [
+    'chaebol',
+    'worldvalley',
+    'kernkeiwit',
+    'wyndcom',
+    'palantir',
+    'globalextraction'
+] as const;
+
+// =============================================================================
+// FACTION DATA — Canonical from The New Babel
+// =============================================================================
+
+const FACTION_DATA: Conglomerate[] = [
     // =========================================================================
-    // CORPS - MAJOR (7 factions)
-    // The biggest corporate players in Babel
+    // CHAEBOL (BSX: CHA) — Industrial
     // =========================================================================
     {
-        name: "Corps (Major)",
-        key: "corpsmajor",
+        name: "Chaebol",
+        key: "chaebol",
+        label: "CHA — Industrial",
         factions: [
             {
-                name: "The Council",
-                tier: 6,
-                tierDisplay: "VI",
-                description: "The top 8 corps maintaining hegemony across Babel",
-                category: "corps"
-            },
-            {
-                name: "Morningstar",
-                tier: 5,
-                tierDisplay: "V",
-                description: "Military-tech security teams, private armies for hire",
-                category: "corps"
-            },
-            {
                 name: "Cronus Construction",
-                tier: 5,
-                tierDisplay: "V",
+                tier: 6, tierDisplay: "VI",
                 description: "Mega-scale construction and infrastructure",
-                category: "corps"
+                conglomerate: "chaebol", rank: "pillar"
             },
             {
                 name: "Kodama Munitions",
-                tier: 4,
-                tierDisplay: "IV",
+                tier: 5, tierDisplay: "V",
                 description: "Military and prison-labor weapon manufacturer",
-                category: "corps"
+                conglomerate: "chaebol", rank: "pillar"
             },
             {
-                name: "World Valley Medical",
-                tier: 4,
-                tierDisplay: "IV",
-                description: "Microsoft-y cybernetics provider, basic replacement limbs",
-                category: "corps"
-            },
-            {
-                name: "Nobusama Logistics",
-                tier: 4,
-                tierDisplay: "IV",
-                description: "Shipping, transport, and supply chain operations",
-                category: "corps"
+                name: "Hype",
+                tier: 5, tierDisplay: "V",
+                description: "Mass media and talent cultivation. Originated in K-Pop, trains talent and cultivates 'authentic music narratives'",
+                conglomerate: "chaebol", rank: "pillar"
             },
             {
                 name: "Nutrition Unlimited",
-                tier: 4,
-                tierDisplay: "IV",
+                tier: 4, tierDisplay: "IV",
                 description: "Food production and distribution megacorp",
-                category: "corps"
-            }
-        ]
-    },
-
-    // =========================================================================
-    // CORPS - MINOR (7 factions)
-    // Smaller but still significant corporate entities
-    // =========================================================================
-    {
-        name: "Corps (Minor)",
-        key: "corpsminor",
-        factions: [
-            {
-                name: "WyndCom",
-                tier: 4,
-                tierDisplay: "IV",
-                description: "Air and space travel leader, cheap fast and sleek",
-                category: "corps"
+                conglomerate: "chaebol", rank: "major"
             },
             {
-                name: "NERPS!",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Tesla with flamethrowers and weed. Oxygen bars, cool kid augments",
-                category: "corps"
-            },
-            {
-                name: "Oh-Di",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Omni-Health Directional - healthcare and pharmaceuticals",
-                category: "corps"
-            },
-            {
-                name: "Zirinka Computing",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Computing and networking infrastructure",
-                category: "corps"
-            },
-            {
-                name: "Takam Housing",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Housing and property development",
-                category: "corps"
+                name: "Nobusama",
+                tier: 4, tierDisplay: "IV",
+                description: "Cars, boats, planes, construction equipment",
+                conglomerate: "chaebol", rank: "major"
             },
             {
                 name: "Surma School Labs",
-                tier: 3,
-                tierDisplay: "III",
+                tier: 3, tierDisplay: "III",
                 description: "Education and research laboratories",
-                category: "corps"
-            },
-            {
-                name: "Kinnara Generation",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Power generation and energy infrastructure",
-                category: "corps"
+                conglomerate: "chaebol", rank: "major"
             }
         ]
     },
 
     // =========================================================================
-    // THE UNDERWORLD (10 factions)
-    // Criminal organizations operating in Babel's shadows
+    // WORLD VALLEY (BSX: WVM) — Biotechnology
     // =========================================================================
     {
-        name: "The Underworld",
-        key: "underworld",
+        name: "World Valley",
+        key: "worldvalley",
+        label: "WVM — Biotechnology",
         factions: [
             {
-                name: "Cyber Monday",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Thieves and brutes who steal augments from corps",
-                category: "underworld"
+                name: "WV Cybernetics",
+                tier: 6, tierDisplay: "VI",
+                description: "The leader in cybernetic advancements",
+                conglomerate: "worldvalley", rank: "pillar"
             },
             {
-                name: "134º",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Nightclub empire with drug runners in the streets",
-                category: "underworld"
+                name: "Cyto",
+                tier: 5, tierDisplay: "V",
+                description: "Disease research",
+                conglomerate: "worldvalley", rank: "pillar"
             },
             {
-                name: "Dark Wire",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Information brokers and data thieves",
-                category: "underworld"
-            },
-            {
-                name: "Damage Inc.",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Mercenary outfit, violence for hire",
-                category: "underworld"
-            },
-            {
-                name: "Bomb Threat",
-                tier: 1,
-                tierDisplay: "I",
-                description: "Demolitions specialists and anarchist bombers",
-                category: "underworld"
-            },
-            {
-                name: "Quicksilver",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Fast couriers and smugglers",
-                category: "underworld"
-            },
-            {
-                name: "Fleece",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Con artists and grifters",
-                category: "underworld"
-            },
-            {
-                name: "Math Squad",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Number runners and gambling operations",
-                category: "underworld"
-            },
-            {
-                name: "Red Leather",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Flesh trade and pleasure industry",
-                category: "underworld"
-            },
-            {
-                name: "High Water",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Water smugglers and flood zone operators",
-                category: "underworld"
+                name: "Vitae",
+                tier: 5, tierDisplay: "V",
+                description: "Water treatment and study",
+                conglomerate: "worldvalley", rank: "pillar"
             }
         ]
     },
 
     // =========================================================================
-    // FRINGE & LABOR (10 factions)
-    // Revolutionaries, idealists, and workers' organizations
+    // KERN-KEIWIT (BSX: KKX) — Finance
     // =========================================================================
     {
-        name: "Fringe & Labor",
-        key: "fringe",
+        name: "Kern-Keiwit",
+        key: "kernkeiwit",
+        label: "KKX — Finance",
         factions: [
             {
-                name: "The Flotilla",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Anarcho-communist boat collective, smugglers of goods and ideas",
-                category: "fringe"
+                name: "Babel Stock Exchange",
+                tier: 6, tierDisplay: "VI",
+                description: "BSX: BSX",
+                conglomerate: "kernkeiwit", rank: "pillar"
             },
             {
-                name: "Taxi & Transport",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Ground transportation union",
-                category: "labor"
+                name: "Kern-Keiwit Investment",
+                tier: 5, tierDisplay: "V",
+                description: "Money flows through KKI into many companies and startups. They all get pulled under the umbrella",
+                conglomerate: "kernkeiwit", rank: "pillar"
             },
             {
-                name: "The Dockers",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Port workers and shipping handlers",
-                category: "labor"
-            },
-            {
-                name: "Laborers",
-                tier: 3,
-                tierDisplay: "III",
-                description: "General workers' collective",
-                category: "labor"
-            },
-            {
-                name: "Brass Roses",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Revolutionary hacker squad",
-                category: "fringe"
-            },
-            {
-                name: "Brahmin",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Religious revivalists and spiritual resistance",
-                category: "fringe"
-            },
-            {
-                name: "The Indentured",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Debt-bound workers organizing in secret",
-                category: "labor"
-            },
-            {
-                name: "Journos",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Underground journalists and truth-seekers",
-                category: "labor"
-            },
-            {
-                name: "Kar Ptiwati",
-                tier: 1,
-                tierDisplay: "I",
-                description: "Thai dissidents and revolutionaries against the corps",
-                category: "fringe"
-            },
-            {
-                name: "Cognitive Dissidents",
-                tier: 1,
-                tierDisplay: "I",
-                description: "Anti-tech philosophers and luddites",
-                category: "fringe"
+                name: "Shining Insurance",
+                tier: 5, tierDisplay: "V",
+                description: "Insurance",
+                conglomerate: "kernkeiwit", rank: "pillar"
             }
         ]
     },
 
     // =========================================================================
-    // CITIZENS (8 factions)
-    // The districts and populations of Babel itself
+    // WYNDCOM (BSX: WYC) — Logistics
     // =========================================================================
     {
-        name: "Citizens",
-        key: "citizens",
+        name: "WyndCom",
+        key: "wyndcom",
+        label: "WYC — Logistics",
         factions: [
             {
-                name: "New World City",
-                tier: 1,
-                tierDisplay: "I",
-                description: "Immigrant district, fresh arrivals to Babel",
-                category: "citizens"
+                name: "Takam Housing",
+                tier: 3, tierDisplay: "III",
+                description: "Housing and property development",
+                conglomerate: "wyndcom", rank: "major"
+            }
+        ]
+    },
+
+    // =========================================================================
+    // PALANTIR (BSX: PAL) — Information
+    // =========================================================================
+    {
+        name: "Palantir",
+        key: "palantir",
+        label: "PAL — Information",
+        factions: [
+            {
+                name: "Meta",
+                tier: 6, tierDisplay: "VI",
+                description: "Surveillance and social media",
+                conglomerate: "palantir", rank: "pillar"
             },
             {
-                name: "The Slums",
-                tier: 1,
-                tierDisplay: "I",
-                description: "The poorest district, forgotten by the corps",
-                category: "citizens"
+                name: "Morningstar",
+                tier: 5, tierDisplay: "V",
+                description: "Special forces and investigation",
+                conglomerate: "palantir", rank: "pillar"
             },
             {
-                name: "The Slab",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Factory district above, gladiatorial testing below",
-                category: "citizens"
+                name: "OmniHealth Directional",
+                tier: 4, tierDisplay: "IV",
+                description: "Drug pushers, mood machines (BSX: OHDI)",
+                conglomerate: "palantir", rank: "major"
             },
             {
-                name: "The Kitchen",
-                tier: 2,
-                tierDisplay: "II",
-                description: "Food processing and service district",
-                category: "citizens"
+                name: "NERPS!",
+                tier: 3, tierDisplay: "III",
+                description: "Tesla with flamethrowers and weed. Oxygen bars, cool kid augments (BSX: NERP)",
+                conglomerate: "palantir", rank: "major"
             },
             {
-                name: "The Town",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Middle-class residential area",
-                category: "citizens"
+                name: "Five-O",
+                tier: 2, tierDisplay: "II",
+                description: "Be an Uber driver, except get deputized and given criminal targets",
+                conglomerate: "palantir", rank: "minor"
+            }
+        ]
+    },
+
+    // =========================================================================
+    // GLOBAL EXTRACTION (BSX: GBC) — Resource Extraction
+    // =========================================================================
+    {
+        name: "Global Extraction",
+        key: "globalextraction",
+        label: "GBC — Resource Extraction",
+        factions: [
+            {
+                name: "New Era Energy",
+                tier: 6, tierDisplay: "VI",
+                description: "Nuclear energy powering most of the city (BSX: GEE)",
+                conglomerate: "globalextraction", rank: "pillar"
             },
             {
-                name: "The Resort",
-                tier: 3,
-                tierDisplay: "III",
-                description: "Entertainment and leisure district",
-                category: "citizens"
+                name: "RRR",
+                tier: 5, tierDisplay: "V",
+                description: "Recover, Reclaim, Rebuild. International sites in collapsed states — looting historical objects and nuclear missile sites (BSX: RRR)",
+                conglomerate: "globalextraction", rank: "pillar"
             },
             {
-                name: "The Lux",
-                tier: 4,
-                tierDisplay: "IV",
-                description: "Wealthy residential towers",
-                category: "citizens"
+                name: "THE-COPS",
+                tier: 3, tierDisplay: "III",
+                description: "Law enforcement",
+                conglomerate: "globalextraction", rank: "major"
             },
             {
-                name: "The Corporate Center",
-                tier: 5,
-                tierDisplay: "V",
-                description: "Gleaming towers of corporate power",
-                category: "citizens"
+                name: "Zirinka Computing",
+                tier: 2, tierDisplay: "II",
+                description: "Eastern Bloc computers, basis for many black market decks",
+                conglomerate: "globalextraction", rank: "minor"
             }
         ]
     }
 ];
 
-/**
- * Get all factions as a flat array for populating the repeating section
- */
+// =============================================================================
+// UNDERWORLD FACTIONS (independent, not under conglomerates)
+// =============================================================================
+
+interface UnderworldFaction {
+    name: string;
+    tier: number;
+    tierDisplay: string;
+    description: string;
+}
+
+const UNDERWORLD_DATA: UnderworldFaction[] = [
+    { name: "Cyber Monday", tier: 3, tierDisplay: "III", description: "Auged up dominators of New World. Collectors of augments from those they wound" },
+    { name: "Petty Vermin", tier: 2, tierDisplay: "II", description: "Territorial mix of lesser gangs in the Sea Wall. Derelict youth fortress" },
+    { name: "High Water", tier: 3, tierDisplay: "III", description: "Ex-Morningstar (or secretly still Morningstar). Experienced auged up Runners for hire" },
+    { name: "134°", tier: 3, tierDisplay: "III", description: "The hottest club in the underworld. Neutral ground in Jehannam's tunnels" },
+    { name: "Dark Wire", tier: 2, tierDisplay: "II", description: "Hackers and mercs who do cleanup work for corporations" },
+    { name: "Damage Inc.", tier: 2, tierDisplay: "II", description: "Ex-corp construction team who takes down the buildings they built" },
+    { name: "Bomb Threat", tier: 1, tierDisplay: "I", description: "Break & enter runners who used a rock band as cover, until they got too cool to hide" },
+    { name: "Quicksilver", tier: 2, tierDisplay: "II", description: "Shiny, gaudy and arrogant brutal street racing group with the slickest rides" },
+    { name: "Fleece", tier: 2, tierDisplay: "II", description: "Sneaky smugglers and thieves, selling material and info to the highest bidder" },
+    { name: "Math Squad", tier: 2, tierDisplay: "II", description: "1337 h4x0rs modeled after classic 70s-80s nerd looks. Still dangerous" },
+    { name: "Red Leather", tier: 3, tierDisplay: "III", description: "Over-dramatic street brawlers, the biggest mohawks in the city" }
+];
+
+// =============================================================================
+// FRINGE FACTIONS (independent, not under conglomerates)
+// =============================================================================
+
+const FRINGE_DATA: UnderworldFaction[] = [
+    { name: "The Flotilla", tier: 3, tierDisplay: "III", description: "Anarcho-communist collective on boats. Loot failed states, supply revolutionary forces" },
+    { name: "Kar Ptiwati", tier: 1, tierDisplay: "I", description: "Thai dissidents and revolutionaries against the corps" },
+    { name: "Brass Roses", tier: 2, tierDisplay: "II", description: "Revolutionary hacker squad" },
+    { name: "Brahmin", tier: 2, tierDisplay: "II", description: "Collectivist society in an unattended city block. Grow their own food, keep to themselves" },
+    { name: "Cognitive Dissidents", tier: 1, tierDisplay: "I", description: "Experimental burnouts" }
+];
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
+
 const getAllFactions = (): Faction[] => {
-    return FACTION_DATA.flatMap(category => category.factions);
+    return FACTION_DATA.flatMap(conglomerate => conglomerate.factions);
 };
 
-/**
- * Get factions by category
- */
-const getFactionsByCategory = (categoryKey: string): Faction[] => {
-    const category = FACTION_DATA.find(cat => cat.key === categoryKey);
-    return category ? category.factions : [];
+const getFactionsByConglomerate = (conglomerateKey: string): Faction[] => {
+    const conglomerate = FACTION_DATA.find(c => c.key === conglomerateKey);
+    return conglomerate ? conglomerate.factions : [];
 };

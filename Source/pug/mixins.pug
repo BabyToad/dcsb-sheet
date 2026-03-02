@@ -353,8 +353,32 @@ mixin clock-entry()
             textarea.clock-notes-input(name="attr_clock_notes", placeholder="Notes...")
 
 //- ═══════════════════════════════════════════════════════════════
+//- CONGLOMERATE NOTICE (Agon-style dual tracking)
+//- 3 tri-state boxes per conglomerate: positive, negative, or neutral
+//- ═══════════════════════════════════════════════════════════════
+
+mixin subsidiary-toggle(slug)
+    input.subsidiary-toggle(type="checkbox", name=`attr_expand_${slug}`, id=`expand_${slug}`)
+    label.subsidiary-toggle-btn(for=`expand_${slug}`) COMPANIES
+
+mixin conglomerate-notice(slug)
+    .conglomerate-notice
+        .notice-label NOTICE
+        .notice-boxes
+            - for (var i = 1; i <= 3; i++)
+                .notice-box
+                    label.notice-pip(data-value="-1")
+                        input(type="radio", name=`attr_${slug}_notice_${i}`, value="-1")
+                        span −
+                    label.notice-pip(data-value="0")
+                        input(type="radio", name=`attr_${slug}_notice_${i}`, value="0", checked)
+                        span ·
+                    label.notice-pip(data-value="1")
+                        input(type="radio", name=`attr_${slug}_notice_${i}`, value="1")
+                        span +
+
 //- FACTION ENTRY (repeating section)
-//- Track relationships with Babel's factions
+//- Track relationships with conglomerate companies
 //- Status: -3 (War) to +3 (Allies)
 //- ═══════════════════════════════════════════════════════════════
 

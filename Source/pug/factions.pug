@@ -1,6 +1,7 @@
 //- Dark City, Shining Babel - Factions Tab
-//- Track crew relationships with Babel's 42 factions
-//- Organized by category in columns
+//- Track conglomerate notice and company relationships
+//- 6 conglomerates with Agon-style dual positive/negative notice
+//- Underworld (11 factions) and Fringe (5 factions) below
 
 //- Section 01: FACTION RELATIONS
 +section-header-editable("factions", "FACTION RELATIONS", "01")
@@ -13,6 +14,7 @@
 
     //- Status legend (compact)
     .status-legend
+        span.legend-label COMPANY:
         span.legend-item.war ⚔ WAR
         span.legend-item.hostile -2
         span.legend-item.interfering -1
@@ -20,35 +22,70 @@
         span.legend-item.helpful +1
         span.legend-item.friendly +2
         span.legend-item.allied ★ ALLY
+        span.legend-sep |
+        span.legend-label NOTICE:
+        span.legend-item.notice-neg − Negative
+        span.legend-item.neutral · Neutral
+        span.legend-item.notice-pos + Positive
 
-    //- Category columns grid (balanced: 7, 7, 10, 10, 8)
+    //- Conglomerate columns grid (3x2)
     .faction-columns
-        //- Column 1: Major Corps (7 factions)
+        //- Column 1: Chaebol
         .faction-column
-            .faction-category-header CORPS (MAJOR)
-            fieldset.repeating_factionscorpsmajor
+            .faction-category-header CHAEBOL
+            +conglomerate-notice("chaebol")
+            +subsidiary-toggle("chaebol")
+            fieldset.repeating_factionschaebol
                 +faction-entry()
 
-        //- Column 2: Minor Corps (7 factions)
+        //- Column 2: World Valley
         .faction-column
-            .faction-category-header CORPS (MINOR)
-            fieldset.repeating_factionscorpsminor
+            .faction-category-header WORLD VALLEY
+            +conglomerate-notice("worldvalley")
+            +subsidiary-toggle("worldvalley")
+            fieldset.repeating_factionsworldvalley
                 +faction-entry()
 
-        //- Column 3: The Underworld (10 factions)
+        //- Column 3: Kern-Keiwit
         .faction-column
-            .faction-category-header THE UNDERWORLD
-            fieldset.repeating_factionsunderworld
+            .faction-category-header KERN-KEIWIT
+            +conglomerate-notice("kernkeiwit")
+            +subsidiary-toggle("kernkeiwit")
+            fieldset.repeating_factionskernkeiwit
                 +faction-entry()
 
-        //- Column 4: Fringe & Labor (10 factions)
+        //- Column 4: WyndCom
         .faction-column
-            .faction-category-header FRINGE & LABOR
-            fieldset.repeating_factionsfringe
+            .faction-category-header WYNDCOM
+            +conglomerate-notice("wyndcom")
+            +subsidiary-toggle("wyndcom")
+            fieldset.repeating_factionswyndcom
                 +faction-entry()
 
-        //- Column 5: Citizens (8 factions)
+        //- Column 5: Palantir
         .faction-column
-            .faction-category-header CITIZENS
-            fieldset.repeating_factionscitizens
+            .faction-category-header PALANTIR
+            +conglomerate-notice("palantir")
+            +subsidiary-toggle("palantir")
+            fieldset.repeating_factionspalantir
                 +faction-entry()
+
+        //- Column 6: Global Extraction
+        .faction-column
+            .faction-category-header GLOBAL EXTRACTION
+            +conglomerate-notice("globalextraction")
+            +subsidiary-toggle("globalextraction")
+            fieldset.repeating_factionsglobalextraction
+                +faction-entry()
+
+    //- Section 02: THE UNDERWORLD
+    .faction-group
+        .faction-group-header THE UNDERWORLD
+        fieldset.repeating_factionsunderworld
+            +faction-entry()
+
+    //- Section 03: THE FRINGE
+    .faction-group
+        .faction-group-header THE FRINGE
+        fieldset.repeating_factionsfringe
+            +faction-entry()
