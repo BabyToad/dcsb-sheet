@@ -230,9 +230,9 @@
                         span.bc-value(name="attr_maintenance_clocks") 0
                         span  BC
                 .maintenance-gauge
-                    //- 16-segment gauge with clock boundaries every 4
+                    //- 24-segment gauge with clock boundaries every 6
                     //- Auto-filled based on installed augment tiers
-                    +fakeradio-track("maintenance_ticks", 16, "maint-segment")
+                    +fakeradio-track("maintenance_ticks", 24, "maint-segment")
 
             +repeating("augments")
                 .augment-entry

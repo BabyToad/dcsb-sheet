@@ -1795,11 +1795,11 @@
 .charsheet .augment-maintenance .maintenance-gauge .maint-segment:first-of-type {
   border-left-width: 1px;
 }
-.charsheet .augment-maintenance .maintenance-gauge .maint-segment:nth-of-type(4n + 1) {
+.charsheet .augment-maintenance .maintenance-gauge .maint-segment:nth-of-type(6n + 1) {
   border-left: 2px solid #1a1a1a;
   margin-left: 3px;
 }
-.charsheet .augment-maintenance .maintenance-gauge .maint-segment:nth-of-type(4n + 1):first-of-type {
+.charsheet .augment-maintenance .maintenance-gauge .maint-segment:nth-of-type(6n + 1):first-of-type {
   margin-left: 0;
 }
 .charsheet .augment-maintenance .maintenance-gauge .fakeradio:checked ~ .fakeradio + .maint-segment {

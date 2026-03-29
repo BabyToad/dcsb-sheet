@@ -47,7 +47,7 @@ const TRAUMA = {
 
 // Augments (formerly Cybernetics) - use maintenance clocks instead of capacity
 const MAINTENANCE = {
-    CLOCK_SIZE: 4,  // 4 ticks per maintenance clock
+    CLOCK_SIZE: 6,  // 6 ticks per maintenance clock
 } as const;
 
 // =============================================================================

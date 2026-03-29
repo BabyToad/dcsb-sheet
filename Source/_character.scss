@@ -860,8 +860,8 @@
                     border-left-width: 1px;
                 }
 
-                // Clock boundary markers - thicker border every 4 segments
-                &:nth-of-type(4n + 1) {
+                // Clock boundary markers - thicker border every 6 segments
+                &:nth-of-type(6n + 1) {
                     border-left: 2px solid $zine-ink;
                     margin-left: 3px;
 
