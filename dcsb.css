@@ -3052,13 +3052,13 @@
   font-size: 12px;
 }
 
-.factions-section {
+.charsheet .factions-section {
   padding: 8px;
 }
-.factions-section .factions-controls {
+.charsheet .factions-section .factions-controls {
   margin-bottom: 8px;
 }
-.factions-section .populate-btn {
+.charsheet .factions-section .populate-btn {
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   padding: 4px 8px;
@@ -3068,12 +3068,11 @@
   color: #1a1a1a;
   transition: all 0.1s ease;
 }
-.factions-section .populate-btn:hover {
+.charsheet .factions-section .populate-btn:hover {
   background: #ffb000;
   color: #1a1a1a;
 }
-
-.faction-columns {
+.charsheet .faction-columns {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
@@ -3081,15 +3080,13 @@
   width: 100%;
   overflow: hidden;
 }
-
-.faction-column {
+.charsheet .faction-column {
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
 }
-
-.status-legend {
+.charsheet .status-legend {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -3100,47 +3097,46 @@
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
 }
-.status-legend .legend-label {
+.charsheet .status-legend .legend-label {
   font-weight: bold;
   color: #1a1a1a;
 }
-.status-legend .legend-sep {
+.charsheet .status-legend .legend-sep {
   color: rgba(136, 136, 136, 0.4);
 }
-.status-legend .legend-item {
+.charsheet .status-legend .legend-item {
   display: flex;
   align-items: center;
   gap: 2px;
 }
-.status-legend .legend-item.war {
+.charsheet .status-legend .legend-item.war {
   color: #8b0000;
 }
-.status-legend .legend-item.hostile {
+.charsheet .status-legend .legend-item.hostile {
   color: rgb(113.5, 0, 0);
 }
-.status-legend .legend-item.interfering {
+.charsheet .status-legend .legend-item.interfering {
   color: #cc7700;
 }
-.status-legend .legend-item.neutral {
+.charsheet .status-legend .legend-item.neutral {
   color: #888888;
 }
-.status-legend .legend-item.helpful {
+.charsheet .status-legend .legend-item.helpful {
   color: rgb(62.7906976744, 125.5813953488, 54.4186046512);
 }
-.status-legend .legend-item.friendly {
+.charsheet .status-legend .legend-item.friendly {
   color: #2d5a27;
 }
-.status-legend .legend-item.allied {
+.charsheet .status-legend .legend-item.allied {
   color: rgb(36.1046511628, 72.2093023256, 31.2906976744);
 }
-.status-legend .legend-item.notice-neg {
+.charsheet .status-legend .legend-item.notice-neg {
   color: #8b0000;
 }
-.status-legend .legend-item.notice-pos {
+.charsheet .status-legend .legend-item.notice-pos {
   color: #2d5a27;
 }
-
-.conglomerate-notice {
+.charsheet .conglomerate-notice {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -3149,8 +3145,7 @@
   border: 1px solid rgba(255, 176, 0, 0.3);
   background: rgba(255, 176, 0, 0.03);
 }
-
-.notice-label {
+.charsheet .notice-label {
   font-family: "Courier New", Courier, monospace;
   font-size: 8px;
   font-weight: bold;
@@ -3158,22 +3153,20 @@
   letter-spacing: 0.1em;
   flex-shrink: 0;
 }
-
-.notice-boxes {
+.charsheet .notice-boxes {
   display: flex;
   gap: 2px;
   flex: 1;
   justify-content: center;
 }
-
-.notice-box {
+.charsheet .notice-box {
   display: flex;
   gap: 1px;
   border: 1px solid rgba(136, 136, 136, 0.3);
   padding: 1px;
   background: rgba(26, 26, 26, 0.02);
 }
-.notice-box .notice-pip {
+.charsheet .notice-box .notice-pip {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3189,44 +3182,43 @@
   color: #888888;
   transition: all 0.1s ease;
 }
-.notice-box .notice-pip input[type=radio] {
+.charsheet .notice-box .notice-pip input[type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.notice-box .notice-pip:hover {
+.charsheet .notice-box .notice-pip:hover {
   border-color: #ffb000;
 }
-.notice-box .notice-pip[data-value="-1"] {
+.charsheet .notice-box .notice-pip[data-value="-1"] {
   border-color: rgba(139, 0, 0, 0.3);
   color: rgba(139, 0, 0, 0.5);
 }
-.notice-box .notice-pip[data-value="-1"]:has(input:checked) {
+.charsheet .notice-box .notice-pip[data-value="-1"]:has(input:checked) {
   background: #8b0000;
   color: #e5e5e0;
   border-color: #8b0000;
 }
-.notice-box .notice-pip[data-value="0"] {
+.charsheet .notice-box .notice-pip[data-value="0"] {
   border-color: rgba(136, 136, 136, 0.3);
   color: rgba(136, 136, 136, 0.5);
 }
-.notice-box .notice-pip[data-value="0"]:has(input:checked) {
+.charsheet .notice-box .notice-pip[data-value="0"]:has(input:checked) {
   background: rgba(136, 136, 136, 0.3);
   color: #888888;
   border-color: rgba(136, 136, 136, 0.5);
 }
-.notice-box .notice-pip[data-value="1"] {
+.charsheet .notice-box .notice-pip[data-value="1"] {
   border-color: rgba(45, 90, 39, 0.3);
   color: rgba(45, 90, 39, 0.5);
 }
-.notice-box .notice-pip[data-value="1"]:has(input:checked) {
+.charsheet .notice-box .notice-pip[data-value="1"]:has(input:checked) {
   background: #2d5a27;
   color: #e5e5e0;
   border-color: #2d5a27;
 }
-
-.faction-entry {
+.charsheet .faction-entry {
   padding: 4px;
   margin-bottom: 2px;
   border: 1px solid rgba(136, 136, 136, 0.2);
@@ -3235,38 +3227,36 @@
   overflow: hidden;
   transition: all 0.1s ease;
 }
-.faction-entry:has(.faction-status-track input[value="-3"]:checked) {
+.charsheet .faction-entry:has(.faction-status-track input[value="-3"]:checked) {
   background: rgba(139, 0, 0, 0.08);
   border-color: rgba(139, 0, 0, 0.3);
 }
-.faction-entry:has(.faction-status-track input[value="-3"]:checked) .faction-name-display,
-.faction-entry:has(.faction-status-track input[value="-3"]:checked) .faction-name-input {
+.charsheet .faction-entry:has(.faction-status-track input[value="-3"]:checked) .faction-name-display,
+.charsheet .faction-entry:has(.faction-status-track input[value="-3"]:checked) .faction-name-input {
   color: #8b0000;
 }
-.faction-entry:has(.faction-status-track input[value="3"]:checked) {
+.charsheet .faction-entry:has(.faction-status-track input[value="3"]:checked) {
   background: rgba(45, 90, 39, 0.08);
   border-color: rgba(45, 90, 39, 0.3);
 }
-.faction-entry:has(.faction-status-track input[value="3"]:checked) .faction-name-display,
-.faction-entry:has(.faction-status-track input[value="3"]:checked) .faction-name-input {
+.charsheet .faction-entry:has(.faction-status-track input[value="3"]:checked) .faction-name-display,
+.charsheet .faction-entry:has(.faction-status-track input[value="3"]:checked) .faction-name-input {
   color: #2d5a27;
 }
-
-.faction-header-row {
+.charsheet .faction-header-row {
   display: flex;
   align-items: center;
   gap: 2px;
   margin-bottom: 2px;
   flex-wrap: wrap;
 }
-
-.faction-hold-selector {
+.charsheet .faction-hold-selector {
   display: flex;
   gap: 1px;
   margin-left: auto;
   flex-shrink: 0;
 }
-.faction-hold-selector .hold-pip {
+.charsheet .faction-hold-selector .hold-pip {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3282,27 +3272,26 @@
   color: #888888;
   transition: all 0.1s ease;
 }
-.faction-hold-selector .hold-pip input[type=radio] {
+.charsheet .faction-hold-selector .hold-pip input[type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.faction-hold-selector .hold-pip:hover {
+.charsheet .faction-hold-selector .hold-pip:hover {
   border-color: #ffb000;
 }
-.faction-hold-selector .hold-pip[data-value=weak]:has(input:checked) {
+.charsheet .faction-hold-selector .hold-pip[data-value=weak]:has(input:checked) {
   background: #cc7700;
   color: #1a1a1a;
   border-color: #cc7700;
 }
-.faction-hold-selector .hold-pip[data-value=strong]:has(input:checked) {
+.charsheet .faction-hold-selector .hold-pip[data-value=strong]:has(input:checked) {
   background: #ffb000;
   color: #1a1a1a;
   border-color: #ffb000;
 }
-
-.faction-tier-badge {
+.charsheet .faction-tier-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3315,15 +3304,13 @@
   font-weight: bold;
   flex-shrink: 0;
 }
-
-.faction-name-display {
+.charsheet .faction-name-display {
   flex: 1;
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   font-weight: bold;
 }
-
-.faction-desc-display {
+.charsheet .faction-desc-display {
   display: block;
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
@@ -3331,8 +3318,7 @@
   margin-bottom: 2px;
   line-height: 1.3;
 }
-
-.faction-name-input {
+.charsheet .faction-name-input {
   flex: 1 1 auto;
   min-width: 60px;
   font-family: "Courier New", Courier, monospace;
@@ -3342,24 +3328,22 @@
   background: transparent;
   padding: 1px 4px;
 }
-.faction-name-input:focus {
+.charsheet .faction-name-input:focus {
   outline: none;
   border-bottom-color: #ffb000;
 }
-
-.faction-tier-edit {
+.charsheet .faction-tier-edit {
   flex-shrink: 0;
   width: auto;
 }
-.faction-tier-edit select {
+.charsheet .faction-tier-edit select {
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
   padding: 1px 2px;
   width: auto;
   min-width: 0;
 }
-
-.faction-desc-input {
+.charsheet .faction-desc-input {
   width: 100%;
   min-height: 24px;
   font-family: "Courier New", Courier, monospace;
@@ -3370,18 +3354,17 @@
   background: transparent;
   resize: vertical;
 }
-.faction-desc-input:focus {
+.charsheet .faction-desc-input:focus {
   outline: none;
   border-color: #ffb000;
 }
-
-.faction-status-track {
+.charsheet .faction-status-track {
   display: flex;
   align-items: center;
   gap: 2px;
   flex-shrink: 0;
 }
-.faction-status-track .status-pip {
+.charsheet .faction-status-track .status-pip {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3397,101 +3380,96 @@
   color: #888888;
   transition: all 0.1s ease;
 }
-.faction-status-track .status-pip input[type=radio] {
+.charsheet .faction-status-track .status-pip input[type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.faction-status-track .status-pip:hover {
+.charsheet .faction-status-track .status-pip:hover {
   border-color: #ffb000;
 }
-.faction-status-track .status-pip[data-value="-3"] {
+.charsheet .faction-status-track .status-pip[data-value="-3"] {
   border-color: rgba(139, 0, 0, 0.5);
   color: rgba(139, 0, 0, 0.7);
 }
-.faction-status-track .status-pip[data-value="-2"] {
+.charsheet .faction-status-track .status-pip[data-value="-2"] {
   border-color: rgba(139, 0, 0, 0.4);
   color: rgba(139, 0, 0, 0.6);
 }
-.faction-status-track .status-pip[data-value="-1"] {
+.charsheet .faction-status-track .status-pip[data-value="-1"] {
   border-color: rgba(204, 119, 0, 0.5);
   color: rgba(204, 119, 0, 0.7);
 }
-.faction-status-track .status-pip[data-value="0"] {
+.charsheet .faction-status-track .status-pip[data-value="0"] {
   border-color: rgba(136, 136, 136, 0.5);
   color: #888888;
 }
-.faction-status-track .status-pip[data-value="1"] {
+.charsheet .faction-status-track .status-pip[data-value="1"] {
   border-color: rgba(45, 90, 39, 0.4);
   color: rgba(45, 90, 39, 0.7);
 }
-.faction-status-track .status-pip[data-value="2"] {
+.charsheet .faction-status-track .status-pip[data-value="2"] {
   border-color: rgba(45, 90, 39, 0.5);
   color: rgba(45, 90, 39, 0.8);
 }
-.faction-status-track .status-pip[data-value="3"] {
+.charsheet .faction-status-track .status-pip[data-value="3"] {
   border-color: rgba(45, 90, 39, 0.6);
   color: #2d5a27;
 }
-.faction-status-track .status-pip:has(input:checked) {
+.charsheet .faction-status-track .status-pip:has(input:checked) {
   font-weight: bold;
 }
-.faction-status-track .status-pip[data-value="-3"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="-3"]:has(input:checked) {
   background: #8b0000;
   color: #e5e5e0;
   border-color: #8b0000;
 }
-.faction-status-track .status-pip[data-value="-2"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="-2"]:has(input:checked) {
   background: rgb(166, 68.7, 67.2);
   color: #e5e5e0;
   border-color: rgb(166, 68.7, 67.2);
 }
-.faction-status-track .status-pip[data-value="-1"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="-1"]:has(input:checked) {
   background: #cc7700;
   color: #1a1a1a;
   border-color: #cc7700;
 }
-.faction-status-track .status-pip[data-value="0"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="0"]:has(input:checked) {
   background: #888888;
   color: #e5e5e0;
   border-color: #888888;
 }
-.faction-status-track .status-pip[data-value="1"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="1"]:has(input:checked) {
   background: rgb(137, 159.5, 131.5);
   color: #1a1a1a;
   border-color: rgb(137, 159.5, 131.5);
 }
-.faction-status-track .status-pip[data-value="2"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="2"]:has(input:checked) {
   background: rgb(100.2, 131.7, 94.5);
   color: #e5e5e0;
   border-color: rgb(100.2, 131.7, 94.5);
 }
-.faction-status-track .status-pip[data-value="3"]:has(input:checked) {
+.charsheet .faction-status-track .status-pip[data-value="3"]:has(input:checked) {
   background: #2d5a27;
   color: #e5e5e0;
   border-color: #2d5a27;
 }
-
-.subsidiary-toggle {
+.charsheet .subsidiary-toggle {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
-
-.faction-column > .subsidiary-toggle ~ * {
+.charsheet .faction-column > .subsidiary-toggle ~ * {
   display: none;
 }
-
-.faction-column > .subsidiary-toggle ~ .subsidiary-toggle-btn {
+.charsheet .faction-column > .subsidiary-toggle ~ .subsidiary-toggle-btn {
   display: block;
 }
-
-.faction-column > .subsidiary-toggle:checked ~ * {
+.charsheet .faction-column > .subsidiary-toggle:checked ~ * {
   display: block;
 }
-
-.subsidiary-toggle-btn {
+.charsheet .subsidiary-toggle-btn {
   display: block;
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
@@ -3504,24 +3482,22 @@
   margin-bottom: 4px;
   transition: all 0.1s ease;
 }
-.subsidiary-toggle-btn::before {
+.charsheet .subsidiary-toggle-btn::before {
   content: "> ";
 }
-.subsidiary-toggle-btn:hover {
+.charsheet .subsidiary-toggle-btn:hover {
   color: #ffb000;
   border-color: rgba(255, 176, 0, 0.5);
 }
-
-.subsidiary-toggle:checked ~ .subsidiary-toggle-btn {
+.charsheet .subsidiary-toggle:checked ~ .subsidiary-toggle-btn {
   color: #ffb000;
   border-color: rgba(255, 176, 0, 0.5);
   border-style: solid;
 }
-.subsidiary-toggle:checked ~ .subsidiary-toggle-btn::before {
+.charsheet .subsidiary-toggle:checked ~ .subsidiary-toggle-btn::before {
   content: "v ";
 }
-
-.faction-category-header {
+.charsheet .faction-category-header {
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   font-weight: bold;
@@ -3533,17 +3509,16 @@
   margin-top: 8px;
   margin-bottom: 4px;
 }
-.faction-category-header:first-child {
+.charsheet .faction-category-header:first-child {
   margin-top: 0;
 }
-
-.faction-column .repcontrol {
+.charsheet .faction-column .repcontrol {
   margin-top: 4px;
   padding: 2px;
   background: rgba(255, 176, 0, 0.05);
   border: 1px dashed rgba(255, 176, 0, 0.3);
 }
-.faction-column .repcontrol button {
+.charsheet .faction-column .repcontrol button {
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
   padding: 2px 4px;
@@ -3553,21 +3528,20 @@
   color: #ffb000;
   transition: all 0.1s ease;
 }
-.faction-column .repcontrol button:hover {
+.charsheet .faction-column .repcontrol button:hover {
   background: #ffb000;
   color: #1a1a1a;
 }
-.faction-column fieldset {
+.charsheet .faction-column fieldset {
   min-width: 0;
   border: none;
   padding: 0;
   margin: 0;
 }
-
-.faction-group {
+.charsheet .faction-group {
   margin-top: 16px;
 }
-.faction-group .faction-group-header {
+.charsheet .faction-group .faction-group-header {
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   font-weight: bold;
@@ -3578,26 +3552,26 @@
   border-bottom: 2px solid #ffb000;
   margin-bottom: 4px;
 }
-.faction-group .repcontainer {
+.charsheet .faction-group .repcontainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
   align-items: start;
 }
-.faction-group fieldset {
+.charsheet .faction-group fieldset {
   min-width: 0;
   border: none;
   padding: 0;
   margin: 0;
 }
-.faction-group .repcontrol {
+.charsheet .faction-group .repcontrol {
   grid-column: 1/-1;
   margin-top: 4px;
   padding: 2px;
   background: rgba(255, 176, 0, 0.05);
   border: 1px dashed rgba(255, 176, 0, 0.3);
 }
-.faction-group .repcontrol button {
+.charsheet .faction-group .repcontrol button {
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
   padding: 2px 4px;
@@ -3607,7 +3581,7 @@
   color: #ffb000;
   transition: all 0.1s ease;
 }
-.faction-group .repcontrol button:hover {
+.charsheet .faction-group .repcontrol button:hover {
   background: #ffb000;
   color: #1a1a1a;
 }

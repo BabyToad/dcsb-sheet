@@ -11,6 +11,8 @@
 // FACTIONS SECTION
 // =============================================================================
 
+.charsheet {
+
 .factions-section {
     padding: $spacing-md;
 
@@ -706,3 +708,5 @@
         }
     }
 }
+
+} // .charsheet
